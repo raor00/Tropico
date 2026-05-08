@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { TOKENS, TOKEN_LIST, type TokenSymbol, getTokenBySymbol } from "@/lib/tokens";
 import { DualPrice } from "./DualPrice";
+import { PixelLoader } from "./PixelLoader";
 import { formatUSD, formatTokenAmount } from "@/lib/formato";
 
 type Quote = {
@@ -135,7 +136,9 @@ export function SwapForm() {
       {/* Detalles */}
       {(quote || loading || error) && (
         <div className="panel flex flex-col gap-2 p-4 text-sm">
-          {loading && <div className="text-tropico-mute">Buscando el mejor precio…</div>}
+          {loading && (
+            <PixelLoader variant="sun" size="sm" label="Buscando el mejor precio…" />
+          )}
           {error && <div className="text-tropico-coral">{error}</div>}
           {quote && !loading && (
             <>

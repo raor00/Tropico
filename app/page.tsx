@@ -18,6 +18,7 @@ import { Logo } from "@/components/Logo";
 import { AuthCTA } from "@/components/AuthCTA";
 import { Header } from "@/components/Header";
 import { Badge } from "@/components/Badge";
+import { ScrollReveal } from "@/components/ScrollReveal";
 
 const VALUE_CARDS = [
   {
@@ -150,7 +151,7 @@ export default function LandingPage() {
       </section>
 
       {/* EL PROBLEMA — 4 stats grandes */}
-      <section className="flex flex-col gap-8">
+      <ScrollReveal direction="up" as="section" className="flex flex-col gap-8">
         <div className="space-y-2">
           <span className="text-xs uppercase tracking-widest text-tropico-coral">
             El problema
@@ -191,10 +192,10 @@ export default function LandingPage() {
             </article>
           ))}
         </div>
-      </section>
+      </ScrollReveal>
 
       {/* VALUE CARDS — Conoce / Cambia / Crece */}
-      <section className="flex flex-col gap-8">
+      <ScrollReveal direction="up" delay={100} as="section" className="flex flex-col gap-8">
         <div className="space-y-2">
           <span className="text-xs uppercase tracking-widest text-tropico-sun">
             La soluci&oacute;n
@@ -233,10 +234,10 @@ export default function LandingPage() {
             );
           })}
         </div>
-      </section>
+      </ScrollReveal>
 
       {/* 6 MÓDULOS — recorrido del producto */}
-      <section className="flex flex-col gap-8">
+      <ScrollReveal direction="pixel" as="section" className="flex flex-col gap-8">
         <div className="space-y-2">
           <span className="text-xs uppercase tracking-widest text-tropico-sea">
             La app completa
@@ -270,10 +271,10 @@ export default function LandingPage() {
             );
           })}
         </div>
-      </section>
+      </ScrollReveal>
 
-      {/* PARA COMERCIOS — preview con comparativa banco tradicional */}
-      <section className="grid gap-6 panel p-8 md:grid-cols-2 md:items-center">
+      {/* PARA COMERCIOS — preview con comparativa POS tradicional */}
+      <ScrollReveal direction="left" as="section" className="grid gap-6 panel p-8 md:grid-cols-2 md:items-center">
         <div className="flex flex-col gap-4">
           <div className="inline-flex w-fit items-center gap-2 rounded-md bg-tropico-coral/15 px-2 py-0.5 text-xs font-semibold uppercase tracking-widest text-tropico-coral">
             <Store className="size-3" strokeWidth={2.5} />
@@ -310,10 +311,10 @@ export default function LandingPage() {
             </div>
           ))}
         </div>
-      </section>
+      </ScrollReveal>
 
       {/* CARLOS MODO AGENTE */}
-      <section className="flex flex-col gap-8">
+      <ScrollReveal direction="right" as="section" className="flex flex-col gap-8">
         <div className="space-y-2">
           <div className="inline-flex w-fit items-center gap-2 rounded-md bg-tropico-sea/15 px-2 py-0.5 text-xs font-semibold uppercase tracking-widest text-tropico-sea">
             <Bot className="size-3" strokeWidth={2.5} />
@@ -353,10 +354,10 @@ export default function LandingPage() {
         >
           Ver Modo Agente &rarr;
         </Link>
-      </section>
+      </ScrollReveal>
 
       {/* MODELO DE NEGOCIO — 5 streams */}
-      <section className="flex flex-col gap-6">
+      <ScrollReveal direction="up" as="section" className="flex flex-col gap-6">
         <div className="space-y-2">
           <span className="text-xs uppercase tracking-widest text-tropico-sun">
             Modelo de negocio
@@ -384,10 +385,10 @@ export default function LandingPage() {
           Proyecci&oacute;n mes 12: 50.000 usuarios + 2.000 comercios ={" "}
           <strong className="text-tropico-green">$250K MRR</strong> sobre $44M de volumen.
         </p>
-      </section>
+      </ScrollReveal>
 
       {/* CTA FINAL */}
-      <section className="panel relative flex flex-col items-center gap-6 overflow-hidden p-10 text-center">
+      <ScrollReveal direction="pixel" as="section" className="panel relative flex flex-col items-center gap-6 overflow-hidden p-10 text-center">
         <div
           className="pointer-events-none absolute inset-0 opacity-60"
           style={{
@@ -423,7 +424,7 @@ export default function LandingPage() {
             </Link>
           </div>
         </div>
-      </section>
+      </ScrollReveal>
 
       {/* FOOTER extendido */}
       <footer className="flex flex-col gap-6 border-t border-tropico-border pt-8 text-sm text-tropico-mute">

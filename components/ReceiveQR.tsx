@@ -9,6 +9,7 @@ import {
   DEMO_MERCHANT_WALLET,
 } from "@/lib/solana-pay";
 import { DualPrice } from "./DualPrice";
+import { PixelLoader } from "./PixelLoader";
 import { formatUSD } from "@/lib/formato";
 
 type Status = "esperando" | "pagado";
@@ -117,8 +118,8 @@ export function ReceiveQR() {
           </div>
         </div>
       ) : (
-        <div className="panel flex items-center gap-3 border-tropico-purple/40 bg-tropico-purple/5 p-4">
-          <div className="size-3 animate-pulse-slow rounded-full bg-tropico-purple" />
+        <div className="panel flex items-center gap-3 border-tropico-sun/40 bg-tropico-sun/5 p-4">
+          <PixelLoader variant="dots" size="sm" />
           <div className="flex-1 text-sm">
             <div className="font-semibold">Esperando pago…</div>
             <div className="text-xs text-tropico-mute">
