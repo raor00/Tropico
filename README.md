@@ -126,6 +126,45 @@ Cuando ambos lados están dentro de Tropico, el dinero gira en USDC sin pasar po
 
 ---
 
+## 📸 Screenshots
+
+### Landing (con header sticky + nav + CTA wallet)
+![Landing](docs/images/screens/01-landing-desktop.png)
+
+### Home — dashboard del usuario
+![Home](docs/images/screens/02-home-desktop.png)
+
+### Cambiar — swap real con Jupiter Quote API
+![Cambiar](docs/images/screens/03-cambiar-desktop.png)
+
+### Cobrar — QR Solana Pay generado real
+![Cobrar](docs/images/screens/04-cobrar-desktop.png)
+
+### Carlos AI — Modo Agente con 4 acciones autónomas
+![Modo Agente](docs/images/screens/10-carlos-agente-desktop.png)
+
+### Tropico Comercios — landing merchant con comparativa Banesco
+![Comercios](docs/images/screens/08-comercios-desktop.png)
+
+### Descubrir — 8 tokens curados con copy venezolano
+![Descubrir](docs/images/screens/11-descubrir-desktop.png)
+
+<details>
+<summary>Más screenshots — Enviar, Guardar, Depositar, Carlos chat</summary>
+
+| Pantalla | Desktop | Mobile |
+|---|---|---|
+| Enviar (claim link + WhatsApp) | ![Enviar](docs/images/screens/05-enviar-desktop.png) | ![Enviar mobile](docs/images/screens/05-enviar-mobile.png) |
+| Guardar (yield UI) | ![Guardar](docs/images/screens/06-guardar-desktop.png) | ![Guardar mobile](docs/images/screens/06-guardar-mobile.png) |
+| Depositar (onramp stub + faucet) | ![Depositar](docs/images/screens/07-depositar-desktop.png) | — |
+| Carlos chat | ![Carlos](docs/images/screens/09-carlos-desktop.png) | — |
+
+</details>
+
+> 📝 Para regenerar todos los screenshots: `node scripts/screenshots.mjs` (requiere `npm install -D playwright` + `npx playwright install chromium`).
+
+---
+
 ## 🚀 Ejecutar localmente
 
 ### Requisitos
@@ -247,6 +286,59 @@ El **gradient firma** es el atardecer caribeño: `coral → sun → sea`. Aparec
 - Botones primarios
 - Hero del landing
 - Splash screen logo reveal
+
+## 🔐 Cómo funciona la wallet — Privy MPC embedded
+
+Tropico **NO usa el modelo tradicional de seed phrase**. Usa **Privy embedded wallet** con **MPC (Multi-Party Computation)**, radicalmente más simple para el venezolano común y más seguro contra pérdidas.
+
+### Flujo de creación (15 segundos, sin seed phrase)
+
+```
+1. Usuario clickea "Empezar con email"
+2. Ingresa su email
+3. Recibe OTP (código 6 dígitos) por mail
+4. Privy ejecuta MPC handshake EN EL BROWSER:
+     - Genera 3 "shares" criptográficos
+     - share-1 → dispositivo del usuario (encriptado)
+     - share-2 → infraestructura Privy (encriptada)
+     - share-3 → guardian backup (encriptado)
+5. La llave privada COMPLETA NUNCA EXISTE
+6. Para firmar tx, los 3 shares cooperan SIN reconstruir la llave
+7. ✅ Wallet Solana lista, pubkey visible en /home
+```
+
+### Lo que el usuario NO necesita
+
+- ❌ Escribir seed phrase de 12-24 palabras
+- ❌ Instalar extensión de browser (Phantom/Solflare)
+- ❌ Bajar app móvil
+- ❌ Recordar palabras
+
+### Lo que SÍ tiene
+
+| Feature | Detalle |
+|---|---|
+| **Login con email + OTP** | Default flow, 15 segundos |
+| **PassKey biométrica opcional** | TouchID/FaceID/Windows Hello — reemplaza OTP |
+| **Recuperación cross-device** | Login con mismo email en nuevo dispositivo → Privy reconstruye share |
+| **Export de seed phrase opcional** | Para "graduarse" a Phantom: 12 palabras exportables desde config |
+
+### ¿Es non-custodial de verdad?
+
+**Sí, técnicamente.** Privy NUNCA tiene la llave completa. Aunque Privy se volviera malicioso, no podría firmar tx sin los otros 2 shares (dispositivo + guardian). Los 3 deben cooperar siempre.
+
+### Modo demo (sin Privy App ID configurado)
+
+Si deployás sin `NEXT_PUBLIC_PRIVY_APP_ID`, la app corre en **demo mode**:
+- Pubkey mock visible en /home (`7xKXt3...kJh92`)
+- Balances simulados realistas
+- Botones de firma muestran "DEMO" — no firman tx real
+- Banner explícito en /home indicando que es simulación
+- **Todos los flows visuales completos** funcionan para presentar el producto
+
+Para activar wallets reales: agregá `NEXT_PUBLIC_PRIVY_APP_ID` (de [dashboard.privy.io](https://dashboard.privy.io)) en `.env.local` o Vercel env vars y reiniciá.
+
+---
 
 ## 🌅 Splash screen — animación al cargar
 

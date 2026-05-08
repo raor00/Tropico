@@ -15,6 +15,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { Logo } from "@/components/Logo";
+import { AuthCTA } from "@/components/AuthCTA";
 
 const VALUE_CARDS = [
   {
@@ -93,41 +94,52 @@ const REVENUE_STREAMS = [
 export default function LandingPage() {
   return (
     <main className="mx-auto flex min-h-dvh max-w-6xl flex-col gap-20 px-5 py-10 md:py-16">
-      {/* HEADER sticky con logo */}
-      <header className="sticky top-0 z-40 -mx-5 flex items-center justify-between border-b border-tropico-border/40 bg-tropico-ink/80 px-5 py-3 backdrop-blur-xl">
+      {/* HEADER sticky con logo + nav links + CTA wallet */}
+      <header className="sticky top-0 z-40 -mx-5 flex items-center justify-between gap-4 border-b border-tropico-border/40 bg-tropico-ink/85 px-5 py-3 backdrop-blur-xl">
         <Logo size={36} wordmarkSize="md" />
-        <div className="hidden items-center gap-4 md:flex">
+
+        {/* Nav desktop */}
+        <nav className="hidden items-center gap-1 md:flex" aria-label="Navegación principal">
+          <Link
+            href="/home"
+            className="rounded-md px-3 py-1.5 text-sm text-tropico-mute transition hover:bg-tropico-sun/10 hover:text-tropico-sun"
+          >
+            Wallet
+          </Link>
+          <Link
+            href="/cambiar"
+            className="rounded-md px-3 py-1.5 text-sm text-tropico-mute transition hover:bg-tropico-sun/10 hover:text-tropico-sun"
+          >
+            Cambiar
+          </Link>
+          <Link
+            href="/cobrar"
+            className="rounded-md px-3 py-1.5 text-sm text-tropico-mute transition hover:bg-tropico-sun/10 hover:text-tropico-sun"
+          >
+            Cobrar
+          </Link>
+          <Link
+            href="/guardar"
+            className="rounded-md px-3 py-1.5 text-sm text-tropico-mute transition hover:bg-tropico-sun/10 hover:text-tropico-sun"
+          >
+            Guardar
+          </Link>
           <Link
             href="/comercios"
-            className="text-sm text-tropico-mute transition hover:text-tropico-sun"
+            className="rounded-md px-3 py-1.5 text-sm text-tropico-mute transition hover:bg-tropico-sun/10 hover:text-tropico-sun"
           >
             Comercios
           </Link>
           <Link
-            href="/descubrir"
-            className="text-sm text-tropico-mute transition hover:text-tropico-sun"
-          >
-            Descubrir
-          </Link>
-          <Link
             href="/carlos"
-            className="text-sm text-tropico-mute transition hover:text-tropico-sun"
+            className="rounded-md px-3 py-1.5 text-sm text-tropico-mute transition hover:bg-tropico-sun/10 hover:text-tropico-sun"
           >
             Carlos AI
           </Link>
-          <Link
-            href="/home"
-            className="rounded-full border border-tropico-sun/40 bg-tropico-sun/10 px-3 py-1 text-xs font-semibold text-tropico-sun transition hover:bg-tropico-sun/20"
-          >
-            Abrir app
-          </Link>
-        </div>
-        <Link
-          href="/home"
-          className="rounded-full border border-tropico-sun/40 bg-tropico-sun/10 px-3 py-1 text-xs font-semibold text-tropico-sun md:hidden"
-        >
-          Abrir
-        </Link>
+        </nav>
+
+        {/* CTA crear wallet */}
+        <AuthCTA variant="compact" />
       </header>
 
       {/* HERO */}
@@ -158,9 +170,7 @@ export default function LandingPage() {
         </div>
 
         <div className="flex flex-col gap-3 sm:flex-row">
-          <Link href="/home" className="btn-primary">
-            Empezar con email &rarr;
-          </Link>
+          <AuthCTA variant="primary" label="Crear mi wallet con email" />
           <Link href="/comercios" className="btn-ghost">
             Soy comercio, quiero afiliarme
           </Link>
