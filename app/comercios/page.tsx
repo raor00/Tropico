@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ComparativaTabla } from "@/components/ComparativaTabla";
 import { AfiliarForm } from "@/components/AfiliarForm";
+import { Logo } from "@/components/Logo";
 
 export const metadata = {
   title: "Tropico Comercios — Cobr&aacute; en d&oacute;lares sin Banesco",
@@ -75,24 +76,12 @@ export default function ComerciosPage() {
     <main className="mx-auto flex min-h-dvh max-w-6xl flex-col gap-16 px-5 py-10">
       {/* Header */}
       <header className="flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-3">
-          <span
-            className="font-wordmark text-2xl leading-none"
-            style={{
-              background:
-                "linear-gradient(135deg, #EF476F 0%, #FFD166 50%, #06D6A0 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-              filter: "drop-shadow(0 0 10px rgba(255, 209, 102, 0.25))",
-            }}
-          >
-            Tropico
-          </span>
+        <div className="flex items-center gap-2">
+          <Logo size={36} wordmarkSize="md" />
           <span className="rounded-md bg-tropico-coral/20 px-2 py-0.5 text-xs font-semibold uppercase tracking-wider text-tropico-coral">
             Comercios
           </span>
-        </Link>
+        </div>
         <Link href="/" className="text-sm text-tropico-mute hover:text-tropico-text">
           Soy cliente, no comercio &rarr;
         </Link>

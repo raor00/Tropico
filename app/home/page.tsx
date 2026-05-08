@@ -13,6 +13,7 @@ import {
 import { DualPrice } from "@/components/DualPrice";
 import { ModuleCard } from "@/components/ModuleCard";
 import { BalanceList } from "@/components/BalanceList";
+import { Logo } from "@/components/Logo";
 import {
   MOCK_BALANCES,
   MOCK_PORTFOLIO,
@@ -81,21 +82,7 @@ export default function HomePage() {
     <main className="mx-auto flex min-h-dvh max-w-5xl flex-col gap-8 px-5 py-10">
       {/* Header */}
       <header className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <Link href="/" className="flex items-center gap-3">
-          <span
-            className="font-wordmark text-2xl leading-none"
-            style={{
-              background:
-                "linear-gradient(135deg, #EF476F 0%, #FFD166 50%, #06D6A0 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-              filter: "drop-shadow(0 0 10px rgba(255, 209, 102, 0.25))",
-            }}
-          >
-            Tropico
-          </span>
-        </Link>
+        <Logo size={36} wordmarkSize="md" />
         <div className="flex items-center gap-3">
           <span className="rounded-full border border-tropico-border bg-tropico-panel px-3 py-1 text-xs text-tropico-mute">
             🟢 {shortAddress(MOCK_PORTFOLIO.walletAddress, 6)}
