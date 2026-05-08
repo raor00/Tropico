@@ -1,0 +1,26 @@
+name: tropico-cashback
+version: 0.1.0
+display_name: "Tropico Cashback"
+description: "Carlos consulta cashback acumulado de comercios afiliados Tropico y propone reclamarlo."
+author: Tropico
+price: free
+min_capability: tier-2
+
+provides:
+  - tropico.cashback.read
+  - tropico.cashback.claim_propose
+
+requires:
+  skills: [tropico-cashback]
+  channels: [web]
+
+x-lumen:
+  requires:
+    terminal:
+      allowlist: [python3]
+    config:
+      INSTANCE_ID: "ID de la instancia Tropico"
+      SCRIPTS_DIR: "Path a las capabilities Python"
+
+tags: [x-lumen, tropico, cashback, merchants]
+language: es-VE

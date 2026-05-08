@@ -1,0 +1,26 @@
+name: tropico-yield
+version: 0.1.0
+display_name: "Tropico Yield"
+description: "Carlos consulta y propone estrategias de yield (mSOL Marinade, Kamino USDC vault, Kamino LP) para que el usuario haga trabajar su plata."
+author: Tropico
+price: free
+min_capability: tier-2
+
+provides:
+  - tropico.yield.list
+  - tropico.yield.recommend
+
+requires:
+  skills: [tropico-yield]
+  channels: [web]
+
+x-lumen:
+  requires:
+    terminal:
+      allowlist: [python3]
+    config:
+      INSTANCE_ID: "ID de la instancia Tropico"
+      SCRIPTS_DIR: "Path a las capabilities Python"
+
+tags: [x-lumen, tropico, yield, defi, marinade, kamino]
+language: es-VE

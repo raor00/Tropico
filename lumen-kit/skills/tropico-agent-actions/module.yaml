@@ -1,0 +1,30 @@
+name: tropico-agent-actions
+version: 0.1.0
+display_name: "Tropico Agent Actions"
+description: "Carlos coordina las 4 acciones autónomas del Modo Agente (DCA, auto-yield, auto-cashback, re-balance) vía OpenClaw + Privy delegated keys."
+author: Tropico
+price: free
+min_capability: tier-2
+
+provides:
+  - tropico.agent.dca
+  - tropico.agent.auto_yield
+  - tropico.agent.auto_cashback
+  - tropico.agent.rebalance
+
+requires:
+  skills: [tropico-agent-actions, tropico-swap, tropico-yield, tropico-cashback, tropico-balances]
+  channels: [web]
+
+x-lumen:
+  requires:
+    terminal:
+      allowlist: [python3]
+    config:
+      INSTANCE_ID: "ID de la instancia Tropico"
+      SCRIPTS_DIR: "Path a las capabilities Python"
+      OPENCLAW_API_URL: "URL del OpenClaw skill server (ej. http://localhost:7100)"
+      OPENCLAW_API_KEY: "API key de OpenClaw (secret)"
+
+tags: [x-lumen, tropico, agent, openclaw, autonomous]
+language: es-VE

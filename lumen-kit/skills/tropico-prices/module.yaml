@@ -1,0 +1,26 @@
+name: tropico-prices
+version: 0.1.0
+display_name: "Tropico Prices"
+description: "Carlos consulta precios USD live de tokens Solana y la tasa USD/VES paralelo de Venezuela."
+author: Tropico
+price: free
+min_capability: tier-2
+
+provides:
+  - tropico.prices.usd
+  - tropico.prices.bs
+
+requires:
+  skills: [tropico-prices]
+  channels: [web]
+
+x-lumen:
+  requires:
+    terminal:
+      allowlist: [python3]
+    config:
+      INSTANCE_ID: "ID de la instancia Tropico (ej. tropico-mvp)"
+      SCRIPTS_DIR: "Path a las capabilities Python (ej. /srv/tropico/capabilities/prices)"
+
+tags: [x-lumen, tropico, prices]
+language: es-VE

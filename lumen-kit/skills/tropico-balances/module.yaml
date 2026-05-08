@@ -1,0 +1,26 @@
+name: tropico-balances
+version: 0.1.0
+display_name: "Tropico Balances"
+description: "Carlos consulta saldos del wallet del usuario en Solana — SOL nativo + SPL token accounts."
+author: Tropico
+price: free
+min_capability: tier-2
+
+provides:
+  - tropico.balances.read
+
+requires:
+  skills: [tropico-balances]
+  channels: [web]
+
+x-lumen:
+  requires:
+    terminal:
+      allowlist: [python3]
+    config:
+      INSTANCE_ID: "ID de la instancia Tropico"
+      SCRIPTS_DIR: "Path a las capabilities Python"
+      HELIUS_RPC: "URL del RPC Helius para mainnet"
+
+tags: [x-lumen, tropico, balances, solana]
+language: es-VE

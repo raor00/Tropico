@@ -1,0 +1,30 @@
+name: tropico-swap
+version: 0.1.0
+display_name: "Tropico Swap"
+description: "Carlos cotiza y propone swaps via Jupiter v6 con platformFeeBps de Tropico. La firma siempre la hace el usuario."
+author: Tropico
+price: free
+min_capability: tier-2
+
+provides:
+  - tropico.swap.quote
+  - tropico.swap.suggest
+
+requires:
+  skills: [tropico-swap]
+  channels: [web]
+
+x-lumen:
+  requires:
+    terminal:
+      allowlist: [python3]
+    config:
+      INSTANCE_ID: "ID de la instancia Tropico"
+      SCRIPTS_DIR: "Path a las capabilities Python"
+      TROPICO_FEE_OWNER: "Pubkey del wallet de fees de Tropico"
+      TROPICO_FEE_ATA_USDC: "ATA USDC del wallet de fees"
+      TROPICO_FEE_ATA_SOL: "ATA wSOL del wallet de fees"
+      TROPICO_FEE_ATA_USDT: "ATA USDT del wallet de fees"
+
+tags: [x-lumen, tropico, swap, jupiter, solana]
+language: es-VE

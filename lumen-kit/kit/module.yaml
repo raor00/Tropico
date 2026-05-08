@@ -1,0 +1,28 @@
+name: tropico-wallet-kit
+version: 0.1.0
+display_name: "Tropico Wallet Kit — Carlos AI"
+description: "Carlos, el copiloto financiero venezolano de Tropico. Ayuda al usuario a navegar el ecosistema Solana — saldos, swaps, pagos, yield y cashback — con voz local, sin jerga, non-custodial."
+author: Tropico
+price: free
+min_capability: tier-2
+tags: [x-lumen, personality, tropico, solana, fintech, venezuela]
+language: es-VE
+personality: personality.yaml
+
+provides:
+  - tropico.balances
+  - tropico.swap
+  - tropico.pay
+  - tropico.yield
+  - tropico.cashback
+  - tropico.prices
+
+requires:
+  skills:
+    - tropico-balances
+    - tropico-swap
+    - tropico-pay
+    - tropico-yield
+    - tropico-cashback
+    - tropico-prices
+  channels: [web]

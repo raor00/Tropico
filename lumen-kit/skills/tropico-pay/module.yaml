@@ -1,0 +1,28 @@
+name: tropico-pay
+version: 0.1.0
+display_name: "Tropico Pay"
+description: "Carlos genera URLs y QRs Solana Pay para que el merchant cobre, o el usuario envíe USDC con claim links."
+author: Tropico
+price: free
+min_capability: tier-2
+
+provides:
+  - tropico.pay.qr
+  - tropico.pay.send
+  - tropico.pay.claim_link
+
+requires:
+  skills: [tropico-pay]
+  channels: [web]
+
+x-lumen:
+  requires:
+    terminal:
+      allowlist: [python3]
+    config:
+      INSTANCE_ID: "ID de la instancia Tropico"
+      SCRIPTS_DIR: "Path a las capabilities Python"
+      TROPICO_BASE_URL: "Base URL de la app Tropico (ej. https://tropico.vercel.app)"
+
+tags: [x-lumen, tropico, payments, solana-pay]
+language: es-VE
