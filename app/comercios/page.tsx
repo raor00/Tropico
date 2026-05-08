@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ComparativaTabla } from "@/components/ComparativaTabla";
 import { AfiliarForm } from "@/components/AfiliarForm";
 import { Logo } from "@/components/Logo";
+import { Header } from "@/components/Header";
 
 export const metadata = {
   title: "Tropico Comercios — Cobr&aacute; en d&oacute;lares sin Banesco",
@@ -74,18 +75,8 @@ const PARTNERS_BAR = [
 export default function ComerciosPage() {
   return (
     <main className="mx-auto flex min-h-dvh max-w-6xl flex-col gap-16 px-5 py-10">
-      {/* Header */}
-      <header className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Logo size={36} wordmarkSize="md" />
-          <span className="rounded-md bg-tropico-coral/20 px-2 py-0.5 text-xs font-semibold uppercase tracking-wider text-tropico-coral">
-            Comercios
-          </span>
-        </div>
-        <Link href="/" className="text-sm text-tropico-mute hover:text-tropico-text">
-          Soy cliente, no comercio &rarr;
-        </Link>
-      </header>
+      {/* Header flotante con badge "Comercios" */}
+      <Header badge={{ label: "Comercios", tone: "coral" }} />
 
       {/* Hero */}
       <section className="flex flex-col gap-6 animate-fade-up">

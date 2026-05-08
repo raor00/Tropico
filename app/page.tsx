@@ -16,6 +16,8 @@ import {
 } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { AuthCTA } from "@/components/AuthCTA";
+import { Header } from "@/components/Header";
+import { Badge } from "@/components/Badge";
 
 const VALUE_CARDS = [
   {
@@ -94,53 +96,8 @@ const REVENUE_STREAMS = [
 export default function LandingPage() {
   return (
     <main className="mx-auto flex min-h-dvh max-w-6xl flex-col gap-20 px-5 py-10 md:py-16">
-      {/* HEADER sticky con logo + nav links + CTA wallet */}
-      <header className="sticky top-0 z-40 -mx-5 flex items-center justify-between gap-4 border-b border-tropico-border/40 bg-tropico-ink/85 px-5 py-3 backdrop-blur-xl">
-        <Logo size={36} wordmarkSize="md" />
-
-        {/* Nav desktop */}
-        <nav className="hidden items-center gap-1 md:flex" aria-label="Navegación principal">
-          <Link
-            href="/home"
-            className="rounded-md px-3 py-1.5 text-sm text-tropico-mute transition hover:bg-tropico-sun/10 hover:text-tropico-sun"
-          >
-            Wallet
-          </Link>
-          <Link
-            href="/cambiar"
-            className="rounded-md px-3 py-1.5 text-sm text-tropico-mute transition hover:bg-tropico-sun/10 hover:text-tropico-sun"
-          >
-            Cambiar
-          </Link>
-          <Link
-            href="/cobrar"
-            className="rounded-md px-3 py-1.5 text-sm text-tropico-mute transition hover:bg-tropico-sun/10 hover:text-tropico-sun"
-          >
-            Cobrar
-          </Link>
-          <Link
-            href="/guardar"
-            className="rounded-md px-3 py-1.5 text-sm text-tropico-mute transition hover:bg-tropico-sun/10 hover:text-tropico-sun"
-          >
-            Guardar
-          </Link>
-          <Link
-            href="/comercios"
-            className="rounded-md px-3 py-1.5 text-sm text-tropico-mute transition hover:bg-tropico-sun/10 hover:text-tropico-sun"
-          >
-            Comercios
-          </Link>
-          <Link
-            href="/carlos"
-            className="rounded-md px-3 py-1.5 text-sm text-tropico-mute transition hover:bg-tropico-sun/10 hover:text-tropico-sun"
-          >
-            Carlos AI
-          </Link>
-        </nav>
-
-        {/* CTA crear wallet */}
-        <AuthCTA variant="compact" />
-      </header>
+      {/* HEADER flotante — anclado en top, flota al hacer scroll */}
+      <Header />
 
       {/* HERO */}
       <section className="flex flex-col gap-6 animate-fade-up pt-4">

@@ -3,6 +3,7 @@ import { Manrope, Bricolage_Grotesque, Honk } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import { SplashScreen } from "@/components/SplashScreen";
+import { BottomNav } from "@/components/BottomNav";
 
 // Body / UI: Manrope — geométrica moderna, menos genérica que Inter
 const manrope = Manrope({
@@ -54,9 +55,12 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es-VE" className={`${manrope.variable} ${bricolage.variable} ${honk.variable}`}>
-      <body className="tropico-glow min-h-dvh">
+      <body className="tropico-glow min-h-dvh pb-20 md:pb-0">
         <SplashScreen />
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}
+          <BottomNav />
+        </Providers>
       </body>
     </html>
   );

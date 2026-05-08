@@ -14,6 +14,7 @@ import { DualPrice } from "@/components/DualPrice";
 import { ModuleCard } from "@/components/ModuleCard";
 import { BalanceList } from "@/components/BalanceList";
 import { Logo } from "@/components/Logo";
+import { Header } from "@/components/Header";
 import {
   MOCK_BALANCES,
   MOCK_PORTFOLIO,
@@ -80,22 +81,23 @@ const MODULES = [
 export default function HomePage() {
   return (
     <main className="mx-auto flex min-h-dvh max-w-5xl flex-col gap-8 px-5 py-10">
-      {/* Header */}
-      <header className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <Logo size={36} wordmarkSize="md" />
-        <div className="flex items-center gap-3">
-          <span className="rounded-full border border-tropico-border bg-tropico-panel px-3 py-1 text-xs text-tropico-mute">
-            🟢 {shortAddress(MOCK_PORTFOLIO.walletAddress, 6)}
-          </span>
-          <Link
-            href="/depositar"
-            className="inline-flex items-center gap-1 rounded-full border border-tropico-border bg-tropico-panel px-3 py-1 text-xs transition hover:border-tropico-sun hover:text-tropico-sun"
-          >
-            <Plus className="size-3" strokeWidth={2.5} aria-hidden="true" />
-            Depositar
-          </Link>
-        </div>
-      </header>
+      {/* Header flotante con scroll detection */}
+      <Header />
+
+      {/* Sub-header con balance summary + acciones rápidas */}
+      <section className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+        <span className="inline-flex w-fit items-center gap-1.5 rounded-full border border-tropico-sea/30 bg-tropico-sea/5 px-3 py-1 text-xs text-tropico-sea">
+          <span className="size-1.5 rounded-full bg-tropico-sea animate-pulse-warm" />
+          {shortAddress(MOCK_PORTFOLIO.walletAddress, 6)}
+        </span>
+        <Link
+          href="/depositar"
+          className="inline-flex w-fit items-center gap-1 rounded-full border border-tropico-sun/40 bg-tropico-sun/10 px-3 py-1 text-xs font-semibold text-tropico-sun transition hover:bg-tropico-sun/20"
+        >
+          <Plus className="size-3" strokeWidth={2.5} aria-hidden="true" />
+          Depositar bs
+        </Link>
+      </section>
 
       {/* Banner mock */}
       <div className="panel flex items-center gap-3 border-tropico-sun/30 bg-tropico-sun/5 p-3 text-xs">
