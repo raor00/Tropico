@@ -71,7 +71,7 @@ export default function DepositarPage() {
           <strong className="text-tropico-green">&lt;5 minutos</strong>.
         </p>
         <p className="text-sm text-tropico-mute">
-          Por ahora, us&aacute; el faucet de prueba abajo para cargar tu wallet con USDC
+          Por ahora, usa el faucet de prueba abajo para cargar tu wallet con USDC
           de devnet y probar el resto de Tropico.
         </p>
       </div>
@@ -132,7 +132,7 @@ export default function DepositarPage() {
           <div>
             <h3 className="font-display text-lg font-bold">Faucet de prueba</h3>
             <p className="text-xs text-tropico-mute">
-              Recib&iacute; 50 USDC de devnet para probar el resto de Tropico
+              Recibe 50 USDC de devnet para probar el resto de Tropico
             </p>
           </div>
         </div>

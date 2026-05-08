@@ -44,7 +44,7 @@ export function AfiliarForm() {
           y el logo &laquo;Acepta Tropico&raquo; para tu local.
         </p>
         <p className="text-xs text-tropico-mute">
-          Mientras tanto, dec&iacute;le a tus clientes que ya pueden pagarte con Tropico.
+          Mientras tanto, dile a tus clientes que ya pueden pagarte con Tropico.
         </p>
       </div>
     );
@@ -99,7 +99,7 @@ export function AfiliarForm() {
             required
             className="rounded-lg border border-tropico-border bg-tropico-ink px-3 py-2 outline-none transition focus:border-tropico-purple"
           >
-            <option value="">Eleg&iacute; uno</option>
+            <option value="">Elige uno</option>
             {TIPOS.map((t) => (
               <option key={t.value} value={t.value}>
                 {t.label}
@@ -136,7 +136,7 @@ export function AfiliarForm() {
       </button>
 
       <p className="text-center text-xs text-tropico-mute">
-        Cero costo de afiliaci&oacute;n. Solo pag&aacute;s 1% por cobro recibido.
+        Cero costo de afiliaci&oacute;n. Solo pagas 1% por cobro recibido.
       </p>
     </form>
   );

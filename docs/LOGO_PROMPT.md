@@ -20,7 +20,7 @@ Pixel art app icon, 128x128, 16-bit retro style, crisp pixels no smoothing. A ta
 
 ### Versión expandida (más símbolos venezolanos)
 
-Si querés meterle más identidad (orquídea nacional + bandera tricolor sutil):
+Si quieres meterle más identidad (orquídea nacional + bandera tricolor sutil):
 
 ```
 Pixel art logo 128x128, 16-bit retro game aesthetic. Venezuelan tropical icon: central coconut palm tree (Tucacas/Morrocoy coastal style, slender and slightly wind-curved), vibrant scarlet macaw (guacamaya bandera) perched mid-trunk with spread wings showing red-yellow-blue feathers, small white orchid (Cattleya mossiae, flor nacional) blooming at the base of the palm, golden sun behind palm crown radiating subtle yellow-blue-red gradient (Venezuelan flag colors hidden in the rays), Cerro El Ávila silhouette in background. Color palette dominated by: Solana purple #9945FF and Solana green #14F195 as the sky/atmosphere gradient, Caribbean yellow #FFD166 sun, coral pink #EF476F macaw body, sea green #06D6A0 mountain. Background: deep ink #0a0a14. Crisp pixel boundaries, no anti-aliasing, isometric 3/4 perspective, sticker-style with 1-pixel dark outline. No text, no letters. App icon ready, centered, must be readable at 32x32. Premium crypto-fintech meets nostalgic 1990s JRPG vibe.
@@ -59,7 +59,7 @@ text, letters, words, signature, watermark, blurry, anti-aliased, smooth gradien
 
 ## 💡 Variaciones para iterar
 
-Generá 4-6 variantes con el mismo prompt y elegí. Si querés iterar, podés cambiar:
+Genera 4-6 variantes con el mismo prompt y elige. Si quieres iterar, puedes cambiar:
 
 1. **Composición**:
    - "palm centered" vs "palm leaning right" vs "palm leaning left"
@@ -178,7 +178,7 @@ La combinación palmera + guacamaya + Solana colors es **única en el ecosistema
 
 ## 🎁 Variantes adicionales (post-MVP)
 
-Cuando tengas tiempo después del hackathon, considerá generar:
+Cuando tengas tiempo después del hackathon, considera generar:
 
 1. **Logo Tropico Comercios** (variante para merchants — más profesional, menos juguetón, palmera + guacamaya pero con tonos más sobrios)
 2. **Logo "Acepta Tropico"** sticker para que los merchants peguen en sus locales físicos (formato circular o pentagonal con borde colorido)
@@ -190,7 +190,7 @@ Cuando tengas tiempo después del hackathon, considerá generar:
 
 ## ⚠️ Anti-patterns a evitar
 
-- ❌ NO uses palmeras genéricas tropicales tipo Hawaii/Bahamas — perdés identidad VE
+- ❌ NO uses palmeras genéricas tropicales tipo Hawaii/Bahamas — pierdes identidad VE
 - ❌ NO metas la bandera de Venezuela LITERAL (queda político, hackeable, conflictivo)
 - ❌ NO uses fotos realistas — Tropico es PIXEL ART por filosofía (nostalgia + lowfi + identidad)
 - ❌ NO uses gradientes suavizados — pixel art tiene bordes crispy
@@ -203,7 +203,7 @@ Cuando tengas tiempo después del hackathon, considerá generar:
 
 ## 📞 Si la generación no convence después de 4-6 intentos
 
-Considerá contratar a un pixel artist en Fiverr o Upwork con este brief. Cobros típicos: $50-150 USD por logo profesional pixel art. Razonable para algo que va a vivir años representando la marca.
+Considera contratar a un pixel artist en Fiverr o Upwork con este brief. Cobros típicos: $50-150 USD por logo profesional pixel art. Razonable para algo que va a vivir años representando la marca.
 
 Buenos buscadores para encontrar pixel artists:
 - Fiverr: search "pixel art logo design"

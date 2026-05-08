@@ -16,7 +16,7 @@
 - Pitch deck (slide 1)
 - Open Graph (cuando lo compartas en redes)
 
-**Cómo generarlo**: usá el prompt completo en `docs/LOGO_PROMPT.md` con Midjourney/DALL-E/Flux. Tip: generá 4 variantes y elegí.
+**Cómo generarlo**: usa el prompt completo en `docs/LOGO_PROMPT.md` con Midjourney/DALL-E/Flux. Tip: genera 4 variantes y elige.
 
 ### 2. Iconos PWA `public/icons/icon-192.png` y `public/icons/icon-512.png`
 
@@ -27,13 +27,13 @@
 
 **Cómo generarlos**: una vez tengas `tropico-512.png`, escalá con cualquier tool:
 ```bash
-# Si tenés ImageMagick instalado:
+# Si tienes ImageMagick instalado:
 brew install imagemagick
 convert public/icons/tropico-512.png -resize 192x192 public/icons/icon-192.png
 cp public/icons/tropico-512.png public/icons/icon-512.png
 ```
 
-O usá un servicio web tipo https://realfavicongenerator.net (subís 1 PNG, te devuelve todos los tamaños).
+O usa un servicio web tipo https://realfavicongenerator.net (subís 1 PNG, te devuelve todos los tamaños).
 
 ### 3. Favicon `public/favicon.ico`
 
@@ -53,14 +53,14 @@ O usá un servicio web tipo https://realfavicongenerator.net (subís 1 PNG, te d
 
 **Cómo generarlo**:
 - Diseñalo en Canva (template "Banner")
-- O usá [shields.io](https://shields.io) para algo simple
+- O usa [shields.io](https://shields.io) para algo simple
 - O renderizá el primer slide del pitch deck como PNG:
   ```bash
   npx @marp-team/marp-cli@latest docs/PITCH_DECK.md --images png --output-dir docs/slides/
   cp docs/slides/PITCH_DECK.001.png docs/images/banner.png
   ```
 
-Luego agregá al README arriba del título:
+Luego agrega al README arriba del título:
 ```markdown
 ![Tropico](docs/images/banner.png)
 ```
@@ -78,10 +78,10 @@ Luego agregá al README arriba del título:
 - `comercios.png` — `/comercios` con la comparativa Banesco
 
 **Cómo capturarlos**:
-1. Abrí cada URL en Chrome
+1. Abre cada URL en Chrome
 2. Dev tools → Toggle device toolbar (Cmd+Shift+M) → "Responsive" 1440×900
 3. Screenshot full-page: clic 3 puntos del dev tools → "Capture full size screenshot"
-4. Guardá en `docs/images/screens/`
+4. Guarda en `docs/images/screens/`
 
 O automatizá con Playwright:
 ```bash
@@ -97,7 +97,7 @@ npx playwright install chromium
 **Qué muestra**: flow rápido de Landing → Home → Cobrar (con QR) → momento red económica
 
 **Cómo generarlo**:
-- macOS: usá [Kap](https://getkap.co/) (free) o [CleanShot X](https://cleanshot.com)
+- macOS: usa [Kap](https://getkap.co/) (free) o [CleanShot X](https://cleanshot.com)
 - Grabá la pantalla con QuickTime, después convertí a GIF con [ezgif.com](https://ezgif.com/video-to-gif)
 - O FFmpeg local:
   ```bash
@@ -115,10 +115,10 @@ npx playwright install chromium
 ```tsx
 export const metadata: Metadata = {
   title: "Tropico — La red económica del venezolano en Solana",
-  description: "Ahorrá ganando, pagá sin perder. Non-custodial, en español venezolano.",
+  description: "Ahorra ganando, paga sin perder. Non-custodial, en español venezolano.",
   openGraph: {
     title: "Tropico — La red económica del venezolano en Solana",
-    description: "MercadoPago para Solana. Non-custodial. Hecho en Venezuela.",
+    description: "La wallet caribeña en Solana. Non-custodial. USDC + yield + QR para comercios. Hecho en Venezuela.",
     images: ["/og-image.png"],
     type: "website",
   },
@@ -174,7 +174,7 @@ graph LR
 
 ## 11. Script para capturar screenshots automático (Playwright)
 
-Si tenés tiempo y querés automatizar las 11 capturas:
+Si tienes tiempo y quieres automatizar las 11 capturas:
 
 ```bash
 # 1. Instalar
@@ -298,4 +298,4 @@ Cualquier diseñador o herramienta IA con esto puede generar assets coherentes.
 
 ---
 
-**Próximo paso**: generar el logo (30min) y después usar Playwright para los screenshots (10min). En 1 hora tenés todos los assets bloqueantes listos.
+**Próximo paso**: generar el logo (30min) y después usar Playwright para los screenshots (10min). En 1 hora tienes todos los assets bloqueantes listos.

@@ -5,15 +5,15 @@ import { Logo } from "@/components/Logo";
 import { Header } from "@/components/Header";
 
 export const metadata = {
-  title: "Tropico Comercios — Cobr&aacute; en d&oacute;lares sin banco tradicional",
+  title: "Tropico Comercios — Cobra en d&oacute;lares sin banco tradicional",
   description:
-    "Aceptá pagos en USDC con un código QR. La plata te llega al instante. Pagás 1% en lugar del 4.5% del POS tradicional. Sin contrato, sin POS, sin esperas.",
+    "Aceptá pagos en USDC con un código QR. La plata te llega al instante. Pagas 1% en lugar del 4.5% del POS tradicional. Sin contrato, sin POS, sin esperas.",
 };
 
 const FEATURES = [
   {
     titulo: "1% de fee",
-    detalle: "vs 4.5% del POS tradicional. Por cada $100 cobrados, te ahorr&aacute;s $3.50.",
+    detalle: "vs 4.5% del POS tradicional. Por cada $100 cobrados, te ahorras $3.50.",
     color: "from-tropico-green/30 to-transparent",
   },
   {
@@ -32,13 +32,13 @@ const FEATURES = [
     color: "from-tropico-sun/30 to-transparent",
   },
   {
-    titulo: "Cobr&aacute;s en d&oacute;lares (USDC)",
+    titulo: "Cobras en d&oacute;lares (USDC)",
     detalle: "No m&aacute;s bol&iacute;vares devalu&aacute;ndose entre la venta y el cierre del d&iacute;a.",
     color: "from-tropico-sea/30 to-transparent",
   },
   {
     titulo: "Reportes para SENIAT",
-    detalle: "Export&aacute; tus cobros en CSV cuando lo necesites. Contabilidad simple.",
+    detalle: "Exporta tus cobros en CSV cuando lo necesites. Contabilidad simple.",
     color: "from-tropico-mute/30 to-transparent",
   },
 ];
@@ -52,13 +52,13 @@ const STEPS = [
   },
   {
     paso: "2",
-    titulo: "Gener&aacute; tu QR",
+    titulo: "Genera tu QR",
     detalle:
-      "Ingres&aacute; el monto a cobrar. Un c&oacute;digo aparece en tu pantalla.",
+      "Ingresa el monto a cobrar. Un c&oacute;digo aparece en tu pantalla.",
   },
   {
     paso: "3",
-    titulo: "Recib&iacute; USDC",
+    titulo: "Recibe USDC",
     detalle:
       "Tu cliente escanea, paga, y la plata cae en tu wallet en menos de un segundo.",
   },
@@ -85,13 +85,13 @@ export default function ComerciosPage() {
           Para bodegas, freelancers y comercios venezolanos
         </span>
         <h1 className="h-display">
-          Cobr&aacute; en d&oacute;lares.<br />
+          Cobra en d&oacute;lares.<br />
           <span className="bg-gradient-to-r from-tropico-coral to-tropico-sun bg-clip-text text-transparent">
             Sin banco tradicional. Sin POS. Sin esperas.
           </span>
         </h1>
         <p className="max-w-3xl text-lg text-tropico-mute">
-          Aceptá pagos en USDC con un código QR. La plata te llega al instante. Pagás
+          Aceptá pagos en USDC con un código QR. La plata te llega al instante. Pagas
           <strong className="text-tropico-text"> 1% </strong> en lugar del
           <strong className="text-tropico-coral"> 4.5% </strong> del POS tradicional.
           Sin contrato, sin equipo caro, sin esperas.
@@ -176,7 +176,7 @@ export default function ComerciosPage() {
             Construido sobre infraestructura confiable
           </span>
           <span className="text-sm">
-            Tu plata vive en tu wallet, no en la nuestra. Verific&aacute; cada fee en{" "}
+            Tu plata vive en tu wallet, no en la nuestra. Verifica cada fee en{" "}
             <a
               href="https://solscan.io"
               target="_blank"
@@ -207,7 +207,7 @@ export default function ComerciosPage() {
             &iquest;List@ para cobrar mejor?
           </h2>
           <p className="text-tropico-mute">
-            Cre&aacute; tu cuenta de comercio en 5 minutos. Te contactamos por WhatsApp con
+            Crea tu cuenta de comercio en 5 minutos. Te contactamos por WhatsApp con
             tu QR y el material para tu local.
           </p>
           <ul className="flex flex-col gap-2 text-sm">

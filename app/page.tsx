@@ -13,18 +13,23 @@ import {
   Store,
   Bot,
   ExternalLink,
+  KeyRound,
+  AlertTriangle,
+  Users,
+  CheckCircle2,
 } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { AuthCTA } from "@/components/AuthCTA";
 import { Header } from "@/components/Header";
 import { Badge } from "@/components/Badge";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import { VenezuelaBadge } from "@/components/VenezuelaBadge";
 
 const VALUE_CARDS = [
   {
     title: "Conoce",
     body:
-      "M&aacute;s all&aacute; del USDT. Aprend&eacute; qu&eacute; es JTO, JUP, mSOL — sin jerga gringa, en venezolano.",
+      "M&aacute;s all&aacute; del USDT. Aprende qu&eacute; es JTO, JUP, mSOL — sin jerga gringa, en venezolano.",
     accent: "from-tropico-sun/30 to-transparent",
     badge: "Educa",
     Icon: Compass,
@@ -32,7 +37,7 @@ const VALUE_CARDS = [
   {
     title: "Cambia",
     body:
-      "Intercambi&aacute; entre tokens al mejor precio del mercado. Comisi&oacute;n transparente del 0.5% — punto.",
+      "Intercambia entre tokens al mejor precio del mercado. Comisi&oacute;n transparente del 0.5% — punto.",
     accent: "from-tropico-coral/30 to-transparent",
     badge: "Swap",
     Icon: ArrowLeftRight,
@@ -80,7 +85,7 @@ const MODULES = [
 ];
 
 const AGENT_ACTIONS = [
-  { name: "DCA semanal", desc: "Compr&aacute; $X de un token cada [d&iacute;a] autom&aacute;tico" },
+  { name: "DCA semanal", desc: "Compra $X de un token cada [d&iacute;a] autom&aacute;tico" },
   { name: "Auto-yield al recibir remesa", desc: "Si llega +$50, mueve excedente a Save" },
   { name: "Auto-cashback claim", desc: "Reclama tu cashback de comercios cada semana" },
   { name: "Re-balance de portafolio", desc: "Si JTO sube +20%, vende 10% a USDC" },
@@ -103,10 +108,8 @@ export default function LandingPage() {
       {/* HERO */}
       <section className="flex flex-col gap-6 animate-fade-up pt-4">
         <div className="space-y-4">
-          <span className="inline-flex w-fit items-center gap-2 rounded-full border border-tropico-sun/30 bg-tropico-sun/5 px-3 py-1 text-xs text-tropico-sun">
-            <span className="size-1.5 rounded-full bg-tropico-sun animate-pulse-warm" />
-            🇻🇪 Hecho en Venezuela &middot; para Venezuela
-          </span>
+          <VenezuelaBadge />
+
           <h1 className="h-display max-w-4xl">
             La red econ&oacute;mica del{" "}
             <span
@@ -121,7 +124,7 @@ export default function LandingPage() {
             ,<br /> en Solana.
           </h1>
           <p className="max-w-2xl text-lg text-tropico-mute">
-            Ahorr&aacute; ganando, pag&aacute; sin perder. Una red de pagos non-custodial donde
+            Ahorra ganando, paga sin perder. Una red de pagos non-custodial donde
             tu plata vive en USDC, genera rendimiento autom&aacute;tico, y los comercios pagan{" "}
             <strong className="text-tropico-text">60% menos en fees vs POS tradicional</strong>.
           </p>
@@ -149,6 +152,74 @@ export default function LandingPage() {
           </span>
         </div>
       </section>
+
+      {/* PARA TODOS — onboarding accesible + dueño real de tu wallet */}
+      <ScrollReveal direction="up" as="section" className="flex flex-col gap-8">
+        <div className="space-y-2">
+          <span className="inline-flex items-center gap-1.5 text-xs uppercase tracking-widest text-tropico-sea">
+            <Users className="size-3.5" /> Para cualquier venezolano
+          </span>
+          <h2 className="font-display text-3xl font-bold md:text-4xl">
+            No es para experimentados.
+            <br />
+            <span className="text-tropico-mute">Es para todos.</span>
+          </h2>
+          <p className="max-w-3xl text-tropico-mute">
+            Si tienes un email, ya puedes tener tu wallet. Sin frase semilla de 12 palabras
+            que no entiendes. Sin &laquo;modo desarrollador&raquo;. Sin tener que aprender qu&eacute; es
+            una blockchain. Tu t&iacute;a puede usarla. Tu primo del taller tambi&eacute;n. El que
+            recibe remesas en bol&iacute;vares y nunca ha tocado cripto, tambi&eacute;n.
+          </p>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-2">
+          {/* Card 1 — la wallet es tuya */}
+          <article className="panel flex flex-col gap-3 p-6 transition hover:border-tropico-sun/40">
+            <KeyRound className="size-6 text-tropico-sun" strokeWidth={1.75} />
+            <h3 className="font-display text-xl font-bold">
+              Tu wallet, tu plata. Punto.
+            </h3>
+            <p className="text-sm text-tropico-mute">
+              En Tropico tu wallet es{" "}
+              <strong className="text-tropico-text">100% tuya</strong>. Tropico nunca toca
+              tus fondos, no puede congelar tu cuenta, no puede bloquear un retiro. Si
+              Tropico desaparece mañana, tu plata sigue ahí — accesible con tu backup,
+              desde cualquier wallet de Solana del mundo.
+            </p>
+            <ul className="mt-1 flex flex-col gap-1.5 text-xs text-tropico-mute">
+              <li className="flex items-start gap-1.5">
+                <CheckCircle2 className="mt-0.5 size-3.5 shrink-0 text-tropico-sea" />
+                <span>Tu pubkey es p&uacute;blica, verificable en Solscan</span>
+              </li>
+              <li className="flex items-start gap-1.5">
+                <CheckCircle2 className="mt-0.5 size-3.5 shrink-0 text-tropico-sea" />
+                <span>Export&aacute;la a Phantom o Solflare cuando quieras</span>
+              </li>
+              <li className="flex items-start gap-1.5">
+                <CheckCircle2 className="mt-0.5 size-3.5 shrink-0 text-tropico-sea" />
+                <span>Llaves MPC (3 partes) — Tropico jam&aacute;s tiene la llave completa</span>
+              </li>
+            </ul>
+          </article>
+
+          {/* Card 2 — sutilmente: cuidado con los "casi" non-custodial */}
+          <article className="panel flex flex-col gap-3 border-tropico-coral/30 bg-tropico-coral/5 p-6">
+            <AlertTriangle className="size-6 text-tropico-coral" strokeWidth={1.75} />
+            <h3 className="font-display text-xl font-bold">
+              Cuidado con los &laquo;casi&raquo; non-custodial
+            </h3>
+            <p className="text-sm text-tropico-mute">
+              Hay apps que dicen ser non-custodial pero en realidad guardan tus llaves en
+              su servidor. Si te dicen &laquo;es tu wallet&raquo; pero nunca te muestran c&oacute;mo
+              exportarla a otra app — no es tuya. Es la de ellos, prestada.
+            </p>
+            <p className="text-xs italic text-tropico-mute">
+              Regla simple: si no puedes mover tu plata a otra wallet sin permiso del
+              proveedor, no eres dueño. Eres usuario.
+            </p>
+          </article>
+        </div>
+      </ScrollReveal>
 
       {/* EL PROBLEMA — 4 stats grandes */}
       <ScrollReveal direction="up" as="section" className="flex flex-col gap-8">
@@ -246,7 +317,7 @@ export default function LandingPage() {
             Una sola app, 6 acciones que cambian tu economía.
           </h2>
           <p className="max-w-3xl text-tropico-mute">
-            Pod&eacute;s probar TODAS sin instalar nada. Sin Privy configurado, la app corre con
+            Puedes probar TODAS sin instalar nada. Sin Privy configurado, la app corre con
             datos mock honestos &mdash; ideal para que veas el flow completo en segundos.
           </p>
         </div>
@@ -281,11 +352,11 @@ export default function LandingPage() {
             Para comercios
           </div>
           <h2 className="font-display text-3xl font-bold leading-tight md:text-4xl">
-            Cobr&aacute; en d&oacute;lares.
+            Cobra en d&oacute;lares.
             <br /> <span className="text-tropico-coral">Sin banco tradicional.</span>
           </h2>
           <p className="text-tropico-mute">
-            Bodegas, freelancers, deliveries — pag&aacute;s <strong className="text-tropico-text">1%</strong>{" "}
+            Bodegas, freelancers, deliveries — pagas <strong className="text-tropico-text">1%</strong>{" "}
             en lugar del <strong className="text-tropico-coral">4.5%</strong> de POS tradicional.
             Settlement en menos de 1 segundo. Sin chargebacks.
           </p>
@@ -326,7 +397,7 @@ export default function LandingPage() {
           </h2>
           <p className="max-w-3xl text-tropico-mute">
             Carlos puede ejecutar acciones aut&oacute;nomas con permisos limitados v&iacute;a OpenClaw + Privy
-            delegated session keys. Vos defin&iacute;s los l&iacute;mites. Las llaves NUNCA se exponen.
+            delegated session keys. Tú defines los l&iacute;mites. Las llaves NUNCA se exponen.
           </p>
         </div>
         <div className="grid gap-3 md:grid-cols-2">
@@ -413,7 +484,7 @@ export default function LandingPage() {
           </h2>
           <p className="max-w-xl text-tropico-mute">
             Sin esperar a que un banco te apruebe. Sin que nadie te congele la cuenta.
-            Sin que la inflaci&oacute;n te derrita los ahorros. Empez&aacute; con tu email.
+            Sin que la inflaci&oacute;n te derrita los ahorros. Empieza con tu email.
           </p>
           <div className="flex flex-col gap-3 sm:flex-row">
             <Link href="/home" className="btn-primary">
@@ -431,11 +502,10 @@ export default function LandingPage() {
         <div className="grid gap-6 md:grid-cols-4">
           <div className="flex flex-col gap-2">
             <Logo size={32} wordmarkSize="sm" />
-            <p className="text-xs text-tropico-mute mt-2">
-              Hecho en Venezuela 🇻🇪 para Venezuela.
-              <br />
-              Construido sobre Solana.
-            </p>
+            <div className="mt-2 flex flex-col gap-2">
+              <VenezuelaBadge size="sm" />
+              <p className="text-xs text-tropico-mute">Construido sobre Solana.</p>
+            </div>
           </div>
           <div className="flex flex-col gap-1">
             <span className="text-xs font-semibold uppercase tracking-wider text-tropico-text">
@@ -479,7 +549,7 @@ export default function LandingPage() {
             &copy; 2026 Tropico &middot; dev3pack hackathon &middot; MIT License
           </span>
           <span className="text-xs">
-            Tropico nunca toca tus llaves &middot; Verific&aacute; cada fee en{" "}
+            Tropico nunca toca tus llaves &middot; Verifica cada fee en{" "}
             <a
               href="https://solscan.io"
               target="_blank"

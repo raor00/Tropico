@@ -46,7 +46,7 @@ export function SendForm() {
   }
 
   function onShareWhatsApp() {
-    const message = `🌴 Te mand&eacute; ${formatUSD(amountNumber)} v&iacute;a Tropico\n\nAbr&iacute; este link para reclamar tu plata. No necesit&aacute;s tener wallet — la creamos cuando entres con tu email.`;
+    const message = `🌴 Te mand&eacute; ${formatUSD(amountNumber)} v&iacute;a Tropico\n\nAbr&iacute; este link para reclamar tu plata. No necesitas tener wallet — la creamos cuando entres con tu email.`;
     window.open(whatsappShareUrl(message, claimUrl), "_blank");
     setStep("shared");
   }
@@ -69,7 +69,7 @@ export function SendForm() {
     return (
       <form onSubmit={onGenerar} className="flex flex-col gap-4">
         <div className="panel flex flex-col gap-4 p-6">
-          <h2 className="font-display text-xl font-bold">A qui&eacute;n le mand&aacute;s?</h2>
+          <h2 className="font-display text-xl font-bold">A qui&eacute;n le mandas?</h2>
           <input
             value={destinatario}
             onChange={(e) => setDestinatario(e.target.value)}

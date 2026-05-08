@@ -24,7 +24,7 @@ export function AgentHistory({ refreshKey = 0 }: { refreshKey?: number }) {
         <h3 className="font-display text-lg font-bold">Sin acciones aún</h3>
         <p className="text-sm text-tropico-mute">
           Cuando Carlos ejecute una acci&oacute;n agentic, aparecer&aacute; ac&aacute;.
-          Activ&aacute; alguna regla y simul&aacute; una ejecuci&oacute;n para empezar.
+          Activa alguna regla y simul&aacute; una ejecuci&oacute;n para empezar.
         </p>
       </div>
     );

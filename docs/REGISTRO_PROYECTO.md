@@ -8,12 +8,12 @@
 
 **Límite: 50 caracteres**
 
-### Opciones (elegí una):
+### Opciones (elige una):
 
 | Opción | Caracteres | Cuándo usar |
 |---|---|---|
 | `Tropico` | 7 | **RECOMENDADA** — corta, memorable, brandeable |
-| `Tropico — Red económica de Venezuela` | 38 | Si querés contexto inmediato sin descripción |
+| `Tropico — Red económica de Venezuela` | 38 | Si quieres contexto inmediato sin descripción |
 | `Red Tropico` | 11 | Alternativa que enfatiza el aspecto red |
 
 **👉 Mi voto: `Tropico`** (la marca pura, lo demás se explica en el One-liner)
@@ -24,16 +24,16 @@
 
 **Límite: 120 caracteres**
 
-### Opciones (elegí una):
+### Opciones (elige una):
 
 | Opción | Caracteres | Tono |
 |---|---|---|
-| `La red económica del venezolano en Solana: ahorrá ganando, pagá sin perder, todo non-custodial.` | 96 | **RECOMENDADA** — clara, directa, captura la propuesta de valor |
+| `La red económica del venezolano en Solana: ahorra ganando, paga sin perder, todo non-custodial.` | 96 | **RECOMENDADA** — clara, directa, captura la propuesta de valor |
 | `Red de pagos non-custodial para Venezuela: USDC con yield automático y QR para comercios. 60% más barato que Banesco.` | 119 | Más datos concretos, menos poético |
 | `Sistema operativo financiero del venezolano sobre Solana — wallet + pagos + yield + AI copilot.` | 96 | Más técnico/feature-driven |
-| `MercadoPago para Solana: el venezolano ahorra en USDC con yield, paga en comercios con QR, todos ganan.` | 105 | Analogía rápida que cualquiera entiende |
+| `Red económica caribeña en Solana: el venezolano ahorra en USDC con yield, paga en comercios con QR, todos ganan.` | 105 | Analogía rápida que cualquiera entiende |
 
-**👉 Mi voto: opción 1** — *"La red económica del venezolano en Solana: ahorrá ganando, pagá sin perder, todo non-custodial."*
+**👉 Mi voto: opción 1** — *"La red económica del venezolano en Solana: ahorra ganando, paga sin perder, todo non-custodial."*
 
 ---
 
@@ -48,9 +48,9 @@
 | **LI.FI** | ❌ NO | LI.FI es cross-chain bridge (EVM ↔ Solana). Tropico es Solana-Maxi puro, no usamos bridges. |
 | **Virtuals** | ✅ **SÍ** | Virtuals es marketplace de AI agents. Carlos AI + capa agéntica con OpenClaw encajan perfecto. |
 | **Solana Mobile** | ❌ NO (por ahora) | Tropico es PWA, no app nativa. Solana Mobile prioriza apps nativas para Saga/Seeker. Se puede aplicar en Q1 2027. |
-| **Eleven Labs** | ⚠️ Opcional | Si pensás agregar voz a Carlos en el demo (Carlos responde con voz Eleven Labs), aplicá. Si no, skip. |
+| **Eleven Labs** | ⚠️ Opcional | Si piensas agregar voz a Carlos en el demo (Carlos responde con voz Eleven Labs), aplicá. Si no, skip. |
 
-**👉 Mi voto: aplicar a Virtuals.** Si tenés tiempo de meterle voz a Carlos en el demo (1 endpoint de Eleven Labs), también aplicá ahí.
+**👉 Mi voto: aplicar a Virtuals.** Si tienes tiempo de meterle voz a Carlos en el demo (1 endpoint de Eleven Labs), también aplicá ahí.
 
 ---
 
@@ -74,7 +74,7 @@ Las categorías típicas en hackathons Solana son:
 | **AI Agents** | ✅ Tercera opción | Carlos + Modo Agente + OpenClaw integration. Si la categoría es prominente en el hack, vale la pena. |
 | DeFi | ⚠️ Opcional | Los módulos Cambiar + Guardar son DeFi, pero competirías con proyectos puramente DeFi (más complejos). |
 
-**👉 Mi voto: Consumer Apps** (si solo podés elegir una). Si podés multi-select, agregá Payments y/o AI Agents.
+**👉 Mi voto: Consumer Apps** (si solo puedes elegir una). Si puedes multi-select, agrega Payments y/o AI Agents.
 
 ---
 
@@ -90,7 +90,7 @@ Las categorías típicas en hackathons Solana son:
 | Poner el address de Jupiter Aggregator: `JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4` | Si el form REQUIERE un address, este es el programa principal con el que interactuamos para los swaps |
 | Poner el address de tu fee account ATA (USDC) | Si quieren la cuenta donde aterrizan las fees, ese es el ATA de Tropico para USDC |
 
-**👉 Mi voto: dejarlo vacío.** Si te exige uno, poné Jupiter Aggregator y aclaralo en la descripción larga: *"Tropico construye sobre Jupiter; no tiene programa Anchor propio (decisión técnica)"*.
+**👉 Mi voto: dejarlo vacío.** Si te exige uno, pon Jupiter Aggregator y aclaralo en la descripción larga: *"Tropico construye sobre Jupiter; no tiene programa Anchor propio (decisión técnica)"*.
 
 ---
 
@@ -98,7 +98,7 @@ Las categorías típicas en hackathons Solana son:
 
 **Auto-detectado**: 🇻🇪 **Caracas — Caracas, Venezuela**
 
-**👉 Acción**: Dejá el auto-detected. Es perfecto. Hub local + bandera VE = bonus points por representación regional + autenticidad geográfica del proyecto.
+**👉 Acción**: Deja el auto-detected. Es perfecto. Hub local + bandera VE = bonus points por representación regional + autenticidad geográfica del proyecto.
 
 ---
 
@@ -115,7 +115,7 @@ LA SOLUCIÓN — DOS PRODUCTOS INTEGRADOS. Tropico Wallet (consumidor): login co
 
 CINCO STREAMS DE REVENUE: 0.5% por swap, 0.3% spread en envíos, 2% del yield, 1% por cobro merchant, Carlos AI como acelerador transversal. Mes 12 proyectado: 50K usuarios + 2K comercios = $250K MRR sobre $44M de volumen.
 
-EFECTO RED BILATERAL. Cuando ambos lados están dentro, el dinero gira en USDC sin pasar por bancos. Es MercadoPago para Solana, nativo de USDC, non-custodial. Construido por un venezolano que vive el problema. La primera red económica privada de LATAM sobre Solana — ahorrá ganando, pagá sin perder.
+EFECTO RED BILATERAL. Cuando ambos lados están dentro, el dinero gira en USDC sin pasar por bancos. Es la red económica caribeña en Solana, nativa de USDC, non-custodial. Construido por un venezolano que vive el problema. La primera red económica privada de LATAM sobre Solana — ahorra ganando, paga sin perder.
 ```
 
 **Word count: 290 / 300** ✅
@@ -133,7 +133,7 @@ CAPA AGÉNTICA. Modo Agente integrable con OpenClaw + Privy delegated session ke
 
 CINCO STREAMS DE REVENUE: 0.5% swap + 0.3% send + 2% yield + 1% merchant + Carlos como acelerador. Stack: Next.js 15, Privy, Jupiter v6, Gemini 2.0 Flash, Helius RPC. Cero programa Anchor custom, cero backend persistente, non-custodial estricto.
 
-EFECTO RED BILATERAL. Cada nuevo merchant aumenta valor para usuarios y viceversa. Mes 12: $250K MRR sobre $44M volumen. Roadmap: Q3 OpenClaw real + on-ramp partners, Q4 Tropico Card, Q1 2027 LATAM expansion (CO/AR/MX/PE/CL). MercadoPago para Solana, nativo USDC, hecho en Venezuela.
+EFECTO RED BILATERAL. Cada nuevo merchant aumenta valor para usuarios y viceversa. Mes 12: $250K MRR sobre $44M volumen. Roadmap: Q3 OpenClaw real + on-ramp partners, Q4 Tropico Card, Q1 2027 LATAM expansion (CO/AR/MX/PE/CL). la red económica caribeña en Solana, nativa de USDC, hecho en Venezuela.
 ```
 
 **Word count: 285 / 300** ✅
@@ -144,7 +144,7 @@ EFECTO RED BILATERAL. Cada nuevo merchant aumenta valor para usuarios y vicevers
 
 ## ✅ Tech Stack * (multi-select)
 
-Si el dropdown es de opciones predefinidas, seleccioná todas las que apliquen:
+Si el dropdown es de opciones predefinidas, selecciona todas las que apliquen:
 
 ### TECNOLOGÍAS A SELECCIONAR (en orden de prioridad)
 
@@ -172,7 +172,7 @@ Si el dropdown es de opciones predefinidas, seleccioná todas las que apliquen:
 **Wallet adapters:**
 - ✅ **Solana Wallet Adapter** (fallback Phantom/Solflare)
 
-### Si el campo es free text (texto libre), pegá esto:
+### Si el campo es free text (texto libre), pega esto:
 
 ```
 Solana, Solana Pay, Jupiter v6, Privy (embedded MPC wallets), Helius RPC, SPL Token, Next.js 15, React 19, TypeScript, Tailwind CSS, Google Gemini 2.0 Flash, OpenClaw (agentic layer), Solana Wallet Adapter, React Query, Vercel, ve.dolarapi.com (USD/VES rate)
@@ -201,7 +201,7 @@ Capa agéntica con OpenClaw + Privy: 4 acciones autónomas (DCA, auto-yield, aut
 
 Stack: Next.js 15, Privy, Jupiter v6, Gemini 2.0 Flash, Helius. Cero Anchor custom, cero backend, non-custodial estricto.
 
-MercadoPago para Solana, nativo USDC. Hecho en Venezuela, primera red económica privada de LATAM sobre Solana.
+la red económica caribeña en Solana, nativa de USDC. Hecho en Venezuela, primera red económica privada de LATAM sobre Solana.
 ```
 
 **Caracteres: ~1,290** ✅
@@ -245,7 +245,7 @@ CINCO STREAMS DE REVENUE
 • Carlos AI como acelerador de los anteriores
 
 EFECTO RED BILATERAL
-Cuando ambos lados (consumidor + merchant) están en Tropico, el dinero gira en USDC sin pasar por bancos. El merchant ahorra 60% en fees y puede devolver cashback al cliente. El cliente gana yield automático y paga sin perder valor. Todos ganan, menos el banco. Es MercadoPago para Solana, nativo de USDC, non-custodial.
+Cuando ambos lados (consumidor + merchant) están en Tropico, el dinero gira en USDC sin pasar por bancos. El merchant ahorra 60% en fees y puede devolver cashback al cliente. El cliente gana yield automático y paga sin perder valor. Todos ganan, menos el banco. Es la red económica caribeña en Solana, nativa de USDC, non-custodial.
 
 CAPA AGÉNTICA CON OPENCLAW
 Modo Agente integrable con OpenClaw + Privy delegated session keys (showcase en MVP, integración real Q3). Carlos puede ejecutar 4 acciones autónomas con permisos limitados: DCA programado, auto-yield al recibir remesas, auto-cashback de comercios, re-balance de portafolio. Llaves nunca expuestas, policies con límites estrictos, sesiones que expiran.
@@ -294,7 +294,7 @@ GitHub: https://github.com/[TU-USUARIO]/Hackathon
 Demo en vivo: https://tropico.vercel.app  (cuando lo deployes)
 Demo video (3-5 min): [URL YouTube unlisted del demo grabado]
 Pitch deck: [URL Google Slides o PDF en repo]
-Twitter/X: [si tenés cuenta del proyecto]
+Twitter/X: [si tienes cuenta del proyecto]
 Telegram/WhatsApp: [grupo de comunidad si lo creaste]
 ```
 
@@ -313,12 +313,12 @@ Background: developer venezolano, [años] de experiencia, primera vez construyen
 
 ### 🎬 Demo video script (para el campo "video URL")
 
-Si te piden una descripción del video, podés poner:
+Si te piden una descripción del video, puedes poner:
 
 ```
 Demo de 4 minutos mostrando:
 0:00–0:30  El problema (95% del cripto VE atrapado en USDT/Binance, POS tradicional 4.5%)
-0:30–1:00  La visión Red Tropico (consumer + merchant, MercadoPago para Solana)
+0:30–1:00  La visión Red Tropico (consumer + merchant, red caribeña en Solana)
 1:00–1:30  Demo onboarding (login email vía Privy, wallet en 15s)
 1:30–2:00  Demo Cambiar (swap SOL→JTO, fee 0.5% verificable en Solscan)
 2:00–2:45  Demo Cobrar (split screen: cliente paga $5, comercio recibe $4.95, Tropico recibe $0.05, en <1s)
@@ -397,12 +397,12 @@ Si "Tropico" ya está registrado en algún directorio:
 
 ---
 
-## 📞 Si tenés dudas durante el submit
+## 📞 Si tienes dudas durante el submit
 
 - **Si te pide un campo que no sabés**: dejarlo vacío si es opcional. NO inventes URLs.
-- **Si te pide un screenshot**: tomá uno de la pantalla `/home` y otro de `/cobrar` con QR generado.
-- **Si te pide un logo**: usá el placeholder gradient purple→green del header de Tropico (no diseño formal — eso viene post-hackathon).
-- **Si el form se cae a mitad**: copiá TODO el contenido de este doc primero a un Google Docs como backup. NO confíes en que el form guarde drafts.
+- **Si te pide un screenshot**: toma uno de la pantalla `/home` y otro de `/cobrar` con QR generado.
+- **Si te pide un logo**: usa el placeholder gradient purple→green del header de Tropico (no diseño formal — eso viene post-hackathon).
+- **Si el form se cae a mitad**: copia TODO el contenido de este doc primero a un Google Docs como backup. NO confíes en que el form guarde drafts.
 
 ---
 

@@ -56,7 +56,7 @@ python3 {SCRIPTS_DIR}/cashback_historico.py --instance {INSTANCE_ID} --wallet <P
 ## Ejemplos
 
 - "¿Tengo cashback?"
-  → `cashback_acumulado.py` → "S&iacute;, panita. Ten&eacute;s $3.20 acumulados (Bs. 2.081,63) de 4 comercios. La mayor parte vino de Bodega La Esquina ($1.20). ¿Te lo reclamo?"
+  → `cashback_acumulado.py` → "S&iacute;, panita. Tens $3.20 acumulados (Bs. 2.081,63) de 4 comercios. La mayor parte vino de Bodega La Esquina ($1.20). ¿Te lo reclamo?"
 
 - "¿Cómo funciona el cashback?"
-  → "Cuando pag&aacute;s en un comercio afiliado a Tropico, el comercio te devuelve un porcentaje (típicamente 0.5-1%) porque ahorra en fees vs POS tradicional. Vos ganás siendo cliente; el comercio fideliza."
+  → "Cuando pagas en un comercio afiliado a Tropico, el comercio te devuelve un porcentaje (típicamente 0.5-1%) porque ahorra en fees vs POS tradicional. Tú ganas siendo cliente; el comercio fideliza."

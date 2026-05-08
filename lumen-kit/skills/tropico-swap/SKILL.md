@@ -46,11 +46,11 @@ Devuelve JSON con 2-3 sugerencias rankeadas según perfil.
 
 ## Reglas de ruteo
 
-1. Usuario dice "Cambiá $10 de SOL a USDC" → `jupiter_quote.py --from SOL --to USDC --amount 10`. Carlos muestra la cotización Y dirige al UI: "Listo, te dejo la cotización. Si te convence, andá a Cambiar y confirmá la firma con tu wallet."
+1. Usuario dice "Cambia $10 de SOL a USDC" → `jupiter_quote.py --from SOL --to USDC --amount 10`. Carlos muestra la cotización Y dirige al UI: "Listo, te dejo la cotización. Si te convence, ve a Cambiar y confirma la firma con tu wallet."
 
 2. Usuario dice "¿Qué token me conviene comprar con $100?" → `jupiter_recomendar.py --usd 100 --perfil balanceado`. Carlos sugiere 2-3 opciones con razones.
 
-3. Usuario dice "Hac&eacute; el swap por mí" → Carlos responde: "Yo no firmo transacciones por vos, panita — eso lo hac&eacute;s vos en /cambiar para mantener el non-custodial. Pero te dejo la cotización lista."
+3. Usuario dice "Haz el swap por mí" → Carlos responde: "Yo no firmo transacciones por tú, panita — eso lo hazs tú en /cambiar para mantener el non-custodial. Pero te dejo la cotización lista."
 
 4. Si el usuario activó **Modo Agente con regla DCA o Re-balance**, ahí sí Carlos puede ejecutar autónomamente vía OpenClaw delegated key — pero ese flujo se maneja desde el skill `tropico-agent-actions`, no directo desde acá.
 
@@ -66,9 +66,9 @@ Al final de tu respuesta, incluí el contract:
 
 ## Ejemplos
 
-- "Cambi&aacute; $10 USDC a JTO"
+- "Cambia $10 USDC a JTO"
   → `jupiter_quote.py --from USDC --to JTO --amount 10`
-  → "Por $10 USDC recibirías ~4.34 JTO (con 0.5% de fee Tropico = $0.05). Tasa: 1 USDC = 0.434 JTO. Si te sirve, dale a Cambiar y confirmá con tu wallet."
+  → "Por $10 USDC recibirías ~4.34 JTO (con 0.5% de fee Tropico = $0.05). Tasa: 1 USDC = 0.434 JTO. Si te sirve, dale a Cambiar y confirma con tu wallet."
   → + UI surface con CTA a /cambiar
 
 - "Mejor swap para $50 con perfil conservador"
@@ -77,6 +77,6 @@ Al final de tu respuesta, incluí el contract:
 
 ## Formato de respuesta
 
-- Mostrá el output esperado, la fee de Tropico (transparente), y el price impact si es >0.5%
-- Si el price impact es alto (>3%), advertí: "Ojo, este swap tiene impacto del X%. Pod&eacute;s perder valor — quizás conviene hacer un monto más chico."
-- Cerrá con el CTA a /cambiar
+- Muestra el output esperado, la fee de Tropico (transparente), y el price impact si es >0.5%
+- Si el price impact es alto (>3%), advertí: "Ojo, este swap tiene impacto del X%. Puedes perder valor — quizás conviene hacer un monto más chico."
+- Cierra con el CTA a /cambiar

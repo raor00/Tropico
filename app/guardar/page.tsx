@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Header } from "@/components/Header";
 import { DualPrice } from "@/components/DualPrice";
 import { MOCK_PORTFOLIO } from "@/lib/mock-data";
 import { formatUSD } from "@/lib/formato";
@@ -11,7 +12,7 @@ const ESTRATEGIAS = [
   {
     nombre: "mSOL Liquid Staking",
     descripcion:
-      "Tu USDC se convierte autom&aacute;tico en mSOL (Marinade). Gan&aacute;s ~7% al a&ntilde;o estimado. Sin lock — pod&eacute;s salir cuando quieras.",
+      "Tu USDC se convierte autom&aacute;tico en mSOL (Marinade). Ganas ~7% al a&ntilde;o estimado. Sin lock — puedes salir cuando quieras.",
     apy: 7.0,
     riesgo: "Bajo",
     riesgoColor: "text-tropico-sea",
@@ -21,7 +22,7 @@ const ESTRATEGIAS = [
   {
     nombre: "Kamino USDC Vault",
     descripcion:
-      "Pres&aacute;s tu USDC en el vault de Kamino. Yield ~5% al a&ntilde;o, m&aacute;s estable que mSOL. Cero exposici&oacute;n a SOL.",
+      "Prestas tu USDC en el vault de Kamino. Yield ~5% al a&ntilde;o, m&aacute;s estable que mSOL. Cero exposici&oacute;n a SOL.",
     apy: 5.2,
     riesgo: "Bajo",
     riesgoColor: "text-tropico-sea",
@@ -31,7 +32,7 @@ const ESTRATEGIAS = [
   {
     nombre: "Kamino mSOL/USDC LP",
     descripcion:
-      "LP avanzado: pon&eacute;s mSOL + USDC y gan&aacute;s fees de quien hace swaps. Mayor APY pero hay impermanent loss.",
+      "LP avanzado: pones mSOL + USDC y ganas fees de quien hace swaps. Mayor APY pero hay impermanent loss.",
     apy: 12.4,
     riesgo: "Medio",
     riesgoColor: "text-tropico-sun",
@@ -43,16 +44,17 @@ const ESTRATEGIAS = [
 export default function GuardarPage() {
   return (
     <main className="mx-auto flex min-h-dvh max-w-3xl flex-col gap-8 px-5 py-10">
-      <header className="flex flex-col gap-2">
+      <Header />
+      <header className="flex flex-col gap-2 pt-4">
         <Link
           href="/home"
-          className="w-fit text-sm text-tropico-mute transition hover:text-tropico-text"
+          className="w-fit text-sm text-tropico-mute transition hover:text-tropico-sun"
         >
           &larr; Volver
         </Link>
         <h1 className="font-display text-3xl font-bold">Guardar</h1>
         <p className="text-sm text-tropico-mute">
-          Tu plata trabajando mientras dorm&iacute;s. Yield autom&aacute;tico,
+          Tu plata trabajando mientras duermes. Yield autom&aacute;tico,
           non-custodial, sin penalizaciones.
         </p>
       </header>
@@ -65,12 +67,10 @@ export default function GuardarPage() {
             ✨ Yield ON por default
           </span>
         </header>
-
         <DualPrice usd={MOCK_PORTFOLIO.total * 0.7} size="xl" />
         <p className="text-xs text-tropico-mute">
           70% de tu saldo USDC est&aacute; generando rendimiento
         </p>
-
         <div className="mt-2 grid grid-cols-3 gap-3 border-t border-tropico-border pt-4">
           <div>
             <div className="text-xs text-tropico-mute">Esta semana</div>
@@ -99,7 +99,7 @@ export default function GuardarPage() {
         <span className="text-tropico-mute">
           Demo del hackathon &mdash; n&uacute;meros simulados. En producci&oacute;n
           tu USDC se convierte autom&aacute;tico v&iacute;a Jupiter route a la estrategia que
-          eljid&aacute;s. Q3 2026.
+          elijas. Q3 2026.
         </span>
       </div>
 

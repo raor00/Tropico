@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import { SwapForm } from "@/components/SwapForm";
+import { Header } from "@/components/Header";
 
 export const metadata = {
   title: "Cambiar — Tropico",
@@ -9,16 +10,17 @@ export const metadata = {
 export default function CambiarPage() {
   return (
     <main className="mx-auto flex min-h-dvh max-w-2xl flex-col gap-6 px-5 py-10">
-      <header className="flex flex-col gap-2">
+      <Header />
+      <header className="flex flex-col gap-2 pt-4">
         <Link
           href="/home"
-          className="w-fit text-sm text-tropico-mute transition hover:text-tropico-text"
+          className="w-fit text-sm text-tropico-mute transition hover:text-tropico-sun"
         >
           &larr; Volver
         </Link>
         <h1 className="font-display text-3xl font-bold">Cambiar</h1>
         <p className="text-sm text-tropico-mute">
-          Intercambi&aacute; entre tokens al mejor precio. Cotizaciones en vivo via Jupiter v6.
+          Intercambia entre tokens al mejor precio. Cotizaciones en vivo via Jupiter v6.
         </p>
       </header>
 

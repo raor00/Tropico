@@ -79,7 +79,7 @@ export const AGENT_ACTIONS: AgentAction[] = [
     gradient: "from-tropico-purple/30 to-tropico-green/10",
     titulo: "DCA semanal",
     descripcionUsuario:
-      "Comprá automáticamente un monto fijo de un token cada semana. Te despreocupás de los picos del mercado.",
+      "Compra automáticamente un monto fijo de un token cada semana. Te despreocupás de los picos del mercado.",
     policy: "Máximo $200/semana, máximo $50 por ejecución",
     triggerProduccion: "Cron semanal en Vercel",
     defaultConfig: {
@@ -112,7 +112,7 @@ export const AGENT_ACTIONS: AgentAction[] = [
     gradient: "from-tropico-sun/30 to-tropico-coral/10",
     titulo: "Auto-cashback de comercios",
     descripcionUsuario:
-      "Reclamá automáticamente el cashback acumulado de comercios afiliados Tropico. Sin recordar manualmente.",
+      "Reclama automáticamente el cashback acumulado de comercios afiliados Tropico. Sin recordar manualmente.",
     policy: "Máximo $50 por claim, cooldown 24h",
     triggerProduccion: "Cron semanal o mensual según preferencia",
     defaultConfig: {
@@ -127,7 +127,7 @@ export const AGENT_ACTIONS: AgentAction[] = [
     gradient: "from-tropico-coral/30 to-tropico-purple/10",
     titulo: "Re-balance de portafolio",
     descripcionUsuario:
-      "Si un token sube X% en Y días, vendé Z% a USDC para tomar ganancia. Disciplina automática.",
+      "Si un token sube X% en Y días, vende Z% a USDC para tomar ganancia. Disciplina automática.",
     policy: "Máximo 50% del holding, máximo 1 rebalance por token por semana",
     triggerProduccion: "Poll de precios cada 15 minutos vs holdings",
     defaultConfig: {

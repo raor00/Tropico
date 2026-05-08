@@ -32,7 +32,7 @@ const MODULES = [
     href: "/cambiar",
     Icon: ArrowLeftRight,
     titulo: "Cambiar",
-    descripcion: "Intercambi&aacute; entre tokens al mejor precio del mercado",
+    descripcion: "Intercambia entre tokens al mejor precio del mercado",
     gradient: "from-tropico-purple/20 to-tropico-sea/10",
     badge: "Swap",
   },
@@ -40,7 +40,7 @@ const MODULES = [
     href: "/enviar",
     Icon: Send,
     titulo: "Enviar",
-    descripcion: "Mand&aacute; USDC a quien quieras, instant&aacute;neo",
+    descripcion: "Manda USDC a quien quieras, instant&aacute;neo",
     gradient: "from-tropico-sun/30 to-tropico-coral/15",
     badge: "Send",
   },
@@ -72,7 +72,7 @@ const MODULES = [
     href: "/descubrir",
     Icon: Compass,
     titulo: "Descubrir",
-    descripcion: "Conoc&eacute; el ecosistema Solana",
+    descripcion: "Conoce el ecosistema Solana",
     gradient: "from-tropico-mute/20 to-tropico-border/10",
     badge: "Educa",
   },
@@ -150,7 +150,7 @@ export default function HomePage() {
               </div>
               <div>
                 <div className="font-semibold">
-                  Ten&eacute;s {formatUSD(MOCK_CASHBACK_PENDIENTE.total)} de cashback acumulado
+                  Tens {formatUSD(MOCK_CASHBACK_PENDIENTE.total)} de cashback acumulado
                 </div>
                 <div className="text-xs text-tropico-mute">
                   De {MOCK_CASHBACK_PENDIENTE.comerciosCount} comercios afiliados
@@ -219,7 +219,7 @@ export default function HomePage() {
           <span className="text-3xl" aria-hidden>🇻🇪</span>
           <div>
             <h3 className="font-display text-lg font-bold">
-              Pronto: deposit&aacute; bs desde tu banco
+              Pronto: deposita bs desde tu banco
             </h3>
             <p className="text-sm text-tropico-mute">
               banco tradicional, Mercantil, BDV, Provincial &mdash; integraci&oacute;n directa Q3
@@ -233,7 +233,7 @@ export default function HomePage() {
 
       {/* Footer */}
       <footer className="mt-auto border-t border-tropico-border pt-6 text-xs text-tropico-mute">
-        Tropico nunca toca tus llaves. Verific&aacute; cada fee en{" "}
+        Tropico nunca toca tus llaves. Verifica cada fee en{" "}
         <a
           href="https://solscan.io"
           target="_blank"

@@ -41,8 +41,8 @@ Devuelve JSON: `{ "usd": 50, "bs": 32525.5, "tasa": 650.51 }`
 1. Usuario pregunta "¿Cuánto vale SOL?" → `precio_usd.py --token SOL`
 2. Usuario pregunta "¿A cuánto está el dólar?" → `precio_bs.py`
 3. Usuario pregunta "¿Cuánto son $50 en bs?" → `convertir_usd_bs.py --usd 50`
-4. Si el script falla (red, API down) → respondé "No pude consultar el precio en este momento, pana. Intentá en un minuto."
-5. **NUNCA** uses tasas hardcoded — siempre llamá al script, aunque tengas un valor reciente.
+4. Si el script falla (red, API down) → responde "No pude consultar el precio en este momento, pana. Intenta en un minuto."
+5. **NUNCA** uses tasas hardcoded — siempre llama al script, aunque tengas un valor reciente.
 
 ## Ejemplos
 

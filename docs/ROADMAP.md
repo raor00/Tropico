@@ -99,7 +99,7 @@ Tropico crece en 4 dimensiones simultáneas:
 
 ### Carlos AI proactivo (Q4 2026)
 - Carlos detecta oportunidades sin que el usuario configure
-- Ejemplos: flagea inactividad de USDC ("tenés $500 USDC parados desde hace 2 semanas, ¿activamos yield?"), sugiere DCA basado en patrón de gastos, alerta de oportunidades de mercado relevantes para el portfolio del usuario
+- Ejemplos: flagea inactividad de USDC ("tienes $500 USDC parados desde hace 2 semanas, ¿activamos yield?"), sugiere DCA basado en patrón de gastos, alerta de oportunidades de mercado relevantes para el portfolio del usuario
 - Sigue siendo non-custodial — Carlos solo SUGIERE, usuario firma
 
 ---

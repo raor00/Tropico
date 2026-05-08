@@ -69,7 +69,7 @@ export function ReceiveQR() {
   }
 
   function onShareWhatsApp() {
-    const message = `🌴 Recibí $${amountNumber.toFixed(2)} USDC vía Tropico\n\nGracias por tu compra. Recibo on-chain disponible en Solscan.`;
+    const message = `🌴 Recibe $${amountNumber.toFixed(2)} USDC vía Tropico\n\nGracias por tu compra. Recibo on-chain disponible en Solscan.`;
     window.open(whatsappShareUrl(message), "_blank");
   }
 
@@ -77,7 +77,7 @@ export function ReceiveQR() {
     return (
       <div className="flex flex-col gap-6">
         <div className="panel flex flex-col gap-4 p-6">
-          <h2 className="font-display text-xl font-bold">Cu&aacute;nto cobr&aacute;s?</h2>
+          <h2 className="font-display text-xl font-bold">Cu&aacute;nto cobras?</h2>
           <input
             type="number"
             inputMode="decimal"
@@ -175,7 +175,7 @@ export function ReceiveQR() {
 
       <p className="text-center text-xs text-tropico-mute">
         En producci&oacute;n, Tropico escucha la blockchain con `findReference` y detecta
-        el pago autom&aacute;tico. Para demo, us&aacute; el bot&oacute;n &laquo;Simular&raquo;.
+        el pago autom&aacute;tico. Para demo, usa el bot&oacute;n &laquo;Simular&raquo;.
       </p>
     </div>
   );

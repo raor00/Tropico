@@ -33,10 +33,10 @@ Las 11 rutas devuelven 200 OK. El flow end-to-end está demoable:
 
 | Feature | Requiere | Quién lo configura |
 |---|---|---|
-| Login real con email vía Privy | `NEXT_PUBLIC_PRIVY_APP_ID` | Vos en https://dashboard.privy.io |
-| Lectura de balances reales en mainnet | `NEXT_PUBLIC_HELIUS_RPC` | Vos en https://dashboard.helius.dev |
-| Carlos chat funcional | `GOOGLE_GENERATIVE_AI_API_KEY` | Vos en https://aistudio.google.com/apikey |
-| Swap real con fee llegando a wallet de Tropico | Wallet de fees + ATAs creadas | Vos via `solana-keygen` y `spl-token` |
+| Login real con email vía Privy | `NEXT_PUBLIC_PRIVY_APP_ID` | Tú en https://dashboard.privy.io |
+| Lectura de balances reales en mainnet | `NEXT_PUBLIC_HELIUS_RPC` | Tú en https://dashboard.helius.dev |
+| Carlos chat funcional | `GOOGLE_GENERATIVE_AI_API_KEY` | Tú en https://aistudio.google.com/apikey |
+| Swap real con fee llegando a wallet de Tropico | Wallet de fees + ATAs creadas | Tú via `solana-keygen` y `spl-token` |
 | Cobros reales que aterrizan en wallet del merchant | Wallet del merchant conectada | Setup wallet del merchant en Privy |
 
 **Sin estas keys**: el demo es 100% UX/UI con simulaciones honestas.
@@ -189,7 +189,7 @@ Después: cambiar, cobrar, enviar, guardar, depositar (en ese orden de prioridad
 
 ---
 
-## 📞 Cuándo me decís "ya tengo las API keys"
+## 📞 Cuándo me dices "ya tengo las API keys"
 
 En cuanto las tengas:
 
@@ -256,7 +256,7 @@ Ese momento "fee llegando en Solscan en vivo" es **el momento ganador del pitch*
 **4:00–5:00 — Cierre con visión**
 > "Q3: integración real OpenClaw + on-ramp con partners. Q4: Tropico Card. Q1 2027: LATAM expansion. Tropico no es una wallet. Es la infraestructura económica que LATAM necesita."
 
-### Si tenés API keys agregás:
+### Si tienes API keys agregás:
 - Demo onboarding REAL con Privy (login con email → wallet en 15s)
 - Swap REAL con la fee llegando a tu wallet (split-screen Solscan)
 - Carlos chat respondiendo en venezolano con Gemini
@@ -267,11 +267,11 @@ Ese momento "fee llegando en Solscan en vivo" es **el momento ganador del pitch*
 
 | Prioridad | Tarea | Esfuerzo | Cuándo |
 |---|---|---|---|
-| 🔥 ALTA | Generar logo final pixel art | 30min externo | Inmediato (usá el prompt en `LOGO_PROMPT.md`) |
+| 🔥 ALTA | Generar logo final pixel art | 30min externo | Inmediato (usa el prompt en `LOGO_PROMPT.md`) |
 | 🔥 ALTA | Reemplazar placeholder gradient del header con logo real | 15min | Cuando tengas el logo |
 | 🔥 ALTA | Deploy a Vercel | 30min | YA |
 | 🔥 ALTA | Grabar demo video (4-5 min) en YouTube unlisted | 1h | Cuando deploy esté live |
 | 🟡 MEDIA | Pitch deck (5-6 slides) en Google Slides | 2h | Antes del submit |
 | 🟡 MEDIA | README.md con problema + demo gif + decisiones | 1h | Antes del submit |
-| 🟢 BAJA | Agregar Privy + Gemini + Helius keys | 30min config + 2h integración | Si querés demo con tx real |
+| 🟢 BAJA | Agregar Privy + Gemini + Helius keys | 30min config + 2h integración | Si quieres demo con tx real |
 | 🟢 BAJA | Crear wallet de fees + ATAs + hacer un swap demo | 1h | Para tener "fee real" en Solscan para mostrar en pitch |

@@ -48,19 +48,19 @@ Wide 16:9 horizontal banner, dark warm teal-purple gradient background (NOT pure
 
 ```bash
 # Midjourney (Discord)
-/imagine [pegá el prompt completo]
+/imagine [pega el prompt completo]
 
 # Recraft (web)
-recraft.ai → New Image → Style: Vector → pegá prompt simplificado
+recraft.ai → New Image → Style: Vector → pega prompt simplificado
 
 # Ideogram
-ideogram.ai → pegá prompt → Style: Auto
+ideogram.ai → pega prompt → Style: Auto
 
 # DALL-E 3 (ChatGPT Plus)
-"Generate this image: [pegá prompt simplificado]"
+"Generate this image: [pega prompt simplificado]"
 ```
 
-Generá **4-6 variantes**. La AI suele tener problemas con texto exacto en imágenes — si "TROPICO" sale mal escrito, generá el icon solo y agregá el wordmark a mano en Figma/Canva (más control).
+Genera **4-6 variantes**. La AI suele tener problemas con texto exacto en imágenes — si "TROPICO" sale mal escrito, genera el icon solo y agrega el wordmark a mano en Figma/Canva (más control).
 
 ### Paso 2: Guardar en el repo
 
@@ -116,7 +116,7 @@ Mantener solo: palmera + guacamaya + sol + halo dots + wordmark.
 - [ ] No hay texto extra/random/glitched
 - [ ] Composición horizontal balanceada (icon left, wordmark right)
 - [ ] Ratio 16:9 exacto (1920×1080 o múltiplo)
-- [ ] Filesize <500KB optimizado (usá [tinypng.com](https://tinypng.com) si es muy pesado)
+- [ ] Filesize <500KB optimizado (usa [tinypng.com](https://tinypng.com) si es muy pesado)
 
 ---
 

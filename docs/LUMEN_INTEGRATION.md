@@ -432,7 +432,7 @@ Esta integración requiere los 4 scripts pendientes en `lumen-capabilities/agent
 4. Lumen lee `SKILL.md` de `tropico-prices` → identifica `precio_usd.py` como el comando relevante
 5. Lumen ejecuta `python3 precio_usd.py --instance tropico-mvp --token SOL` via terminal connector
 6. Script devuelve JSON: `{"priceUSD": 91.53, "priceChange24h": 3.41}`
-7. Lumen genera respuesta humana en venezolano: "SOL está en $91.53, subió 3.4% en las últimas 24h. ¿Querés cambiar a SOL desde USDC?"
+7. Lumen genera respuesta humana en venezolano: "SOL está en $91.53, subió 3.4% en las últimas 24h. ¿Quieres cambiar a SOL desde USDC?"
 8. Lumen incluye UI surface XML para que el frontend muestre un CTA a /cambiar
 9. Frontend renderiza la respuesta + la card
 
@@ -459,7 +459,7 @@ Funciona, pero pierde:
 
 ### ¿Qué pasa si Lumen está caído?
 
-Frontend tiene fallback: muestra "Carlos está descansando, intentá en unos minutos" + ofrece quick prompts pre-cacheados que no requieren Lumen (educación estática del catálogo de tokens).
+Frontend tiene fallback: muestra "Carlos está descansando, intenta en unos minutos" + ofrece quick prompts pre-cacheados que no requieren Lumen (educación estática del catálogo de tokens).
 
 ### ¿Las llaves del usuario están seguras?
 
@@ -504,6 +504,100 @@ DeepSeek-V4-flash es la recomendación default por costo/velocidad. Gemini 2.0 F
 - Brief master: `docs/TROPICO_BRIEF.md` (sección 23 actualizada con Lumen como motor agéntico)
 - Roadmap: `docs/ROADMAP.md`
 - Plan original Lumen: `~/.claude/plans/shiny-riding-whale.md`
+
+---
+
+## 13. Replicabilidad: Tropico Web3 Kit como pieza portable
+
+> **Insight clave**: El Tropico Web3 Kit no es "código que solo corre en Lumen". Es una **definición declarativa** (markdown + YAML + scripts Python) que cumple la spec de skills agénticas. Cualquier orquestador que entienda esa spec puede correrlo — Lumen hoy, Hermes y OpenClaw en producción.
+
+### 13.1 Las 3 capas son agnósticas al orquestador
+
+Vuelve a mirar la arquitectura del kit (basada en `GUIA-CREACION-KIT-LUMEN.md`):
+
+```
+┌─────────────────────────────────────────────┐
+│  KIT (personality)                          │  ← módulo declarativo (YAML)
+│  module.yaml + personality.yaml             │
+├─────────────────────────────────────────────┤
+│  SKILLS (conocimiento operativo)            │  ← módulo declarativo (MD + YAML)
+│  module.yaml + SKILL.md por skill           │
+├─────────────────────────────────────────────┤
+│  CAPABILITIES (scripts/binarios)            │  ← Python estándar, CLI con flags
+│  Scripts Python — Jupiter, RPC, Helius      │
+└─────────────────────────────────────────────┘
+```
+
+**Ninguna capa tiene dependencias propietarias de Lumen.**
+
+- `module.yaml` y `personality.yaml` son YAML estándar
+- `SKILL.md` es markdown con frontmatter
+- Capabilities son scripts Python con argparse — los puede invocar cualquier proceso vía `subprocess`/`exec`
+
+### 13.2 Adapters: cómo se conecta a Hermes y OpenClaw
+
+| Capa | Lumen (hoy) | Hermes (Q3) | OpenClaw (Q3) |
+|------|-------------|-------------|---------------|
+| Kit/personality | Lee YAML nativo | Adapter convierte YAML → Hermes module spec | N/A (no es cerebro) |
+| Skills | Carga vía `lumen module install` | Adapter expone SKILL.md como tool definitions | Skills `tropico-agent-actions` se mapea a OpenClaw skill |
+| Capabilities (scripts) | Ejecuta vía `terminal` connector con allowlist | Mismo, vía MCP server o tool runner | OpenClaw las invoca igual, pero la capability `agent_execute.py` se enruta a OpenClaw API |
+| Memoria | Stateless por chat (MVP) | Persistente por usuario (RAG) | N/A |
+| Firma on-chain | N/A (solo lectura) | N/A (solo lectura) | Privy delegated session keys |
+
+### 13.3 Patrón de adapter (pseudocódigo)
+
+```python
+# lumen-to-hermes-adapter.py
+from pathlib import Path
+import yaml
+from hermes import Module, Skill
+
+def load_lumen_kit_into_hermes(kit_path: Path) -> Module:
+    kit_meta = yaml.safe_load((kit_path / "module.yaml").read_text())
+    personality = yaml.safe_load((kit_path / "personality.yaml").read_text())
+
+    skills = []
+    for skill_dir in (kit_path / "skills").iterdir():
+        skill_meta = yaml.safe_load((skill_dir / "module.yaml").read_text())
+        skill_md = (skill_dir / "SKILL.md").read_text()
+        skills.append(Skill(
+            name=skill_meta["name"],
+            description=skill_meta["description"],
+            instructions=skill_md,
+            allowlist=skill_meta.get("x-lumen", {})
+                              .get("requires", {})
+                              .get("terminal", {})
+                              .get("allowlist", []),
+        ))
+
+    return Module(
+        name=kit_meta["name"],
+        identity=personality["identity"],
+        rules=personality["rules"],
+        knowledge=personality["knowledge"],
+        skills=skills,
+    )
+```
+
+El adapter es ~30 líneas. Lo mismo aplica para OpenClaw — la skill `tropico-agent-actions` ya está documentada en formato compatible (comandos parametrizados, sin estado oculto).
+
+### 13.4 Por qué esto importa para Tropico
+
+1. **No nos casamos con un vendor**. Si Lumen cambia su licencia o muere, el kit sigue siendo nuestro.
+2. **Stack progresivo**. Hoy Lumen es suficiente para chat + lookup. Mañana sumamos Hermes para memoria persistente, OpenClaw para autonomía on-chain. Cada pieza es opcional.
+3. **Open source replicable**. El Web3 Kit es el primero de su tipo en español caribeño con foco fintech LATAM. Otros equipos pueden forkear y adaptar (replicar para Colombia, Argentina, México) sin tocar el orquestador.
+4. **Auditabilidad**. Personality.yaml + skills + capabilities son texto plano. Cualquiera puede revisar qué Carlos sabe, qué puede hacer, qué nunca hace. No hay caja negra.
+
+### 13.5 Ruta de migración (post-hackathon)
+
+```
+Sprint 1 (hoy) ──▶ Lumen MVP (chat + skills lectura)
+Sprint 2 (Q3)  ──▶ + OpenClaw (las 4 acciones autónomas con policy engine)
+Sprint 3 (Q3)  ──▶ + Hermes (memoria persistente + proactividad multi-canal)
+Sprint 4 (Q4)  ──▶ Adapter público — anyone-fork-and-deploy
+```
+
+Cada sprint añade una pieza sin romper la anterior. El Tropico Web3 Kit es la única constante.
 
 ---
 

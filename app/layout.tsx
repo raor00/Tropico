@@ -29,11 +29,11 @@ const honk = Honk({
 export const metadata: Metadata = {
   title: "Tropico — La red económica del venezolano en Solana",
   description:
-    "Ahorrá ganando, pagá sin perder. Red de pagos non-custodial sobre Solana. Hecho en Venezuela.",
+    "Ahorra ganando, paga sin perder. Red de pagos non-custodial sobre Solana. Hecho en Venezuela.",
   manifest: "/manifest.json",
   openGraph: {
     title: "Tropico — La red económica del venezolano en Solana",
-    description: "MercadoPago para Solana. Non-custodial. Hecho en Venezuela.",
+    description: "La wallet caribeña en Solana. Non-custodial. USDC + yield + QR para comercios. Hecho en Venezuela.",
     type: "website",
     locale: "es_VE",
   },

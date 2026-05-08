@@ -63,13 +63,13 @@ Te va a preguntar:
 ? Want to modify these settings? [y/N] n
 ```
 
-Esperá ~2 minutos. Te imprime una URL tipo:
+Espera ~2 minutos. Te imprime una URL tipo:
 
 ```
 ✅  Production: https://tropico-abc123.vercel.app
 ```
 
-**Esa es tu preview URL.** Abrila, navegá las 11 rutas, verificá que todo carga.
+**Esa es tu preview URL.** Abrila, navega las 11 rutas, verifica que todo carga.
 
 ### Paso 4: Deploy a producción
 
@@ -106,9 +106,9 @@ gh repo create tropico --public --source=. --remote=origin --push
 
 ### Paso 2: Importar en Vercel
 
-1. Andá a https://vercel.com/new
+1. Ve a https://vercel.com/new
 2. Click "Import Git Repository"
-3. Seleccioná tu repo `tropico`
+3. Selecciona tu repo `tropico`
 4. Vercel detecta Next.js automáticamente
 5. Framework Preset: **Next.js** (ya seleccionado)
 6. Root Directory: `./`
@@ -116,7 +116,7 @@ gh repo create tropico --public --source=. --remote=origin --push
 8. Output Directory: `.next` (default)
 9. Click **Deploy**
 
-Esperá ~3 minutos. Te muestra "Congratulations" + URL live.
+Espera ~3 minutos. Te muestra "Congratulations" + URL live.
 
 ### Paso 3: Auto-deploy configurado
 
@@ -128,7 +128,7 @@ Cada vez que hagas `git push` a la branch `main`, Vercel re-deploya automáticam
 
 ### Opción A: Desde dashboard (visual)
 
-1. Andá a tu proyecto en https://vercel.com/dashboard
+1. Ve a tu proyecto en https://vercel.com/dashboard
 2. Click en tu proyecto `tropico` → tab **Settings** → **Environment Variables**
 3. Agregar una por una (todas las del `.env.local`):
 
@@ -166,12 +166,12 @@ vercel --prod
 
 ## 🌍 Dominio custom (opcional, $10-15/año)
 
-Si querés `tropico.app` o `tropico.com.ve` en lugar de `tropico-xxx.vercel.app`:
+Si quieres `tropico.app` o `tropico.com.ve` en lugar de `tropico-xxx.vercel.app`:
 
-1. Comprá el dominio en Namecheap, GoDaddy, o Cloudflare Registrar
+1. Compra el dominio en Namecheap, GoDaddy, o Cloudflare Registrar
 2. En Vercel dashboard → tu proyecto → Settings → Domains
 3. Agregar tu dominio
-4. Vercel te muestra los DNS records que tenés que configurar
+4. Vercel te muestra los DNS records que tienes que configurar
 5. En el panel del dominio, agregar:
    - `A` record: `76.76.21.21`
    - `CNAME www`: `cname.vercel-dns.com`
@@ -224,7 +224,7 @@ git push  # Vercel re-deploya
 
 ### "/cambiar muestra 'Cotizaciones no disponibles'"
 
-El frontend llama a `https://lite-api.jup.ag/swap/v1/quote`. Si Jupiter está caído ese día (raro pero pasa), no hay nada que hacer. Mostrá el demo de `/cobrar` mientras tanto.
+El frontend llama a `https://lite-api.jup.ag/swap/v1/quote`. Si Jupiter está caído ese día (raro pero pasa), no hay nada que hacer. Muestra el demo de `/cobrar` mientras tanto.
 
 ---
 
@@ -282,7 +282,7 @@ Para producción real (post-hackathon):
 
 3. **Actualizar `docs/REGISTRO_PROYECTO.md`** con la URL en la sección de Links
 
-4. **Grabar el demo de 4-5 min** ahora que tenés URL live para mostrar (mirá script en `docs/DEMO_READINESS.md`)
+4. **Grabar el demo de 4-5 min** ahora que tienes URL live para mostrar (mira script en `docs/DEMO_READINESS.md`)
 
 5. **Subir el video a YouTube unlisted** y agregar el link al README + pitch
 

@@ -38,7 +38,7 @@ export const TOKENS: Record<TokenSymbol, TokenInfo> = {
       "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
     vibe: "El motor del ecosistema",
     pitchVE:
-      "El token nativo de Solana, mi pana. Lo us&aacute;s para pagar comisiones (centavos), hacer staking, y es la base de todo lo que pasa en esta red. Si Solana sube, SOL sube.",
+      "El token nativo de Solana, mi pana. Lo usas para pagar comisiones (centavos), hacer staking, y es la base de todo lo que pasa en esta red. Si Solana sube, SOL sube.",
     riesgo: 3,
     brand: "#9945FF",
   },
@@ -51,7 +51,7 @@ export const TOKENS: Record<TokenSymbol, TokenInfo> = {
       "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
     vibe: "El d&oacute;lar digital m&aacute;s confiable",
     pitchVE:
-      "1 USDC = 1 USD, siempre. Respaldado por d&oacute;lares reales en bancos auditados. Si quer&eacute;s ahorrar sin que se te pierda valor, esto es lo m&aacute;s parecido a un d&oacute;lar en tu bolsillo digital.",
+      "1 USDC = 1 USD, siempre. Respaldado por d&oacute;lares reales en bancos auditados. Si quieres ahorrar sin que se te pierda valor, esto es lo m&aacute;s parecido a un d&oacute;lar en tu bolsillo digital.",
     riesgo: 1,
     brand: "#2775CA",
   },
@@ -64,7 +64,7 @@ export const TOKENS: Record<TokenSymbol, TokenInfo> = {
       "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB/logo.svg",
     vibe: "El que ya conoc&eacute;s, ahora en Solana",
     pitchVE:
-      "El mismo USDT que us&aacute;s en Binance, pero en Solana es m&aacute;s r&aacute;pido y m&aacute;s barato. Si vens del mundo Tron, este es tu puente directo.",
+      "El mismo USDT que usas en Binance, pero en Solana es m&aacute;s r&aacute;pido y m&aacute;s barato. Si vens del mundo Tron, este es tu puente directo.",
     riesgo: 2,
     brand: "#26A17B",
   },
@@ -76,7 +76,7 @@ export const TOKENS: Record<TokenSymbol, TokenInfo> = {
     logoURI: "https://static.jup.ag/jup/icon.png",
     vibe: "El Booking de los swaps",
     pitchVE:
-      "Jupiter es la app que te busca el mejor precio entre todas las exchanges de Solana. Cada swap que hac&eacute;s en Tropico pasa por Jupiter. JUP es su token: si la app crece, el token crece.",
+      "Jupiter es la app que te busca el mejor precio entre todas las exchanges de Solana. Cada swap que hazs en Tropico pasa por Jupiter. JUP es su token: si la app crece, el token crece.",
     riesgo: 3,
     brand: "#FBA43A",
   },
@@ -89,7 +89,7 @@ export const TOKENS: Record<TokenSymbol, TokenInfo> = {
       "https://metadata.jito.network/token/jto/image",
     vibe: "Tu SOL trabajando en background",
     pitchVE:
-      "JTO es el token de Jito, una plataforma de staking que paga m&aacute;s que el staking normal. Pens&aacute; en JTO como ser due&ntilde;o de un peda&ccedil;ito de esa plataforma — si m&aacute;s gente la usa, m&aacute;s gan&aacute;s.",
+      "JTO es el token de Jito, una plataforma de staking que paga m&aacute;s que el staking normal. Piensa en JTO como ser due&ntilde;o de un peda&ccedil;ito de esa plataforma — si m&aacute;s gente la usa, m&aacute;s ganas.",
     riesgo: 3,
     brand: "#00D9C0",
   },
@@ -128,7 +128,7 @@ export const TOKENS: Record<TokenSymbol, TokenInfo> = {
       "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/4k3Dyjzvzp8eMZWUXbBCjEvwSkkk59S5iCNLY3QrkX6R/logo.png",
     vibe: "Una de las primeras exchanges descentralizadas",
     pitchVE:
-      "Raydium es uno de los DEX m&aacute;s usados de Solana. Cuando hac&eacute;s un swap aqu&iacute; en Tropico, una parte de tu transacci&oacute;n probablemente pasa por Raydium. Su token gana valor mientras m&aacute;s gente la use.",
+      "Raydium es uno de los DEX m&aacute;s usados de Solana. Cuando hazs un swap aqu&iacute; en Tropico, una parte de tu transacci&oacute;n probablemente pasa por Raydium. Su token gana valor mientras m&aacute;s gente la use.",
     riesgo: 4,
     brand: "#C200FB",
   },
@@ -141,7 +141,7 @@ export const TOKENS: Record<TokenSymbol, TokenInfo> = {
       "https://arweave.net/hQiPZOsRZXGXBJd_82PhVdlM_hACsT_q6wqwf5cSY7I",
     vibe: "La memecoin oficial de Solana",
     pitchVE:
-      "BONK es una memecoin — sub&eacute; y baj&aacute; r&aacute;pido, no tiene m&aacute;s utilidad que la cultura. Si quer&eacute;s jugar con plata que pod&eacute;s perder y divertirte, BONK. Pero no metas tus ahorros aqu&iacute;, panita.",
+      "BONK es una memecoin — sub&eacute; y baja r&aacute;pido, no tiene m&aacute;s utilidad que la cultura. Si quieres jugar con plata que puedes perder y divertirte, BONK. Pero no metas tus ahorros aqu&iacute;, panita.",
     riesgo: 5,
     brand: "#FFB938",
   },

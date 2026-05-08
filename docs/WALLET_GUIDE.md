@@ -8,7 +8,7 @@
 
 ## 🎯 TL;DR (90 segundos)
 
-Tropico **NO te pide escribir 12 palabras** de seed phrase. Usás tu **email + un OTP** y en 15 segundos tenés una wallet de Solana funcional. Bajo el capó usa **Privy MPC embedded wallets**: la llave privada **nunca existe completa** en ningún lado — está dividida en 3 pedazos criptográficos (shares) que cooperan para firmar SIN reconstruirla. Es **non-custodial real** (Tropico ni Privy pueden mover tu plata solos), recuperable por email, y opcional con biometría TouchID/FaceID. Si querés migrar a Phantom en el futuro, podés exportar las 12 palabras tradicionales.
+Tropico **NO te pide escribir 12 palabras** de seed phrase. Usas tu **email + un OTP** y en 15 segundos tienes una wallet de Solana funcional. Bajo el capó usa **Privy MPC embedded wallets**: la llave privada **nunca existe completa** en ningún lado — está dividida en 3 pedazos criptográficos (shares) que cooperan para firmar SIN reconstruirla. Es **non-custodial real** (Tropico ni Privy pueden mover tu plata solos), recuperable por email, y opcional con biometría TouchID/FaceID. Si quieres migrar a Phantom en el futuro, puedes exportar las 12 palabras tradicionales.
 
 ---
 
@@ -107,12 +107,12 @@ Aplicado a wallets:
 
 **Analogía simple**:
 - Imaginá una caja fuerte con 3 cerraduras distintas
-- Vos tenés 1 llave, Privy tiene la 2da, un guardian tiene la 3ra
+- Tú tienes 1 llave, Privy tiene la 2da, un guardian tiene la 3ra
 - Para abrir la caja, **las 3 llaves giran al mismo tiempo**
 - Nadie por separado puede abrirla
 - Pero las 3 cooperando, sí
 
-**¿Por qué importa?** Porque una sola parte (vos, Privy, o el guardian) **NO puede mover tus fondos solo**. Eso es exactamente lo que define "non-custodial".
+**¿Por qué importa?** Porque una sola parte (tú, Privy, o el guardian) **NO puede mover tus fondos solo**. Eso es exactamente lo que define "non-custodial".
 
 ---
 
@@ -271,7 +271,7 @@ Las dos apps acceden a la **misma cuenta de Solana**. Mismos fondos, misma pubke
 - Quiere usar features avanzadas no en Tropico (NFT marketplaces, DeFi avanzado)
 - No quiere depender de Privy infra
 
-**Cuándo NO conviene**: si el usuario es nuevo en cripto y prefiere recuperación por email → quedate con Tropico/Privy.
+**Cuándo NO conviene**: si el usuario es nuevo en cripto y prefiere recuperación por email → quédate con Tropico/Privy.
 
 ---
 
@@ -403,23 +403,23 @@ Para Tropico en hackathon y primer año: **Free tier suficiente**. Mes 12 con 50
 
 ### "¿Por qué necesito mi email? ¿Eso es seguro?"
 
-> "Tu email es tu llave de acceso, como con cualquier otra app moderna. Pero la diferencia es que **NOSOTROS NUNCA vemos tu plata** — somos solo el frontend. La plata vive en blockchain pública, vos sos la única persona que puede moverla."
+> "Tu email es tu llave de acceso, como con cualquier otra app moderna. Pero la diferencia es que **NOSOTROS NUNCA vemos tu plata** — somos solo el frontend. La plata vive en blockchain pública, tú eres la única persona que puede moverla."
 
 ### "¿Y si me hackean el email?"
 
-> "Activá la PassKey biométrica desde Settings. Eso suma un factor: aunque alguien acceda a tu email, sin tu huella no puede mover plata."
+> "Activa la PassKey biométrica desde Settings. Eso suma un factor: aunque alguien acceda a tu email, sin tu huella no puede mover plata."
 
 ### "¿Qué pasa si Tropico cierra la empresa?"
 
-> "Podés exportar tu wallet a Phantom desde Settings. Las 12 palabras te dan control total y la wallet sigue funcionando aunque Tropico desaparezca."
+> "Puedes exportar tu wallet a Phantom desde Settings. Las 12 palabras te dan control total y la wallet sigue funcionando aunque Tropico desaparezca."
 
 ### "¿Es lo mismo que Binance?"
 
-> "No. Binance ES el dueño de tu plata mientras está ahí. Si te bloquean la cuenta, perdés acceso. En Tropico **vos sos la dueña** — la plata vive en blockchain, y nadie te la puede congelar. Tropico es solo la interfaz."
+> "No. Binance ES el dueño de tu plata mientras está ahí. Si te bloquean la cuenta, pierdes acceso. En Tropico **tú eres la dueña** — la plata vive en blockchain, y nadie te la puede congelar. Tropico es solo la interfaz."
 
 ### "¿Cómo sé que mi plata realmente está ahí?"
 
-> "Cualquier movimiento queda en blockchain pública. Tomá tu pubkey, andá a [solscan.io](https://solscan.io), pegá tu pubkey, y vas a ver TODOS los movimientos. Cero confianza necesaria — verificás con tus ojos."
+> "Cualquier movimiento queda en blockchain pública. Toma tu pubkey, ve a [solscan.io](https://solscan.io), pega tu pubkey, y vas a ver TODOS los movimientos. Cero confianza necesaria — verificás con tus ojos."
 
 ---
 

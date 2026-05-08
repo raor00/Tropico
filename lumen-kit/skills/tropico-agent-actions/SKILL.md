@@ -60,23 +60,23 @@ python3 {SCRIPTS_DIR}/agent_history.py --instance {INSTANCE_ID} --wallet <PUBKEY
 
 ## Reglas de ruteo
 
-1. "Activá DCA semanal de $50 a SOL los lunes" →
+1. "Activa DCA semanal de $50 a SOL los lunes" →
    - `agent_rule_upsert.py --action dca --config '{"monto":50,"tokenDestino":"SOL","diaSemana":1,"hora":10}'`
-   - Confirmá con el usuario antes
-   - Mostrá la policy: "Max $200/semana, max $50 por ejecución, sesión expira en 1h."
+   - Confirma con el usuario antes
+   - Muestra la policy: "Max $200/semana, max $50 por ejecución, sesión expira en 1h."
 
 2. "¿Qué reglas tengo activas?" → `agent_rules_list.py`
 
-3. "Ejecutá el DCA ahora" → confirmar primero, después `agent_execute.py --action dca`. Mostrar la signature al usuario al final.
+3. "Ejecuta el DCA ahora" → confirmar primero, después `agent_execute.py --action dca`. Mostrar la signature al usuario al final.
 
 4. "¿Cuántas veces se ejecutó el rebalance?" → `agent_history.py --limit 10`
 
 ## Reglas de seguridad (NO NEGOCIABLES)
 
 - **Confirmación SIEMPRE**: antes de ejecutar una acción autónoma, mostrar al usuario los detalles (monto, token, destino, fee). NUNCA ejecutar sin confirmación, ni siquiera con regla activa.
-- **Policy primero**: si OpenClaw rechaza por policy violation, mostrá el motivo claro al usuario: "No puedo ejecutar — supera el límite semanal de $200 que configuraste."
-- **Sesión expirada**: si la session key delegada expiró, dirig&iacute; al usuario a reactivar Modo Agente: "La sesión del agente expiró por seguridad. Andá a /carlos/agente y volvé a activar para extender 24h."
-- **Dry-run primero (opcional)**: para acciones de monto >$100, ofrec&eacute; un dry-run que simula sin ejecutar — el usuario aprueba después.
+- **Policy primero**: si OpenClaw rechaza por policy violation, muestra el motivo claro al usuario: "No puedo ejecutar — supera el límite semanal de $200 que configuraste."
+- **Sesión expirada**: si la session key delegada expiró, dirige al usuario a reactivar Modo Agente: "La sesión del agente expiró por seguridad. Ve a /carlos/agente y vuelve a activar para extender 24h."
+- **Dry-run primero (opcional)**: para acciones de monto >$100, ofrece un dry-run que simula sin ejecutar — el usuario aprueba después.
 
 ## UI Surface (cuando proponés activar/ejecutar una acción)
 
@@ -88,15 +88,15 @@ python3 {SCRIPTS_DIR}/agent_history.py --instance {INSTANCE_ID} --wallet <PUBKEY
 
 ## Ejemplos
 
-- "Configur&aacute; un DCA de $30 a JTO los viernes"
+- "Configura un DCA de $30 a JTO los viernes"
   → Confirmar: "Te configuro: $30 USDC → JTO cada viernes a las 10am. Policy: max $120/mes, sesión expira en 1h. ¿Lo activo?"
   → Si user dice s&iacute;: `agent_rule_upsert.py --action dca --config '...'`
 
-- "Ejecut&aacute; el cashback ya"
+- "Ejecuta el cashback ya"
   → Confirmar: "Acumulaste $3.20. ¿Lo reclamo a tu wallet ahora? La firma la hace OpenClaw con tu session key."
   → Si user dice s&iacute;: `agent_execute.py --action auto-cashback`
-  → Mostrar tx signature: "Listo, signature: `5xK...abc`. Ya tenés los $3.20 en tu wallet. Verificalo en Solscan si querés."
+  → Mostrar tx signature: "Listo, signature: `5xK...abc`. Ya tienes los $3.20 en tu wallet. Verificalo en Solscan si quieres."
 
 ## Disclaimer en cada respuesta de Modo Agente
 
-Siempre cerrá con: "Pod&eacute;s pausar o revocar el agente cuando quieras desde /carlos/agente."
+Siempre cierra con: "Puedes pausar o revocar el agente cuando quieras desde /carlos/agente."

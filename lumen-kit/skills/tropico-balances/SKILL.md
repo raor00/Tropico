@@ -53,19 +53,19 @@ Devuelve JSON: `{ "yieldSemana": 0.48, "yieldMes": 2.05, "apyActual": 5.2 }`
 1. Usuario pregunta "¿Cuánto tengo?" → `solana_balance.py --wallet <pubkey>`
 2. Usuario pregunta "¿Cuánto SOL tengo?" → `solana_balance.py --wallet <pubkey> --token SOL`
 3. Usuario pregunta "¿Cuánto generé esta semana?" → `yield_acumulado.py --wallet <pubkey>`
-4. Si el wallet no tiene cuentas SPL para algunos tokens → es normal, mostrá solo los que sí tiene
-5. Si el RPC falla → "No puedo leer tu saldo ahora, pana. Verificá tu conexión."
+4. Si el wallet no tiene cuentas SPL para algunos tokens → es normal, muestra solo los que sí tiene
+5. Si el RPC falla → "No puedo leer tu saldo ahora, pana. Verifica tu conexión."
 
 ## Privacidad
 
 - **NO loguees el pubkey en plain text** en el output del script
-- **NO menciones internals** (RPC, ATAs, decimals) al usuario — presentá los datos limpios
+- **NO menciones internals** (RPC, ATAs, decimals) al usuario — presenta los datos limpios
 - El usuario NO debería saber que hay scripts corriendo
 
 ## Ejemplos
 
 - "¿Cuánto tengo en mi wallet?"
-  → `solana_balance.py` → "Tenés $348.65 en total (Bs. 226.753,55 al paralelo). Repartido en 247.30 USDC, 0.428 SOL, 12.5 JTO, y 0.05 mSOL."
+  → `solana_balance.py` → "Tienes $348.65 en total (Bs. 226.753,55 al paralelo). Repartido en 247.30 USDC, 0.428 SOL, 12.5 JTO, y 0.05 mSOL."
 
 - "¿Y mi yield esta semana?"
   → `yield_acumulado.py` → "Esta semana ganaste $0.48 en yield (Bs. 312,24). APY actual: 5.2% — sólido para algo automático."
@@ -74,5 +74,5 @@ Devuelve JSON: `{ "yieldSemana": 0.48, "yieldMes": 2.05, "apyActual": 5.2 }`
 
 - Saldos en USD con `$` prefix y formato US (1,234.56)
 - Bs con `Bs.` prefix y formato VE (1.234,56)
-- Si el usuario tiene <$1, mostrá centavos con 2 decimales
-- Si tiene >$10,000, podés usar formato compacto ($12.5k)
+- Si el usuario tiene <$1, muestra centavos con 2 decimales
+- Si tiene >$10,000, puedes usar formato compacto ($12.5k)

@@ -7,7 +7,7 @@
 
 ## 0. TL;DR — Resumen ejecutivo (90 segundos)
 
-**Tropico** es **la red económica del venezolano en Solana**. NO es una wallet más. Es una **red privada de pagos paralela al sistema bancario** donde el usuario ahorra en USDC (no se devalúa) generando yield ~5% APY automático, paga directo en comercios afiliados con QR (settlement en 1 segundo, sin Banesco/sin POS), y los comercios pagan 60-75% menos en fees vs Visa/Mastercard. **Es MercadoPago para Solana**, nativo de USDC, sin custodios.
+**Tropico** es **la red económica del venezolano en Solana**. NO es una wallet más. Es una **red privada de pagos paralela al sistema bancario** donde el usuario ahorra en USDC (no se devalúa) generando yield ~5% APY automático, paga directo en comercios afiliados con QR (settlement en 1 segundo, sin Banesco/sin POS), y los comercios pagan 60-75% menos en fees vs Visa/Mastercard. **Es la red económica caribeña en Solana**, nativa de USDC, sin custodios.
 
 **Mecánica circular** (la trifecta económica):
 - **Usuario** deposita USDC → genera yield mientras la plata está parada (combate inflación de raíz, porque la plata nunca toca el bs)
@@ -24,7 +24,7 @@
 **Demo del 48h hackathon (dev3pack, mayo 2026):** usuario logguea con email → ve saldo USDC con yield acumulado → paga $5 a un "comercio Tropico" simulado → swap real SOL → JTO con fee a Tropico (verificable en Solscan) → conversación real con Carlos → tour del lado merchant en `/comercios`.
 
 **Posicionamiento competitivo:**
-> Como MercadoPago para Solana. Como Visa pero non-custodial y 60% más barato. Como Kontigo pero abriendo el ecosistema completo. Como Reserve pero con red de comercios y yield real.
+> Una red de pagos caribeña sobre Solana. Como Visa pero non-custodial y 60% más barato. Como Kontigo pero abriendo el ecosistema completo. Como Reserve pero con red de comercios y yield real.
 
 **Stack:** Next.js 15 + Privy + Jupiter v6 + Gemini 2.0 Flash + Helius RPC. Cero programa Anchor custom. Cero backend persistente.
 
@@ -39,8 +39,8 @@
 | Producto merchant | **Tropico Comercios** |
 | Slug | `tropico` |
 | Categoría | Red económica privada / payment network non-custodial |
-| Tagline corto | "La red económica del venezolano. Ahorrá ganando, pagá sin perder." |
-| Tagline largo | "Tu plata en USDC genera mientras está parada. Pagás directo en comercios sin pasar por el banco. Los comercios pagan 60% menos. Todos ganan." |
+| Tagline corto | "La red económica del venezolano. Ahorra ganando, paga sin perder." |
+| Tagline largo | "Tu plata en USDC genera mientras está parada. Pagas directo en comercios sin pasar por el banco. Los comercios pagan 60% menos. Todos ganan." |
 | Idioma | Español venezolano (es-VE) |
 | Mercado objetivo | Venezuela primero, LATAM después (CO, AR, MX, PE) |
 | Tipo de app | Progressive Web App (PWA), mobile-first |
@@ -58,9 +58,9 @@ Esto es lo que diferencia a Tropico de cualquier wallet o app de pagos existente
 
 1. **La plata vive en USDC, no en bs** → no se devalúa. La inflación se neutraliza en origen.
 2. **La plata genera mientras está parada** → yield ~5% APY default (mSOL/Kamino bajo el hood). Combate la inflación USD también.
-3. **Si pagás dentro de la red, no salís de USDC** → el dinero gira sin tocar bancos, sin Visa, sin POS tradicional, sin spreads ocultos.
+3. **Si pagas dentro de la red, no sales de USDC** → el dinero gira sin tocar bancos, sin Visa, sin POS tradicional, sin spreads ocultos.
 
-### Comparativa de costos al merchant (lo que vendés en el pitch)
+### Comparativa de costos al merchant (lo que vendes en el pitch)
 
 | Método | Fee total al merchant | Settlement | Chargebacks | Hardware |
 |---|---|---|---|---|
@@ -84,13 +84,13 @@ Esto es lo que diferencia a Tropico de cualquier wallet o app de pagos existente
 
 ### El efecto red
 
-Cada nuevo merchant afiliado aumenta el valor de la wallet del usuario (más lugares donde pagar). Cada nuevo usuario aumenta el valor de Tropico Comercios (más clientes potenciales). Esto es **classic two-sided network effect** — el mismo modelo que llevó a MercadoPago a $30B de market cap.
+Cada nuevo merchant afiliado aumenta el valor de la wallet del usuario (más lugares donde pagar). Cada nuevo usuario aumenta el valor de Tropico Comercios (más clientes potenciales). Esto es **classic two-sided network effect** — el mismo modelo bilateral que ha probado escalar redes de pagos en LATAM.
 
 ### Confianza radical (la base de todo)
 
 Sin confianza, esta red no funciona. Tropico construye confianza con 4 pilares **visibles en la app**:
 
-1. **Auditoría on-chain pública**: link directo en la app al fee account de Tropico en Solscan. *"Este es exactamente cuánto cobramos. Verificalo vos mismo."*
+1. **Auditoría on-chain pública**: link directo en la app al fee account de Tropico en Solscan. *"Este es exactamente cuánto cobramos. Verificalo tú mismo."*
 2. **Tropico nunca toca tu plata**: explicación visual en onboarding y banner permanente. La wallet es del usuario. Tropico es UI/UX, no custodia.
 3. **Comparativa transparente vs alternativas**: pantalla "Cuánto te ahorrás" con números reales vs Banesco/Binance.
 4. **Open source del frontend** (post-MVP): cualquiera puede auditar el código.
@@ -504,7 +504,7 @@ Hackathon/
 **Para visitantes no logueados.**
 
 - Hero: "El sistema financiero del venezolano, en Solana."
-- Subtitle: "Ahorrá, gastá, recibí, mandá y crecé. Todo en una sola app, sin custodios."
+- Subtitle: "Ahorra, gasta, recibe, manda y crecé. Todo en una sola app, sin custodios."
 - 5 cards (uno por módulo) con badge + descripción
 - CTAs: "Empezar con email" (Privy) | "Ya tengo Phantom"
 
@@ -515,8 +515,8 @@ Hackathon/
 - Header con saldo total: `DualPrice size="xl"` ($1,247.30 / Bs. 811,408.92)
 - Sub-header: número de tokens + dirección abreviada del wallet
 - Grid 2x3 de **ModuleCards**:
-  1. Cambiar (purple→green) — "Intercambiá entre tokens al mejor precio"
-  2. Enviar (sun→coral) — "Mandá USDC a quien quieras, instantáneo"
+  1. Cambiar (purple→green) — "Intercambia entre tokens al mejor precio"
+  2. Enviar (sun→coral) — "Manda USDC a quien quieras, instantáneo"
   3. Guardar (sea→green) — "Tu plata generando ~7% al año"
   4. Cobrar (coral→sun) — "QR para recibir cobros en USDC"
   5. Carlos (purple→sea) — "Pregúntale al copiloto"
@@ -577,7 +577,7 @@ Subflujos:
 - Header: "Tu plata trabajando"
 - Card con saldo actual en USDC (el "ahorro disponible")
 - Toggle grande: **"Activar yield automático"**
-  - OFF: "Tu USDC está parado. Activalo para que gane ~7% al año."
+  - OFF: "Tu USDC está parado. Actívalo para que gane ~7% al año."
   - ON: muestra simulación: "Estás ganando ~$X/mes (~Bs. Y/mes)"
 - Estrategias disponibles (cards):
   - **mSOL Liquid Staking** — APY ~7%, riesgo bajo, lock 0 días
@@ -596,7 +596,7 @@ Subflujos:
 **Estado MVP: UI completa + QR generation real.**
 
 - Header: "Cobrar"
-- Input grande: "¿Cuánto cobrás?" (USD)
+- Input grande: "¿Cuánto cobras?" (USD)
 - DualPrice del monto en bs
 - "Generar QR" → fullscreen con QR de Solana Pay URL
 - Debajo del QR: "Comparte por WhatsApp" + signature listener
@@ -620,7 +620,7 @@ Subflujos:
 - Quick prompts: "¿Qué es JTO?" | "¿Cuál token me conviene?" | "¿Por qué Solana?" | "Diferencia USDC/USDT"
 - Lista de mensajes con burbujas
 - Input fijo abajo + botón send
-- Carlos puede sugerir un módulo: "Si querés ahorrar, andá a /guardar y activá mSOL"
+- Carlos puede sugerir un módulo: "Si quieres ahorrar, ve a /guardar y activa mSOL"
 
 **Backend:** `POST /api/carlos` con `{ message, history, currentScreen }` → Gemini 2.0 Flash con system prompt + history + contexto de pantalla → respuesta + sugerencia opcional de CTA a otro módulo.
 
@@ -827,9 +827,9 @@ const result = await chat.sendMessage(`[pantalla: ${currentScreen}] ${userMessag
 - Nunca empezar features nuevas después de hora 30.
 
 **Plan de fallback graduado v3:**
-- Si vamos atrasados a hora 28: cortá `/comercios` landing (lo metés en pitch deck como "next sprint").
-- Si vamos atrasados a hora 32: cortá Enviar.
-- Si vamos atrasados a hora 35: cortá Guardar (queda yield default ON visible en home pero sin pantalla dedicada).
+- Si vamos atrasados a hora 28: corta `/comercios` landing (lo metés en pitch deck como "next sprint").
+- Si vamos atrasados a hora 32: corta Enviar.
+- Si vamos atrasados a hora 35: corta Guardar (queda yield default ON visible en home pero sin pantalla dedicada).
 - En el peor caso queda: Foundation + Auth + Home + Cambiar + Cobrar + Carlos. **Tropico Lite — la red económica mínima viable.** Es suficiente para demo.
 
 **Por qué Cobrar es ahora crítico:**
@@ -981,7 +981,7 @@ spl-token balance --address <FEE_ATA_USDC>
 
 > "Estás construyendo Tropico — el sistema operativo financiero del venezolano en Solana. Una webapp PWA con 5 módulos integrados (Cambiar, Enviar, Guardar, Cobrar, Carlos) y 5 streams de revenue. Tu trabajo es seguir el brief adjunto al pie de la letra: stack exacto, branding, copy en español venezolano, arquitectura de carpetas, modelo de negocio multi-stream, y decisiones técnicas (cero programa Anchor custom).
 >
-> Tenés 48 horas, sos junior con primera vez en Solana, trabajás solo. Priorizá demo funcional sobre completitud técnica. Construí en este orden: 1) foundation y landing, 2) Privy login, 3) home con 5 módulos visibles, 4) **Cambiar funcional** (módulo crítico), 5) **Carlos funcional** (módulo crítico), 6) Enviar UI-only, 7) Guardar UI-only, 8) Cobrar UI-only, 9) polish, 10) deploy + demo, 11) pitch deck.
+> Tienes 48 horas, eres junior con primera vez en Solana, trabajas solo. Priorizá demo funcional sobre completitud técnica. Construí en este orden: 1) foundation y landing, 2) Privy login, 3) home con 5 módulos visibles, 4) **Cambiar funcional** (módulo crítico), 5) **Carlos funcional** (módulo crítico), 6) Enviar UI-only, 7) Guardar UI-only, 8) Cobrar UI-only, 9) polish, 10) deploy + demo, 11) pitch deck.
 >
 > Reglas no negociables:
 > - Cero código Rust/Anchor
@@ -993,7 +993,7 @@ spl-token balance --address <FEE_ATA_USDC>
 > - **Cambiar y Carlos son 100% funcionales; Enviar/Guardar/Cobrar son UI-completa con simulación honesta** (admitir en UI que es demo)
 > - Plan de fallback graduado: si vamos atrasados, cortar módulos UI-only ANTES que romper Cambiar o Carlos
 >
-> Si algo del brief contradice una decisión, alertame antes de proceder. No inventes deps ni endpoints — usá exactamente los listados."
+> Si algo del brief contradice una decisión, alertame antes de proceder. No inventes deps ni endpoints — usa exactamente los listados."
 
 ### Archivos a adjuntar a la herramienta IA
 
@@ -1175,7 +1175,7 @@ Lumen es un framework open-source (MIT, Python, repo `gabogabucho/lumen-agent`) 
 Cada acción tiene: descripción al usuario, configuración, policy en producción, trigger, simulación demo MVP.
 
 #### 1. DCA semanal
-- **Usuario**: "Comprá $50 de SOL cada lunes 10:00."
+- **Usuario**: "Compra $50 de SOL cada lunes 10:00."
 - **Policy**: max $200/semana, max $50 por ejecución
 - **Trigger producción**: cron semanal
 - **Demo MVP**: card en home con "Próximo DCA: lunes 10:00 — $50 USDC → SOL", botón "Ejecutar ahora" abre `/cambiar` con parámetros pre-llenados (ejecuta tx real)
@@ -1187,13 +1187,13 @@ Cada acción tiene: descripción al usuario, configuración, policy en producci�
 - **Demo MVP**: simular transfer entrante → push "Recibiste $200, Carlos sugiere mover $150 a Save" → confirmación
 
 #### 3. Auto-cashback claim
-- **Usuario**: "Reclamá automático mi cashback acumulado cada semana."
+- **Usuario**: "Reclama automático mi cashback acumulado cada semana."
 - **Policy**: max $50 por claim, cooldown 24h
 - **Trigger producción**: cron semanal
-- **Demo MVP**: card "Tenés $3.20 acumulado en 4 comercios. [Reclamar ahora]" con animación de éxito
+- **Demo MVP**: card "Tienes $3.20 acumulado en 4 comercios. [Reclamar ahora]" con animación de éxito
 
 #### 4. Re-balance de portafolio
-- **Usuario**: "Si JTO sube >20% en 7 días, vendé 10% a USDC."
+- **Usuario**: "Si JTO sube >20% en 7 días, vende 10% a USDC."
 - **Policy**: max 50% del holding, max 1 rebalance/token/semana
 - **Trigger producción**: poll de precios cada 15min
 - **Demo MVP**: card "JTO subió 22% en 7 días. Carlos sugiere vender 10% (~$8) a USDC. [Confirmar]" → ejecuta swap real vía Cambiar

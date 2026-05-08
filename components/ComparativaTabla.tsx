@@ -20,7 +20,7 @@ export function ComparativaTabla() {
     <div className="panel overflow-hidden">
       <div className="border-b border-tropico-border bg-tropico-ink/40 px-5 py-4">
         <h3 className="font-display text-xl font-bold">
-          Cu&aacute;nto te ahorr&aacute;s vs POS tradicional
+          Cu&aacute;nto te ahorras vs POS tradicional
         </h3>
         <p className="text-sm text-tropico-mute">
           Sobre tu volumen mensual real de ventas. C&aacute;lculo conservador, sin contar
@@ -36,7 +36,7 @@ export function ComparativaTabla() {
               <th className="px-5 py-3">POS tradicional (4.5%)</th>
               <th className="px-5 py-3">Tropico (1%)</th>
               <th className="px-5 py-3 text-right">
-                <span className="text-tropico-green">Ahorr&aacute;s</span>
+                <span className="text-tropico-green">Ahorras</span>
               </th>
             </tr>
           </thead>

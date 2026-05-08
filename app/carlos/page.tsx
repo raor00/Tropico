@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Header } from "@/components/Header";
 
 const QUICK_PROMPTS = [
   "¿Qué es JTO?",
@@ -15,10 +16,17 @@ export const metadata = {
 export default function CarlosPage() {
   return (
     <main className="mx-auto flex min-h-dvh max-w-3xl flex-col gap-8 px-5 py-10">
-      <header className="flex flex-col gap-3">
+      <Header
+        nav={[
+          { href: "/home", label: "Wallet" },
+          { href: "/carlos", label: "Carlos" },
+          { href: "/carlos/agente", label: "Modo Agente" },
+        ]}
+      />
+      <header className="flex flex-col gap-3 pt-4">
         <Link
           href="/"
-          className="w-fit text-sm text-tropico-mute transition hover:text-tropico-text"
+          className="w-fit text-sm text-tropico-mute transition hover:text-tropico-sun"
         >
           &larr; Volver
         </Link>
@@ -36,14 +44,14 @@ export default function CarlosPage() {
       {/* Greeting + chat placeholder */}
       <section className="panel flex flex-col gap-4 p-6">
         <p className="text-tropico-text/90">
-          ¡Epa, panita! Soy Carlos, tu copiloto en Solana. Pregunt&aacute;me qu&eacute;
+          ¡Epa, panita! Soy Carlos, tu copiloto en Solana. Preguntame qu&eacute;
           es cualquier token, c&oacute;mo funciona el staking, o por qu&eacute; Solana
           le pega a Ethereum. ¿En qu&eacute; te ayudo?
         </p>
         <div className="rounded-lg border border-tropico-border bg-tropico-ink/40 p-4 text-sm text-tropico-mute">
           ⏳ El chat con Gemini se activa cuando configures tu API key en{" "}
           <code className="font-mono text-xs">.env.local</code>. Por ahora,
-          mir&aacute; el <strong className="text-tropico-text">Modo Agente</strong>{" "}
+          mira el <strong className="text-tropico-text">Modo Agente</strong>{" "}
           que ya est&aacute; funcional como showcase.
         </div>
       </section>
@@ -51,7 +59,7 @@ export default function CarlosPage() {
       {/* Quick prompts */}
       <section className="flex flex-col gap-3">
         <h2 className="text-sm uppercase tracking-wider text-tropico-mute">
-          Pregunt&aacute;me sobre…
+          Preguntame sobre…
         </h2>
         <div className="flex flex-wrap gap-2">
           {QUICK_PROMPTS.map((p) => (

@@ -54,7 +54,7 @@ python3 {SCRIPTS_DIR}/whatsapp_share.py --instance {INSTANCE_ID} --message "<TEX
 
 1. Usuario es merchant y dice "Quiero cobrar $5" → `solana_pay_url.py --recipient <su pubkey> --amount 5 --label <su negocio>`
 2. Usuario dice "Mandale $10 a mi tía" → `claim_link.py --sender <su pubkey> --amount 10 --destinatario "tía"`
-3. Usuario dice "Compart&iacute; este recibo por WhatsApp" → `whatsapp_share.py --message "..." --url "..."`
+3. Usuario dice "Comparte este recibo por WhatsApp" → `whatsapp_share.py --message "..." --url "..."`
 
 ## Reglas de privacidad y seguridad
 
@@ -81,7 +81,7 @@ Para claim link:
 ## Ejemplos
 
 - "Quiero cobrarle $5 a un cliente"
-  → `solana_pay_url.py --amount 5` → "Listo, ten&eacute;s tu QR. Pasaselo al cliente para que escanee con su wallet. La plata te cae en 1 segundo. ¿Comparto el recibo por WhatsApp después?"
+  → `solana_pay_url.py --amount 5` → "Listo, tienes tu QR. Pásaselo al cliente para que escanee con su wallet. La plata te cae en 1 segundo. ¿Comparto el recibo por WhatsApp después?"
 
 - "Mandale $20 a mi primo Juan"
   → `claim_link.py --sender <pubkey> --amount 20 --destinatario "primo Juan"` → "Te genero el link para Juan. Cuando abra, le creamos su wallet con su email y recibe los $20. Te dejo el link de WhatsApp listo para mandárselo."

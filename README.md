@@ -25,8 +25,8 @@
 
 ### El momento red económica (lo que hay que ver)
 
-Abrí dos ventanas:
-1. `/cobrar` como merchant → ingresá $5 → "Generar QR"
+Abre dos ventanas:
+1. `/cobrar` como merchant → ingresa $5 → "Generar QR"
 2. Otra ventana como cliente → escaneá el QR → "Simular pago recibido"
 3. Ves: cliente paga $5, merchant recibe **$4.95 en <1s**, Tropico cobra **$0.05** (1%), cliente recibe **$0.05 cashback**.
 
@@ -70,7 +70,7 @@ Dos productos integrados bajo una marca paraguas, **Red Tropico**:
 
 ### El efecto red económica
 
-Cuando ambos lados están dentro de Tropico, el dinero gira en USDC sin pasar por bancos. El comercio puede ofrecer cashback al cliente porque ahorra ~$35/mes por cada $1k en ventas vs POS tradicional. Es **MercadoPago para Solana, nativo de USDC, non-custodial**.
+Cuando ambos lados están dentro de Tropico, el dinero gira en USDC sin pasar por bancos. El comercio puede ofrecer cashback al cliente porque ahorra ~$35/mes por cada $1k en ventas vs POS tradicional. Es **la red económica caribeña en Solana, nativa de USDC, non-custodial**.
 
 ---
 
@@ -183,7 +183,7 @@ cd tropico
 npm install
 
 # 3. (Opcional) Configurar .env.local con API keys reales
-# Mirá .env.example o docs/REGISTRO_PROYECTO.md
+# Mira .env.example o docs/REGISTRO_PROYECTO.md
 cp .env.example .env.local 2>/dev/null || true
 # Editar .env.local con NEXT_PUBLIC_PRIVY_APP_ID, GOOGLE_GENERATIVE_AI_API_KEY, etc.
 # (Sin keys, la app corre 100% con mocks honestos.)
@@ -335,7 +335,7 @@ Si deployás sin `NEXT_PUBLIC_PRIVY_APP_ID`, la app corre en **demo mode**:
 - Banner explícito en /home indicando que es simulación
 - **Todos los flows visuales completos** funcionan para presentar el producto
 
-Para activar wallets reales: agregá `NEXT_PUBLIC_PRIVY_APP_ID` (de [dashboard.privy.io](https://dashboard.privy.io)) en `.env.local` o Vercel env vars y reiniciá.
+Para activar wallets reales: agrega `NEXT_PUBLIC_PRIVY_APP_ID` (de [dashboard.privy.io](https://dashboard.privy.io)) en `.env.local` o Vercel env vars y reiniciá.
 
 ---
 

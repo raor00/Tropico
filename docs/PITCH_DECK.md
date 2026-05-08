@@ -80,7 +80,7 @@ Cómo renderizarlo:
 
 <br/>
 
-**Ahorrá ganando. Pagá sin perder.**
+**Ahorra ganando. Paga sin perder.**
 **Sin bancos. Sin custodios. Sin USDT atrapado.**
 
 <br/>
@@ -94,7 +94,7 @@ SPEAKER NOTES (slide 1 — 25 segundos):
 en Solana. No es una wallet más, es una red de pagos paralela al sistema bancario."
 
 TIMING: 0:00 → 0:25
-PAUSA después del título. Mirá a la jury. Hablá despacio.
+PAUSA después del título. Mira a la jury. Habla despacio.
 -->
 
 ---
@@ -125,7 +125,7 @@ pero asume usuario experto. Los comercios pagan 4.5% en POS tradicional y espera
 3 días para ver la plata. Ahí está el agujero."
 
 TIMING: 0:25 → 1:15
-ENFASIS en los números: '95%', '4.5%', '24-72 horas'. Dejá pausar el final.
+ENFASIS en los números: '95%', '4.5%', '24-72 horas'. Deja pausar el final.
 -->
 
 ---
@@ -182,10 +182,10 @@ Tropico Comercios para el merchant: QR de cobro, settlement en menos de 1 segund
 fee 1% en lugar del 4.5% de POS tradicional — sin chargebacks, sin contrato.
 
 Cuando ambos están dentro de Tropico, el dinero gira en USDC sin pasar por bancos.
-Es MercadoPago para Solana, non-custodial."
+Es la red económica caribeña en Solana, non-custodial."
 
 TIMING: 1:15 → 2:10
-La frase clave es la última. Decila firme.
+La frase clave es la última. Dila firme.
 -->
 
 ---
@@ -281,7 +281,7 @@ SPEAKER NOTES (slide 5 — 50 segundos):
 "5 streams de revenue desde el día uno. Mes 12: 50.000 usuarios + 2.000 comercios
 generan 250 mil dólares de revenue mensual sobre 44 millones de volumen procesado.
 El motor real de crecimiento es el efecto red bilateral: cada nuevo merchant
-aumenta el valor para los usuarios y viceversa. Mismo modelo que MercadoPago."
+aumenta el valor para los usuarios y viceversa. Modelo bilateral clásico: cada lado aumenta el valor del otro."
 
 TIMING: 3:40 → 4:30
 Énfasis en el '250k MRR mes 12' y 'efecto red bilateral'.
@@ -348,7 +348,7 @@ Tropico no es una wallet. Es la infraestructura económica que el venezolano nec
 y que nadie le está dando. Hasta hoy."
 
 TIMING: 4:30 → 5:30
-La última frase es el MIC-DROP. Decila mirando a los ojos. Pausa. Gracias.
+La última frase es el MIC-DROP. Dila mirando a los ojos. Pausa. Gracias.
 -->
 
 ---
@@ -376,7 +376,7 @@ La última frase es el MIC-DROP. Decila mirando a los ojos. Pausa. Gracias.
 SPEAKER NOTES (slide 7 — slide opcional de cierre):
 Mostrar mientras se va (15-30 segundos extra). Da tiempo a que la jury lea los links.
 
-Si tenés que cortar para preguntas, dejá esta slide proyectada mientras respondés.
+Si tienes que cortar para preguntas, deja esta slide proyectada mientras respondés.
 -->
 
 ---
@@ -404,7 +404,7 @@ marp docs/PITCH_DECK.md -s docs/
 
 ## Opción 2 — Copiar a Google Slides / Keynote
 
-Cada bloque entre `---` es UNA slide. Copiá el texto a tu herramienta favorita
+Cada bloque entre `---` es UNA slide. Copia el texto a tu herramienta favorita
 manteniendo estos elementos:
 - Headline grande
 - Bullets con énfasis en colores Tropico
@@ -451,4 +451,4 @@ slidev docs/PITCH_DECK.md
 - ❌ "Vamos a reemplazar a los bancos" → suena ingenuo
 - ❌ "Garantizamos rendimientos" → ilegal
 - ❌ Cualquier opinión política sobre Venezuela
-- ❌ "Hicimos esto en 48 horas" — decí: "MVP del hackathon de un proyecto serio que continúa"
+- ❌ "Hicimos esto en 48 horas" — di: "MVP del hackathon de un proyecto serio que continúa"

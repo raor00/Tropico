@@ -115,7 +115,7 @@ spl-token mint $MINT 1000000000  # 1 billón con 6 decimals
 # 4. Revocar mint authority (supply ya no puede crecer)
 spl-token authorize $MINT mint --disable
 
-# 5. Revocar freeze authority (no podés congelar wallets de usuarios)
+# 5. Revocar freeze authority (no puedes congelar wallets de usuarios)
 spl-token authorize $MINT freeze --disable
 
 # 6. Setupear metadata Metaplex (nombre, símbolo, logo, description)
@@ -190,7 +190,7 @@ async function distributeRewards(usersWithRewards: Array<{ wallet: string; amoun
 - Pool inicial en Raydium con $25k de liquidez (USDC)
 - Listing en Jupiter (automático cuando hay liquidez)
 - Anuncio en Twitter/Telegram + airdrop a beta users
-- Comunicación: "Si usaste Tropico antes del [fecha], reclamá tu TROP"
+- Comunicación: "Si usaste Tropico antes del [fecha], reclama tu TROP"
 
 ### Fase 3 — Utility activation (mes 3)
 - UI de stake en `/guardar` para boost de yield
@@ -258,7 +258,7 @@ Es código abierto SPL — cualquiera puede lanzar un token llamado "TropiCoin" 
 - Antes: usuario hace swap → pierde 0.5% sin "compensación"
 - Después: usuario hace swap → paga 0.5% + recibe $TROP equivalente al 1% del valor → siente que "gana algo"
 
-Es **psicología de fidelización**. Mismo modelo que Starbucks Stars, MercadoPago Mercado Puntos, Rappi Cash.
+Es **psicología de fidelización**. Mismo modelo que Starbucks Stars, Rappi Cash, y programas de fidelización tradicionales.
 
 ### ¿Qué hace si un usuario quiere vender todos sus $TROP?
 
@@ -270,7 +270,7 @@ Pero el usuario que vende todo $TROP **no obtiene los descuentos de fees** ni el
 
 ## 9. Cuándo ejecutar el launch
 
-**Mi recomendación**: NO durante el hackathon. Hacelo Q3 post-launch cuando tengas:
+**Mi recomendación**: NO durante el hackathon. Hazlo Q3 post-launch cuando tengas:
 - Vercel deploy funcionando con tracción inicial
 - Al menos 100 usuarios beta para airdrop
 - Wallet de tesorería multisig setupeado
