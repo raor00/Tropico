@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Manrope, Bricolage_Grotesque, Honk } from "next/font/google";
+import { Manrope, Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import { SplashScreen } from "@/components/SplashScreen";
@@ -10,20 +10,15 @@ const manrope = Manrope({
   subsets: ["latin"],
   variable: "--font-manrope",
   display: "swap",
+  preload: true,
 });
 
-// Display secundario: Bricolage Grotesque — para titulares h2/h3
+// Display secundario: Bricolage Grotesque — titulares h1/h2/h3 + wordmark
 const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
   variable: "--font-bricolage",
   display: "swap",
-});
-
-// Wordmark "TROPICO": Honk — variable font 2024, super expresiva, casi nadie la usa
-const honk = Honk({
-  subsets: ["latin"],
-  variable: "--font-honk",
-  display: "swap",
+  preload: true,
 });
 
 export const metadata: Metadata = {
@@ -48,13 +43,11 @@ export const viewport: Viewport = {
   themeColor: "#1a0d2e",
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es-VE" className={`${manrope.variable} ${bricolage.variable} ${honk.variable}`}>
+    <html lang="es-VE" className={`${manrope.variable} ${bricolage.variable}`}>
       <body className="tropico-glow min-h-dvh pb-20 md:pb-0">
         <SplashScreen />
         <Providers>

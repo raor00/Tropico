@@ -17,8 +17,8 @@ import { useEffect, useRef, useState } from "react";
 
 const SPLASH_FLAG = "tropico:splash-shown:v1";
 const PIXEL_GRID = 16; // 16x16 grid de "pixels" para el logo (256 cuadritos)
-const REVEAL_DURATION_MS = 1800; // duración del armado pixel
-const TOTAL_DURATION_MS = 3500;
+const REVEAL_DURATION_MS = 1100; // duración del armado pixel
+const TOTAL_DURATION_MS = 2200;
 
 export function SplashScreen() {
   const [show, setShow] = useState(false);
@@ -33,9 +33,9 @@ export function SplashScreen() {
     sessionStorage.setItem(SPLASH_FLAG, "1");
 
     timersRef.current.push(
-      setTimeout(() => setPhase("pixels"), 400),
-      setTimeout(() => setPhase("wordmark"), 2200),
-      setTimeout(() => setPhase("exit"), TOTAL_DURATION_MS - 500),
+      setTimeout(() => setPhase("pixels"), 250),
+      setTimeout(() => setPhase("wordmark"), 1300),
+      setTimeout(() => setPhase("exit"), TOTAL_DURATION_MS - 400),
       setTimeout(() => setShow(false), TOTAL_DURATION_MS),
     );
 

@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { Logo } from "./Logo";
 import { AuthCTA } from "./AuthCTA";
+import { VenezuelaBadge } from "./VenezuelaBadge";
 
 /**
  * Header optimizado.
@@ -102,17 +103,24 @@ function HeaderImpl({
       <header
         className={`sticky top-0 z-40 -mx-5 [contain:layout_paint_style] transition-[padding,background-color,border-color,box-shadow] duration-300 ease-out ${
           scrolled
-            ? "border-b border-tropico-border/60 bg-tropico-ink/85 px-5 py-1.5 backdrop-blur-xl shadow-[0_4px_20px_-8px_rgba(255,209,102,0.18)]"
+            ? "border-b border-tropico-border/60 bg-tropico-ink/85 px-4 py-1 backdrop-blur-xl shadow-[0_4px_20px_-8px_rgba(255,209,102,0.18)]"
             : "border-b border-transparent bg-transparent px-5 py-3"
         }`}
       >
         <div
-          className={`flex items-center justify-between gap-3 will-change-transform transition-transform duration-300 ease-out ${
-            scrolled ? "scale-[0.97]" : "scale-100"
+          className={`flex items-center justify-between gap-2 will-change-transform transition-transform duration-300 ease-out ${
+            scrolled ? "scale-[0.95]" : "scale-100"
           }`}
         >
           <div className="flex items-center gap-2">
-            <Logo size={scrolled ? 28 : 40} wordmarkSize={scrolled ? "sm" : "md"} />
+            <Logo size={scrolled ? 24 : 40} wordmarkSize={scrolled ? "sm" : "md"} />
+            {/* VE badge tricolor animado — siempre xs en header para mantener pill compacta */}
+            <VenezuelaBadge
+              size="xs"
+              className={`hidden transition-opacity duration-300 sm:inline-flex ${
+                scrolled ? "opacity-90" : "opacity-100"
+              }`}
+            />
             {badge && (
               <span
                 className={`rounded-md border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${toneClass}`}

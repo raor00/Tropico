@@ -28,7 +28,7 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-manrope)", "system-ui", "sans-serif"],
         display: ["var(--font-bricolage)", "system-ui", "sans-serif"],
-        wordmark: ["var(--font-honk)", "Bricolage Grotesque", "sans-serif"],
+        wordmark: ["var(--font-bricolage)", "system-ui", "sans-serif"],
       },
       animation: {
         "fade-up": "fade-up 400ms ease-out forwards",
