@@ -20,7 +20,7 @@ Las 11 rutas devuelven 200 OK. El flow end-to-end está demoable:
 | **Enviar** | `/enviar` | ✅ FULL | Form send + generación de claim link real + WhatsApp deep link funcional |
 | **Guardar** | `/guardar` | ✅ FULL | Yield UI con saldo + ganado + 3 estrategias (mSOL, Kamino USDC, Kamino LP) |
 | **Depositar** | `/depositar` | ✅ FULL | On-ramp stub honesto + form simulado + faucet button funcional |
-| **Tropico Comercios** | `/comercios` | ✅ FULL | Landing merchant con comparativa Banesco + form afiliación |
+| **Tropico Comercios** | `/comercios` | ✅ FULL | Landing merchant con comparativa vs POS tradicional + form afiliación |
 | **Carlos AI** | `/carlos` | 🟡 UI shell | Greeting + quick prompts (chat real necesita Gemini API key) |
 | **Carlos Modo Agente** | `/carlos/agente` | ✅ FULL | Toggle + 4 acciones + historial + arquitectura híbrida Hermes+OpenClaw |
 | **API tasa bs** | `/api/precio-bs` | ✅ Live | ve.dolarapi.com (paralelo + BCV) |
@@ -61,7 +61,7 @@ Las 11 rutas devuelven 200 OK. El flow end-to-end está demoable:
    "El venezolano cripto solo conoce USDT. Tropico le abre el ecosistema."
 
 1:00–1:45  Tropico Comercios /comercios
-   Click pestaña merchant → comparativa visual vs Banesco.
+   Click pestaña merchant → comparativa visual vs POS tradicional.
    "Por cada $1.000 vendidos, el comercio ahorra $35 al mes."
    Scroll: features, 3 pasos, form de afiliación.
    "Esto es el efecto red bilateral — usuarios + merchants en una sola app."
@@ -108,7 +108,7 @@ Las 11 rutas devuelven 200 OK. El flow end-to-end está demoable:
    Activar 2 acciones, simular ejecución, mostrar histórico, mostrar arquitectura híbrida.
 
 3:45–4:15  /comercios tour + modelo de negocio
-   Comparativa Banesco, números, proyección $250K MRR mes 12.
+   Comparativa POS tradicional, números, proyección $250K MRR mes 12.
 
 4:15–5:00  Visión Q3/Q4/2027 + cierre
    "Tropico no es una wallet. Es la infraestructura económica que LATAM necesita."
@@ -245,7 +245,7 @@ Ese momento "fee llegando en Solscan en vivo" es **el momento ganador del pitch*
 
 **3:00–3:30 — Tropico Comercios (`/comercios`)**
 > "Lado merchant: comparativa visual."
-- Scroll a la comparativa: $35/mes ahorro vs Banesco POS
+- Scroll a la comparativa: $35/mes ahorro vs POS tradicional
 - "Por cada $1.000 en ventas, el comercio se ahorra $35 al mes"
 - Mostrar form de afiliación
 

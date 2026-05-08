@@ -8,7 +8,7 @@
 
 ## Bloque 0 — Versión simple para audiencias no técnicas (1 minuto hablado)
 
-> *"Te explico fácil: en Venezuela todos vivimos peleándole a la inflación. El bolívar se devalúa, el USDT te lo cobran cada operación, y el comercio que te quiere cobrar con POS Banesco le sacan casi 5%.*
+> *"Te explico fácil: en Venezuela todos vivimos peleándole a la inflación. El bolívar se devalúa, el USDT te lo cobran cada operación, y el comercio que te quiere cobrar con POS tradicional le sacan casi 5%.*
 >
 > *Tropico resuelve eso de un solo tiro. Es una app donde guardás tu plata en dólares digitales que no se devalúan. Mientras está ahí guardada, gana intereses sola — como un 5% al año, automático, sin que tengas que activar nada.*
 >
@@ -36,7 +36,7 @@
 
 ## Bloque 2 — El problema (1 minuto)
 
-> **"En Venezuela, el 95% del volumen cripto vive atrapado en USDT/Tron por Binance P2P. La gente paga 1-3% en cada operación P2P, sus ahorros en bolívares pierden valor cada día por la inflación, y los comercios pagan 4.5% en POS Banesco más esperan 24-72 horas para ver la plata. Las apps en español que existen — Reserve, Kontigo, Zinli — son custodias y solo guardan dólares. Phantom es non-custodial pero asume que ya sabés cripto, lo cual deja afuera al 95% del mercado venezolano. **No existe una plataforma multi-feature, non-custodial, en español, sobre Solana, para Venezuela. Esa es la oportunidad.**"**
+> **"En Venezuela, el 95% del volumen cripto vive atrapado en USDT/Tron por Binance P2P. La gente paga 1-3% en cada operación P2P, sus ahorros en bolívares pierden valor cada día por la inflación, y los comercios pagan 4.5% en POS tradicional más esperan 24-72 horas para ver la plata. Las apps en español que existen — Reserve, Kontigo, Zinli — son custodias y solo guardan dólares. Phantom es non-custodial pero asume que ya sabés cripto, lo cual deja afuera al 95% del mercado venezolano. **No existe una plataforma multi-feature, non-custodial, en español, sobre Solana, para Venezuela. Esa es la oportunidad.**"**
 
 **Tip**: cuando digas los números (95%, 4.5%, 24-72h), pausá un beat. Los números entregados con confianza generan credibilidad inmediata.
 
@@ -170,7 +170,7 @@
 Tené estas listas para soltarlas cuando aporten:
 
 1. **"Red económica paralela al sistema bancario."** (cuando te pregunten qué es Tropico)
-2. **"60% más barato para el merchant que Banesco POS."** (cuando hablen de costos)
+2. **"60% más barato para el merchant que POS tradicional."** (cuando hablen de costos)
 3. **"El dinero nunca toca el bolívar."** (cuando hablen de inflación)
 4. **"MercadoPago para Solana, non-custodial."** (analogía rápida que todos entienden)
 5. **"Cinco streams de revenue desde el primer día."** (cuando hablen de modelo)

@@ -108,7 +108,7 @@ PAUSA después del título. Mirá a la jury. Hablá despacio.
 - **95% del volumen** vive en USDT/Tron por Binance P2P
 - Las apps en español (Reserve, Kontigo, Zinli) son <span class="accent-coral">**custodias**</span> y solo guardan dólares
 - Phantom es non-custodial pero asume usuario experto
-- Los comercios pagan **<span class="accent-coral">4.5%</span> en POS Banesco** + esperan 24-72h
+- Los comercios pagan **<span class="accent-coral">4.5%</span> en POS tradicional** + esperan 24-72h
 - El bolívar **se devalúa entre la venta y el cierre del día**
 
 </div>
@@ -121,7 +121,7 @@ PAUSA después del título. Mirá a la jury. Hablá despacio.
 SPEAKER NOTES (slide 2 — 50 segundos):
 "En Venezuela, el 95% del volumen cripto vive atrapado en USDT/Tron por Binance.
 Las apps en español son custodias y solo guardan dólares. Phantom es non-custodial
-pero asume usuario experto. Los comercios pagan 4.5% en POS Banesco y esperan
+pero asume usuario experto. Los comercios pagan 4.5% en POS tradicional y esperan
 3 días para ver la plata. Ahí está el agujero."
 
 TIMING: 0:25 → 1:15
@@ -179,7 +179,7 @@ SPEAKER NOTES (slide 3 — 55 segundos):
 Tropico Wallet para el consumidor: login con email vía Privy, su saldo USDC genera
 ~5% APY automático sin activar nada, swap a cualquier token con 0.5% de fee.
 Tropico Comercios para el merchant: QR de cobro, settlement en menos de 1 segundo,
-fee 1% en lugar del 4.5% de Banesco POS — sin chargebacks, sin contrato.
+fee 1% en lugar del 4.5% de POS tradicional — sin chargebacks, sin contrato.
 
 Cuando ambos están dentro de Tropico, el dinero gira en USDC sin pasar por bancos.
 Es MercadoPago para Solana, non-custodial."

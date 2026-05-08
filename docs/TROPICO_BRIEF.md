@@ -58,20 +58,20 @@ Esto es lo que diferencia a Tropico de cualquier wallet o app de pagos existente
 
 1. **La plata vive en USDC, no en bs** → no se devalúa. La inflación se neutraliza en origen.
 2. **La plata genera mientras está parada** → yield ~5% APY default (mSOL/Kamino bajo el hood). Combate la inflación USD también.
-3. **Si pagás dentro de la red, no salís de USDC** → el dinero gira sin tocar bancos, sin Visa, sin Banesco POS, sin spreads ocultos.
+3. **Si pagás dentro de la red, no salís de USDC** → el dinero gira sin tocar bancos, sin Visa, sin POS tradicional, sin spreads ocultos.
 
 ### Comparativa de costos al merchant (lo que vendés en el pitch)
 
 | Método | Fee total al merchant | Settlement | Chargebacks | Hardware |
 |---|---|---|---|---|
-| Visa/Mastercard via Banesco POS | 4.5% + IVA | 24-72h | Sí (riesgoso) | $50-150 |
-| Banesco POS terminal | 3.5-4% | 24h | Sí | $50-150 |
+| Visa/Mastercard via POS tradicional | 4.5% + IVA | 24-72h | Sí (riesgoso) | $50-150 |
+| POS tradicional terminal | 3.5-4% | 24h | Sí | $50-150 |
 | Pago Móvil bs | 0.5% pero cobra en bs (devaluación) | Instantáneo | No | Smartphone |
 | Binance P2P | 1-3% por venta + tiempo | 5-30 min | Riesgo P2P | App |
 | Zelle | Gratis pero ilegal/bloqueable | Variable | No | Cuenta US |
 | **Tropico Comercios** | **1%** | **<1s** | **No (on-chain final)** | **Smartphone** |
 
-**Por cada $1.000 en ventas, un merchant venezolano ahorra ~$35 al mes vs Banesco POS.** Eso es lo que el merchant puede devolver al cliente como cashback (creando lealtad), reinvertir, o quedarse de margen.
+**Por cada $1.000 en ventas, un merchant venezolano ahorra ~$35 al mes vs POS tradicional.** Eso es lo que el merchant puede devolver al cliente como cashback (creando lealtad), reinvertir, o quedarse de margen.
 
 ### Por qué el usuario gana
 
@@ -131,12 +131,12 @@ Sin confianza, esta red no funciona. Tropico construye confianza con 4 pilares *
 
 **Sus 4 dolores diarios** = el lado merchant de Tropico:
 1. **"El bolívar se devalúa entre la venta y que llego al banco"** → Tropico Comercios cobra USDC, no bs.
-2. **"Si pongo POS Banesco me cobran 4.5% + me piden contrato + tarda 3 días en ver la plata"** → Tropico Comercios fee 1%, settlement 1 segundo, sin contrato.
+2. **"Si pongo POS tradicional me cobran 4.5% + me piden contrato + tarda 3 días en ver la plata"** → Tropico Comercios fee 1%, settlement 1 segundo, sin contrato.
 3. **"No tengo cómo verificar billetes USD falsos"** → Pago digital en USDC: no hay falsificación posible.
 4. **"Mis clientes jóvenes ya prefieren cripto y los pierdo"** → Los clientes Tropico son sus clientes.
 
 **Beneficios concretos que vendemos a María**:
-- Ahorra ~$35/mes por cada $1.000 en ventas vs Banesco POS
+- Ahorra ~$35/mes por cada $1.000 en ventas vs POS tradicional
 - Settlement instantáneo (no espera 3 días)
 - Sin chargebacks (pagos on-chain son finales)
 - Sin hardware caro (solo necesita su Android viejo)
@@ -841,7 +841,7 @@ Sin Cobrar funcional, no hay red económica — solo otra wallet. El demo debe m
 
 | Tiempo | Sección | Contenido |
 |---|---|---|
-| 0:00–0:30 | Problema sistémico | "El venezolano paga 4.5% en POS Banesco, sus ahorros pierden 3% al año contra la inflación USD, y el bolívar se devalúa entre la venta y el cierre del día. Las apps en español son custodias y solo guardan dólares. Nadie le devuelve el control sobre su economía." |
+| 0:00–0:30 | Problema sistémico | "El venezolano paga 4.5% en POS tradicional, sus ahorros pierden 3% al año contra la inflación USD, y el bolívar se devalúa entre la venta y el cierre del día. Las apps en español son custodias y solo guardan dólares. Nadie le devuelve el control sobre su economía." |
 | 0:30–1:00 | La visión: Red Tropico | "Tropico no es una wallet más. Es **la red económica del venezolano**. Dos productos integrados: Tropico Wallet (consumidor) y Tropico Comercios (merchant). Cuando ambos están dentro, el dinero gira en USDC sin tocar el bolívar ni el banco. Yield default. Settlement <1s. 60% más barato que Visa." |
 | 1:00–1:30 | Demo lado consumidor | Login con Google → Privy crea wallet en 15s → home: "Saldo $50 USDC · Yield acumulado $0.21 esta semana · 5.2% APY". Sin botones de "activar" — el yield está ON por default. |
 | 1:30–2:00 | Demo Cambiar (revenue 1) | SOL → JTO $10 → Jupiter quote → "Comisión Tropico 0.5%" → confirmo → split screen: Solscan muestra fee aterrizando en mi wallet. **Revenue real desde el primer swap.** |
@@ -1262,7 +1262,7 @@ Skills especializadas de Claude Code creadas en `.claude/skills/tropico-*` que a
 | `tropico-solana-pay` | Edits a `app/cobrar/`, `app/enviar/`, `app/claim/`, QR codes | URL spec Solana Pay, reference tracking, findReference listener, claim links, WhatsApp deep links |
 | `tropico-carlos-prompts` | Edits a `lib/carlos-prompt.ts`, `app/carlos/`, prompt engineering | Reglas de voz venezolana, prohibidos, 4 acciones agentic, context injection por pantalla |
 | `tropico-design-system` | Cualquier componente UI, edits a `components/`, `app/`, `tailwind.config.ts` | Paleta Tropico, tipografía, gradientes por módulo, animations, voice/copy, mobile-first |
-| `tropico-merchant-onboarding` | Edits a `app/comercios/`, dashboards merchant, copy para María | Persona María, comparativa vs Banesco POS, form de afiliación, dashboard, branding "Acepta Tropico" |
+| `tropico-merchant-onboarding` | Edits a `app/comercios/`, dashboards merchant, copy para María | Persona María, comparativa vs POS tradicional, form de afiliación, dashboard, branding "Acepta Tropico" |
 
 ### Cómo funcionan
 

@@ -54,7 +54,7 @@ const PROBLEM_STATS = [
   },
   {
     big: "4.5%",
-    label: "fee POS Banesco",
+    label: "fee POS tradicional",
     detail: "+ 24-72h para que el merchant vea la plata",
   },
   {
@@ -122,7 +122,7 @@ export default function LandingPage() {
           <p className="max-w-2xl text-lg text-tropico-mute">
             Ahorr&aacute; ganando, pag&aacute; sin perder. Una red de pagos non-custodial donde
             tu plata vive en USDC, genera rendimiento autom&aacute;tico, y los comercios pagan{" "}
-            <strong className="text-tropico-text">60% menos en fees vs Banesco POS</strong>.
+            <strong className="text-tropico-text">60% menos en fees vs POS tradicional</strong>.
           </p>
         </div>
 
@@ -160,7 +160,7 @@ export default function LandingPage() {
           </h2>
           <p className="max-w-3xl text-tropico-mute">
             Las apps en espa&ntilde;ol son custodias y solo guardan d&oacute;lares. Phantom asume usuario experto.
-            Los comercios pagan fees brutales en POS bancario. Y nadie te explica nada.
+            Los comercios pagan fees brutales en POS tradicional. Y nadie te explica nada.
           </p>
         </div>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -272,7 +272,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* PARA COMERCIOS — preview con comparativa Banesco */}
+      {/* PARA COMERCIOS — preview con comparativa banco tradicional */}
       <section className="grid gap-6 panel p-8 md:grid-cols-2 md:items-center">
         <div className="flex flex-col gap-4">
           <div className="inline-flex w-fit items-center gap-2 rounded-md bg-tropico-coral/15 px-2 py-0.5 text-xs font-semibold uppercase tracking-widest text-tropico-coral">
@@ -281,11 +281,11 @@ export default function LandingPage() {
           </div>
           <h2 className="font-display text-3xl font-bold leading-tight md:text-4xl">
             Cobr&aacute; en d&oacute;lares.
-            <br /> <span className="text-tropico-coral">Sin Banesco.</span>
+            <br /> <span className="text-tropico-coral">Sin banco tradicional.</span>
           </h2>
           <p className="text-tropico-mute">
             Bodegas, freelancers, deliveries — pag&aacute;s <strong className="text-tropico-text">1%</strong>{" "}
-            en lugar del <strong className="text-tropico-coral">4.5%</strong> de Banesco POS.
+            en lugar del <strong className="text-tropico-coral">4.5%</strong> de POS tradicional.
             Settlement en menos de 1 segundo. Sin chargebacks.
           </p>
           <Link href="/comercios" className="btn-primary w-fit">
@@ -296,7 +296,7 @@ export default function LandingPage() {
         <div className="grid grid-cols-3 gap-3 text-center">
           {[
             { v: "1%", l: "fee Tropico", c: "text-tropico-green" },
-            { v: "4.5%", l: "fee Banesco", c: "text-tropico-coral" },
+            { v: "4.5%", l: "fee banco tradicional", c: "text-tropico-coral" },
             { v: "$35", l: "ahorro/mes por $1k vendidos", c: "text-tropico-sun" },
           ].map((item) => (
             <div

@@ -5,20 +5,20 @@ import { Logo } from "@/components/Logo";
 import { Header } from "@/components/Header";
 
 export const metadata = {
-  title: "Tropico Comercios — Cobr&aacute; en d&oacute;lares sin Banesco",
+  title: "Tropico Comercios — Cobr&aacute; en d&oacute;lares sin banco tradicional",
   description:
-    "Aceptá pagos en USDC con un código QR. La plata te llega al instante. Pagás 1% en lugar del 4.5% del POS bancario. Sin contrato, sin POS, sin esperas.",
+    "Aceptá pagos en USDC con un código QR. La plata te llega al instante. Pagás 1% en lugar del 4.5% del POS tradicional. Sin contrato, sin POS, sin esperas.",
 };
 
 const FEATURES = [
   {
     titulo: "1% de fee",
-    detalle: "vs 4.5% del POS Banesco. Por cada $100 cobrados, te ahorr&aacute;s $3.50.",
+    detalle: "vs 4.5% del POS tradicional. Por cada $100 cobrados, te ahorr&aacute;s $3.50.",
     color: "from-tropico-green/30 to-transparent",
   },
   {
     titulo: "Settlement <1 segundo",
-    detalle: "vs 24-72 horas del POS bancario. La plata es tuya al instante, no en 3 d&iacute;as.",
+    detalle: "vs 24-72 horas del POS tradicional. La plata es tuya al instante, no en 3 d&iacute;as.",
     color: "from-tropico-purple/30 to-transparent",
   },
   {
@@ -87,13 +87,13 @@ export default function ComerciosPage() {
         <h1 className="h-display">
           Cobr&aacute; en d&oacute;lares.<br />
           <span className="bg-gradient-to-r from-tropico-coral to-tropico-sun bg-clip-text text-transparent">
-            Sin Banesco. Sin POS. Sin esperas.
+            Sin banco tradicional. Sin POS. Sin esperas.
           </span>
         </h1>
         <p className="max-w-3xl text-lg text-tropico-mute">
           Aceptá pagos en USDC con un código QR. La plata te llega al instante. Pagás
           <strong className="text-tropico-text"> 1% </strong> en lugar del
-          <strong className="text-tropico-coral"> 4.5% </strong> del POS bancario.
+          <strong className="text-tropico-coral"> 4.5% </strong> del POS tradicional.
           Sin contrato, sin equipo caro, sin esperas.
         </p>
         <div className="flex flex-col gap-3 sm:flex-row">

@@ -111,7 +111,7 @@ Tropico es la red económica del venezolano en Solana. NO es una wallet más —
 
 EL PROBLEMA. El 95% del volumen cripto venezolano vive atrapado en USDT/Tron por Binance P2P. Las apps en español (Reserve, Kontigo, Zinli) son custodias y solo guardan dólares. Phantom es non-custodial pero asume usuario experto. No existe una plataforma multi-feature, non-custodial, en español venezolano, sobre Solana.
 
-LA SOLUCIÓN — DOS PRODUCTOS INTEGRADOS. Tropico Wallet (consumidor): login con email vía Privy embedded wallet, saldo USDC con yield ~5% APY default ON, swaps vía Jupiter v6 con 0.5% platformFeeBps, envíos vía Solana Pay con claim links por WhatsApp, pagos a comercios con QR, y Carlos AI — copiloto en español venezolano con Modo Agente integrable con OpenClaw. Tropico Comercios (merchant): QR Solana Pay para cobrar en USDC, settlement <1 segundo, fee 1% al merchant (vs 4.5% Banesco POS — ahorro 60-75%), sin chargebacks, sin contrato bancario, sin hardware.
+LA SOLUCIÓN — DOS PRODUCTOS INTEGRADOS. Tropico Wallet (consumidor): login con email vía Privy embedded wallet, saldo USDC con yield ~5% APY default ON, swaps vía Jupiter v6 con 0.5% platformFeeBps, envíos vía Solana Pay con claim links por WhatsApp, pagos a comercios con QR, y Carlos AI — copiloto en español venezolano con Modo Agente integrable con OpenClaw. Tropico Comercios (merchant): QR Solana Pay para cobrar en USDC, settlement <1 segundo, fee 1% al merchant (vs 4.5% POS tradicional — ahorro 60-75%), sin chargebacks, sin contrato bancario, sin hardware.
 
 CINCO STREAMS DE REVENUE: 0.5% por swap, 0.3% spread en envíos, 2% del yield, 1% por cobro merchant, Carlos AI como acelerador transversal. Mes 12 proyectado: 50K usuarios + 2K comercios = $250K MRR sobre $44M de volumen.
 
@@ -127,7 +127,7 @@ Si preferís enfatizar el aspecto técnico/agéntico:
 ```
 Tropico es la red económica del venezolano en Solana — una plataforma multi-feature non-custodial donde el dinero gira en USDC entre consumidores y comercios afiliados, sin tocar el bolívar ni los bancos. NO es una wallet, es una RED.
 
-DOS PRODUCTOS INTEGRADOS. Tropico Wallet (consumidor) ofrece login con email vía Privy embedded wallet (sin instalar Phantom), saldo USDC con yield ~5% APY default ON, swaps al mejor precio vía Jupiter v6 con 0.5% platformFeeBps, envíos peer-to-peer con Solana Pay y claim links por WhatsApp, pagos a comercios con QR, y Carlos AI — copiloto conversacional en español venezolano (Gemini 2.0 Flash). Tropico Comercios (merchant) genera QR Solana Pay para cobros instantáneos en USDC, fee 1% (vs 4.5% Banesco POS), settlement <1 segundo, dashboard con reportes exportables, logo "Acepta Tropico" para vidriera.
+DOS PRODUCTOS INTEGRADOS. Tropico Wallet (consumidor) ofrece login con email vía Privy embedded wallet (sin instalar Phantom), saldo USDC con yield ~5% APY default ON, swaps al mejor precio vía Jupiter v6 con 0.5% platformFeeBps, envíos peer-to-peer con Solana Pay y claim links por WhatsApp, pagos a comercios con QR, y Carlos AI — copiloto conversacional en español venezolano (Gemini 2.0 Flash). Tropico Comercios (merchant) genera QR Solana Pay para cobros instantáneos en USDC, fee 1% (vs 4.5% POS tradicional), settlement <1 segundo, dashboard con reportes exportables, logo "Acepta Tropico" para vidriera.
 
 CAPA AGÉNTICA. Modo Agente integrable con OpenClaw + Privy delegated session keys. Carlos puede ejecutar 4 acciones autónomas con permisos limitados: DCA programado, auto-yield al recibir remesas, auto-cashback de comercios, re-balance de portafolio. Llaves nunca expuestas. En MVP es showcase, integración real Q3.
 
@@ -193,7 +193,7 @@ El form dice "300 words" pero por si acaso, te dejo también una versión hyper-
 ```
 Tropico es la red económica del venezolano en Solana — una red de pagos non-custodial paralela al sistema bancario donde el dinero gira en USDC entre consumidores y comercios afiliados.
 
-Dos productos integrados: Tropico Wallet (consumidor) con login email vía Privy, yield ~5% APY default, swaps Jupiter con 0.5% fee, envíos Solana Pay, pagos QR, y Carlos AI copiloto en venezolano. Tropico Comercios (merchant) con QR de cobro USDC, settlement <1s, fee 1% (vs 4.5% Banesco POS), sin chargebacks, sin hardware.
+Dos productos integrados: Tropico Wallet (consumidor) con login email vía Privy, yield ~5% APY default, swaps Jupiter con 0.5% fee, envíos Solana Pay, pagos QR, y Carlos AI copiloto en venezolano. Tropico Comercios (merchant) con QR de cobro USDC, settlement <1s, fee 1% (vs 4.5% POS tradicional), sin chargebacks, sin hardware.
 
 Capa agéntica con OpenClaw + Privy: 4 acciones autónomas (DCA, auto-yield, auto-cashback, re-balance) con session keys limitadas. Showcase en MVP, integración real Q3.
 
@@ -232,7 +232,7 @@ Tropico Wallet (consumidor):
 
 Tropico Comercios (merchant):
 • Generación de QR Solana Pay para cobrar en USDC
-• Settlement <1 segundo (vs 24-72h del POS Banesco)
+• Settlement <1 segundo (vs 24-72h del POS tradicional)
 • Fee 1% al merchant (vs 4.5% del POS bancario — ahorro 60-75%)
 • Sin chargebacks, sin contrato bancario, sin POS hardware
 • Dashboard con reportes exportables, logo "Acepta Tropico" para vidriera
@@ -253,7 +253,7 @@ Modo Agente integrable con OpenClaw + Privy delegated session keys (showcase en 
 CONFIANZA RADICAL
 • Auditoría on-chain pública (link al fee account de Tropico en Solscan)
 • Tropico nunca toca llaves del usuario
-• Comparativas transparentes vs Banesco POS
+• Comparativas transparentes vs POS tradicional
 • Open source del frontend (post-MVP)
 
 ROADMAP
@@ -317,7 +317,7 @@ Si te piden una descripción del video, podés poner:
 
 ```
 Demo de 4 minutos mostrando:
-0:00–0:30  El problema (95% del cripto VE atrapado en USDT/Binance, POS Banesco 4.5%)
+0:00–0:30  El problema (95% del cripto VE atrapado en USDT/Binance, POS tradicional 4.5%)
 0:30–1:00  La visión Red Tropico (consumer + merchant, MercadoPago para Solana)
 1:00–1:30  Demo onboarding (login email vía Privy, wallet en 15s)
 1:30–2:00  Demo Cambiar (swap SOL→JTO, fee 0.5% verificable en Solscan)

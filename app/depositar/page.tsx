@@ -6,7 +6,7 @@ import { DualPrice } from "@/components/DualPrice";
 import { formatUSD } from "@/lib/formato";
 
 const BANCOS = [
-  { value: "banesco", label: "Banesco" },
+  { value: "banesco", label: "banco tradicional" },
   { value: "mercantil", label: "Banco Mercantil" },
   { value: "bdv", label: "Banco de Venezuela" },
   { value: "provincial", label: "BBVA Provincial" },
@@ -166,7 +166,7 @@ export default function DepositarPage() {
           <li className="flex items-start gap-2">
             <span className="text-tropico-green">Q4 2026 →</span>
             <span>
-              Off-ramp: convertir USDC a bs y recibir en tu cuenta Banesco/Mercantil
+              Off-ramp: convertir USDC a bs y recibir en tu cuenta banco tradicional/Mercantil
             </span>
           </li>
           <li className="flex items-start gap-2">

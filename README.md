@@ -20,7 +20,6 @@
 ## 🎬 Demo
 
 - 🌐 **Live demo**: [tropico.vercel.app](https://tropico.vercel.app) *(actualizá con tu URL real después de deploy)*
-- 🎥 **Video pitch (4-5 min)**: [YouTube](https://youtube.com) *(actualizá con link unlisted)*
 - 📊 **Pitch deck**: [`docs/PITCH_DECK.md`](docs/PITCH_DECK.md)
 - 📖 **Brief técnico completo**: [`docs/TROPICO_BRIEF.md`](docs/TROPICO_BRIEF.md)
 
@@ -42,7 +41,7 @@ En Venezuela:
 - **95% del volumen cripto** vive atrapado en USDT/Tron por Binance P2P
 - Las apps en español (Reserve, Kontigo, Zinli) son **custodias** y solo guardan dólares
 - Phantom es non-custodial pero **asume usuario experto** — expulsa al 95% del mercado
-- Los comercios pagan **4.5%** en POS Banesco + esperan **24-72h** para ver la plata
+- Los comercios pagan **4.5%** en POS tradicional + esperan **24-72h** para ver la plata
 - El bolívar **se devalúa entre la venta y el cierre del día**
 
 **No existe una plataforma multi-feature, non-custodial, en español venezolano, sobre Solana.**
@@ -64,14 +63,14 @@ Dos productos integrados bajo una marca paraguas, **Red Tropico**:
 ### 💳 Tropico Comercios (merchant)
 
 - QR Solana Pay para cobros instantáneos en USDC
-- Settlement **<1 segundo** (vs 24-72h del POS Banesco)
-- Fee al merchant **1%** (vs 4.5% Banesco — ahorro 60-75%)
+- Settlement **<1 segundo** (vs 24-72h del POS tradicional)
+- Fee al merchant **1%** (vs 4.5% POS tradicional — ahorro 60-75%)
 - Sin chargebacks, sin contrato, sin POS hardware
 - Logo "Acepta Tropico" descargable para vidriera del local
 
 ### El efecto red económica
 
-Cuando ambos lados están dentro de Tropico, el dinero gira en USDC sin pasar por bancos. El comercio puede ofrecer cashback al cliente porque ahorra ~$35/mes por cada $1k en ventas vs Banesco. Es **MercadoPago para Solana, nativo de USDC, non-custodial**.
+Cuando ambos lados están dentro de Tropico, el dinero gira en USDC sin pasar por bancos. El comercio puede ofrecer cashback al cliente porque ahorra ~$35/mes por cada $1k en ventas vs POS tradicional. Es **MercadoPago para Solana, nativo de USDC, non-custodial**.
 
 ---
 
@@ -143,7 +142,7 @@ Cuando ambos lados están dentro de Tropico, el dinero gira en USDC sin pasar po
 ### Carlos AI — Modo Agente con 4 acciones autónomas
 ![Modo Agente](docs/images/screens/10-carlos-agente-desktop.png)
 
-### Tropico Comercios — landing merchant con comparativa Banesco
+### Tropico Comercios — landing merchant con comparativa vs POS tradicional
 ![Comercios](docs/images/screens/08-comercios-desktop.png)
 
 ### Descubrir — 8 tokens curados con copy venezolano
@@ -206,7 +205,7 @@ npm run dev
 | `/enviar` | Form send + claim link + WhatsApp deep link funcional |
 | `/guardar` | Yield UI con 3 estrategias (mSOL, Kamino USDC, Kamino LP) |
 | `/depositar` | Onramp stub honesto + faucet button |
-| `/comercios` | Landing del lado merchant con comparativa vs Banesco POS |
+| `/comercios` | Landing del lado merchant con comparativa vs POS tradicional |
 | `/carlos` | UI shell del chat AI |
 | `/carlos/agente` | Modo Agente con 4 acciones autónomas (DCA, auto-yield, auto-cashback, re-balance) |
 

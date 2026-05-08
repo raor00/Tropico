@@ -222,7 +222,7 @@ export default function HomePage() {
               Pronto: deposit&aacute; bs desde tu banco
             </h3>
             <p className="text-sm text-tropico-mute">
-              Banesco, Mercantil, BDV, Provincial &mdash; integraci&oacute;n directa Q3
+              banco tradicional, Mercantil, BDV, Provincial &mdash; integraci&oacute;n directa Q3
             </p>
           </div>
         </div>
