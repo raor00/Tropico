@@ -350,6 +350,87 @@ El primer load de la sesión muestra una animación pixel-art de bienvenida (~3 
 
 Implementación: `components/SplashScreen.tsx`. Solo se muestra una vez por sesión (sessionStorage flag).
 
+---
+
+## 🎬 Animaciones e identidad pixel art
+
+### `<PixelLoader />` — loaders 8-bit con identidad caribeña
+4 variants reemplazan loaders genéricos:
+- **`sun`** — sol amarillo girando con 8 rays cuadrados pixel
+- **`palmera`** — frondas pixel asomándose con stagger
+- **`wave`** — barra de pixels iluminándose secuencialmente
+- **`dots`** — 3 puntos coral/sun/sea saltando
+
+**Integrado en**: `SwapForm` (cuando consulta Jupiter), `ReceiveQR` (esperando pago)
+
+### `<ScrollReveal />` — transiciones al hacer scroll
+IntersectionObserver-based, una vez revelado no se re-anima. 6 directions:
+- `up` / `down` / `left` / `right` / `fade` / **`pixel`** (scale + rotate sutil)
+
+**Integrado en**: 7 secciones de la landing con direcciones distintas para variedad visual.
+
+### Header sticky flotante (`<Header />`)
+- **scrollY === 0**: anclado, transparente, parte del flow
+- **scrolled**: flotante con `backdrop-blur-2xl`, sombra inferior, logo se achica
+- Transición 300ms suave entre estados
+
+---
+
+## 📐 Spec-Driven Development (SDD)
+
+Tropico adopta **GitHub Spec Kit** (instalado via `uv tool install specify-cli@github/spec-kit`) para features substanciales.
+
+### Constitution
+
+`.specify/memory/constitution.md` define los **7 principios non-negotiable** de Tropico:
+1. **Non-Custodial Estricto** — cero acceso a llaves privadas
+2. **Cero Programa Anchor Custom** — solo protocolos abiertos
+3. **Mobile-First PWA** — Android viejo, sin app nativa
+4. **Solana-Maxi Branding** — sin guiños a EVM/Tron/Bitcoin
+5. **Identidad Venezolana Auténtica** — copy local, cero política
+6. **Cero Backend Persistente en MVP** — Edge routes + localStorage
+7. **Honestidad Demo** — mocks visibles con banners explícitos
+
+### Workflow SDD (skills `/speckit-*`)
+
+```
+/speckit-constitution    → establecer principios (este archivo ya está)
+/speckit-specify <feat>  → crear spec.md de un feature nuevo
+/speckit-clarify         → 5 preguntas para reducir ambigüedad
+/speckit-plan            → estrategia técnica del feature
+/speckit-tasks           → breakdown ejecutable ordenado por deps
+/speckit-implement       → ejecutar tasks (escribe código)
+/speckit-analyze         → check de consistencia entre spec/plan/tasks
+/speckit-checklist       → validar quality
+/speckit-taskstoissues   → convertir tasks → GitHub issues
+```
+
+---
+
+## 🔌 Plugins + tooling instalados
+
+| Plugin | Source | Para qué |
+|---|---|---|
+| **vercel-plugin** | `claude-plugins-official` | 26 skills + 6 cmds + 3 agents para deploy/build/manage Vercel desde Claude Code |
+| **engram** | `Gentleman-Programming/engram` | Memoria persistente cross-session |
+| **caveman-shrink** | MCP server | Compresión de tokens LLM (~65% reducción) |
+| **rtk** | brew | Compresión de outputs CLI |
+| **spec-kit** | uv tool | SDD oficial de GitHub |
+
+Instalación del plugin Vercel:
+```bash
+npx plugins add vercel/vercel-plugin
+```
+
+Instalación de spec-kit:
+```bash
+brew install uv
+uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
+specify init . --integration claude
+```
+
+---
+
 ## 📂 Estructura del repo
 
 ```
@@ -371,10 +452,27 @@ Implementación: `components/SplashScreen.tsx`. Solo se muestra una vez por sesi
 │   ├── DEMO_READINESS.md         # Estado del demo + script 5min
 │   ├── LUMEN_INTEGRATION.md      # Doc maestro de Lumen
 │   ├── LOGO_PROMPT.md            # Prompt para generar logo pixel art
+│   ├── BANNER_PROMPT.md          # Prompt para banner caribeño del README
+│   ├── ASSETS_REPO.md            # Inventario completo de imágenes
 │   ├── GUION_ENTREVISTA.md       # Guión hablado para entrevistas
 │   ├── REGISTRO_PROYECTO.md      # Datos para form del hackathon
-│   └── DEPLOY.md                 # Guía de deploy a Vercel
-└── .claude/skills/tropico-*/     # 6 Claude Code skills para devs
+│   ├── DEPLOY.md                 # Guía de deploy a Vercel
+│   ├── WALLET_GUIDE.md           # Cómo se crea la wallet (Privy MPC, MPC, recovery)
+│   ├── TROPICOIN_SPEC.md         # Spec del token $TROP (10 secciones)
+│   └── images/
+│       ├── banner.png             # Banner caribeño del README
+│       ├── logo.png               # Logo principal pixel art
+│       └── screens/               # 17 screenshots (desktop + mobile)
+├── .specify/                      # SDD spec-kit oficial de GitHub
+│   ├── memory/constitution.md    # 7 principios non-negotiable de Tropico
+│   ├── templates/                # spec / plan / tasks / checklist
+│   ├── scripts/                  # bash helpers para SDD
+│   └── workflows/                # speckit workflow YAML
+├── scripts/
+│   └── screenshots.mjs           # Playwright para regenerar screenshots
+└── .claude/skills/
+    ├── tropico-*/                # 6 Claude Code skills para devs
+    └── speckit-*/                # 9 SDD skills (constitution, specify, plan, tasks…)
 ```
 
 ---
