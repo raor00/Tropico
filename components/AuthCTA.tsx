@@ -85,16 +85,22 @@ function DemoButton({ variant, label }: { variant: Variant; label: string }) {
     }
   }
 
+  // Detectar si ya hay wallet local — cambia el CTA primario
+  const [hasWallet, setHasWallet] = useState(false);
+  useEffect(() => {
+    setHasWallet(localStorage.getItem("tropico:wallet:v1") !== null);
+  }, []);
+
   if (variant === "primary") {
     return (
       <div className="flex flex-col items-stretch gap-2">
         <Link
-          href="/home"
+          href={hasWallet ? "/wallet/abrir" : "/wallet/crear"}
           className="btn-primary inline-flex items-center gap-2"
-          title="Modo demo — sin Privy configurado, navega a /home con datos simulados"
+          title="100% non-custodial — wallet en este navegador, encriptada con tu password"
         >
           <Mail className="size-4" strokeWidth={2} aria-hidden="true" />
-          {label}
+          {hasWallet ? "Abrir mi wallet" : "Crear mi wallet (in-app)"}
           <ArrowRight className="size-4" strokeWidth={2} aria-hidden="true" />
         </Link>
         <button
@@ -104,7 +110,7 @@ function DemoButton({ variant, label }: { variant: Variant; label: string }) {
           title="Genera un keypair efímero en devnet — solo para pruebas"
         >
           <Cpu className="size-3" aria-hidden="true" />
-          {devLoading ? "Generando keypair…" : "Modo dev (devnet)"}
+          {devLoading ? "Generando keypair…" : "Modo dev rápido (devnet, sin password)"}
         </button>
       </div>
     );
@@ -112,10 +118,10 @@ function DemoButton({ variant, label }: { variant: Variant; label: string }) {
 
   return (
     <Link
-      href="/home"
+      href={hasWallet ? "/wallet/abrir" : "/wallet/crear"}
       className="rounded-full border border-tropico-sun/40 bg-tropico-sun/10 px-3 py-1 text-xs font-semibold text-tropico-sun transition hover:bg-tropico-sun/20"
     >
-      Abrir app
+      {hasWallet ? "Abrir app" : "Crear wallet"}
     </Link>
   );
 }
