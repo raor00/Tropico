@@ -225,6 +225,16 @@ Los webhooks van firmados con **HMAC-SHA256**. Ver spec completo en [`docs/INTEG
 
 **4 verticales soportadas:** delivery (estilo apps de comida), e-commerce (marketplaces), ticketing (QR único por evento), SaaS/suscripciones (recurrente vía Modo Agente).
 
+**3 surfaces de integración listas:**
+
+| Surface | Path | Para qué |
+|---|---|---|
+| **REST API** | `app/api/checkout/create/route.ts` | Server-to-server con auth Bearer + CORS abierto. Devuelve la sesión + URL Solana Pay. |
+| **Hosted checkout** | `app/checkout/page.tsx` (`/checkout?session=…`) | Página white-label con QR + deeplink wallet. El partner redirige al usuario aquí. |
+| **Drop-in SDK** | `public/sdk/tropico-pay.js` | `<script>` + `<button data-tropico-pay …>`. Auto-monta modal con QR + polling. Cero estado en el partner. |
+
+**Modelo de fee — HACIA ARRIBA**: el merchant siempre recibe el precio que pidió. El cliente absorbe el fee (0.5% en Tropico Pay, 1% en Cobrar merchant-facing). `customerPays = amount × (1 + feeBps/10000)`, `merchantReceives = amount` exacto.
+
 ---
 
 ## Stack agéntico — Lumen + Hermes + OpenClaw

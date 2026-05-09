@@ -173,6 +173,8 @@ ENFASIS en los números: '95%', '4.5%', '24-72 horas'. Deja pausar el final.
 
 ## Cuando ambos están dentro: el dinero gira en USDC <span class="gradient">sin pasar por bancos</span>
 
+### Y se extiende: <span class="accent-sun">Tropico Pay</span> integra cualquier plataforma — delivery, e-commerce, ticketing, SaaS — con 3 patrones (link Solana Pay, REST + webhook, drop-in JS). El comercio recibe USDC, su precio exacto, en 1 segundo.
+
 <!--
 SPEAKER NOTES (slide 3 — 55 segundos):
 "Tropico es UNA app con dos productos integrados.
@@ -198,10 +200,13 @@ La frase clave es la última. Dila firme.
 
 ### El momento red económica
 
-1. **Cliente** abre Tropico → escanea QR de la bodega → confirma $5
-2. **Bodega** ve <span class="accent-green">+$4.95 en <1 segundo</span>
-3. **Tropico** recibe <span class="accent-green">+$0.05</span> (verificable en Solscan)
-4. **Cliente** recibe <span class="accent-sun">$0.05 cashback</span>
+1. **Bodega** pide cobrar <span class="accent-green">$5</span> → genera QR
+2. **Cliente** abre Tropico → escanea → ve "Pagas $5.05" → confirma
+3. **Bodega** recibe <span class="accent-green">+$5.00 exactos en <1 segundo</span>
+4. **Tropico** recibe <span class="accent-green">+$0.05</span> (verificable en Solscan)
+5. **Cliente** recibe <span class="accent-sun">$0.05 cashback</span> en su próxima compra
+
+> **Fee hacia arriba**: el merchant cobra el precio que pidió, el cliente absorbe el fee. Cero "el merchant trabaja para el procesador".
 
 <br/>
 
@@ -297,21 +302,20 @@ TIMING: 3:40 → 4:30
 
 ### Stack actual
 
-- **Frontend**: Next.js 15 + Privy + Tailwind
+- **Frontend**: Next.js 15 + Privy MPC + Tailwind
 - **Swap**: Jupiter v6 (`platformFeeBps=50`)
-- **Pay**: Solana Pay spec + QR generation
-- **AI**: Lumen + DeepSeek (motor agéntico)
-- **Firma autónoma**: OpenClaw + Privy
+- **Pay**: Solana Pay spec + QR + Tropico Pay REST API
+- **AI 3-layer kit**: Lumen (MVP) + Hermes (Q3) + OpenClaw (Q3)
+- **Capabilities**: Python stdlib (RPC, Jupiter, DolarAPI)
 - **RPC**: Helius
-- **Cero programa Anchor custom**
-- **Cero backend persistente**
+- **Cero programa Anchor custom · Cero backend persistente**
 
 </td>
 <td width="50%">
 
 ### Roadmap
 
-- **Q3 2026**: OpenClaw real + on-ramp partners P2P/Reserve
+- **Q3 2026**: Hermes (memoria) + OpenClaw real (delegated keys) + Tropico Pay GA
 - **Q4 2026**: <span class="accent-sun">Tropico Card</span> (debit USDC + cashback)
 - **Q1 2027**: <span class="accent-sea">LATAM expansion</span> (CO, AR, MX, PE, CL) + Solana Mobile
 
