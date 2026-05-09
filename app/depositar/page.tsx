@@ -193,7 +193,7 @@ export default function DepositarPage() {
         {(metodo === "pagomovil" || metodo === "transferencia") && (
           <ScrollReveal direction="up" delay={150}>
             <section className="panel flex flex-col gap-4 p-6">
-              <h2 className="font-display text-xl font-bold">¿Cuánto USDC querés recibir?</h2>
+              <h2 className="font-display text-xl font-bold">¿Cuánto USDC quieres recibir?</h2>
               <input
                 type="number"
                 inputMode="decimal"

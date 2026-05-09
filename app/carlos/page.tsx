@@ -181,7 +181,9 @@ export default function CarlosPage() {
             <span className="text-2xl">🌴</span>
           </div>
           <div>
-            <h1 className="font-display text-3xl font-bold">Carlos AI</h1>
+            <h1 className="font-display text-3xl font-bold">
+              Carlos AI <span className="text-tropico-purple">by Lumen</span>
+            </h1>
             <a
               href="https://github.com/gabogabucho/lumen-agent"
               target="_blank"

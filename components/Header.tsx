@@ -48,7 +48,7 @@ const FULL_NAV: NavLink[] = [
   { href: "/pagar-servicios", label: "Servicios" },
   { href: "/carlos", label: "Carlos AI" },
   { href: "/comercios", label: "Comercios" },
-  { href: "/wallet/abrir", label: "Configuración" },
+  { href: "/wallet/abrir", label: "Mi wallet" },
 ];
 
 const TONE_MAP = {
@@ -123,17 +123,17 @@ function HeaderImpl({
       <header
         className={`sticky top-0 z-40 -mx-5 [contain:layout_paint_style] transition-[padding,background-color,border-color,box-shadow,backdrop-filter] duration-300 ease-out ${
           scrolled
-            ? "border-b border-tropico-sun/20 bg-tropico-ink/95 px-5 py-2 backdrop-blur-2xl shadow-[0_8px_32px_-12px_rgba(255,209,102,0.35)]"
-            : "border-b border-transparent bg-transparent px-5 py-5"
+            ? "border-b border-tropico-sun/20 bg-tropico-ink/95 px-4 py-2 backdrop-blur-2xl shadow-[0_8px_32px_-12px_rgba(255,209,102,0.35)] md:px-5"
+            : "border-b border-transparent bg-transparent px-4 py-3 md:px-5 md:py-5"
         }`}
       >
         <div
           className={`flex items-center justify-between will-change-transform transition-all duration-300 ease-out ${
-            scrolled ? "scale-[0.96] gap-3" : "scale-100 gap-4"
+            scrolled ? "scale-[0.97] gap-2" : "scale-100 gap-2 md:gap-4"
           }`}
         >
-          <div className="flex items-center gap-3">
-            <Logo size={scrolled ? 32 : 48} wordmarkSize={scrolled ? "sm" : "md"} />
+          <div className="flex items-center gap-2 md:gap-3 min-w-0">
+            <Logo size={scrolled ? 28 : 36} wordmarkSize={scrolled ? "sm" : "md"} />
             {/* VE badge tricolor animado — siempre xs en header para mantener pill compacta */}
             <VenezuelaBadge
               size="xs"

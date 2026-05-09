@@ -7,6 +7,8 @@
 
 **La wallet caribeña en Solana. USDC + yield + QR para comercios. Hecho en Venezuela.**
 
+> _Ahorra ganando intereses. Paga sin perder valor._
+
 > Fintech non-custodial para venezolanos: gestiona dólares digitales, cobra con QR en un segundo, recibe yield automático y deja que tu copiloto AI actúe por ti — sin custodiar tu plata, sin permiso del banco.
 
 [![Solana](https://img.shields.io/badge/Built_on-Solana-9945FF?logo=solana)](https://solana.com)
@@ -421,6 +423,38 @@ Lo que sí tienes: login con email en 15 segundos, biométrica opcional (TouchID
 - **Q3 2026**: Tropico Pay en producción — primeros merchants integrados (delivery, ticketing)
 - **Q4 2026**: Tropico Card (debit Visa backed por USDC + cashback), Tropico Vaults (Kamino), bug bounty público
 - **Q1 2027**: Expansión LATAM (Colombia, Argentina, México, Perú, Chile), Solana Mobile app nativa
+
+---
+
+## 📸 Pantallas
+
+> Captura full-page con Playwright · `node scripts/screenshots.mjs`
+
+### Landing y consumer
+| | | |
+|---|---|---|
+| ![Landing](docs/images/screens/01-landing-desktop.png) <br/>**Landing** — `/` | ![Home](docs/images/screens/02-home-desktop.png) <br/>**Wallet/Home** — `/home` | ![Cambiar](docs/images/screens/03-cambiar-desktop.png) <br/>**Cambiar** — `/cambiar` |
+| ![Cobrar](docs/images/screens/04-cobrar-desktop.png) <br/>**Cobrar QR** — `/cobrar` | ![Enviar](docs/images/screens/05-enviar-desktop.png) <br/>**Enviar + claim** — `/enviar` | ![Guardar](docs/images/screens/06-guardar-desktop.png) <br/>**Yield** — `/guardar` |
+
+### Carlos AI by Lumen + Modo Agente
+| | |
+|---|---|
+| ![Carlos](docs/images/screens/09-carlos-desktop.png) <br/>**Carlos AI** — `/carlos` (7 capacidades) | ![Modo Agente](docs/images/screens/10-carlos-agente-desktop.png) <br/>**Modo Agente** — `/carlos/agente` (4 acciones autónomas) |
+
+### Wallet 100% in-app + Onramp
+| | | |
+|---|---|---|
+| ![Crear wallet](docs/images/screens/12-wallet-crear-desktop.png) <br/>**Crear wallet** — `/wallet/crear` | ![Abrir wallet](docs/images/screens/13-wallet-abrir-desktop.png) <br/>**Abrir wallet** — `/wallet/abrir` | ![Onramp](docs/images/screens/07-depositar-desktop.png) <br/>**Onramp Bs→USDC** — `/depositar` |
+
+### Servicios + Remesas
+| | |
+|---|---|
+| ![Pagar Servicios](docs/images/screens/14-pagar-servicios-desktop.png) <br/>**Pagar Servicios VE** — `/pagar-servicios` (luz, agua, internet, teléfono, recargas) | ![Remesas](docs/images/screens/15-remesas-desktop.png) <br/>**Remesas internacionales** — `/remesas` |
+
+### Lado merchant + Tropico Pay
+| | | |
+|---|---|---|
+| ![Comercios](docs/images/screens/08-comercios-desktop.png) <br/>**Comercios** — `/comercios` | ![Integraciones](docs/images/screens/16-integraciones-desktop.png) <br/>**Tropico Pay** — `/integraciones` (REST + drop-in + hosted) | ![Checkout](docs/images/screens/17-checkout-desktop.png) <br/>**Hosted checkout** — `/checkout` |
 
 ---
 

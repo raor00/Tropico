@@ -3,10 +3,12 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
+import { AlertTriangle } from "lucide-react";
 import { TOKENS, TOKEN_LIST, type TokenSymbol, getTokenBySymbol } from "@/lib/tokens";
 import { DualPrice } from "./DualPrice";
 import { PixelLoader } from "./PixelLoader";
 import { formatUSD, formatTokenAmount } from "@/lib/formato";
+import { checkPerTx, AML_LIMITS } from "@/lib/aml";
 
 type Quote = {
   outAmount: string;
@@ -180,13 +182,32 @@ export function SwapForm() {
         </div>
       )}
 
+      {/* AML check — bloquea el botón si excede $5k por tx */}
+      {(() => {
+        const aml = checkPerTx(fromUSD);
+        if (!aml.ok) {
+          return (
+            <div className="panel flex items-start gap-3 border-tropico-coral/30 bg-tropico-coral/5 p-4">
+              <AlertTriangle className="mt-0.5 size-5 shrink-0 text-tropico-coral" />
+              <div className="flex flex-col gap-1 text-sm">
+                <strong className="text-tropico-coral">{aml.message}</strong>
+                <p className="text-xs text-tropico-mute">{aml.suggested}</p>
+              </div>
+            </div>
+          );
+        }
+        return null;
+      })()}
+
       {/* CTA */}
       <button
-        disabled={!quote || loading}
+        disabled={!quote || loading || !checkPerTx(fromUSD).ok}
         className="btn-primary disabled:cursor-not-allowed disabled:opacity-50"
       >
         {!quote
           ? "Esperando cotizaci&oacute;n…"
+          : !checkPerTx(fromUSD).ok
+          ? `Excede l&iacute;mite AML ($${AML_LIMITS.PER_TX_USD.toLocaleString()})`
           : `Cambiar ${fromSymbol} → ${toSymbol} (DEMO)`}
       </button>
 

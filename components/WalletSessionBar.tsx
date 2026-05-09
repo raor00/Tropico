@@ -57,6 +57,20 @@ export function WalletSessionBar() {
         return;
       } catch {}
     }
+    // Privy: si está conectado, expone wallet via window.privy o cookie
+    // En MVP detectamos solo por la presencia del flag de sesión Privy
+    // Privy SDK guarda token en cookie 'privy-token' después de login
+    if (typeof document !== "undefined") {
+      const privyToken = document.cookie
+        .split("; ")
+        .find((c) => c.startsWith("privy-token="));
+      if (privyToken) {
+        // Pubkey real solo se lee con el SDK lazy-loaded — placeholder visible
+        setSource("privy");
+        setPubkey("Privy MPC · cargando pubkey…");
+        return;
+      }
+    }
     setSource(null);
     setPubkey(null);
   }

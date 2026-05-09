@@ -650,7 +650,7 @@ export default function LandingPage() {
           <ul className="grid gap-2 text-sm text-tropico-mute md:grid-cols-2">
             <li className="flex items-start gap-2">
               <span className="mt-0.5 text-tropico-purple">→</span>
-              <span><strong className="text-tropico-text">Open source MIT</strong> — auditable, sin vendor lock-in, podés correrlo en tu propio server.</span>
+              <span><strong className="text-tropico-text">Open source MIT</strong> — auditable, sin vendor lock-in, puedes correrlo en tu propio server.</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="mt-0.5 text-tropico-purple">→</span>
