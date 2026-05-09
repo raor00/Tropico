@@ -1,6 +1,6 @@
-<!-- Banner. Generar con el prompt en docs/BANNER_PROMPT.md y guardar como docs/images/banner.png -->
+<!-- Banner v2 — pixel art atardecer caribeño: palmera con coco, guacamaya roja-azul-amarilla, sol radiante, mar turquesa, montañas, wordmark TROPICO con gradient sunset (rojo→amarillo→verde→teal) y los 3 pilares: Wallet · Comercios · Carlos AI. Guarda el archivo en docs/images/banner.png para reemplazar el viejo. -->
 <p align="center">
-  <img src="docs/images/banner.png" alt="Tropico — La wallet caribeña en Solana" width="100%" />
+  <img src="docs/images/banner.png" alt="Tropico — Wallet · Comercios · Carlos AI · La red económica caribeña en Solana" width="100%" />
 </p>
 
 # Tropico 🌴

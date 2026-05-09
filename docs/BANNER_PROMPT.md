@@ -2,7 +2,34 @@
 
 > Prompt para generar el **banner horizontal del README** (NO el logo app icon — ese está en `LOGO_PROMPT.md`). Este banner va arriba de todo en el README de GitHub, formato 16:9.
 
-**Última actualización**: 2026-05-08 (v2 — refactorizado a caribeño dominante después del feedback "muy Solana corporativo")
+**Última actualización**: 2026-05-09 (v3 — pixel art 16-bit con guacamaya venezolana + 3 pilares Wallet/Comercios/Carlos AI)
+
+## 🎨 Banner activo (v3) — descripción del archivo actual en `docs/images/banner.png`
+
+```
+Pixel art 16-bit estilo SNES/Genesis, ratio 16:9.
+Escena: isla tropical al atardecer caribeño.
+- Foreground izquierda: palmera alta con cocos amarillos, guacamaya
+  venezolana posada (rojo + azul + amarillo) en el tronco.
+- Sol radiante naranja-amarillo detrás de la palmera, rayos circulares.
+- Mar turquesa-verde con olas pixeladas.
+- Montañas atrás (silueta del Ávila estilizada).
+- Cielo gradient violeta-Solana en la parte superior.
+- Foreground derecha: wordmark "TROPICO" en pixel block letters con
+  gradient vertical (rojo coral → amarillo sol → verde-teal Solana),
+  outline grueso turquesa.
+- Debajo del wordmark: línea con 3 pilares separados por bullets dorados:
+  "Wallet · Comercios · Carlos AI"
+- Bottom de la palmera: raíces que se transforman en circuit lines doradas
+  hacia el agua, sugiriendo blockchain.
+- Paleta dominante: amarillo #FCD116, coral #EF476F, sea #06D6A0,
+  acento Solana purple #9945FF en el cielo.
+- Sin texto extra, sin logos de terceros, sin watermarks.
+```
+
+Para regenerar este banner desde cero, usa el prompt completo abajo (o
+adáptalo). Si solo lo vas a reemplazar con una nueva imagen, guárdala
+como `docs/images/banner.png` (overwrite).
 
 ---
 
