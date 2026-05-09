@@ -102,6 +102,10 @@ export async function sendSol(
 /**
  * Envía un SPL token (USDC, USDT, etc.) de una wallet a otra.
  * Crea ATA destino si no existe (paga el sender).
+ *
+ * Pre-check: el sender necesita SOL para gas (~0.000005) Y para crear
+ * ATA destino si no existe (~0.002 SOL rent exemption). Sin SOL falla
+ * con error críptico de Solana — pre-validamos para dar mensaje claro.
  */
 export async function sendSplToken(
   fromKeypair: Keypair,
@@ -125,7 +129,7 @@ export async function sendSplToken(
     }
 
     const decimals = TOKENS[tokenSymbol].decimals;
-    const usdEstimate = tokenSymbol === "USDC" || tokenSymbol === "USDT" ? amount : amount; // placeholder
+    const usdEstimate = tokenSymbol === "USDC" || tokenSymbol === "USDT" ? amount : amount;
     const aml = checkPerTx(usdEstimate);
     if (!aml.ok) {
       return { ok: false, error: `${aml.message} ${aml.suggested}` };
@@ -135,17 +139,36 @@ export async function sendSplToken(
     const mint = new PublicKey(mintAddress);
     const toPub = new PublicKey(toPubkey);
 
+    // Pre-check SOL balance del sender (gas + posible rent ATA)
+    const senderSolLamports = await conn.getBalance(fromKeypair.publicKey);
+    const senderSol = senderSolLamports / LAMPORTS_PER_SOL;
+    if (senderSol < 0.003) {
+      const faucetCmd = `solana airdrop 2 ${fromKeypair.publicKey.toBase58()} --url ${cluster === "devnet" ? "devnet" : "mainnet-beta"}`;
+      return {
+        ok: false,
+        error: `Tu wallet no tiene SOL para pagar gas (tienes ${senderSol.toFixed(6)} SOL, mínimo ~0.003 para crear ATA destino + gas). ${cluster === "devnet" ? `Pide airdrop con: ${faucetCmd}  o usa https://faucet.solana.com` : "Compra SOL en cualquier exchange y mándalo a tu pubkey antes de enviar."}`,
+      };
+    }
+
     const fromAta = await getAssociatedTokenAddress(mint, fromKeypair.publicKey);
     const toAta = await getAssociatedTokenAddress(mint, toPub);
 
-    const tx = new Transaction();
+    // Verificar que la ATA del sender existe (debería, si tiene saldo)
+    const fromAtaInfo = await conn.getAccountInfo(fromAta);
+    if (!fromAtaInfo) {
+      return {
+        ok: false,
+        error: `Tu wallet no tiene cuenta de ${tokenSymbol} en ${cluster}. Recibe ${tokenSymbol} primero (faucet o transfer).`,
+      };
+    }
 
-    // Verificar si la ATA destino existe; si no, crearla
+    const tx = new Transaction();
+    // Crear ATA destino si no existe
     const toAtaInfo = await conn.getAccountInfo(toAta);
     if (!toAtaInfo) {
       tx.add(
         createAssociatedTokenAccountInstruction(
-          fromKeypair.publicKey, // payer
+          fromKeypair.publicKey,
           toAta,
           toPub,
           mint
@@ -153,7 +176,6 @@ export async function sendSplToken(
       );
     }
 
-    // Transfer instruction
     const lamports = BigInt(Math.floor(amount * 10 ** decimals));
     tx.add(
       createTransferInstruction(
@@ -182,6 +204,20 @@ export async function sendSplToken(
       explorer: `https://solscan.io/tx/${sig}${cluster === "devnet" ? "?cluster=devnet" : ""}`,
     };
   } catch (e) {
-    return { ok: false, error: (e as Error).message };
+    const msg = (e as Error).message;
+    // Mejorar errores comunes de Solana
+    if (msg.includes("found no record of a prior credit")) {
+      return {
+        ok: false,
+        error: "Tu wallet no tiene SOL para pagar el gas + rent de la ATA destino. Pide airdrop devnet en https://faucet.solana.com (o solana airdrop 2 <pubkey> --url devnet).",
+      };
+    }
+    if (msg.includes("InsufficientFundsForRent")) {
+      return {
+        ok: false,
+        error: "Saldo SOL insuficiente para rent exemption (~0.002 SOL). Pide más SOL devnet.",
+      };
+    }
+    return { ok: false, error: msg };
   }
 }
