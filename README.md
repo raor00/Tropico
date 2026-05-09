@@ -395,13 +395,60 @@ Lo que sí tienes: login con email en 15 segundos, biométrica opcional (TouchID
 - **State**: TanStack Query 5
 
 ### Principios no negociables
-1. **Cero programa Anchor custom** — solo protocolos abiertos (SPL Token, Jupiter, Solana Pay)
+1. **Cero Anchor para custodia o lógica de fondos** — solo SPL Token, Jupiter, Solana Pay (programs públicos auditados). El único Anchor program propio (`tropico_treasury`) NO custodia fondos — solo registra metadata pública (transparencia radical).
 2. **Cero backend persistente** — solo Edge routes `/api/*`
 3. **Non-custodial estricto** — Tropico nunca accede a llaves privadas
 4. **API keys secretas solo server-side** — nunca en client
 5. **Mobile-first PWA** — funciona en Android viejo, instalable sin app store
 6. **Cero opinión política** en Carlos AI
 7. **Cero promesas de rendimientos garantizados**
+
+---
+
+## 🔗 On-chain footprint
+
+Tropico es **dApp non-custodial** que compón programs públicos de Solana en lugar de escribir Anchor para custodia. Esto es **decisión arquitectural**: cero superficie de ataque custom, auditable, ship rápido.
+
+**Programs públicos que Tropico USA** (no nuestros, pero parte del stack):
+
+| Program | Address | Para qué |
+|---|---|---|
+| SPL Token Program | `TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA` | Transfers USDC, mint TROPI, ATAs |
+| Jupiter v6 Aggregator | `JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4` | Swaps con `platformFeeBps=50` |
+| Marinade Liquid Staking | `MarBmsSgKXdrN1egZf5sqe1TMThczhMLJhTndPfxN1V` | Yield mSOL ~7% APY |
+| Kamino Lending | `KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD` | Vaults USDC ~5%, LP ~12% |
+
+**TROPI test token mint** (SPL Token estándar, deployado por nosotros en devnet):
+
+```
+MINT_ADDRESS_AQUI_DESPUES_DE_DEPLOY
+```
+
+Verificable en: `https://solscan.io/token/<MINT>?cluster=devnet`
+
+**Programa Anchor propio — `tropico_treasury`** (`programs/tropico_treasury/`):
+
+~150 LOC Rust. Registra cada fee de Tropico on-chain con auditabilidad pública. NO custodia tokens. Solo emite events `FeeRecorded` para que el dashboard `/transparency` (Q3 2026) muestre live cuánto cobra el proyecto y de qué módulo.
+
+```rust
+record_fee(amount, module, user)
+// emit! FeeRecorded { user, module, amount, new_total, tx_count, timestamp }
+```
+
+8 módulos enum: `Swap · Pay · Yield · Cashback · Remesas · Servicios · P2pBs · TropicoPay`.
+
+Listo para deploy. Setup + comandos en [`docs/ANCHOR_PROGRAM.md`](docs/ANCHOR_PROGRAM.md).
+
+```bash
+anchor build
+anchor deploy --provider.cluster devnet
+# → Program ID asignado
+```
+
+**Migration path**:
+- HOY: TROPI test mint (SPL standard, address verificable)
+- Q3: Deploy `tropico_treasury` + wire post-tx hooks → dashboard `/transparency` LIVE
+- Q4: Multi-sig Squads como authority + audit antes de mainnet
 
 ---
 
