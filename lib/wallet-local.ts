@@ -131,7 +131,12 @@ async function encryptBytes(plaintext: Uint8Array, password: string) {
   const salt = crypto.getRandomValues(new Uint8Array(16));
   const iv = crypto.getRandomValues(new Uint8Array(12));
   const key = await deriveAesKey(password, salt);
-  const ciphertext = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, key, plaintext);
+  // Cast a BufferSource explícito — TS5 estricto distingue Uint8Array<ArrayBufferLike> vs <ArrayBuffer>
+  const ciphertext = await crypto.subtle.encrypt(
+    { name: "AES-GCM", iv: iv as BufferSource },
+    key,
+    plaintext as BufferSource
+  );
   return {
     ciphertext: bufToBase64(ciphertext),
     salt: bufToBase64(salt),
@@ -148,9 +153,9 @@ async function decryptBytes(
     const iv = base64ToBuf(wallet.iv);
     const key = await deriveAesKey(password, salt);
     const plain = await crypto.subtle.decrypt(
-      { name: "AES-GCM", iv },
+      { name: "AES-GCM", iv: iv as BufferSource },
       key,
-      base64ToBuf(wallet.ciphertext)
+      base64ToBuf(wallet.ciphertext) as BufferSource
     );
     return new Uint8Array(plain);
   } catch {
@@ -159,7 +164,7 @@ async function decryptBytes(
 }
 
 async function deriveAesKey(password: string, salt: Uint8Array): Promise<CryptoKey> {
-  const passwordBuf = new TextEncoder().encode(password);
+  const passwordBuf = new TextEncoder().encode(password) as BufferSource;
   const baseKey = await crypto.subtle.importKey(
     "raw",
     passwordBuf,
@@ -168,7 +173,7 @@ async function deriveAesKey(password: string, salt: Uint8Array): Promise<CryptoK
     ["deriveKey"]
   );
   return crypto.subtle.deriveKey(
-    { name: "PBKDF2", salt, iterations: PBKDF2_ITERATIONS, hash: "SHA-256" },
+    { name: "PBKDF2", salt: salt as BufferSource, iterations: PBKDF2_ITERATIONS, hash: "SHA-256" },
     baseKey,
     { name: "AES-GCM", length: 256 },
     false,

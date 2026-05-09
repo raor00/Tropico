@@ -46,6 +46,7 @@ export function ScrollReveal({
   rootMargin = "-80px",
   className = "",
   as: Component = "div",
+  id,
 }: {
   children: ReactNode;
   direction?: Direction;
@@ -58,7 +59,9 @@ export function ScrollReveal({
   /** Margen del rootMargin del IntersectionObserver */
   rootMargin?: string;
   className?: string;
-  as?: "div" | "section" | "article" | "li";
+  as?: "div" | "section" | "article" | "li" | "aside";
+  /** id opcional para anchor links (ej. #flow #calculadora) */
+  id?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [revealed, setRevealed] = useState(false);
@@ -93,6 +96,7 @@ export function ScrollReveal({
   return (
     <Component
       ref={ref as never}
+      id={id}
       className={`transition-all ease-out ${revealed ? visibleCls : hiddenCls} ${className}`}
       style={{ transitionDuration: `${duration}ms` }}
     >
