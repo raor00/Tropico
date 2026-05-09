@@ -6,6 +6,7 @@ import {
   QrCode,
   Sparkles,
   Compass,
+  Zap,
   Gift,
   CalendarClock,
   Plus,
@@ -75,6 +76,14 @@ const MODULES = [
     descripcion: "Conoce el ecosistema Solana",
     gradient: "from-tropico-mute/20 to-tropico-border/10",
     badge: "Educa",
+  },
+  {
+    href: "/pagar-servicios",
+    Icon: Zap,
+    titulo: "Servicios",
+    descripcion: "Paga luz, agua, internet y streaming con USDC",
+    gradient: "from-tropico-sun/25 to-tropico-sea/10",
+    badge: "Pagar",
   },
 ];
 

@@ -27,6 +27,7 @@ const DEFAULT_NAV: NavLink[] = [
   { href: "/home", label: "Wallet" },
   { href: "/cambiar", label: "Cambiar" },
   { href: "/cobrar", label: "Cobrar" },
+  { href: "/pagar-servicios", label: "Servicios" },
   { href: "/comercios", label: "Comercios" },
   { href: "/integraciones", label: "Integraciones" },
 ];

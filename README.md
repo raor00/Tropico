@@ -157,7 +157,7 @@ Sin ninguna key, la app corre en **modo demo** con mocks honestos y banners expl
 | **Cobrar** | `/cobrar` | QR Solana Pay generado client-side — cualquier wallet puede pagar |
 | **Enviar** | `/enviar` | P2P a wallet address o claim link para quien no tiene wallet, compartible por WhatsApp |
 | **Guardar** | `/guardar` | Yield ~5% APY default ON — mSOL o Kamino bajo el hood |
-| **Carlos AI** | `/carlos` | Copiloto venezolano — preguntas, contexto de tu portfolio, acciones agénticas |
+| **Carlos AI by Lumen** | `/carlos` | Copiloto venezolano — 7 capacidades reales (saldos, precios, swap, QR, yield, cashback, agente) powered by [Lumen](https://github.com/gabogabucho/lumen-agent) |
 
 ### Modo Agente — `/carlos/agente`
 
@@ -323,8 +323,8 @@ Lo que sí tienes: login con email en 15 segundos, biométrica opcional (TouchID
 | `/descubrir` | Catálogo educativo de 8 tokens en venezolano |
 | `/comercios` | Landing del lado merchant con comparativa vs POS tradicional |
 | `/integraciones` | Tropico Pay — 3 patrones de integración + verticales |
-| `/carlos` | UI shell del chat AI |
-| `/carlos/agente` | Modo Agente — 4 acciones autónomas (DCA, auto-yield, auto-cashback, rebalance) |
+| `/carlos` | Carlos AI by Lumen — chat + 7 capacidades + input funcional |
+| `/carlos/agente` | Modo Agente — 4 acciones autónomas (DCA, auto-yield, auto-cashback, rebalance) powered by Lumen |
 
 ---
 

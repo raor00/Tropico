@@ -74,12 +74,12 @@ export default function ModoAgentePage() {
             </div>
           </div>
           <a
-            href="https://github.com/raor00/Tropico/tree/main/lumen-kit"
+            href="https://github.com/gabogabucho/lumen-agent"
             target="_blank"
             rel="noreferrer"
-            className="w-fit rounded-full border border-tropico-sea/40 bg-tropico-sea/10 px-3 py-1.5 text-xs font-semibold text-tropico-sea transition hover:bg-tropico-sea/20"
+            className="w-fit rounded-full border border-tropico-purple/40 bg-tropico-purple/10 px-3 py-1.5 text-xs font-semibold text-tropico-purple transition hover:bg-tropico-purple/20"
           >
-            Ver en GitHub →
+            Ver Lumen en GitHub →
           </a>
         </header>
 
@@ -87,14 +87,23 @@ export default function ModoAgentePage() {
           Carlos no es un wrapper de ChatGPT. Es un agente con personalidad, conocimiento de
           dominio y acceso a herramientas reales — corriendo sobre{" "}
           <a
-            href="https://github.com/lumenagents/lumen"
+            href="https://github.com/gabogabucho/lumen-agent"
             target="_blank"
             rel="noreferrer"
-            className="font-semibold text-tropico-sun underline"
+            className="font-bold text-tropico-purple underline"
           >
             Lumen
           </a>
-          , el framework open source de agentes en espa&ntilde;ol.
+          , el framework open source de agentes en espa&ntilde;ol creado por{" "}
+          <a
+            href="https://github.com/gabogabucho/lumen-agent"
+            target="_blank"
+            rel="noreferrer"
+            className="font-semibold text-tropico-purple underline"
+          >
+            @gabogabucho
+          </a>
+          .
           Construimos un kit de tres capas — <strong>KIT &middot; SKILLS &middot; CAPABILITIES</strong> — que
           es portable a cualquier orquestador compatible con la spec de skills (incluido
           Hermes/OpenClaw).
@@ -119,7 +128,7 @@ export default function ModoAgentePage() {
           <div className="rounded-xl border border-tropico-sea/30 bg-tropico-sea/5 p-4">
             <header className="mb-2 flex items-center gap-2">
               <span className="text-lg">📚</span>
-              <h3 className="font-display text-base font-bold text-tropico-sea">6 SKILLS</h3>
+              <h3 className="font-display text-base font-bold text-tropico-sea">7 SKILLS</h3>
             </header>
             <p className="text-xs text-tropico-mute">
               <code className="text-tropico-text">SKILL.md</code> + <code className="text-tropico-text">module.yaml</code> por skill

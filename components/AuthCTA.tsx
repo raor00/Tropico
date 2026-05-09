@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { Wallet, Mail, ArrowRight } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Wallet, Mail, ArrowRight, Cpu } from "lucide-react";
 
 /**
  * Botón de autenticación que se adapta al modo:
@@ -39,20 +40,73 @@ export function AuthCTA({
 }
 
 /**
- * Versión demo — solo navega a /home con banner explícito
+ * Versión demo — navega a /home con banner explícito + botón Modo dev
  */
 function DemoButton({ variant, label }: { variant: Variant; label: string }) {
+  const router = useRouter();
+  const [devLoading, setDevLoading] = useState(false);
+
+  async function activarModoDev() {
+    setDevLoading(true);
+    try {
+      // Generar keypair efímero on-browser via @solana/web3.js
+      const { Keypair } = await import("@solana/web3.js");
+      const kp = Keypair.generate();
+      localStorage.setItem(
+        "tropico:dev-wallet",
+        JSON.stringify({
+          publicKey: kp.publicKey.toBase58(),
+          // secretKey como array de numbers para evitar depender de bs58 en browser
+          secretKey: Array.from(kp.secretKey),
+          createdAt: new Date().toISOString(),
+          network: "devnet",
+        })
+      );
+      router.push("/home");
+    } catch {
+      // Fallback: mock pubkey aleatorio si @solana/web3.js no carga en browser
+      const randomBytes = new Uint8Array(32);
+      crypto.getRandomValues(randomBytes);
+      const mockPubkey = Array.from(randomBytes, (b) =>
+        b.toString(16).padStart(2, "0")
+      ).join("");
+      localStorage.setItem(
+        "tropico:dev-wallet",
+        JSON.stringify({
+          publicKey: mockPubkey,
+          secretKey: null,
+          createdAt: new Date().toISOString(),
+          network: "devnet",
+        })
+      );
+      router.push("/home");
+    } finally {
+      setDevLoading(false);
+    }
+  }
+
   if (variant === "primary") {
     return (
-      <Link
-        href="/home"
-        className="btn-primary inline-flex items-center gap-2"
-        title="Modo demo — sin Privy configurado, navega a /home con datos simulados"
-      >
-        <Mail className="size-4" strokeWidth={2} aria-hidden="true" />
-        {label}
-        <ArrowRight className="size-4" strokeWidth={2} aria-hidden="true" />
-      </Link>
+      <div className="flex flex-col items-stretch gap-2">
+        <Link
+          href="/home"
+          className="btn-primary inline-flex items-center gap-2"
+          title="Modo demo — sin Privy configurado, navega a /home con datos simulados"
+        >
+          <Mail className="size-4" strokeWidth={2} aria-hidden="true" />
+          {label}
+          <ArrowRight className="size-4" strokeWidth={2} aria-hidden="true" />
+        </Link>
+        <button
+          onClick={activarModoDev}
+          disabled={devLoading}
+          className="inline-flex items-center justify-center gap-1.5 text-xs text-tropico-mute transition hover:text-tropico-purple disabled:opacity-60"
+          title="Genera un keypair efímero en devnet — solo para pruebas"
+        >
+          <Cpu className="size-3" aria-hidden="true" />
+          {devLoading ? "Generando keypair…" : "Modo dev (devnet)"}
+        </button>
+      </div>
     );
   }
 
