@@ -125,10 +125,6 @@ const CANNED: Record<string, string> = {
     "¡Buena estrategia! El DCA semanal reduce el riesgo de comprar en el pico. Ve a Modo Agente → DCA y configura $50 a SOL cada 7 días. En Q3 se ejecuta automático; por ahora lo apruebas con un click. ¿Vamos?",
 };
 
-export const metadata = {
-  title: "Carlos AI by Lumen — Tu copiloto en Solana",
-};
-
 export default function CarlosPage() {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<{ role: "user" | "carlos"; text: string }[]>([]);
