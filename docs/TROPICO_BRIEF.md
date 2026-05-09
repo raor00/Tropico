@@ -39,7 +39,7 @@
 | Producto merchant | **Tropico Comercios** |
 | Slug | `tropico` |
 | Categoría | Red económica privada / payment network non-custodial |
-| Tagline corto | "La red económica del venezolano. Ahorra ganando, paga sin perder." |
+| Tagline corto | "La red económica del venezolano. Ahorra ganando intereses. Paga sin perder valor." |
 | Tagline largo | "Tu plata en USDC genera mientras está parada. Pagas directo en comercios sin pasar por el banco. Los comercios pagan 60% menos. Todos ganan." |
 | Idioma | Español venezolano (es-VE) |
 | Mercado objetivo | Venezuela primero, LATAM después (CO, AR, MX, PE) |

@@ -24,7 +24,7 @@ const bricolage = Bricolage_Grotesque({
 export const metadata: Metadata = {
   title: "Tropico — La red económica del venezolano en Solana",
   description:
-    "Ahorra ganando, paga sin perder. Red de pagos non-custodial sobre Solana. Hecho en Venezuela.",
+    "Ahorra ganando intereses. Paga sin perder valor. Red de pagos non-custodial sobre Solana. Hecho en Venezuela.",
   manifest: "/manifest.json",
   openGraph: {
     title: "Tropico — La red económica del venezolano en Solana",

@@ -126,7 +126,7 @@ export default function LandingPage() {
             ,<br /> en Solana.
           </h1>
           <p className="max-w-2xl text-lg text-tropico-mute">
-            Ahorra ganando, paga sin perder. Una red de pagos non-custodial donde
+            Ahorra ganando intereses. Paga sin perder valor. Una red de pagos non-custodial donde
             tu plata vive en USDC, genera rendimiento autom&aacute;tico, y los comercios pagan{" "}
             <strong className="text-tropico-text">60% menos en fees vs POS tradicional</strong>.
           </p>

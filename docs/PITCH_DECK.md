@@ -80,7 +80,7 @@ Cómo renderizarlo:
 
 <br/>
 
-**Ahorra ganando. Paga sin perder.**
+**Ahorra ganando intereses. Paga sin perder valor.**
 **Sin bancos. Sin custodios. Sin USDT atrapado.**
 
 <br/>

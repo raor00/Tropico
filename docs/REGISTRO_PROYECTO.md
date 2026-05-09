@@ -28,12 +28,12 @@
 
 | Opción | Caracteres | Tono |
 |---|---|---|
-| `La red económica del venezolano en Solana: ahorra ganando, paga sin perder, todo non-custodial.` | 96 | **RECOMENDADA** — clara, directa, captura la propuesta de valor |
+| `La red económica del venezolano en Solana: ahorra ganando intereses, paga sin perder valor, todo non-custodial.` | 96 | **RECOMENDADA** — clara, directa, captura la propuesta de valor |
 | `Red de pagos non-custodial para Venezuela: USDC con yield automático y QR para comercios. 60% más barato que Banesco.` | 119 | Más datos concretos, menos poético |
 | `Sistema operativo financiero del venezolano sobre Solana — wallet + pagos + yield + AI copilot.` | 96 | Más técnico/feature-driven |
 | `Red económica caribeña en Solana: el venezolano ahorra en USDC con yield, paga en comercios con QR, todos ganan.` | 105 | Analogía rápida que cualquiera entiende |
 
-**👉 Mi voto: opción 1** — *"La red económica del venezolano en Solana: ahorra ganando, paga sin perder, todo non-custodial."*
+**👉 Mi voto: opción 1** — *"La red económica del venezolano en Solana: ahorra ganando intereses, paga sin perder valor, todo non-custodial."*
 
 ---
 
@@ -115,7 +115,7 @@ LA SOLUCIÓN — DOS PRODUCTOS INTEGRADOS. Tropico Wallet (consumidor): login co
 
 CINCO STREAMS DE REVENUE: 0.5% por swap, 0.3% spread en envíos, 2% del yield, 1% por cobro merchant, Carlos AI como acelerador transversal. Mes 12 proyectado: 50K usuarios + 2K comercios = $250K MRR sobre $44M de volumen.
 
-EFECTO RED BILATERAL. Cuando ambos lados están dentro, el dinero gira en USDC sin pasar por bancos. Es la red económica caribeña en Solana, nativa de USDC, non-custodial. Construido por un venezolano que vive el problema. La primera red económica privada de LATAM sobre Solana — ahorra ganando, paga sin perder.
+EFECTO RED BILATERAL. Cuando ambos lados están dentro, el dinero gira en USDC sin pasar por bancos. Es la red económica caribeña en Solana, nativa de USDC, non-custodial. Construido por un venezolano que vive el problema. La primera red económica privada de LATAM sobre Solana — ahorra ganando intereses, paga sin perder valor.
 ```
 
 **Word count: 290 / 300** ✅

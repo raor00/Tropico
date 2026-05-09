@@ -115,7 +115,7 @@ npx playwright install chromium
 ```tsx
 export const metadata: Metadata = {
   title: "Tropico — La red económica del venezolano en Solana",
-  description: "Ahorra ganando, paga sin perder. Non-custodial, en español venezolano.",
+  description: "Ahorra ganando intereses. Paga sin perder valor. Non-custodial, en español venezolano.",
   openGraph: {
     title: "Tropico — La red económica del venezolano en Solana",
     description: "La wallet caribeña en Solana. Non-custodial. USDC + yield + QR para comercios. Hecho en Venezuela.",
