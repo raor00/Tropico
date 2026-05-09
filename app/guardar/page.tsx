@@ -71,7 +71,7 @@ export default function GuardarPage() {
         <p className="text-xs text-tropico-mute">
           70% de tu saldo USDC est&aacute; generando rendimiento
         </p>
-        <div className="mt-2 grid grid-cols-3 gap-3 border-t border-tropico-border pt-4">
+        <div className="mt-2 grid grid-cols-3 gap-2 border-t border-tropico-border pt-4 md:gap-3">
           <div>
             <div className="text-xs text-tropico-mute">Esta semana</div>
             <div className="font-display text-lg font-bold text-tropico-green">

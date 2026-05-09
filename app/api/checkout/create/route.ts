@@ -25,16 +25,20 @@ export const dynamic = "force-dynamic";
  *    "webhookUrl": "https://api.yummyrides.com/webhooks/tropico"
  *  }
  *
- * Response 200:
+ * Response 201:
  *  {
  *    "sessionId": "tps_...",
  *    "reference": "...",
- *    "solanaPayUrl": "solana:...",
+ *    "solanaPayUrl": "solana:...",   ← amount = customerPays (fee incluido)
  *    "hostedCheckoutUrl": "https://tropico.app/checkout?...",
  *    "expiresAt": "2026-05-08T20:30:00.000Z",
  *    "feeBps": 50,
- *    "merchantReceives": 12.4375
+ *    "customerPays": 12.5625,        ← amount + fee (0.5%) — lo que el cliente paga
+ *    "merchantReceives": 12.50        ← amount exacto del merchant — sin descuento
  *  }
+ *
+ *  Modelo de fee (hacia arriba): el fee se añade sobre el monto del merchant.
+ *  El merchant recibe exactamente lo que pidió; el cliente absorbe el fee.
  */
 export async function POST(req: Request) {
   let body: unknown;

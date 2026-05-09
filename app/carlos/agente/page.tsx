@@ -63,7 +63,7 @@ export default function ModoAgentePage() {
       {/* SECCIÓN: Tropico Web3 Kit (Lumen) — el kit que construimos  */}
       {/* ─────────────────────────────────────────────────────────── */}
       <section className="panel flex flex-col gap-5 p-6">
-        <header className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+        <header className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-3">
             <span className="text-2xl" aria-hidden>🧰</span>
             <div>
@@ -77,7 +77,7 @@ export default function ModoAgentePage() {
             href="https://github.com/raor00/Tropico/tree/main/lumen-kit"
             target="_blank"
             rel="noreferrer"
-            className="rounded-full border border-tropico-sea/40 bg-tropico-sea/10 px-3 py-1.5 text-xs font-semibold text-tropico-sea transition hover:bg-tropico-sea/20"
+            className="w-fit rounded-full border border-tropico-sea/40 bg-tropico-sea/10 px-3 py-1.5 text-xs font-semibold text-tropico-sea transition hover:bg-tropico-sea/20"
           >
             Ver en GitHub →
           </a>
@@ -262,7 +262,7 @@ export default function ModoAgentePage() {
         </div>
 
         {/* Diagrama del flow */}
-        <div className="rounded-xl border border-tropico-border bg-tropico-ink/60 p-4 font-mono text-[11px] leading-relaxed text-tropico-mute">
+        <div className="overflow-x-auto rounded-xl border border-tropico-border bg-tropico-ink/60 p-4 font-mono text-[11px] leading-relaxed text-tropico-mute">
           <div className="text-tropico-text mb-1">// Flujo de una acci&oacute;n aut&oacute;noma en producci&oacute;n</div>
           <pre className="whitespace-pre-wrap">{`Usuario  ──▶  Hermes (cerebro + memoria)
                   │ "DCA semanal toca, propongo $50→SOL"

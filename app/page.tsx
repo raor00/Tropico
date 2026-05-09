@@ -101,7 +101,7 @@ const REVENUE_STREAMS = [
 
 export default function LandingPage() {
   return (
-    <main className="mx-auto flex min-h-dvh max-w-6xl flex-col gap-20 px-5 py-10 md:py-16">
+    <main className="mx-auto flex min-h-dvh max-w-6xl flex-col gap-10 px-5 py-10 md:gap-20 md:py-16">
       {/* HEADER flotante — anclado en top, flota al hacer scroll */}
       <Header />
 
@@ -345,7 +345,7 @@ export default function LandingPage() {
       </ScrollReveal>
 
       {/* PARA COMERCIOS — preview con comparativa POS tradicional */}
-      <ScrollReveal direction="left" as="section" className="grid gap-6 panel p-8 md:grid-cols-2 md:items-center">
+      <ScrollReveal direction="left" as="section" className="grid gap-6 panel p-5 md:grid-cols-2 md:items-center md:p-8">
         <div className="flex flex-col gap-4">
           <div className="inline-flex w-fit items-center gap-2 rounded-md bg-tropico-coral/15 px-2 py-0.5 text-xs font-semibold uppercase tracking-widest text-tropico-coral">
             <Store className="size-3" strokeWidth={2.5} />
@@ -365,7 +365,7 @@ export default function LandingPage() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-3 gap-3 text-center">
+        <div className="grid grid-cols-3 gap-2 text-center sm:gap-3">
           {[
             { v: "1%", l: "fee Tropico", c: "text-tropico-green" },
             { v: "4.5%", l: "fee banco tradicional", c: "text-tropico-coral" },
@@ -437,7 +437,7 @@ export default function LandingPage() {
             5 streams de revenue desde el d&iacute;a uno.
           </h2>
         </div>
-        <div className="grid gap-3 md:grid-cols-5">
+        <div className="grid grid-cols-3 gap-3 sm:grid-cols-5">
           {REVENUE_STREAMS.map((s) => (
             <div
               key={s.name}
@@ -459,7 +459,7 @@ export default function LandingPage() {
       </ScrollReveal>
 
       {/* CTA FINAL */}
-      <ScrollReveal direction="pixel" as="section" className="panel relative flex flex-col items-center gap-6 overflow-hidden p-10 text-center">
+      <ScrollReveal direction="pixel" as="section" className="panel relative flex flex-col items-center gap-6 overflow-hidden p-6 text-center md:p-10">
         <div
           className="pointer-events-none absolute inset-0 opacity-60"
           style={{

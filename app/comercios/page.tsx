@@ -74,7 +74,7 @@ const PARTNERS_BAR = [
 
 export default function ComerciosPage() {
   return (
-    <main className="mx-auto flex min-h-dvh max-w-6xl flex-col gap-16 px-5 py-10">
+    <main className="mx-auto flex min-h-dvh max-w-6xl flex-col gap-10 px-5 py-10 md:gap-16">
       {/* Header flotante con badge "Comercios" */}
       <Header badge={{ label: "Comercios", tone: "coral" }} />
 
@@ -84,7 +84,7 @@ export default function ComerciosPage() {
           <span className="size-1.5 rounded-full bg-tropico-coral animate-pulse-slow" />
           Para bodegas, freelancers y comercios venezolanos
         </span>
-        <h1 className="h-display">
+        <h1 className="h-display break-words">
           Cobra en d&oacute;lares.<br />
           <span className="bg-gradient-to-r from-tropico-coral to-tropico-sun bg-clip-text text-transparent">
             Sin banco tradicional. Sin POS. Sin esperas.

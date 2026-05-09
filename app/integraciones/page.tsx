@@ -97,7 +97,7 @@ async function createTropicoCharge(orderId, amount) {
 
 export default function IntegracionesPage() {
   return (
-    <main className="mx-auto flex min-h-dvh max-w-6xl flex-col gap-12 px-5 py-10">
+    <main className="mx-auto flex min-h-dvh max-w-6xl flex-col gap-8 px-5 py-10 md:gap-12">
       <Header
         nav={[
           { href: "/home", label: "Wallet" },
@@ -113,7 +113,7 @@ export default function IntegracionesPage() {
         <span className="inline-flex w-fit items-center gap-2 rounded-full border border-tropico-sea/30 bg-tropico-sea/5 px-3 py-1 text-xs font-semibold text-tropico-sea">
           <Zap className="size-3" /> Tropico Pay · Integración para plataformas
         </span>
-        <h1 className="font-display text-4xl font-bold leading-tight md:text-6xl">
+        <h1 className="font-display text-3xl font-bold leading-tight md:text-6xl">
           Cobra en USDC.
           <br />
           <span
@@ -303,7 +303,7 @@ X-Tropico-Signature: sha256=...
       </section>
 
       {/* CTA partners */}
-      <section className="panel flex flex-col items-start gap-5 bg-gradient-to-br from-tropico-purple/10 via-tropico-sea/10 to-tropico-sun/10 p-8 md:flex-row md:items-center md:justify-between">
+      <section className="panel flex flex-col items-start gap-5 bg-gradient-to-br from-tropico-purple/10 via-tropico-sea/10 to-tropico-sun/10 p-5 md:flex-row md:items-center md:justify-between md:p-8">
         <div className="flex flex-col gap-2">
           <h2 className="font-display text-3xl font-bold">¿Quieres integrar tu plataforma?</h2>
           <p className="max-w-2xl text-sm text-tropico-mute">

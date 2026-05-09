@@ -118,9 +118,9 @@ export function SwapForm() {
         </button>
       </div>
 
-      {/* To block */}
+      {/* To block — outAmount ya viene descontado el fee de Jupiter (post-fee) */}
       <SideBlock
-        label="A"
+        label="Recibes exacto"
         symbol={toSymbol}
         onSymbolChange={setToSymbol}
         amount={
@@ -157,8 +157,14 @@ export function SwapForm() {
               </Row>
               <Row
                 label={
-                  <span className="font-semibold text-tropico-green">
+                  <span className="flex items-center gap-1 font-semibold text-tropico-green">
                     Comisi&oacute;n Tropico (0.5%)
+                    <span
+                      title="Tropico cobra 0.5% del swap — ya incluido en el monto que recibes, no se descuenta después."
+                      className="cursor-help rounded-full border border-tropico-border px-1 text-[10px] text-tropico-mute"
+                    >
+                      ?
+                    </span>
                   </span>
                 }
               >

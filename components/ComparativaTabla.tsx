@@ -76,6 +76,11 @@ export function ComparativaTabla() {
           Eso son entre <strong>$420</strong> y <strong>$10.500</strong> al a&ntilde;o
           en tu bolsillo. Por solo cambiar tu m&eacute;todo de cobro.
         </p>
+        <p className="mt-2 text-xs text-tropico-mute">
+          Con Tropico, <span className="font-semibold text-tropico-sea">recibes el 100% del precio que pones</span>.
+          El fee se cobra al cliente encima del monto — nunca sale de lo que acordaste cobrar.
+          El POS tradicional te retiene el 4.5% de cada cobro.
+        </p>
       </div>
     </div>
   );

@@ -11,6 +11,11 @@
  *
  * Todas las integraciones devuelven el mismo resultado: una `reference` que
  * el partner usa para trackear el pago, y la URL Solana Pay que el cliente abre.
+ *
+ * MODELO DE FEE (fee hacia arriba):
+ * El merchant fija su precio. Tropico añade el fee SOBRE ESE MONTO.
+ * El cliente paga (amount + fee). El merchant recibe su amount exacto.
+ * Ejemplo: merchant pide $5 → cliente paga $5.05 → merchant recibe $5.00.
  */
 
 import { buildSolanaPayUrl, generateReference } from "./solana-pay";
@@ -56,9 +61,21 @@ export type CheckoutSession = {
   hostedCheckoutUrl: string;
   /** Cuándo expira (ISO 8601, default 15 min) */
   expiresAt: string;
-  /** Comisión que cobrará Tropico al merchant (0.5% default) */
+  /**
+   * Fee Tropico en basis points (50 = 0.5%).
+   * El fee se añade SOBRE el monto del merchant (fee hacia arriba).
+   * El merchant recibe su amount exacto; el cliente absorbe el fee.
+   */
   feeBps: number;
-  /** Monto que recibirá el merchant después de fee */
+  /**
+   * Lo que el cliente paga = amount + fee.
+   * Este es el monto codificado en el Solana Pay URL y en el QR.
+   */
+  customerPays: number;
+  /**
+   * Lo que el merchant recibe = amount exacto que solicitó.
+   * El fee NO se descuenta del merchant.
+   */
   merchantReceives: number;
   /** Eco del partner */
   partnerId: string;
@@ -68,13 +85,18 @@ export type CheckoutSession = {
 const TROPICO_BASE_URL =
   process.env.NEXT_PUBLIC_BASE_URL ?? "https://tropico.app";
 
-const DEFAULT_FEE_BPS = 50; // 0.5% al merchant — política Tropico Pay
+const DEFAULT_FEE_BPS = 50; // 0.5% — se añade SOBRE el monto del merchant (fee hacia arriba)
 
 const DEFAULT_TTL_MS = 15 * 60 * 1000; // 15 minutos
 
 /**
  * Crea una sesión de checkout. Server-side: NO genera signing,
  * solo arma URL + reference. El cliente firma desde su wallet.
+ *
+ * Modelo de fee (hacia arriba):
+ *   fee         = amount × feeBps / 10000
+ *   customerPays  = amount + fee   ← lo que el cliente paga (codificado en el QR)
+ *   merchantReceives = amount       ← el merchant recibe exactamente lo que pidió
  */
 export function createCheckoutSession(
   input: CreateCheckoutInput
@@ -83,11 +105,13 @@ export function createCheckoutSession(
   const sessionId = `tps_${reference.slice(0, 16)}`;
   const symbol = input.tokenSymbol ?? "USDC";
   const fee = (input.amount * DEFAULT_FEE_BPS) / 10000;
-  const merchantReceives = +(input.amount - fee).toFixed(6);
+  const customerPays = +(input.amount + fee).toFixed(6);
+  const merchantReceives = +input.amount.toFixed(6);
 
+  // El QR pide al cliente `customerPays` (amount + fee), no el amount del merchant
   const solanaPayUrl = buildSolanaPayUrl({
     recipient: input.merchantWallet,
-    amount: input.amount,
+    amount: customerPays,
     tokenSymbol: symbol,
     reference,
     label: `${input.partnerId} · pedido ${input.orderId}`,
@@ -111,6 +135,7 @@ export function createCheckoutSession(
     hostedCheckoutUrl,
     expiresAt: new Date(Date.now() + DEFAULT_TTL_MS).toISOString(),
     feeBps: DEFAULT_FEE_BPS,
+    customerPays,
     merchantReceives,
     partnerId: input.partnerId,
     orderId: input.orderId,

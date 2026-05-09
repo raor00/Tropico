@@ -1,0 +1,33 @@
+{
+  "merchants": [
+    {
+      "id": "bodega-la-esquina",
+      "nombre": "Bodega La Esquina",
+      "amount": 1.20,
+      "ultimoCobro": "2026-05-08T12:00:00Z",
+      "cashback_pct": 1.0
+    },
+    {
+      "id": "panaderia-nueva",
+      "nombre": "Panadería Nueva",
+      "amount": 0.75,
+      "ultimoCobro": "2026-05-07T18:30:00Z",
+      "cashback_pct": 0.5
+    },
+    {
+      "id": "farmacia-el-sol",
+      "nombre": "Farmacia El Sol",
+      "amount": 0.80,
+      "ultimoCobro": "2026-05-06T09:15:00Z",
+      "cashback_pct": 0.75
+    },
+    {
+      "id": "licorera-caracas",
+      "nombre": "Licorera Caracas",
+      "amount": 0.45,
+      "ultimoCobro": "2026-05-05T21:00:00Z",
+      "cashback_pct": 0.5
+    }
+  ],
+  "ultimoClaim": "2026-04-30T10:00:00Z"
+}

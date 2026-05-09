@@ -35,7 +35,7 @@ Tu plataforma                Tropico Pay              Solana
 | Métrica | Visa/Mastercard | Tropico Pay |
 |---|---|---|
 | Settlement | 1-3 días hábiles | **1 segundo** |
-| Fee al merchant | 2.5–5% + flat | **0.5%** |
+| Fee al merchant | 2.5–5% + flat (descontado de lo cobrado) | **0.5% cobrado al cliente, merchant recibe 100%** |
 | Chargebacks | Sí (riesgo del merchant) | **0** (firma irreversible) |
 | Moneda | Local (devaluable) | **USDC** (estable, USD digital) |
 | Custodia | Banco intermediario | **Non-custodial** |
@@ -70,15 +70,18 @@ Respuesta:
 {
   "sessionId": "tps_a1b2c3d4e5f6g7h8",
   "reference": "9KqM3nF...",
-  "solanaPayUrl": "solana:Mer7Gh...?amount=12.50&spl-token=...&reference=9KqM3nF...",
+  "solanaPayUrl": "solana:Mer7Gh...?amount=12.5625&spl-token=...&reference=9KqM3nF...",
   "hostedCheckoutUrl": "https://tropico.app/checkout?session=tps_a1b2c3d4e5f6g7h8&...",
   "expiresAt": "2026-05-08T20:30:00.000Z",
   "feeBps": 50,
-  "merchantReceives": 12.4375,
+  "customerPays": 12.5625,
+  "merchantReceives": 12.50,
   "partnerId": "tu-app",
   "orderId": "ORD-001"
 }
 ```
+
+> **Modelo de fee (hacia arriba)**: `customerPays = amount + fee (0.5%)`. El merchant recibe su precio exacto. El cliente absorbe el fee. El QR y el Solana Pay URL siempre codifican `customerPays`.
 
 ### 2.2 REST API + Webhook (server-to-server)
 
@@ -168,15 +171,18 @@ Crea una sesión de checkout y devuelve URL Solana Pay + reference única.
 {
   "sessionId": "tps_<16char>",
   "reference": "<32char base58>",
-  "solanaPayUrl": "solana:<recipient>?amount=...&spl-token=...&reference=...",
+  "solanaPayUrl": "solana:<recipient>?amount=<customerPays>&spl-token=...&reference=...",
   "hostedCheckoutUrl": "https://tropico.app/checkout?session=...",
   "expiresAt": "ISO 8601",
   "feeBps": 50,
-  "merchantReceives": 12.4375,
+  "customerPays": 12.5625,
+  "merchantReceives": 12.50,
   "partnerId": "tu-app",
   "orderId": "ORD-001"
 }
 ```
+
+**Fee model (hacia arriba)**: `customerPays = amount × (1 + feeBps/10000)`. El merchant recibe `amount` exacto. El fee sale del cliente, no del merchant.
 
 **Errores**:
 
@@ -208,7 +214,8 @@ X-Tropico-Timestamp: 1715200800
   "reference": "9KqM3nF...",
   "amount": 12.50,
   "tokenSymbol": "USDC",
-  "merchantReceives": 12.4375,
+  "customerPays": 12.5625,
+  "merchantReceives": 12.50,
   "feeBps": 50,
   "txSignature": "5xK...abc",
   "blockTime": 1715200800,

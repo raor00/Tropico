@@ -118,7 +118,7 @@ export default function HomePage() {
         </header>
         <DualPrice usd={MOCK_PORTFOLIO.total} size="xl" />
 
-        <div className="mt-2 grid grid-cols-3 gap-3 border-t border-tropico-border pt-4">
+        <div className="mt-2 grid grid-cols-3 gap-2 border-t border-tropico-border pt-4 md:gap-3">
           <div>
             <div className="text-xs text-tropico-mute">Yield esta semana</div>
             <div className="font-display text-lg font-bold text-tropico-green">
@@ -143,7 +143,7 @@ export default function HomePage() {
       {/* Notificaciones de Carlos (showcase del Modo Agente) */}
       <section className="flex flex-col gap-2">
         {MOCK_CASHBACK_PENDIENTE.total > 0 && (
-          <div className="panel flex items-center justify-between gap-4 border-tropico-sun/30 bg-tropico-sun/5 p-4">
+          <div className="panel flex flex-wrap items-center justify-between gap-3 border-tropico-sun/30 bg-tropico-sun/5 p-4">
             <div className="flex items-center gap-3">
               <div className="flex size-10 items-center justify-center rounded-lg bg-tropico-sun/20 text-tropico-sun">
                 <Gift className="size-5" strokeWidth={1.75} aria-hidden="true" />
@@ -166,7 +166,7 @@ export default function HomePage() {
           </div>
         )}
 
-        <div className="panel flex items-center justify-between gap-4 border-tropico-coral/30 bg-tropico-coral/5 p-4">
+        <div className="panel flex flex-wrap items-center justify-between gap-3 border-tropico-coral/30 bg-tropico-coral/5 p-4">
           <div className="flex items-center gap-3">
             <div className="flex size-10 items-center justify-center rounded-lg bg-tropico-coral/20 text-tropico-coral">
               <CalendarClock className="size-5" strokeWidth={1.75} aria-hidden="true" />
@@ -213,7 +213,7 @@ export default function HomePage() {
       {/* Banner on-ramp */}
       <Link
         href="/depositar"
-        className="panel group flex items-center justify-between gap-4 overflow-hidden p-6 transition hover:border-tropico-coral"
+        className="panel group flex flex-wrap items-center justify-between gap-3 overflow-hidden p-5 transition hover:border-tropico-coral md:p-6"
       >
         <div className="flex items-center gap-4">
           <span className="text-3xl" aria-hidden>🇻🇪</span>

@@ -22,19 +22,23 @@ export function ReceiveQR() {
 
   const amountNumber = parseFloat(amount) || 0;
 
+  // Fee hacia arriba: el cliente paga amount × 1.01, el merchant recibe amount exacto
+  const customerPays = +(amountNumber * 1.01).toFixed(6);
+
   const reference = useMemo(() => generateReference(), [showQR]);
 
   const payUrl = useMemo(
     () =>
       buildSolanaPayUrl({
         recipient: DEMO_MERCHANT_WALLET,
-        amount: amountNumber,
+        // El QR codifica lo que el cliente paga (amount + 1% fee), no el monto del merchant
+        amount: customerPays,
         tokenSymbol: "USDC",
         reference,
         label: "Tropico Comercios",
-        message: `Cobro de $${amountNumber.toFixed(2)} USDC v&iacute;a Tropico`,
+        message: `Pago de $${customerPays.toFixed(2)} USDC vía Tropico`,
       }),
-    [amountNumber, reference]
+    [customerPays, reference]
   );
 
   // Generate QR code SVG when payUrl changes
@@ -113,7 +117,7 @@ export function ReceiveQR() {
           <div className="flex-1">
             <div className="font-bold text-tropico-green">¡Pago recibido!</div>
             <div className="text-xs text-tropico-mute">
-              {formatUSD(amountNumber * 0.99)} en tu wallet (1% fee Tropico).
+              Tienes <span className="font-semibold text-tropico-sea">{formatUSD(amountNumber)} exactos</span> en tu wallet.
             </div>
           </div>
         </div>
@@ -143,9 +147,26 @@ export function ReceiveQR() {
           )}
         </div>
         <div className="text-center">
-          <DualPrice usd={amountNumber} size="lg" align="center" />
-          <p className="mt-2 text-xs text-tropico-mute">
-            Cobro en USDC &middot; Solana mainnet
+          {/* Lo que el cliente paga (con fee encima) */}
+          <div className="flex flex-col items-center gap-1">
+            <p className="text-xs font-semibold uppercase tracking-wider text-tropico-coral">
+              Cliente paga
+            </p>
+            <p className="font-display text-3xl font-bold tabular-nums text-tropico-coral">
+              {formatUSD(customerPays)}
+            </p>
+          </div>
+          {/* Lo que el merchant recibe */}
+          <div className="mt-3 flex flex-col items-center gap-1">
+            <p className="text-xs font-semibold uppercase tracking-wider text-tropico-sea">
+              Tú recibes
+            </p>
+            <p className="font-display text-2xl font-bold tabular-nums text-tropico-sea">
+              {formatUSD(amountNumber)} exactos
+            </p>
+          </div>
+          <p className="mt-3 text-xs text-tropico-mute">
+            Fee 1% se cobra al cliente — tú recibes lo que pediste. Cobro en USDC &middot; Solana
           </p>
         </div>
       </div>
