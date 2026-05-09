@@ -236,7 +236,7 @@ python3 lumen-capabilities/pay/solana_pay_url.py --instance demo --recipient Mer
 ✅ Activar/configurar Modo Agente (DCA, auto-yield, etc.)
 ✅ Generar QRs de cobro con monto específico
 ✅ Recordar conversaciones previas (cuando Hermes esté en Q3)
-✅ Hablar venezolano natural sin jerga gringa
+✅ Hablar venezolano natural sin jerga técnica
 
 ### 6.2 Lo que NO puede
 

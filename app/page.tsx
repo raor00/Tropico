@@ -31,7 +31,7 @@ const VALUE_CARDS = [
   {
     title: "Conoce",
     body:
-      "M&aacute;s all&aacute; del USDT. Aprende qu&eacute; es JTO, JUP, mSOL — sin jerga gringa, en venezolano.",
+      "M&aacute;s all&aacute; del USDT. Aprende qu&eacute; es JTO, JUP, mSOL — sin jerga técnica, en venezolano natural.",
     accent: "from-tropico-sun/30 to-transparent",
     badge: "Educa",
     Icon: Compass,

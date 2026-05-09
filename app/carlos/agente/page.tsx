@@ -233,7 +233,7 @@ export default function ModoAgentePage() {
           <ul className="flex flex-col gap-1 text-xs text-tropico-mute">
             <li>• <strong className="text-tropico-text">Personality + skills + capabilities</strong> en arquitectura declarativa de 3 capas</li>
             <li>• <strong className="text-tropico-text">Hot reload</strong> de skills sin restart del server</li>
-            <li>• <strong className="text-tropico-text">Espa&ntilde;ol nativo</strong> — no es wrapper de framework gringo</li>
+            <li>• <strong className="text-tropico-text">Espa&ntilde;ol nativo</strong> — no es orquestador con diseño nativo para LATAM</li>
             <li>• <strong className="text-tropico-text">Tool calling</strong> a scripts Python (Helius, Jupiter, DolarAPI)</li>
           </ul>
         </div>

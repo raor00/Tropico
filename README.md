@@ -259,7 +259,7 @@ Los webhooks van firmados con **HMAC-SHA256**. Ver spec completo en [`docs/INTEG
 ### Por qué Lumen
 
 - **Open source MIT** — auditable, sin vendor lock-in
-- **Pensado en español** — no es wrapper de framework gringo
+- **Pensado en español** — no es orquestador con diseño nativo para LATAM
 - **Arquitectura modular** — 3 capas declarativas (KIT + SKILLS + CAPABILITIES) sin acoplamiento
 - **Tool calling nativo** — LLM puede invocar scripts Python reales (precios, swaps, balances)
 - **Hot reload** — cambias un skill sin restart
@@ -398,7 +398,7 @@ Lo que sí tienes: login con email en 15 segundos, biométrica opcional (TouchID
 3. **Non-custodial estricto** — Tropico nunca accede a llaves privadas
 4. **API keys secretas solo server-side** — nunca en client
 5. **Mobile-first PWA** — funciona en Android viejo, instalable sin app store
-6. **Cero política venezolana** en Carlos AI
+6. **Cero opinión política** en Carlos AI
 7. **Cero promesas de rendimientos garantizados**
 
 ---
@@ -457,9 +457,8 @@ MIT — ver [`LICENSE`](LICENSE).
 
 ## 👤 Autor
 
-Construido por un venezolano para venezolanos. 🇻🇪
+Construido por **Rafa Oviedo** — venezolano, para venezolanos. 🇻🇪
 
-- **Email**: rafa.oviedo2000@gmail.com
 - **Hackathon**: [dev3pack 2026](https://dev3pack.com), Caracas hub
 
 ---

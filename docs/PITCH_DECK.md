@@ -370,7 +370,6 @@ La última frase es el MIC-DROP. Dila mirando a los ojos. Pausa. Gracias.
 🌐 **Demo live**: `tropico.vercel.app`
 📂 **Repo**: `github.com/[tu-usuario]/Hackathon`
 🎬 **Video pitch**: `youtu.be/[unlisted]`
-✉️ **Contacto**: rafa.oviedo2000@gmail.com
 
 <br/>
 

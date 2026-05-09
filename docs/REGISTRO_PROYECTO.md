@@ -306,7 +306,6 @@ Solo founder & developer
 LinkedIn: [tu URL]
 Twitter/X: [tu handle]
 GitHub: [tu username]
-Email: rafa.oviedo2000@gmail.com
 
 Background: developer venezolano, [años] de experiencia, primera vez construyendo en Solana.
 ```

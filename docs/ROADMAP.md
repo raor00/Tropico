@@ -13,7 +13,7 @@ Tropico crece en 4 dimensiones simultáneas:
 3. **Nuevos módulos** — Card, Vaults curados, Lending, Earn (cashback), eventualmente facturación electrónica para merchants.
 4. **Geografía** — Venezuela primero; luego Colombia, Argentina, México, Perú.
 
-**Principios no negociables**: non-custodial siempre; Carlos AI transversal; cero EVM/Tron/Bitcoin (Solana Maxi); copy localizado por país; **confianza radical: cada fee de Tropico es público y verificable on-chain**; cero política.
+**Principios no negociables**: non-custodial siempre; Carlos AI transversal; cero EVM/Tron/Bitcoin (Solana Maxi); copy localizado por país; **confianza radical: cada fee de Tropico es público y verificable on-chain**; cero opinión política.
 
 ---
 
