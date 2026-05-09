@@ -60,15 +60,6 @@ const METODOS = [
     color: "tropico-purple",
   },
   {
-    id: "crypto",
-    label: "Crypto P2P (3rd party)",
-    icon: TrendingUp,
-    tiempo: "Variable",
-    fee: "Solo gas",
-    limite: "Sin AML interno",
-    color: "tropico-sun",
-  },
-  {
     id: "tarjeta",
     label: "Tarjeta USD",
     icon: CreditCard,

@@ -34,7 +34,7 @@ const POOL_BS_AVAILABLE = 50_000_000; // mock liquidity Bs
 const POOL_USDC_AVAILABLE = 12_000; // mock liquidity USDC
 
 type Side = "sell-bs" | "buy-bs";
-type Method = "pagomovil" | "banco" | "tarjeta" | "crypto";
+type Method = "pagomovil" | "banco" | "tarjeta";
 
 const METODOS = [
   {
@@ -70,17 +70,6 @@ const METODOS = [
     bg: "bg-tropico-coral/10",
     ring: "ring-tropico-coral/30",
   },
-  {
-    id: "crypto" as Method,
-    label: "Crypto P2P",
-    icon: TrendingUp,
-    tiempo: "Variable",
-    fee: "Solo gas",
-    limite: "Sin AML",
-    color: "text-tropico-sun",
-    bg: "bg-tropico-sun/10",
-    ring: "ring-tropico-sun/30",
-  },
 ];
 
 export function BsSwapForm({ paraleloRate = 36.42 }: { paraleloRate?: number }) {
@@ -100,7 +89,7 @@ export function BsSwapForm({ paraleloRate = 36.42 }: { paraleloRate?: number }) 
   const selectedMethod = METODOS.find((m) => m.id === method)!;
   // Spread real depende del método (tarjeta cobra más por procesador, crypto solo gas)
   const effectiveSpreadBps =
-    method === "tarjeta" ? 250 : method === "crypto" ? 0 : SPREAD_BPS;
+    method === "tarjeta" ? 250 : SPREAD_BPS;
 
   // Cálculo del swap con spread del método elegido
   const calc = useMemo(() => {
@@ -193,7 +182,7 @@ export function BsSwapForm({ paraleloRate = 36.42 }: { paraleloRate?: number }) 
           <span className="text-xs font-semibold uppercase tracking-wider text-tropico-mute">
             ¿Cómo vas a depositar los Bs?
           </span>
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+          <div className="grid grid-cols-3 gap-2">
             {METODOS.map((m) => {
               const Icon = m.icon;
               const active = method === m.id;

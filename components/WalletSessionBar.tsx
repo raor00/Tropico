@@ -10,6 +10,8 @@ import {
   Check,
   ExternalLink,
   ChevronDown,
+  Eye,
+  EyeOff,
 } from "lucide-react";
 import {
   hasLocalWallet,
@@ -34,6 +36,7 @@ export function WalletSessionBar() {
   const [pubkey, setPubkey] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [revealed, setRevealed] = useState(false); // pubkey hidden por default
 
   useEffect(() => {
     refresh();
@@ -172,14 +175,31 @@ export function WalletSessionBar() {
                 <span className="text-[10px] font-semibold uppercase tracking-wider text-tropico-mute">
                   Pubkey
                 </span>
-                <span
-                  className={`rounded-full px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider ${sourceLabel.bg} ${sourceLabel.color}`}
-                >
-                  {sourceLabel.txt}
-                </span>
+                <div className="flex items-center gap-1.5">
+                  <button
+                    onClick={() => setRevealed((v) => !v)}
+                    className="inline-flex items-center gap-1 text-[10px] text-tropico-mute hover:text-tropico-sun"
+                    aria-label={revealed ? "Ocultar pubkey" : "Mostrar pubkey"}
+                  >
+                    {revealed ? (
+                      <>
+                        <EyeOff className="size-3" /> Ocultar
+                      </>
+                    ) : (
+                      <>
+                        <Eye className="size-3" /> Mostrar
+                      </>
+                    )}
+                  </button>
+                  <span
+                    className={`rounded-full px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider ${sourceLabel.bg} ${sourceLabel.color}`}
+                  >
+                    {sourceLabel.txt}
+                  </span>
+                </div>
               </div>
               <code className="block break-all font-mono text-[11px] leading-relaxed text-tropico-sun">
-                {pubkey}
+                {revealed ? pubkey : "•".repeat(44)}
               </code>
               <div className="mt-2 grid grid-cols-2 gap-2">
                 <button
