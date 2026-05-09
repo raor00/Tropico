@@ -527,47 +527,162 @@ export default function LandingPage() {
         </div>
       </ScrollReveal>
 
-      {/* CARLOS MODO AGENTE */}
-      <ScrollReveal direction="right" as="section" className="flex flex-col gap-8">
-        <div className="space-y-2">
-          <div className="inline-flex w-fit items-center gap-2 rounded-md bg-tropico-sea/15 px-2 py-0.5 text-xs font-semibold uppercase tracking-widest text-tropico-sea">
-            <Bot className="size-3" strokeWidth={2.5} />
-            Carlos AI &middot; Modo Agente
+      {/* CARLOS AI BY LUMEN — sección dedicada, el diferencial principal */}
+      <ScrollReveal direction="right" as="section" className="relative flex flex-col gap-8 overflow-hidden">
+        {/* Background accent */}
+        <div
+          className="pointer-events-none absolute inset-0 -z-10 opacity-30"
+          style={{
+            background:
+              "radial-gradient(60% 60% at 30% 50%, rgba(153,69,255,0.12) 0%, transparent 70%), radial-gradient(50% 50% at 80% 20%, rgba(6,214,160,0.10) 0%, transparent 70%)",
+          }}
+        />
+
+        <div className="space-y-3">
+          <div className="inline-flex w-fit items-center gap-2 rounded-full border border-tropico-purple/40 bg-tropico-purple/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-tropico-purple">
+            <Sparkles className="size-3" strokeWidth={2.5} />
+            Carlos AI <span className="text-tropico-mute">by</span> Lumen
           </div>
-          <h2 className="font-display text-3xl font-bold md:text-4xl">
-            Tu plata trabajando sola.{" "}
-            <span className="text-tropico-sea">Con tus reglas.</span>
+          <h2 className="font-display text-4xl font-black leading-tight md:text-5xl">
+            Tu copiloto financiero
+            <br />
+            <span
+              className="bg-clip-text text-transparent"
+              style={{
+                backgroundImage:
+                  "linear-gradient(135deg, #9945FF 0%, #06D6A0 50%, #FFD166 100%)",
+              }}
+            >
+              vive dentro de tu wallet.
+            </span>
           </h2>
-          <p className="max-w-3xl text-tropico-mute">
-            Carlos puede ejecutar acciones aut&oacute;nomas con permisos limitados v&iacute;a OpenClaw + Privy
-            delegated session keys. Tú defines los l&iacute;mites. Las llaves NUNCA se exponen.
+          <p className="max-w-3xl text-base text-tropico-mute md:text-lg">
+            Carlos no es un chatbot. Es un agente con personalidad, conocimiento de
+            dominio y herramientas reales — corriendo sobre{" "}
+            <a
+              href="https://github.com/gabogabucho/lumen-agent"
+              target="_blank"
+              rel="noreferrer"
+              className="font-semibold text-tropico-purple underline"
+            >
+              Lumen
+            </a>
+            , el framework open-source de agentes en español. Te entiende en
+            venezolano, ejecuta acciones on-chain con tu permiso, y aprende lo que
+            necesitas hacer con tu plata.
           </p>
         </div>
-        <div className="grid gap-3 md:grid-cols-2">
-          {AGENT_ACTIONS.map((a) => (
-            <article
-              key={a.name}
-              className="panel flex items-start gap-3 p-4 transition hover:border-tropico-sea/40"
-            >
-              <div className="flex size-9 items-center justify-center rounded-lg bg-tropico-sea/15 text-tropico-sea ring-1 ring-tropico-sea/30">
-                <Bot className="size-4" strokeWidth={1.75} />
-              </div>
-              <div className="flex flex-col gap-1">
-                <span className="font-semibold">{a.name}</span>
-                <span
-                  className="text-xs text-tropico-mute"
-                  dangerouslySetInnerHTML={{ __html: a.desc }}
-                />
-              </div>
-            </article>
-          ))}
+
+        {/* 7 capacidades reales — más prominente */}
+        <div>
+          <h3 className="mb-3 text-xs font-semibold uppercase tracking-widest text-tropico-mute">
+            Las 7 capacidades de Carlos (todas funcionan ya)
+          </h3>
+          <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
+            {[
+              { icon: "💼", name: "Saldos", skill: "tropico-balances" },
+              { icon: "📈", name: "Precios", skill: "tropico-prices" },
+              { icon: "↔️", name: "Swaps", skill: "tropico-swap" },
+              { icon: "📱", name: "QR Pago", skill: "tropico-pay" },
+              { icon: "🌱", name: "Yield", skill: "tropico-yield" },
+              { icon: "🎁", name: "Cashback", skill: "tropico-cashback" },
+              { icon: "🤖", name: "Modo Agente", skill: "agent-actions" },
+              { icon: "🌐", name: "Remesas (Q3)", skill: "remesas-flow" },
+            ].map((c) => (
+              <article
+                key={c.name}
+                className="panel flex flex-col gap-1 p-3 transition hover:border-tropico-purple/40"
+              >
+                <span className="text-xl" aria-hidden>{c.icon}</span>
+                <span className="text-sm font-semibold text-tropico-text">{c.name}</span>
+                <code className="truncate text-[10px] text-tropico-purple">
+                  {c.skill}
+                </code>
+              </article>
+            ))}
+          </div>
         </div>
-        <Link
-          href="/carlos/agente"
-          className="btn-ghost w-fit"
-        >
-          Ver Modo Agente &rarr;
-        </Link>
+
+        {/* Modo Agente — autonomía */}
+        <div className="panel flex flex-col gap-4 border-tropico-sea/30 bg-gradient-to-br from-tropico-sea/5 to-tropico-purple/5 p-5 md:p-6">
+          <div className="flex flex-col gap-2">
+            <div className="inline-flex w-fit items-center gap-2 rounded-md bg-tropico-sea/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-widest text-tropico-sea">
+              <Bot className="size-3" strokeWidth={2.5} />
+              Modo Agente · autonomía con tu permiso
+            </div>
+            <h3 className="font-display text-2xl font-bold">
+              Tu plata trabajando sola.{" "}
+              <span className="text-tropico-sea">Con tus reglas.</span>
+            </h3>
+            <p className="max-w-3xl text-sm text-tropico-mute">
+              Activa Modo Agente y Carlos ejecuta 4 acciones autónomas dentro de los
+              límites que TÚ defines. En MVP confirma con un click; Q3 2026 corre 100%
+              autónomo via Privy delegated session keys. Tú revocas cuando quieras.
+              Llaves nunca expuestas.
+            </p>
+          </div>
+          <div className="grid gap-2 md:grid-cols-2">
+            {AGENT_ACTIONS.map((a) => (
+              <article
+                key={a.name}
+                className="flex items-start gap-3 rounded-lg border border-tropico-border bg-tropico-ink/40 p-3 transition hover:border-tropico-sea/40"
+              >
+                <div className="flex size-8 items-center justify-center rounded-lg bg-tropico-sea/15 text-tropico-sea ring-1 ring-tropico-sea/30">
+                  <Bot className="size-4" strokeWidth={1.75} />
+                </div>
+                <div className="flex flex-col gap-0.5">
+                  <span className="text-sm font-semibold text-tropico-text">{a.name}</span>
+                  <span
+                    className="text-xs text-tropico-mute"
+                    dangerouslySetInnerHTML={{ __html: a.desc }}
+                  />
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        {/* Stack agéntico — Lumen protagonista */}
+        <div className="panel flex flex-col gap-3 p-5">
+          <h3 className="font-display text-xl font-bold">
+            ¿Por qué Lumen y no GPT/Claude pelado?
+          </h3>
+          <ul className="grid gap-2 text-sm text-tropico-mute md:grid-cols-2">
+            <li className="flex items-start gap-2">
+              <span className="mt-0.5 text-tropico-purple">→</span>
+              <span><strong className="text-tropico-text">Open source MIT</strong> — auditable, sin vendor lock-in, podés correrlo en tu propio server.</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="mt-0.5 text-tropico-purple">→</span>
+              <span><strong className="text-tropico-text">Diseño nativo para LATAM</strong> — el framework entiende contexto regional, no solo traduce inglés.</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="mt-0.5 text-tropico-purple">→</span>
+              <span><strong className="text-tropico-text">Tool calling real</strong> — Carlos invoca scripts Python que tocan Solana RPC, Jupiter, DolarAPI. No es un wrapper de chat.</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="mt-0.5 text-tropico-purple">→</span>
+              <span><strong className="text-tropico-text">Kit replicable</strong> — el Tropico Web3 Kit (KIT + 7 SKILLS + 8 capabilities) es portable a Hermes/OpenClaw con un adapter de ~30 líneas.</span>
+            </li>
+          </ul>
+        </div>
+
+        <div className="flex flex-wrap gap-3">
+          <Link href="/carlos" className="btn-primary inline-flex items-center gap-2">
+            <Sparkles className="size-4" /> Hablar con Carlos
+          </Link>
+          <Link href="/carlos/agente" className="btn-ghost inline-flex items-center gap-2">
+            <Bot className="size-4" /> Ver Modo Agente
+          </Link>
+          <a
+            href="https://github.com/gabogabucho/lumen-agent"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2 rounded-full border border-tropico-purple/40 bg-tropico-purple/10 px-4 py-2 text-sm font-semibold text-tropico-purple transition hover:bg-tropico-purple/20"
+          >
+            Lumen en GitHub <ExternalLink className="size-3.5" />
+          </a>
+        </div>
       </ScrollReveal>
 
       {/* MODELO DE NEGOCIO — 5 streams */}

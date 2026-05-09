@@ -13,14 +13,7 @@ export default function ModoAgentePage() {
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-5xl flex-col gap-8 px-5 py-10">
-      <Header
-        nav={[
-          { href: "/home", label: "Wallet" },
-          { href: "/carlos", label: "Carlos" },
-          { href: "/carlos/agente", label: "Modo Agente" },
-        ]}
-        badge={{ label: "Agente", tone: "sea" }}
-      />
+      <Header badge={{ label: "Modo Agente", tone: "sea" }} />
 
       {/* Header de página */}
       <header className="flex flex-col gap-4 pt-4">

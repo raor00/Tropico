@@ -166,13 +166,7 @@ export default function CarlosPage() {
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-3xl flex-col gap-8 px-5 py-10">
-      <Header
-        nav={[
-          { href: "/home", label: "Wallet" },
-          { href: "/carlos", label: "Carlos" },
-          { href: "/carlos/agente", label: "Modo Agente" },
-        ]}
-      />
+      <Header />
 
       {/* ── Hero ───────────────────────────────────────────────── */}
       <header className="flex flex-col gap-3 pt-4">

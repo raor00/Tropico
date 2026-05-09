@@ -94,10 +94,7 @@ export default function AbrirWalletPage() {
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-xl flex-col gap-6 px-5 py-10">
-      <Header
-        nav={[{ href: "/", label: "Inicio" }]}
-        badge={{ label: "Abrir wallet", tone: "sun" }}
-      />
+      <Header badge={{ label: "Abrir wallet", tone: "sun" }} />
 
       <section className="panel flex flex-col gap-5 p-6">
         <header className="flex flex-col gap-2">

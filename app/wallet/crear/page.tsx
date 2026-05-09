@@ -84,10 +84,7 @@ export default function CrearWalletPage() {
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-xl flex-col gap-6 px-5 py-10">
-      <Header
-        nav={[{ href: "/", label: "Inicio" }]}
-        badge={{ label: "Crear wallet", tone: "sun" }}
-      />
+      <Header badge={{ label: "Crear wallet", tone: "sun" }} />
 
       {/* Progress dots */}
       <div className="flex items-center justify-center gap-2 pt-4">

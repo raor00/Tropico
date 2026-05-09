@@ -98,15 +98,7 @@ async function createTropicoCharge(orderId, amount) {
 export default function IntegracionesPage() {
   return (
     <main className="mx-auto flex min-h-dvh max-w-6xl flex-col gap-8 px-5 py-10 md:gap-12">
-      <Header
-        nav={[
-          { href: "/home", label: "Wallet" },
-          { href: "/comercios", label: "Comercios" },
-          { href: "/integraciones", label: "Integraciones" },
-          { href: "/carlos", label: "Carlos" },
-        ]}
-        badge={{ label: "Tropico Pay", tone: "sea" }}
-      />
+      <Header badge={{ label: "Tropico Pay", tone: "sea" }} />
 
       {/* HERO */}
       <section className="flex flex-col gap-6 pt-6">
