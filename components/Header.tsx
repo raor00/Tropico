@@ -131,12 +131,13 @@ function HeaderImpl({
         }`}
       >
         <div className="flex items-center justify-between gap-3 md:gap-4">
-          {/* Logo wrapper: shrink-0 para que NO se comprima ni se solape con nav */}
+          {/* Logo wrapper: shrink-0 para que NO se comprima ni se solape con nav.
+               Wordmark "Tropico" SIEMPRE visible. Tamaño "sm" en pages con nav
+               (más compacto, no compite por espacio); "md" en pages sin nav. */}
           <div className="flex shrink-0 items-center gap-2 md:gap-3">
             <Logo
               size={36}
-              wordmarkSize="md"
-              iconOnly={!badge && showNav}
+              wordmarkSize={badge || !showNav ? "md" : "sm"}
             />
             <VenezuelaBadge
               size="xs"
