@@ -148,20 +148,35 @@ Sin ninguna key, la app corre en **modo demo** con mocks honestos y banners expl
 
 ---
 
-## Los 5 módulos del consumidor
+## Los 8 módulos del consumidor
+
+> **Crecimos**: arrancamos con 5 módulos en el brief original, llegamos a 8 cubriendo
+> todo el ciclo de vida del dólar digital del venezolano — desde recibir remesa
+> internacional hasta pagar la luz.
+
+| # | Módulo | URL | Qué hace |
+|---|---|---|---|
+| 1 | **Wallet / Home** | `/home` | Dashboard: saldo USDC, yield acumulado, accesos rápidos al resto de módulos |
+| 2 | **Cambiar** | `/cambiar` | Swap con cotización real de Jupiter v6 + fee 0.5% (`platformFeeBps=50`) |
+| 3 | **Cobrar** | `/cobrar` | QR Solana Pay generado client-side — cualquier wallet de Solana puede pagar (fee 1% HACIA ARRIBA, merchant recibe el precio exacto) |
+| 4 | **Enviar** | `/enviar` | P2P directo a wallet address o claim link para quien no tiene wallet, compartible por WhatsApp |
+| 5 | **Guardar** | `/guardar` | Yield ~5% APY default ON — mSOL (Marinade) o Kamino bajo el hood |
+| 6 | **Carlos AI by Lumen** | `/carlos` | Copiloto venezolano — 7 capacidades reales (saldos, precios, swap, QR, yield, cashback, agente) powered by [Lumen](https://github.com/gabogabucho/lumen-agent) |
+| 7 | **Pagar Servicios** 🆕 | `/pagar-servicios` | Luz (Corpoelec), agua, gas, teléfono (Movistar/Digitel/Movilnet), internet (CANTV/Inter), streaming, Pago Móvil masivo |
+| 8 | **Remesas** 🆕 | `/remesas` | Puente para que tu familia desde el exterior (USA/España/AR/etc.) te mande USDC en 1 segundo, vía on-ramp aggregator (MoonPay/Transak/Ramp/Stripe Crypto) |
+
+### Módulos auxiliares (no son consumer-facing principales pero forman parte del flow)
 
 | Módulo | URL | Qué hace |
 |---|---|---|
-| **Wallet / Home** | `/home` | Dashboard: saldo USDC, yield acumulado, accesos rápidos a los 6 módulos |
-| **Cambiar** | `/cambiar` | Swap con cotización real de Jupiter Quote API + fee 0.5% (`platformFeeBps=50`) |
-| **Cobrar** | `/cobrar` | QR Solana Pay generado client-side — cualquier wallet puede pagar |
-| **Enviar** | `/enviar` | P2P a wallet address o claim link para quien no tiene wallet, compartible por WhatsApp |
-| **Guardar** | `/guardar` | Yield ~5% APY default ON — mSOL o Kamino bajo el hood |
-| **Carlos AI by Lumen** | `/carlos` | Copiloto venezolano — 7 capacidades reales (saldos, precios, swap, QR, yield, cashback, agente) powered by [Lumen](https://github.com/gabogabucho/lumen-agent) |
+| **Depositar / Onramp** | `/depositar` | Bs → USDC vía Pago Móvil, transferencia bancaria, crypto P2P, tarjeta USD |
+| **Descubrir** | `/descubrir` | Catálogo educativo de tokens curados (SOL/USDC/JUP/JTO/mSOL/...) |
+| **Claim** | `/claim/[id]` | Página que abre el receptor de un claim link de /enviar |
+| **Modo Agente** | `/carlos/agente` | Showcase de 4 acciones autónomas (DCA / auto-yield / cashback / rebalance) |
 
 ### Modo Agente — `/carlos/agente`
 
-Carlos puede actuar on-chain con tu permiso explícito. Cuatro acciones hoy (mock en MVP, real en Q3 con OpenClaw):
+Carlos puede actuar on-chain con tu permiso explícito. Corre sobre **Lumen** (el motor de Carlos), que invoca la skill `tropico-agent-actions` y ejecuta vía la capability Python `agent_execute.py`. Hoy MVP confirma con un click; Q3 2026 sumamos firma delegada (Privy session keys, opcionalmente vía OpenClaw policy engine) para que las 4 acciones corran 100% autónomas:
 
 - **DCA** — compra periódica de USDC/SOL a intervalos definidos por el usuario
 - **Auto-yield** — mueve el excedente de saldo a la mejor estrategia de yield disponible
@@ -402,7 +417,7 @@ Lo que sí tienes: login con email en 15 segundos, biométrica opcional (TouchID
 
 ## Roadmap Q3/Q4
 
-- **Q3 2026**: Privy + Helius conectados en prod, Lumen real (no mock), OpenClaw + delegated session keys, Hermes memoria, on-ramp con partners P2P
+- **Q3 2026**: Privy + Helius conectados en prod, Lumen tool calling real (capabilities ejecutables), Privy delegated session keys (opcionalmente OpenClaw policy engine), Hermes memoria, on-ramp con partners P2P
 - **Q3 2026**: Tropico Pay en producción — primeros merchants integrados (delivery, ticketing)
 - **Q4 2026**: Tropico Card (debit Visa backed por USDC + cashback), Tropico Vaults (Kamino), bug bounty público
 - **Q1 2027**: Expansión LATAM (Colombia, Argentina, México, Perú, Chile), Solana Mobile app nativa

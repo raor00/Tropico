@@ -111,7 +111,7 @@ Tropico es la red económica del venezolano en Solana. NO es una wallet más —
 
 EL PROBLEMA. El 95% del volumen cripto venezolano vive atrapado en USDT/Tron por Binance P2P. Las apps en español (Reserve, Kontigo, Zinli) son custodias y solo guardan dólares. Phantom es non-custodial pero asume usuario experto. No existe una plataforma multi-feature, non-custodial, en español venezolano, sobre Solana.
 
-LA SOLUCIÓN — DOS PRODUCTOS INTEGRADOS. Tropico Wallet (consumidor): login con email vía Privy embedded wallet, saldo USDC con yield ~5% APY default ON, swaps vía Jupiter v6 con 0.5% platformFeeBps, envíos vía Solana Pay con claim links por WhatsApp, pagos a comercios con QR, y Carlos AI — copiloto en español venezolano con Modo Agente integrable con OpenClaw. Tropico Comercios (merchant): QR Solana Pay para cobrar en USDC, settlement <1 segundo, fee 1% al merchant (vs 4.5% POS tradicional — ahorro 60-75%), sin chargebacks, sin contrato bancario, sin hardware.
+LA SOLUCIÓN — DOS PRODUCTOS INTEGRADOS. Tropico Wallet (consumidor): login con email vía Privy embedded wallet, saldo USDC con yield ~5% APY default ON, swaps vía Jupiter v6 con 0.5% platformFeeBps, envíos vía Solana Pay con claim links por WhatsApp, pagos a comercios con QR, y Carlos AI — copiloto en español venezolano con Modo Agente sobre Lumen + Privy delegated keys (OpenClaw opcional como policy engine). Tropico Comercios (merchant): QR Solana Pay para cobrar en USDC, settlement <1 segundo, fee 1% al merchant (vs 4.5% POS tradicional — ahorro 60-75%), sin chargebacks, sin contrato bancario, sin hardware.
 
 CINCO STREAMS DE REVENUE: 0.5% por swap, 0.3% spread en envíos, 2% del yield, 1% por cobro merchant, Carlos AI como acelerador transversal. Mes 12 proyectado: 50K usuarios + 2K comercios = $250K MRR sobre $44M de volumen.
 
@@ -129,11 +129,11 @@ Tropico es la red económica del venezolano en Solana — una plataforma multi-f
 
 DOS PRODUCTOS INTEGRADOS. Tropico Wallet (consumidor) ofrece login con email vía Privy embedded wallet (sin instalar Phantom), saldo USDC con yield ~5% APY default ON, swaps al mejor precio vía Jupiter v6 con 0.5% platformFeeBps, envíos peer-to-peer con Solana Pay y claim links por WhatsApp, pagos a comercios con QR, y Carlos AI — copiloto conversacional en español venezolano (Gemini 2.0 Flash). Tropico Comercios (merchant) genera QR Solana Pay para cobros instantáneos en USDC, fee 1% (vs 4.5% POS tradicional), settlement <1 segundo, dashboard con reportes exportables, logo "Acepta Tropico" para vidriera.
 
-CAPA AGÉNTICA. Modo Agente integrable con OpenClaw + Privy delegated session keys. Carlos puede ejecutar 4 acciones autónomas con permisos limitados: DCA programado, auto-yield al recibir remesas, auto-cashback de comercios, re-balance de portafolio. Llaves nunca expuestas. En MVP es showcase, integración real Q3.
+CAPA AGÉNTICA. Modo Agente sobre Lumen + Privy delegated session keys (OpenClaw opcional como policy engine). Carlos puede ejecutar 4 acciones autónomas con permisos limitados: DCA programado, auto-yield al recibir remesas, auto-cashback de comercios, re-balance de portafolio. Llaves nunca expuestas. En MVP es showcase, integración real Q3.
 
 CINCO STREAMS DE REVENUE: 0.5% swap + 0.3% send + 2% yield + 1% merchant + Carlos como acelerador. Stack: Next.js 15, Privy, Jupiter v6, Gemini 2.0 Flash, Helius RPC. Cero programa Anchor custom, cero backend persistente, non-custodial estricto.
 
-EFECTO RED BILATERAL. Cada nuevo merchant aumenta valor para usuarios y viceversa. Mes 12: $250K MRR sobre $44M volumen. Roadmap: Q3 OpenClaw real + on-ramp partners, Q4 Tropico Card, Q1 2027 LATAM expansion (CO/AR/MX/PE/CL). la red económica caribeña en Solana, nativa de USDC, hecho en Venezuela.
+EFECTO RED BILATERAL. Cada nuevo merchant aumenta valor para usuarios y viceversa. Mes 12: $250K MRR sobre $44M volumen. Roadmap: Q3 Lumen tool calling real + Privy delegated keys + on-ramp partners, Q4 Tropico Card, Q1 2027 LATAM expansion (CO/AR/MX/PE/CL). la red económica caribeña en Solana, nativa de USDC, hecho en Venezuela.
 ```
 
 **Word count: 285 / 300** ✅
@@ -195,7 +195,7 @@ Tropico es la red económica del venezolano en Solana — una red de pagos non-c
 
 Dos productos integrados: Tropico Wallet (consumidor) con login email vía Privy, yield ~5% APY default, swaps Jupiter con 0.5% fee, envíos Solana Pay, pagos QR, y Carlos AI copiloto en venezolano. Tropico Comercios (merchant) con QR de cobro USDC, settlement <1s, fee 1% (vs 4.5% POS tradicional), sin chargebacks, sin hardware.
 
-Capa agéntica con OpenClaw + Privy: 4 acciones autónomas (DCA, auto-yield, auto-cashback, re-balance) con session keys limitadas. Showcase en MVP, integración real Q3.
+Capa agéntica sobre Lumen + Privy delegated session keys (OpenClaw opcional): 4 acciones autónomas (DCA, auto-yield, auto-cashback, re-balance) con session keys limitadas. Showcase en MVP, integración real Q3.
 
 5 streams de revenue: 0.5% swap + 0.3% send + 2% yield + 1% merchant + Carlos AI acelerador. Mes 12: $250K MRR / $44M volumen.
 
@@ -248,7 +248,7 @@ EFECTO RED BILATERAL
 Cuando ambos lados (consumidor + merchant) están en Tropico, el dinero gira en USDC sin pasar por bancos. El merchant ahorra 60% en fees y puede devolver cashback al cliente. El cliente gana yield automático y paga sin perder valor. Todos ganan, menos el banco. Es la red económica caribeña en Solana, nativa de USDC, non-custodial.
 
 CAPA AGÉNTICA CON OPENCLAW
-Modo Agente integrable con OpenClaw + Privy delegated session keys (showcase en MVP, integración real Q3). Carlos puede ejecutar 4 acciones autónomas con permisos limitados: DCA programado, auto-yield al recibir remesas, auto-cashback de comercios, re-balance de portafolio. Llaves nunca expuestas, policies con límites estrictos, sesiones que expiran.
+Modo Agente sobre Lumen + Privy delegated session keys (OpenClaw opcional como policy engine) (showcase en MVP, integración real Q3). Carlos puede ejecutar 4 acciones autónomas con permisos limitados: DCA programado, auto-yield al recibir remesas, auto-cashback de comercios, re-balance de portafolio. Llaves nunca expuestas, policies con límites estrictos, sesiones que expiran.
 
 CONFIANZA RADICAL
 • Auditoría on-chain pública (link al fee account de Tropico en Solscan)
@@ -257,7 +257,7 @@ CONFIANZA RADICAL
 • Open source del frontend (post-MVP)
 
 ROADMAP
-• Q3 2026: integración real OpenClaw + on-ramp con partners P2P / Reserve
+• Q3 2026: Lumen tool calling real + Privy delegated keys + on-ramp (OpenClaw opcional) con partners P2P / Reserve
 • Q4 2026: Tropico Card (debit USDC con interchange + cashback)
 • Q1 2027: LATAM expansion (CO, AR, MX, PE, CL) + Solana Mobile
 
@@ -277,7 +277,7 @@ TECH STACK
 • Tasa USD/VES: ve.dolarapi.com (paralelo)
 • State: React Query 5
 • Hosting: Vercel
-• Capa agéntica: OpenClaw (showcase MVP, integración real Q3)
+• Capa agéntica: Lumen + Privy delegated keys (OpenClaw opcional, showcase MVP, integración real Q3)
 
 DECISIONES TÉCNICAS CLAVE
 • Cero programa Anchor custom — usamos protocolos abiertos de Solana (SPL Token, Jupiter, Solana Pay)
@@ -324,7 +324,7 @@ Demo de 4 minutos mostrando:
 2:00–2:45  Demo Cobrar (split screen: cliente paga $5, comercio recibe $4.95, Tropico recibe $0.05, en <1s)
 2:45–3:00  Demo Carlos AI (pregunta sobre yield, respuesta en venezolano)
 3:00–3:30  Demo /comercios (comparativa visual vs Banesco)
-3:30–4:00  Modelo + roadmap (5 streams, Q3 OpenClaw real, Q1 2027 LATAM)
+3:30–4:00  Modelo + roadmap (5 streams, Q3 Lumen tool calling real + delegated keys, Q1 2027 LATAM)
 ```
 
 ### 🌟 What's special / Why should we win?

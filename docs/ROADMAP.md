@@ -52,7 +52,7 @@ Tropico crece en 4 dimensiones simultáneas:
 - Voz: input por micrófono + respuesta TTS (Gemini supports audio)
 - Modo agente: "Carlos, swap $50 de USDC a JTO" → propone tx + usuario firma
 
-### Capa agéntica REAL con OpenClaw (lo que reemplaza al MVP showcase)
+### Capa agéntica REAL — Lumen + Privy delegated keys (OpenClaw opcional)
 
 - Setup en ClawHub: registrar app de Tropico, obtener API key OpenClaw
 - Privy policies: policy engine en dashboard de Privy con reglas por acción (max amount, frequency, time windows)

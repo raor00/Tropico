@@ -411,7 +411,7 @@ A: Sí. El smart fallback usa keyword routing — sigue dando guidance útil + s
 A: DeepSeek-V4 es ~50x más barato, español es excelente, OpenAI-compatible API. Para un fintech LATAM el costo importa.
 
 **Q: ¿Carlos puede firmar transacciones por mí?**
-A: Hoy no — siempre confirma contigo. Q3 con OpenClaw + Privy delegated session keys puede firmar dentro de policies (ej. max $200/sem en DCA). Tú revocas cuando quieras.
+A: Hoy no — siempre confirma contigo. Carlos sobre Lumen propone, tú apruebas con un click. Q3 2026 sumamos firma delegada vía Privy session keys (opcionalmente con OpenClaw policy engine encima) para que las acciones corran 100% autónomas dentro de policies que tú defines (ej. max $200/sem en DCA). Tú revocas cuando quieras. Lumen sigue siendo el motor.
 
 **Q: ¿Y si Carlos dice algo incorrecto sobre mi plata?**
 A: Avísanos. Carlos NUNCA debería garantizar rendimientos, dar consejo financiero personalizado, o inventar datos. Si lo hace, es bug del system prompt.
