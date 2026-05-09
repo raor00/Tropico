@@ -1,6 +1,8 @@
 import { Header } from "@/components/Header";
 import { PagarServiciosClient } from "./PagarServiciosClient";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Pagar Servicios — Tropico",
   description:
@@ -20,7 +22,7 @@ export default function PagarServiciosPage() {
 
       {/* Hero */}
       <section className="flex flex-col gap-3">
-        <h1 className="font-display text-4xl font-black tracking-tighter leading-tight md:text-5xl">
+        <h1 className="font-display text-3xl font-black tracking-tighter leading-tight md:text-5xl">
           Paga todo lo de tu casa con USDC
         </h1>
         <p className="max-w-xl text-lg text-tropico-mute">

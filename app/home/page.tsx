@@ -26,6 +26,8 @@ import {
 } from "@/lib/mock-data";
 import { formatUSD, formatRelativeTime, shortAddress } from "@/lib/formato";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Tu Tropico — Inicio",
 };
@@ -134,7 +136,7 @@ export default function HomePage() {
         </header>
         <DualPrice usd={MOCK_PORTFOLIO.total} size="xl" />
 
-        <div className="mt-2 grid grid-cols-3 gap-2 border-t border-tropico-border pt-4 md:gap-3">
+        <div className="mt-2 grid grid-cols-3 gap-1 border-t border-tropico-border pt-4 sm:gap-2 md:gap-3">
           <div>
             <div className="text-xs text-tropico-mute">Yield esta semana</div>
             <div className="font-display text-lg font-bold text-tropico-green">

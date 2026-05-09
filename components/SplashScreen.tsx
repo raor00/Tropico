@@ -21,19 +21,19 @@ const REVEAL_DURATION_MS = 1100; // duración del armado pixel
 const TOTAL_DURATION_MS = 2200;
 
 export function SplashScreen() {
-  // Lazy init: si ya se mostró antes en esta sesión, arrancamos hidden de una vez.
-  // Esto evita el flicker de "página renderiza → splash aparece → página re-renderiza".
-  const [show, setShow] = useState<boolean>(() => {
-    if (typeof window === "undefined") return false; // SSR: nunca render splash server-side
-    return sessionStorage.getItem(SPLASH_FLAG) !== "1";
-  });
+  // Hydration-safe: server y primer client render → mounted=false → null.
+  // useEffect runs SOLO en client después de mount → decide si mostrar splash.
+  // Evita hydration mismatch causado por leer sessionStorage en initial state.
+  const [mounted, setMounted] = useState(false);
+  const [show, setShow] = useState(false);
   const [phase, setPhase] = useState<"sun" | "pixels" | "wordmark" | "exit">("sun");
   const timersRef = useRef<NodeJS.Timeout[]>([]);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    setMounted(true);
     if (sessionStorage.getItem(SPLASH_FLAG) === "1") return;
 
+    setShow(true);
     sessionStorage.setItem(SPLASH_FLAG, "1");
 
     timersRef.current.push(
@@ -54,7 +54,8 @@ export function SplashScreen() {
     setTimeout(() => setShow(false), 400);
   }
 
-  if (!show) return null;
+  // Server + primer client render: nada (mounted=false). Después: depende de show.
+  if (!mounted || !show) return null;
 
   // Generar grid de "pixels" del logo con delays aleatorios staggered
   const pixels = Array.from({ length: PIXEL_GRID * PIXEL_GRID }, (_, i) => {

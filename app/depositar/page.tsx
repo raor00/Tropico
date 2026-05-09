@@ -79,6 +79,8 @@ const TASA_FALLBACK = 650.51;
 type Metodo = "pagomovil" | "transferencia" | "crypto" | "tarjeta";
 type Step = "select" | "pagomovil" | "transferencia" | "done";
 
+export const dynamic = "force-dynamic";
+
 export default function DepositarPage() {
   const [metodo, setMetodo] = useState<Metodo>("pagomovil");
   const [step, setStep] = useState<Step>("select");
@@ -141,7 +143,7 @@ export default function DepositarPage() {
           <section className="flex flex-col gap-3">
             <h2 className="font-display text-lg font-bold">¿Cómo quieres depositar?</h2>
             <div className="overflow-x-auto rounded-xl border border-tropico-border">
-              <table className="w-full text-sm">
+              <table className="w-full min-w-[420px] text-sm">
                 <thead>
                   <tr className="border-b border-tropico-border bg-tropico-ink/40 text-left text-xs text-tropico-mute">
                     <th className="px-4 py-3">Método</th>

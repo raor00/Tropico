@@ -27,6 +27,8 @@ import {
 
 type Side = "sell-bs" | "buy-bs";
 
+export const dynamic = "force-dynamic";
+
 export default function IntercambioP2PPage() {
   const [side, setSide] = useState<Side>("sell-bs");
   const [amount, setAmount] = useState("");
