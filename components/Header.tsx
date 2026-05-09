@@ -128,11 +128,11 @@ function HeaderImpl({
         }`}
       >
         <div
-          className={`flex items-center justify-between will-change-transform transition-all duration-300 ease-out ${
-            scrolled ? "scale-[0.97] gap-2" : "scale-100 gap-2 md:gap-4"
-          }`}
+          className={`flex items-center justify-between will-change-transform transition-transform duration-300 ease-out ${
+            scrolled ? "scale-[0.97]" : "scale-100"
+          } ${scrolled ? "gap-2" : "gap-2 md:gap-4"}`}
         >
-          <div className="flex items-center gap-2 md:gap-3 min-w-0">
+          <div className="flex items-center gap-2 md:gap-3 min-w-0 shrink">
             <Logo size={scrolled ? 28 : 36} wordmarkSize={scrolled ? "sm" : "md"} />
             {/* VE badge tricolor animado — siempre xs en header para mantener pill compacta */}
             <VenezuelaBadge
@@ -143,7 +143,7 @@ function HeaderImpl({
             />
             {badge && (
               <span
-                className={`rounded-md border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider ${toneClass}`}
+                className={`shrink-0 whitespace-nowrap rounded-md border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider ${toneClass}`}
               >
                 {badge.label}
               </span>
