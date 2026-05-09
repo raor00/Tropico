@@ -150,8 +150,10 @@ function HeaderImpl({
             )}
           </div>
 
-          {/* Nav desktop — pill grupos con padding generoso, compactación visible */}
-          {showNav && (
+          {/* Nav desktop — pill grupos. Cuando hay badge, esconder nav desktop
+               para evitar solape (badge + nav center + auth chocan). Mobile
+               drawer sigue activo via hamburger. */}
+          {showNav && !badge && (
             <nav
               className={`hidden items-center rounded-full border bg-tropico-ink/40 backdrop-blur-sm md:flex transition-all duration-300 ${
                 scrolled
@@ -192,9 +194,9 @@ function HeaderImpl({
                 aria-label={drawerOpen ? "Cerrar menú" : "Abrir menú"}
                 aria-expanded={drawerOpen}
                 aria-controls="mobile-drawer"
-                className={`flex items-center justify-center rounded-full border border-tropico-border bg-tropico-ink/40 text-tropico-text transition hover:border-tropico-sun hover:text-tropico-sun md:hidden ${
+                className={`flex items-center justify-center rounded-full border border-tropico-border bg-tropico-ink/40 text-tropico-text transition hover:border-tropico-sun hover:text-tropico-sun ${
                   scrolled ? "size-9" : "size-10"
-                }`}
+                } ${badge ? "" : "md:hidden"}`}
               >
                 {drawerOpen ? <X className="size-4" /> : <Menu className="size-5" />}
               </button>
@@ -203,22 +205,24 @@ function HeaderImpl({
         </div>
       </header>
 
-      {/* Drawer móvil — z-index >  header (z-40) para que cubra completo, no solape */}
+      {/* Drawer — z-index >  header (z-40). En pages con badge también
+           visible en desktop (no solo md:hidden) porque el nav desktop
+           está oculto y necesitamos forma de navegar. */}
       {showNav && (
         <>
           <div
             onClick={() => setDrawerOpen(false)}
-            className={`fixed inset-0 z-50 bg-tropico-ink/80 backdrop-blur-md transition-opacity duration-300 md:hidden ${
-              drawerOpen ? "opacity-100" : "pointer-events-none opacity-0"
-            }`}
+            className={`fixed inset-0 z-50 bg-tropico-ink/80 backdrop-blur-md transition-opacity duration-300 ${
+              badge ? "" : "md:hidden"
+            } ${drawerOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}
             aria-hidden
           />
           <aside
             id="mobile-drawer"
-            className={`fixed right-0 top-0 z-[60] flex h-dvh w-72 max-w-[85vw] flex-col gap-1 overflow-y-auto border-l border-tropico-border bg-tropico-ink px-5 pb-8 pt-6 backdrop-blur-xl transition-transform duration-300 ease-out md:hidden ${
-              drawerOpen ? "translate-x-0" : "translate-x-full"
-            }`}
-            aria-label="Menú móvil"
+            className={`fixed right-0 top-0 z-[60] flex h-dvh w-72 max-w-[85vw] flex-col gap-1 overflow-y-auto border-l border-tropico-border bg-tropico-ink px-5 pb-8 pt-6 backdrop-blur-xl transition-transform duration-300 ease-out ${
+              badge ? "" : "md:hidden"
+            } ${drawerOpen ? "translate-x-0" : "translate-x-full"}`}
+            aria-label="Menú de navegación"
           >
             {/* Botón cerrar interno + branding */}
             <header className="mb-4 flex items-center justify-between border-b border-tropico-border pb-3">
