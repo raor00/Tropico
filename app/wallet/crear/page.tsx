@@ -249,7 +249,12 @@ export default function CrearWalletPage() {
           </label>
 
           <button
-            onClick={() => setStep("done")}
+            onClick={() => {
+              // Marca wallet como desbloqueada en sessionStorage para que AuthCTA
+              // muestre "Mi wallet" en lugar de "Abrir wallet"
+              sessionStorage.setItem("tropico:wallet:unlocked", "1");
+              setStep("done");
+            }}
             disabled={!confirmedBackup}
             className="btn-primary inline-flex items-center justify-center gap-2 disabled:opacity-50"
           >

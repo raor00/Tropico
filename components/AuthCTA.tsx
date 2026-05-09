@@ -85,43 +85,69 @@ function DemoButton({ variant, label }: { variant: Variant; label: string }) {
     }
   }
 
-  // Detectar si ya hay wallet local — cambia el CTA primario
-  const [hasWallet, setHasWallet] = useState(false);
+  // 3 estados: no-wallet · has-wallet-locked · unlocked
+  // unlocked = sessionStorage flag set después de password unlock o create
+  const [walletState, setWalletState] = useState<"none" | "locked" | "unlocked">("none");
   useEffect(() => {
-    setHasWallet(localStorage.getItem("tropico:wallet:v1") !== null);
+    const has = localStorage.getItem("tropico:wallet:v1") !== null;
+    const unlocked = sessionStorage.getItem("tropico:wallet:unlocked") === "1";
+    const dev = localStorage.getItem("tropico:dev-wallet") !== null;
+    if (has && unlocked) setWalletState("unlocked");
+    else if (has) setWalletState("locked");
+    else if (dev) setWalletState("unlocked"); // dev wallet siempre "unlocked"
+    else setWalletState("none");
   }, []);
+
+  // Resolver href + label según estado
+  const cta = (() => {
+    if (walletState === "unlocked") {
+      return { href: "/home", label: "Ir a mi wallet", labelCompact: "Mi wallet" };
+    }
+    if (walletState === "locked") {
+      return { href: "/wallet/abrir", label: "Desbloquear wallet", labelCompact: "Abrir wallet" };
+    }
+    return { href: "/wallet/crear", label: "Crear mi wallet (in-app)", labelCompact: "Crear wallet" };
+  })();
 
   if (variant === "primary") {
     return (
       <div className="flex flex-col items-stretch gap-2">
         <Link
-          href={hasWallet ? "/wallet/abrir" : "/wallet/crear"}
+          href={cta.href}
           className="btn-primary inline-flex items-center gap-2"
           title="100% non-custodial — wallet en este navegador, encriptada con tu password"
         >
           <Mail className="size-4" strokeWidth={2} aria-hidden="true" />
-          {hasWallet ? "Abrir mi wallet" : "Crear mi wallet (in-app)"}
+          {cta.label}
           <ArrowRight className="size-4" strokeWidth={2} aria-hidden="true" />
         </Link>
-        <button
-          onClick={activarModoDev}
-          disabled={devLoading}
-          className="inline-flex items-center justify-center gap-1.5 text-xs text-tropico-mute transition hover:text-tropico-purple disabled:opacity-60"
-          title="Genera un keypair efímero en devnet — solo para pruebas"
-        >
-          <Cpu className="size-3" aria-hidden="true" />
-          {devLoading ? "Generando keypair…" : "Modo dev rápido (devnet, sin password)"}
-        </button>
+        {/* Modo dev solo aparece si no hay wallet aún (no tiene sentido si ya estás dentro) */}
+        {walletState === "none" && (
+          <button
+            onClick={activarModoDev}
+            disabled={devLoading}
+            className="inline-flex items-center justify-center gap-1.5 text-xs text-tropico-mute transition hover:text-tropico-purple disabled:opacity-60"
+            title="Genera un keypair efímero en devnet — solo para pruebas"
+          >
+            <Cpu className="size-3" aria-hidden="true" />
+            {devLoading ? "Generando keypair…" : "Modo dev rápido (devnet, sin password)"}
+          </button>
+        )}
       </div>
     );
   }
 
+  // Compact (Header)
   return (
     <Link
-      href={hasWallet ? "/wallet/abrir" : "/wallet/crear"}
-      className="rounded-full border border-tropico-sun/40 bg-tropico-sun/10 px-3 py-1 text-xs font-semibold text-tropico-sun transition hover:bg-tropico-sun/20"
+      href={cta.href}
+      className={`rounded-full border px-3 py-1 text-xs font-semibold transition ${
+        walletState === "unlocked"
+          ? "border-tropico-sea/40 bg-tropico-sea/10 text-tropico-sea hover:bg-tropico-sea/20"
+          : "border-tropico-sun/40 bg-tropico-sun/10 text-tropico-sun hover:bg-tropico-sun/20"
+      }`}
     >
-      {hasWallet ? "Abrir app" : "Crear wallet"}
+      {cta.labelCompact}
     </Link>
   );
 }
