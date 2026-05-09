@@ -454,7 +454,7 @@ export default function RemesasPage() {
         </div>
 
         <div className="panel overflow-x-auto p-6">
-          <pre className="font-mono text-sm leading-loose text-tropico-mute">
+          <pre className="font-mono text-xs leading-loose text-tropico-mute sm:text-sm">
             <code>{`1. Tú abres /remesas → elegís monto + país
 2. Tropico genera quote: $100 USD → ~$98 USDC para tu familia
 3. Pagás con tarjeta / transferencia / PayPal / crypto

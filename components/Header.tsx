@@ -103,19 +103,19 @@ function HeaderImpl({
   return (
     <>
       <header
-        className={`sticky top-0 z-40 -mx-5 [contain:layout_paint_style] transition-[padding,background-color,border-color,box-shadow] duration-300 ease-out ${
+        className={`sticky top-0 z-40 -mx-5 [contain:layout_paint_style] transition-[padding,background-color,border-color,box-shadow,backdrop-filter] duration-300 ease-out ${
           scrolled
-            ? "border-b border-tropico-border/60 bg-tropico-ink/85 px-4 py-1 backdrop-blur-xl shadow-[0_4px_20px_-8px_rgba(255,209,102,0.18)]"
-            : "border-b border-transparent bg-transparent px-5 py-3"
+            ? "border-b border-tropico-sun/20 bg-tropico-ink/95 px-5 py-2 backdrop-blur-2xl shadow-[0_8px_32px_-12px_rgba(255,209,102,0.35)]"
+            : "border-b border-transparent bg-transparent px-5 py-5"
         }`}
       >
         <div
-          className={`flex items-center justify-between gap-2 will-change-transform transition-transform duration-300 ease-out ${
-            scrolled ? "scale-[0.95]" : "scale-100"
+          className={`flex items-center justify-between will-change-transform transition-all duration-300 ease-out ${
+            scrolled ? "scale-[0.96] gap-3" : "scale-100 gap-4"
           }`}
         >
-          <div className="flex items-center gap-2">
-            <Logo size={scrolled ? 24 : 40} wordmarkSize={scrolled ? "sm" : "md"} />
+          <div className="flex items-center gap-3">
+            <Logo size={scrolled ? 32 : 48} wordmarkSize={scrolled ? "sm" : "md"} />
             {/* VE badge tricolor animado — siempre xs en header para mantener pill compacta */}
             <VenezuelaBadge
               size="xs"
@@ -125,17 +125,21 @@ function HeaderImpl({
             />
             {badge && (
               <span
-                className={`rounded-md border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${toneClass}`}
+                className={`rounded-md border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider ${toneClass}`}
               >
                 {badge.label}
               </span>
             )}
           </div>
 
-          {/* Nav desktop */}
+          {/* Nav desktop — pill grupos con padding generoso, compactación visible */}
           {showNav && (
             <nav
-              className="hidden items-center gap-0.5 md:flex"
+              className={`hidden items-center rounded-full border bg-tropico-ink/40 backdrop-blur-sm md:flex transition-all duration-300 ${
+                scrolled
+                  ? "border-tropico-border/60 gap-0.5 p-1"
+                  : "border-tropico-border gap-1 p-1.5"
+              }`}
               aria-label="Navegación principal"
             >
               {nav.map((link) => {
@@ -145,11 +149,13 @@ function HeaderImpl({
                     key={link.href}
                     href={link.href}
                     aria-current={active ? "page" : undefined}
-                    className={`rounded-md transition-colors ${
-                      scrolled ? "px-2.5 py-1 text-xs" : "px-3 py-1.5 text-sm"
+                    className={`rounded-full font-medium transition-all duration-200 ${
+                      scrolled
+                        ? "px-3 py-1.5 text-xs"
+                        : "px-4 py-2 text-sm"
                     } ${
                       active
-                        ? "bg-tropico-sun/15 font-semibold text-tropico-sun"
+                        ? "bg-tropico-sun text-tropico-ink shadow-sm shadow-tropico-sun/40"
                         : "text-tropico-mute hover:bg-tropico-sun/10 hover:text-tropico-sun"
                     }`}
                   >
@@ -168,9 +174,11 @@ function HeaderImpl({
                 aria-label={drawerOpen ? "Cerrar menú" : "Abrir menú"}
                 aria-expanded={drawerOpen}
                 aria-controls="mobile-drawer"
-                className="flex size-9 items-center justify-center rounded-md border border-tropico-border bg-tropico-ink/40 text-tropico-text transition hover:border-tropico-sun hover:text-tropico-sun md:hidden"
+                className={`flex items-center justify-center rounded-full border border-tropico-border bg-tropico-ink/40 text-tropico-text transition hover:border-tropico-sun hover:text-tropico-sun md:hidden ${
+                  scrolled ? "size-9" : "size-10"
+                }`}
               >
-                {drawerOpen ? <X className="size-4" /> : <Menu className="size-4" />}
+                {drawerOpen ? <X className="size-4" /> : <Menu className="size-5" />}
               </button>
             )}
           </div>

@@ -23,6 +23,12 @@ const ROUTES = [
   ["/carlos", "09-carlos"],
   ["/carlos/agente", "10-carlos-agente"],
   ["/descubrir", "11-descubrir"],
+  ["/wallet/crear", "12-wallet-crear"],
+  ["/wallet/abrir", "13-wallet-abrir"],
+  ["/pagar-servicios", "14-pagar-servicios"],
+  ["/remesas", "15-remesas"],
+  ["/integraciones", "16-integraciones"],
+  ["/checkout", "17-checkout"],
 ];
 
 const OUT_DIR = "docs/images/screens";

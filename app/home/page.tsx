@@ -17,6 +17,7 @@ import { ModuleCard } from "@/components/ModuleCard";
 import { BalanceList } from "@/components/BalanceList";
 import { Logo } from "@/components/Logo";
 import { Header } from "@/components/Header";
+import { WalletSessionBar } from "@/components/WalletSessionBar";
 import {
   MOCK_BALANCES,
   MOCK_PORTFOLIO,
@@ -102,15 +103,12 @@ export default function HomePage() {
       {/* Header flotante con scroll detection */}
       <Header />
 
-      {/* Sub-header con balance summary + acciones rápidas */}
-      <section className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-        <span className="inline-flex w-fit items-center gap-1.5 rounded-full border border-tropico-sea/30 bg-tropico-sea/5 px-3 py-1 text-xs text-tropico-sea">
-          <span className="size-1.5 rounded-full bg-tropico-sea animate-pulse-warm" />
-          {shortAddress(MOCK_PORTFOLIO.walletAddress, 6)}
-        </span>
+      {/* Wallet session bar — pubkey real + dropdown cerrar/cambiar */}
+      <section className="flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <WalletSessionBar />
         <Link
           href="/depositar"
-          className="inline-flex w-fit items-center gap-1 rounded-full border border-tropico-sun/40 bg-tropico-sun/10 px-3 py-1 text-xs font-semibold text-tropico-sun transition hover:bg-tropico-sun/20"
+          className="inline-flex w-fit items-center gap-1 rounded-full border border-tropico-sun/40 bg-tropico-sun/10 px-3 py-1.5 text-xs font-semibold text-tropico-sun transition hover:bg-tropico-sun/20"
         >
           <Plus className="size-3" strokeWidth={2.5} aria-hidden="true" />
           Depositar bs

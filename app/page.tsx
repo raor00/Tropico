@@ -580,7 +580,7 @@ export default function LandingPage() {
             5 streams de revenue desde el d&iacute;a uno.
           </h2>
         </div>
-        <div className="grid grid-cols-3 gap-3 sm:grid-cols-5">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
           {REVENUE_STREAMS.map((s) => (
             <div
               key={s.name}

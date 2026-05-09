@@ -261,40 +261,90 @@ export default function CrearWalletPage() {
         </section>
       )}
 
-      {/* STEP 4 — DONE */}
+      {/* STEP 4 — DONE — accesos directos a todos los módulos */}
       {step === "done" && (
-        <section className="panel flex flex-col gap-5 border-tropico-sea/40 bg-tropico-sea/5 p-6 text-center">
-          <ShieldCheck
-            className="mx-auto size-12 text-tropico-sea"
-            strokeWidth={1.5}
-          />
-          <h1 className="font-display text-2xl font-bold">¡Wallet lista! 🌴</h1>
-          <p className="text-sm text-tropico-mute">
-            Tu wallet vive en este navegador, encriptada con tu password. Lista para
-            recibir USDC, hacer swaps, cobrar, mandar.
-          </p>
-          <div className="rounded-lg border border-tropico-border bg-tropico-ink/60 p-3">
-            <div className="mb-1 text-[10px] font-semibold uppercase tracking-wider text-tropico-mute">
-              Tu pubkey
+        <section className="flex flex-col gap-4">
+          <div className="panel flex flex-col items-center gap-4 border-tropico-sea/40 bg-tropico-sea/5 p-6 text-center">
+            <ShieldCheck
+              className="size-14 text-tropico-sea"
+              strokeWidth={1.5}
+            />
+            <div>
+              <h1 className="font-display text-2xl font-bold">¡Wallet lista! 🌴</h1>
+              <p className="mt-1 text-sm text-tropico-mute">
+                Tu wallet vive en este navegador, encriptada con tu password. Lista
+                para recibir, cambiar, cobrar, mandar y guardar.
+              </p>
             </div>
-            <code className="break-all font-mono text-xs text-tropico-sun">
-              {pubkey}
-            </code>
+            <div className="w-full rounded-lg border border-tropico-border bg-tropico-ink/60 p-3 text-left">
+              <div className="mb-1 flex items-center justify-between">
+                <span className="text-[10px] font-semibold uppercase tracking-wider text-tropico-mute">
+                  Tu pubkey
+                </span>
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(pubkey);
+                    setCopied(true);
+                    setTimeout(() => setCopied(false), 1800);
+                  }}
+                  className="inline-flex items-center gap-1 text-[10px] text-tropico-sun hover:underline"
+                >
+                  {copied ? <Check className="size-3" /> : <Copy className="size-3" />}
+                  {copied ? "Copiado" : "Copiar"}
+                </button>
+              </div>
+              <code className="block break-all font-mono text-[11px] leading-relaxed text-tropico-sun">
+                {pubkey}
+              </code>
+            </div>
+            <button
+              onClick={() => router.push("/home")}
+              className="btn-primary inline-flex items-center justify-center gap-2 w-full"
+            >
+              Ir a mi wallet <ArrowRight className="size-4" />
+            </button>
           </div>
-          <button
-            onClick={() => router.push("/home")}
-            className="btn-primary inline-flex items-center justify-center gap-2"
-          >
-            Ir a mi wallet <ArrowRight className="size-4" />
-          </button>
-          <a
-            href={`https://solscan.io/account/${pubkey}`}
-            target="_blank"
-            rel="noreferrer"
-            className="text-xs text-tropico-mute underline hover:text-tropico-sun"
-          >
-            Verificar en Solscan →
-          </a>
+
+          {/* Accesos directos a los 8 módulos */}
+          <div className="panel flex flex-col gap-3 p-5">
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-tropico-mute">
+              Empieza por aquí
+            </h3>
+            <div className="grid grid-cols-2 gap-2 text-sm sm:grid-cols-3">
+              {[
+                { href: "/depositar", label: "💰 Depositar" },
+                { href: "/cobrar", label: "📱 Cobrar QR" },
+                { href: "/cambiar", label: "↔️ Cambiar" },
+                { href: "/enviar", label: "📤 Enviar" },
+                { href: "/guardar", label: "🌱 Guardar" },
+                { href: "/remesas", label: "🌐 Remesas" },
+                { href: "/pagar-servicios", label: "⚡ Servicios" },
+                { href: "/carlos", label: "🤖 Carlos AI" },
+              ].map((m) => (
+                <Link
+                  key={m.href}
+                  href={m.href}
+                  className="rounded-lg border border-tropico-border bg-tropico-ink/40 px-3 py-2.5 text-center font-medium text-tropico-text transition hover:border-tropico-sun hover:text-tropico-sun"
+                >
+                  {m.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-2 text-center text-xs text-tropico-mute sm:flex-row sm:justify-center sm:gap-4">
+            <a
+              href={`https://solscan.io/account/${pubkey}`}
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-tropico-sun"
+            >
+              Verificar en Solscan →
+            </a>
+            <Link href="/wallet/abrir" className="hover:text-tropico-sun">
+              Iniciar sesión / cambiar wallet
+            </Link>
+          </div>
         </section>
       )}
 

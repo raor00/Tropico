@@ -20,7 +20,7 @@ export default function PagarServiciosPage() {
 
       {/* Hero */}
       <section className="flex flex-col gap-3">
-        <h1 className="h-display text-4xl md:text-5xl">
+        <h1 className="font-display text-4xl font-black tracking-tighter leading-tight md:text-5xl">
           Paga todo lo de tu casa con USDC
         </h1>
         <p className="max-w-xl text-lg text-tropico-mute">
@@ -72,7 +72,8 @@ export default function PagarServiciosPage() {
       <section className="flex flex-col gap-4">
         <h2 className="font-display text-2xl font-bold">Roadmap de servicios</h2>
         <div className="panel overflow-hidden p-0">
-          <table className="w-full text-sm">
+          <div className="overflow-x-auto">
+          <table className="w-full min-w-[480px] text-sm">
             <thead>
               <tr className="border-b border-tropico-border bg-tropico-ink/40 text-left text-xs uppercase tracking-wider text-tropico-mute">
                 <th className="px-5 py-3">Fase</th>
@@ -109,6 +110,7 @@ export default function PagarServiciosPage() {
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       </section>
 
