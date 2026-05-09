@@ -29,9 +29,8 @@ const DEFAULT_NAV: NavLink[] = [
   { href: "/cobrar", label: "Cobrar" },
   { href: "/remesas", label: "Remesas" },
   { href: "/carlos", label: "Carlos" },
-  // Comercios + Servicios + Integraciones viven solo en drawer mobile +
-  // footer. Nav desktop reducida a 5 items para garantizar que ningún
-  // viewport md+ recorta links.
+  { href: "/comercios", label: "Comercios" },
+  // Servicios + Integraciones viven en drawer mobile + footer landing.
 ];
 
 /** Nav extendida para el drawer móvil — compactada por feedback de usuario.
@@ -123,14 +122,17 @@ function HeaderImpl({
 
   return (
     <>
-      <header
-        className={`sticky top-0 z-40 -mx-5 [contain:layout_paint_style] px-4 py-3 md:px-5 md:py-4 transition-[background-color,border-color,box-shadow,backdrop-filter] duration-200 ease-out ${
-          scrolled
-            ? "border-b border-tropico-sun/20 bg-tropico-ink/95 backdrop-blur-xl shadow-[0_4px_20px_-8px_rgba(255,209,102,0.25)]"
-            : "border-b border-transparent bg-transparent"
-        }`}
-      >
-        <div className="flex items-center justify-between gap-3 md:gap-4">
+      {/* Header como PILL flotante — no full-width bar.
+           Padding del wrapper externo (h-Y) reserva el espacio sticky.
+           El pill interior es rounded-full con backdrop-blur, max-w-fit. */}
+      <header className="sticky top-3 z-40 flex justify-center px-2 [contain:layout_paint_style] md:top-4">
+        <div
+          className={`flex w-full max-w-5xl items-center justify-between gap-3 rounded-full border px-3 py-2 transition-[background-color,border-color,box-shadow,backdrop-filter] duration-200 ease-out md:gap-4 md:px-4 ${
+            scrolled
+              ? "border-tropico-sun/30 bg-tropico-ink/90 backdrop-blur-xl shadow-[0_8px_24px_-12px_rgba(255,209,102,0.4)]"
+              : "border-tropico-border/60 bg-tropico-ink/70 backdrop-blur-md"
+          }`}
+        >
           {/* Logo wrapper: shrink-0 para que NO se comprima ni se solape con nav.
                Wordmark "Tropico":
                - Pages SIN nav (badge o nav off): visible siempre, size md

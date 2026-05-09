@@ -137,17 +137,21 @@ function DemoButton({ variant, label }: { variant: Variant; label: string }) {
     );
   }
 
-  // Compact (Header)
+  // Compact (Header) — mobile/md: icon-only redondo. lg+: con label.
+  // Esto evita que ocupe demasiado ancho en md cuando compite con el nav.
+  const Icon = walletState === "unlocked" ? Wallet : Mail;
   return (
     <Link
       href={cta.href}
-      className={`rounded-full border px-3 py-1 text-xs font-semibold transition ${
+      title={cta.labelCompact}
+      className={`flex shrink-0 items-center gap-1.5 rounded-full border text-xs font-semibold transition size-9 justify-center lg:size-auto lg:px-3 lg:py-1.5 ${
         walletState === "unlocked"
           ? "border-tropico-sea/40 bg-tropico-sea/10 text-tropico-sea hover:bg-tropico-sea/20"
           : "border-tropico-sun/40 bg-tropico-sun/10 text-tropico-sun hover:bg-tropico-sun/20"
       }`}
     >
-      {cta.labelCompact}
+      <Icon className="size-4" strokeWidth={2} aria-hidden="true" />
+      <span className="hidden lg:inline whitespace-nowrap">{cta.labelCompact}</span>
     </Link>
   );
 }
