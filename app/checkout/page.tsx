@@ -63,7 +63,7 @@ export default async function CheckoutPage({
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-2xl flex-col gap-6 px-5 py-10">
-      <Header badge={{ label: "Pay", tone: "sea" }} />
+      <Header />
 
       <header className="flex flex-col gap-2 pt-4">
         <span className="text-xs uppercase tracking-widest text-tropico-sea">

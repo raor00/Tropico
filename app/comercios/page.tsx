@@ -76,7 +76,7 @@ export default function ComerciosPage() {
   return (
     <main className="mx-auto flex min-h-dvh max-w-6xl flex-col gap-10 px-5 py-10 md:gap-16">
       {/* Header flotante con badge "Comercios" */}
-      <Header badge={{ label: "Comercios", tone: "coral" }} />
+      <Header />
 
       {/* Hero */}
       <section className="flex flex-col gap-6 animate-fade-up">

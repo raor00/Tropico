@@ -5,26 +5,16 @@ import { ArrowLeftRight, Banknote } from "lucide-react";
 import { SwapForm } from "@/components/SwapForm";
 import { BsSwapForm } from "@/components/BsSwapForm";
 
-type Tab = "tokens" | "bolivares";
+type Tab = "bolivares" | "tokens";
 
 export function CambiarTabs() {
-  const [tab, setTab] = useState<Tab>("tokens");
+  // Bolívares es el caso de uso principal del venezolano — default tab
+  const [tab, setTab] = useState<Tab>("bolivares");
 
   return (
     <div className="flex flex-col gap-4">
-      {/* Tabs */}
+      {/* Tabs — Bolívares primero (caso de uso principal VE) */}
       <div className="grid grid-cols-2 gap-2 rounded-xl border border-tropico-border bg-tropico-ink/40 p-1.5">
-        <button
-          onClick={() => setTab("tokens")}
-          className={`flex items-center justify-center gap-2 rounded-lg px-3 py-3 text-sm font-semibold transition ${
-            tab === "tokens"
-              ? "bg-tropico-sun text-tropico-ink shadow-sm shadow-tropico-sun/30"
-              : "text-tropico-mute hover:text-tropico-sun"
-          }`}
-        >
-          <ArrowLeftRight className="size-4" />
-          Tokens (Jupiter)
-        </button>
         <button
           onClick={() => setTab("bolivares")}
           className={`flex items-center justify-center gap-2 rounded-lg px-3 py-3 text-sm font-semibold transition ${
@@ -36,9 +26,20 @@ export function CambiarTabs() {
           <Banknote className="size-4" />
           Bolívares ↔ USDC
         </button>
+        <button
+          onClick={() => setTab("tokens")}
+          className={`flex items-center justify-center gap-2 rounded-lg px-3 py-3 text-sm font-semibold transition ${
+            tab === "tokens"
+              ? "bg-tropico-sun text-tropico-ink shadow-sm shadow-tropico-sun/30"
+              : "text-tropico-mute hover:text-tropico-sun"
+          }`}
+        >
+          <ArrowLeftRight className="size-4" />
+          Tokens (Jupiter)
+        </button>
       </div>
 
-      {tab === "tokens" ? <SwapForm /> : <BsSwapForm />}
+      {tab === "bolivares" ? <BsSwapForm /> : <SwapForm />}
     </div>
   );
 }

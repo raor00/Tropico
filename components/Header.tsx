@@ -66,30 +66,23 @@ function HeaderImpl({
   badge?: { label: string; tone?: keyof typeof TONE_MAP };
   showNav?: boolean;
 }) {
+  // Header static — sin compact-on-scroll. El cambio de altura on scroll
+  // causaba content shift que re-disparaba scroll events en loop infinito
+  // ("header saltando"). Mejor: padding fijo siempre, layout estable.
+  // Solo detectamos scroll>0 para mostrar bg + shadow (no cambia altura).
   const [scrolled, setScrolled] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const tickingRef = useRef(false);
   const lastStateRef = useRef(false);
   const pathname = usePathname();
 
-  // Scroll detection con HYSTERESIS para evitar bounce/loop:
-  // - Compactar cuando scrollY > 80
-  // - Expandir cuando scrollY < 20
-  // El gap entre thresholds previene el flapping cuando el cambio de
-  // altura del header empuja contenido y dispara otro evento scroll.
   useEffect(() => {
-    const COMPACT_AT = 80;
-    const EXPAND_AT = 20;
     const onScroll = () => {
       if (tickingRef.current) return;
       tickingRef.current = true;
       requestAnimationFrame(() => {
-        const y = window.scrollY;
-        const current = lastStateRef.current;
-        let next = current;
-        if (!current && y > COMPACT_AT) next = true;
-        else if (current && y < EXPAND_AT) next = false;
-        if (next !== current) {
+        const next = window.scrollY > 12;
+        if (next !== lastStateRef.current) {
           lastStateRef.current = next;
           setScrolled(next);
         }
@@ -131,24 +124,18 @@ function HeaderImpl({
   return (
     <>
       <header
-        className={`sticky top-0 z-40 -mx-5 [contain:layout_paint_style] transition-[padding,background-color,border-color,box-shadow,backdrop-filter] duration-300 ease-out ${
+        className={`sticky top-0 z-40 -mx-5 [contain:layout_paint_style] px-4 py-3 md:px-5 md:py-4 transition-[background-color,border-color,box-shadow,backdrop-filter] duration-200 ease-out ${
           scrolled
-            ? "border-b border-tropico-sun/20 bg-tropico-ink/95 px-4 py-2 backdrop-blur-2xl shadow-[0_8px_32px_-12px_rgba(255,209,102,0.35)] md:px-5"
-            : "border-b border-transparent bg-transparent px-4 py-3 md:px-5 md:py-5"
+            ? "border-b border-tropico-sun/20 bg-tropico-ink/95 backdrop-blur-xl shadow-[0_4px_20px_-8px_rgba(255,209,102,0.25)]"
+            : "border-b border-transparent bg-transparent"
         }`}
       >
-        <div
-          className={`flex items-center justify-between will-change-transform transition-transform duration-300 ease-out ${
-            scrolled ? "scale-[0.97]" : "scale-100"
-          } ${scrolled ? "gap-2" : "gap-2 md:gap-4"}`}
-        >
+        <div className="flex items-center justify-between gap-2 md:gap-4">
           <div className="flex items-center gap-2 md:gap-3 min-w-0 shrink">
-            {/* Logo: en pages con nav center (sin badge), solo icon para evitar
-                 que el wordmark se solape con el nav. En pages con badge,
-                 wordmark visible (no compite con nav). */}
+            {/* Logo size FIJO — sin scale on scroll (evita layout shift) */}
             <Logo
-              size={scrolled ? 28 : 36}
-              wordmarkSize={scrolled ? "sm" : "md"}
+              size={36}
+              wordmarkSize="md"
               iconOnly={!badge && showNav}
             />
             {/* VE badge tricolor animado — siempre xs en header para mantener pill compacta */}
