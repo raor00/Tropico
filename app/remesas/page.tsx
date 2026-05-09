@@ -18,6 +18,7 @@ import {
   AlertTriangle,
 } from "lucide-react";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import { InAppPreviewBanner } from "@/components/InAppPreviewBanner";
 import { VenezuelaBadge } from "@/components/VenezuelaBadge";
 import { QuoteCalculator } from "./QuoteCalculator";
 
@@ -182,7 +183,12 @@ const PAISES = [
 export default function RemesasPage() {
   return (
     <main className="mx-auto flex min-h-dvh max-w-6xl flex-col gap-10 px-5 py-10 md:gap-20 md:py-16">
-      {/* Header global con badge Remesas */}
+      {/* Banner solo si user tiene wallet — preview app + nota demo */}
+      <InAppPreviewBanner
+        modulo="remesas internacionales"
+        appHref="/enviar"
+        appLabel="Enviar USDC ahora"
+      />
 
       {/* ═══ HERO ═══════════════════════════════════════════════════════ */}
       <section className="animate-fade-up flex flex-col gap-6 pt-4">

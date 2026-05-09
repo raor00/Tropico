@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { INTEGRATION_USE_CASES } from "@/lib/checkout";
 import { Code2, Webhook, Link2, Smartphone, ShieldCheck, Zap, Globe, ArrowRight } from "lucide-react";
+import { InAppPreviewBanner } from "@/components/InAppPreviewBanner";
 
 export const metadata = {
   title: "Integraciones — Tropico Pay",
@@ -97,6 +98,12 @@ async function createTropicoCharge(orderId, amount) {
 export default function IntegracionesPage() {
   return (
     <main className="mx-auto flex min-h-dvh max-w-6xl flex-col gap-8 px-5 py-10 md:gap-12">
+      {/* Banner solo si user tiene wallet — preview app + nota demo */}
+      <InAppPreviewBanner
+        modulo="Tropico Pay"
+        appHref="/cobrar"
+        appLabel="Probar QR cobro"
+      />
 
       {/* HERO */}
       <section className="flex flex-col gap-6 pt-6">

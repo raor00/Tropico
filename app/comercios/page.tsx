@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ComparativaTabla } from "@/components/ComparativaTabla";
 import { AfiliarForm } from "@/components/AfiliarForm";
 import { Logo } from "@/components/Logo";
+import { InAppPreviewBanner } from "@/components/InAppPreviewBanner";
 
 export const metadata = {
   title: "Tropico Comercios — Cobra en d&oacute;lares sin banco tradicional",
@@ -74,7 +75,12 @@ const PARTNERS_BAR = [
 export default function ComerciosPage() {
   return (
     <main className="mx-auto flex min-h-dvh max-w-6xl flex-col gap-10 px-5 py-10 md:gap-16">
-      {/* Header flotante con badge "Comercios" */}
+      {/* Banner solo si user tiene wallet — preview app + nota demo */}
+      <InAppPreviewBanner
+        modulo="comercios afiliados"
+        appHref="/cobrar"
+        appLabel="Probar QR de cobro"
+      />
 
       {/* Hero */}
       <section className="flex flex-col gap-6 animate-fade-up">
