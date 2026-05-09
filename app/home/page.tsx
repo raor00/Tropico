@@ -10,6 +10,7 @@ import {
   Gift,
   CalendarClock,
   Plus,
+  Globe,
 } from "lucide-react";
 import { DualPrice } from "@/components/DualPrice";
 import { ModuleCard } from "@/components/ModuleCard";
@@ -84,6 +85,14 @@ const MODULES = [
     descripcion: "Paga luz, agua, internet y streaming con USDC",
     gradient: "from-tropico-sun/25 to-tropico-sea/10",
     badge: "Pagar",
+  },
+  {
+    href: "/remesas",
+    Icon: Globe,
+    titulo: "Remesas",
+    descripcion: "Recib&eacute; plata del exterior en 1 segundo, sin colas",
+    gradient: "from-tropico-sea/30 to-tropico-sun/10",
+    badge: "Remesas",
   },
 ];
 

@@ -17,6 +17,7 @@ import {
   AlertTriangle,
   Users,
   CheckCircle2,
+  Globe,
 } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { AuthCTA } from "@/components/AuthCTA";
@@ -218,6 +219,48 @@ export default function LandingPage() {
               proveedor, no eres dueño. Eres usuario.
             </p>
           </article>
+        </div>
+      </ScrollReveal>
+
+      {/* REMESAS — puente familiar */}
+      <ScrollReveal direction="up" as="section" className="panel relative flex flex-col gap-6 overflow-hidden p-6 md:p-8">
+        <div
+          className="pointer-events-none absolute inset-0 opacity-50"
+          style={{
+            background: "linear-gradient(135deg, rgba(6,214,160,0.12) 0%, rgba(255,209,102,0.10) 100%)",
+          }}
+        />
+        <div className="relative flex flex-col gap-6">
+          <div className="space-y-2">
+            <span className="inline-flex items-center gap-1.5 text-xs uppercase tracking-widest text-tropico-sea">
+              <Globe className="size-3.5" /> Puente de remesas
+            </span>
+            <h2 className="font-display text-3xl font-bold md:text-4xl">
+              Tu familia en el exterior manda dinero{" "}
+              <span className="text-tropico-sea">en 1 segundo.</span>
+            </h2>
+            <p className="max-w-2xl text-tropico-mute">
+              Sin colas, sin esperar 3 d&iacute;as, sin pagar 10% de comisi&oacute;n. Desde cualquier pa&iacute;s del
+              mundo, al wallet de tu familiar en Venezuela — instant&aacute;neo y non-custodial.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-3 gap-3">
+            {[
+              { v: "1s", l: "settlement on-chain", c: "text-tropico-sea" },
+              { v: "1-2%", l: "fee total", c: "text-tropico-green" },
+              { v: "150+", l: "países de origen", c: "text-tropico-sun" },
+            ].map((stat) => (
+              <div key={stat.l} className="panel flex flex-col items-center justify-center gap-1 p-4 text-center">
+                <div className={`font-display text-3xl font-bold ${stat.c}`}>{stat.v}</div>
+                <div className="text-[10px] uppercase tracking-wider text-tropico-mute">{stat.l}</div>
+              </div>
+            ))}
+          </div>
+
+          <Link href="/remesas" className="btn-primary w-fit">
+            Ver c&oacute;mo funciona &rarr;
+          </Link>
         </div>
       </ScrollReveal>
 

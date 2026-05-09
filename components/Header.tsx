@@ -28,8 +28,9 @@ const DEFAULT_NAV: NavLink[] = [
   { href: "/cambiar", label: "Cambiar" },
   { href: "/cobrar", label: "Cobrar" },
   { href: "/pagar-servicios", label: "Servicios" },
+  { href: "/remesas", label: "Remesas" },
   { href: "/comercios", label: "Comercios" },
-  { href: "/integraciones", label: "Integraciones" },
+  // Integraciones vive solo en footer — nav limitada a 6 links para no saturar mobile
 ];
 
 const TONE_MAP = {
