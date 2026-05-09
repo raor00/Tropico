@@ -15,6 +15,7 @@ import {
 import { Header } from "@/components/Header";
 import { WalletSessionBar } from "@/components/WalletSessionBar";
 import { HomeBalances } from "@/components/HomeBalances";
+import { ModuleCard } from "@/components/ModuleCard";
 import { MOCK_CASHBACK_PENDIENTE, MOCK_NEXT_DCA } from "@/lib/mock-data";
 import { formatUSD } from "@/lib/formato";
 
@@ -25,22 +26,78 @@ export const metadata = {
 };
 
 const MODULES = [
-  { href: "/cambiar", Icon: ArrowLeftRight, titulo: "Cambiar", accent: "text-tropico-sun" },
-  { href: "/cobrar", Icon: QrCode, titulo: "Cobrar", accent: "text-tropico-coral" },
-  { href: "/enviar", Icon: Send, titulo: "Enviar", accent: "text-tropico-sun" },
-  { href: "/guardar", Icon: Sprout, titulo: "Guardar", accent: "text-tropico-sea" },
-  { href: "/remesas", Icon: Globe, titulo: "Remesas", accent: "text-tropico-sea" },
-  { href: "/pagar-servicios", Icon: Zap, titulo: "Servicios", accent: "text-tropico-sun" },
-  { href: "/carlos", Icon: Sparkles, titulo: "Carlos AI", accent: "text-tropico-purple" },
-  { href: "/descubrir", Icon: Compass, titulo: "Descubrir", accent: "text-tropico-mute" },
+  {
+    href: "/cambiar",
+    Icon: ArrowLeftRight,
+    titulo: "Cambiar",
+    descripcion: "Intercambia tokens o Bs↔USDC al mejor precio",
+    gradient: "from-tropico-purple/20 to-tropico-sea/10",
+    badge: "Swap",
+  },
+  {
+    href: "/cobrar",
+    Icon: QrCode,
+    titulo: "Cobrar",
+    descripcion: "QR Solana Pay — recibe USDC al instante",
+    gradient: "from-tropico-coral/30 to-tropico-sun/15",
+    badge: "QR",
+  },
+  {
+    href: "/enviar",
+    Icon: Send,
+    titulo: "Enviar",
+    descripcion: "Manda USDC a quien quieras, instant&aacute;neo",
+    gradient: "from-tropico-sun/30 to-tropico-coral/15",
+    badge: "Send",
+  },
+  {
+    href: "/guardar",
+    Icon: Sprout,
+    titulo: "Guardar",
+    descripcion: "Tu plata generando ~5% al a&ntilde;o autom&aacute;tico",
+    gradient: "from-tropico-sea/30 to-tropico-green/10",
+    badge: "Yield",
+  },
+  {
+    href: "/remesas",
+    Icon: Globe,
+    titulo: "Remesas",
+    descripcion: "Recibe del exterior en 1 segundo, sin colas",
+    gradient: "from-tropico-sea/30 to-tropico-sun/10",
+    badge: "Remesas",
+  },
+  {
+    href: "/pagar-servicios",
+    Icon: Zap,
+    titulo: "Servicios",
+    descripcion: "Paga luz, agua, internet y streaming con USDC",
+    gradient: "from-tropico-sun/25 to-tropico-sea/10",
+    badge: "Pay",
+  },
+  {
+    href: "/carlos",
+    Icon: Sparkles,
+    titulo: "Carlos AI",
+    descripcion: "Tu copiloto venezolano powered by Lumen",
+    gradient: "from-tropico-coral/20 to-tropico-purple/15",
+    badge: "AI",
+  },
+  {
+    href: "/descubrir",
+    Icon: Compass,
+    titulo: "Descubrir",
+    descripcion: "Conoce el ecosistema Solana sin jerga",
+    gradient: "from-tropico-mute/20 to-tropico-border/10",
+    badge: "Educa",
+  },
 ];
 
 export default function HomePage() {
   return (
-    <main className="mx-auto flex min-h-dvh max-w-2xl flex-col gap-5 px-5 py-6">
+    <main className="mx-auto flex min-h-dvh max-w-5xl flex-col gap-6 px-5 py-8">
       <Header />
 
-      {/* Wallet session + depositar */}
+      {/* Wallet session + Depositar */}
       <section className="flex flex-wrap items-center justify-between gap-2">
         <WalletSessionBar />
         <Link
@@ -52,61 +109,54 @@ export default function HomePage() {
         </Link>
       </section>
 
-      {/* Saldo real on-chain — minimal, sin orbes */}
+      {/* Saldo real on-chain (HomeBalances trae card + lista) */}
       <HomeBalances />
 
-      {/* Notificaciones — solo si hay datos */}
-      {(MOCK_CASHBACK_PENDIENTE.total > 0 || MOCK_NEXT_DCA?.monto) && (
-        <section className="grid gap-2 sm:grid-cols-2">
-          {MOCK_CASHBACK_PENDIENTE.total > 0 && (
-            <Link
-              href="/carlos/agente"
-              className="flex items-center gap-2.5 rounded-xl border border-tropico-border bg-tropico-panel/40 p-3 transition hover:border-tropico-sun/40"
-            >
-              <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-tropico-sun/15 text-tropico-sun">
-                <Gift className="size-4" strokeWidth={1.75} />
-              </div>
-              <div className="min-w-0 flex-1">
-                <div className="truncate text-xs font-medium text-tropico-text">
-                  {formatUSD(MOCK_CASHBACK_PENDIENTE.total)} de cashback
-                </div>
-                <div className="text-[10px] text-tropico-mute">Tap para reclamar</div>
-              </div>
-            </Link>
-          )}
-
+      {/* Notificaciones Carlos — descriptivas, sin saturar */}
+      <section className="grid gap-3 md:grid-cols-2">
+        {MOCK_CASHBACK_PENDIENTE.total > 0 && (
           <Link
             href="/carlos/agente"
-            className="flex items-center gap-2.5 rounded-xl border border-tropico-border bg-tropico-panel/40 p-3 transition hover:border-tropico-coral/40"
+            className="panel flex items-center gap-3 border-tropico-sun/30 bg-tropico-sun/5 p-4 transition hover:border-tropico-sun/60"
           >
-            <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-tropico-coral/15 text-tropico-coral">
-              <CalendarClock className="size-4" strokeWidth={1.75} />
+            <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-tropico-sun/20 text-tropico-sun">
+              <Gift className="size-5" strokeWidth={1.75} />
             </div>
             <div className="min-w-0 flex-1">
-              <div className="truncate text-xs font-medium text-tropico-text">
-                DCA Lun · {formatUSD(MOCK_NEXT_DCA.monto)} → {MOCK_NEXT_DCA.tokenDestino}
+              <div className="text-sm font-semibold text-tropico-text">
+                Tienes {formatUSD(MOCK_CASHBACK_PENDIENTE.total)} de cashback acumulado
               </div>
-              <div className="text-[10px] text-tropico-mute">Carlos lo ejecuta</div>
+              <div className="text-xs text-tropico-mute">
+                De {MOCK_CASHBACK_PENDIENTE.comerciosCount} comercios afiliados — tap para reclamar
+              </div>
             </div>
           </Link>
-        </section>
-      )}
+        )}
 
-      {/* Módulos — grid uniforme, minimal */}
-      <section>
-        <h2 className="mb-2 text-xs font-semibold uppercase tracking-wider text-tropico-mute">
-          Acciones
-        </h2>
-        <div className="grid grid-cols-4 gap-2">
+        <Link
+          href="/carlos/agente"
+          className="panel flex items-center gap-3 border-tropico-coral/30 bg-tropico-coral/5 p-4 transition hover:border-tropico-coral/60"
+        >
+          <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-tropico-coral/20 text-tropico-coral">
+            <CalendarClock className="size-5" strokeWidth={1.75} />
+          </div>
+          <div className="min-w-0 flex-1">
+            <div className="text-sm font-semibold text-tropico-text">
+              Pr&oacute;ximo DCA: {formatUSD(MOCK_NEXT_DCA.monto)} → {MOCK_NEXT_DCA.tokenDestino}
+            </div>
+            <div className="text-xs text-tropico-mute">
+              Lunes 10:00 — Carlos lo ejecuta autom&aacute;tico
+            </div>
+          </div>
+        </Link>
+      </section>
+
+      {/* Grid de módulos — 2-col mobile, 3-col tablet, 4-col desktop */}
+      <section className="flex flex-col gap-3">
+        <h2 className="font-display text-xl font-bold">Acciones</h2>
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
           {MODULES.map((m) => (
-            <Link
-              key={m.href}
-              href={m.href}
-              className="group flex flex-col items-center gap-2 rounded-xl border border-tropico-border bg-tropico-panel/40 p-3 transition hover:border-tropico-sun/40 hover:bg-tropico-panel/60"
-            >
-              <m.Icon className={`size-5 ${m.accent} transition group-hover:scale-110`} strokeWidth={1.75} />
-              <span className="text-[11px] font-medium text-tropico-text">{m.titulo}</span>
-            </Link>
+            <ModuleCard key={m.href} {...m} />
           ))}
         </div>
       </section>
