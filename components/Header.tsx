@@ -29,9 +29,9 @@ const DEFAULT_NAV: NavLink[] = [
   { href: "/cobrar", label: "Cobrar" },
   { href: "/remesas", label: "Remesas" },
   { href: "/carlos", label: "Carlos" },
-  { href: "/comercios", label: "Comercios" },
-  // /pagar-servicios e /integraciones viven en footer + drawer mobile completo —
-  // nav desktop limitada a 6 links para no saturar.
+  // Comercios + Servicios + Integraciones viven solo en drawer mobile +
+  // footer. Nav desktop reducida a 5 items para garantizar que ningún
+  // viewport md+ recorta links.
 ];
 
 /** Nav extendida para el drawer móvil — compactada por feedback de usuario.
@@ -162,7 +162,7 @@ function HeaderImpl({
                Cuando hay badge, esconder nav desktop. */}
           {showNav && !badge && (
             <nav
-              className="hidden items-center gap-0.5 rounded-full border border-tropico-border bg-tropico-ink/40 p-1 backdrop-blur-sm md:flex"
+              className="hidden max-w-full items-center gap-0.5 overflow-x-auto rounded-full border border-tropico-border bg-tropico-ink/40 p-1 backdrop-blur-sm [scrollbar-width:none] md:flex [&::-webkit-scrollbar]:hidden"
               aria-label="Navegación principal"
             >
               {nav.map((link) => {
