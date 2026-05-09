@@ -38,6 +38,7 @@ const DEFAULT_NAV: NavLink[] = [
 const FULL_NAV: NavLink[] = [
   { href: "/home", label: "Wallet" },
   { href: "/cambiar", label: "Cambiar" },
+  { href: "/intercambio-p2p", label: "P2P Bs ↔ USDC" },
   { href: "/cobrar", label: "Cobrar" },
   { href: "/enviar", label: "Enviar" },
   { href: "/guardar", label: "Guardar" },
