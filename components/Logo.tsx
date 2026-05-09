@@ -10,6 +10,8 @@ type LogoProps = {
   asLink?: boolean;
   /** Mostrar solo el icono sin wordmark */
   iconOnly?: boolean;
+  /** Clases extra para el wordmark span (ej. responsive hide) */
+  wordmarkClass?: string;
   className?: string;
 };
 
@@ -24,6 +26,7 @@ export function Logo({
   wordmarkSize = "md",
   asLink = true,
   iconOnly = false,
+  wordmarkClass = "",
   className = "",
 }: LogoProps) {
   const inner = (
@@ -41,7 +44,7 @@ export function Logo({
       />
       {!iconOnly && (
         <span
-          className={`font-display font-bold tracking-tight leading-none ${wordmarkSizeMap[wordmarkSize]}`}
+          className={`font-display font-bold tracking-tight leading-none ${wordmarkSizeMap[wordmarkSize]} ${wordmarkClass}`}
           style={{
             background:
               "linear-gradient(135deg, #EF476F 0%, #FFD166 50%, #06D6A0 100%)",
