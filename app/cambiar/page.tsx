@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import { Header } from "@/components/Header";
+import { FaucetCard } from "@/components/FaucetCard";
 import { CambiarTabs } from "./CambiarTabs";
 
 export const metadata = {
@@ -24,6 +25,9 @@ export default function CambiarPage() {
           Tropico Liquidity Pool (settlement &lt;1s, sin esperar contraparte).
         </p>
       </header>
+
+      {/* Faucet $50 USDC test — visible al inicio para que el user pueda probar el swap */}
+      <FaucetCard />
 
       <Suspense
         fallback={

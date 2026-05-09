@@ -34,42 +34,47 @@ const DATOS_BANCARIOS = [
   { banco: "BNC", numero: "0191-0099-44-9900991234", tipo: "Corriente", titular: "Tropico Tech C.A." },
 ];
 
-/* ── Métodos comparativa ─────────────────────────────────────────────── */
+/* ── Métodos de ingreso de Bs al sistema ──────────────────────────────
+ * Una vez los Bs entran al pool de Tropico, el swap a USDC es INMEDIATO
+ * (vía Tropico Liquidity Pool, settlement <1s on-chain).
+ * El "tiempo" abajo es solo el del pago bancario (Pago Móvil instantáneo en VE).
+ * Fee = spread Tropico 1.5%. Límite por tx = $5,000 (AML).
+ */
 const METODOS = [
   {
     id: "pagomovil",
     label: "Pago Móvil",
     icon: Smartphone,
-    tiempo: "< 15 min",
+    tiempo: "Inmediato",
     fee: "1.5%",
-    limite: "Bs. 50.000/día",
+    limite: "$5.000 / tx",
     color: "tropico-green",
   },
   {
     id: "transferencia",
     label: "Transferencia bancaria",
     icon: Building2,
-    tiempo: "< 30 min",
+    tiempo: "Inmediato",
     fee: "1.5%",
-    limite: "Sin límite",
+    limite: "$5.000 / tx",
     color: "tropico-purple",
   },
   {
     id: "crypto",
-    label: "Crypto P2P",
+    label: "Crypto P2P (3rd party)",
     icon: TrendingUp,
-    tiempo: "Varía",
-    fee: "Variable",
-    limite: "Sin límite",
+    tiempo: "Variable",
+    fee: "Solo gas",
+    limite: "Sin AML interno",
     color: "tropico-sun",
   },
   {
     id: "tarjeta",
     label: "Tarjeta USD",
     icon: CreditCard,
-    tiempo: "Instantáneo",
+    tiempo: "Inmediato",
     fee: "2.5%",
-    limite: "$500/día",
+    limite: "$5.000 / tx",
     color: "tropico-coral",
   },
 ];
