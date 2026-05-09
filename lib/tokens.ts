@@ -7,7 +7,8 @@ export type TokenSymbol =
   | "mSOL"
   | "KMNO"
   | "RAY"
-  | "BONK";
+  | "BONK"
+  | "TROPI";
 
 export type TokenInfo = {
   symbol: TokenSymbol;
@@ -145,6 +146,22 @@ export const TOKENS: Record<TokenSymbol, TokenInfo> = {
     riesgo: 5,
     brand: "#FFB938",
   },
+  TROPI: {
+    symbol: "TROPI",
+    name: "Tropico Test Token",
+    // SPL token mint deployado por nosotros en devnet — NO mainnet, NO valor real.
+    // Existe para demostrar end-to-end que Tropico interactua con SPL nativo
+    // (transfer, ATA, mint authority) y para el form del hackathon.
+    // Mainnet: cuando launcheemos TROPI real (Q4) con tokenomics auditados.
+    mint: "AbkCW6BA2ZVoTw4Q6M1NvATiZjn2aMS3WvWZQbhRQf6K",
+    decimals: 6,
+    logoURI: "/icons/tropico-logo.png",
+    vibe: "Token de prueba del hackathon",
+    pitchVE:
+      "TROPI es nuestro token de pruebas en devnet. Nos sirve para demostrar que Tropico habla SPL nativo: lo creamos, mintamos, transfer&iacute;mos y trackeamos como cualquier otro token de Solana. En mainnet aparece Q4 2026 con tokenomics auditados.",
+    riesgo: 5,
+    brand: "#0EA5A5",
+  },
 };
 
 export const TOKEN_LIST: TokenInfo[] = [
@@ -157,6 +174,7 @@ export const TOKEN_LIST: TokenInfo[] = [
   TOKENS.KMNO,
   TOKENS.RAY,
   TOKENS.BONK,
+  TOKENS.TROPI,
 ];
 
 /** Tokens recomendados para descubrir (excluye USDT por estar over-representado en VE) */

@@ -21,6 +21,7 @@ export type WalletBalances = {
   kmno: number;
   ray: number;
   bonk: number;
+  tropi: number;
   // valor total estimado en USD
   totalUsd: number;
   // raw map
@@ -100,6 +101,11 @@ export async function fetchAllBalances(
     { symbol: "BONK", mint: TOKENS.BONK.mint },
   ];
 
+  // TROPI test token solo existe en devnet (mint nuestro)
+  if (cluster === "devnet") {
+    splTokens.push({ symbol: "TROPI", mint: TOKENS.TROPI.mint });
+  }
+
   const [sol, ...splValues] = await Promise.all([
     fetchSolBalance(pubkey),
     ...splTokens.map((t) => fetchSplBalance(pubkey, t.mint)),
@@ -121,6 +127,7 @@ export async function fetchAllBalances(
     KMNO: 0.08,
     RAY: 4.5,
     BONK: 0.000020,
+    TROPI: 0, // devnet test token, sin precio mainnet
   };
 
   let totalUsd = 0;
@@ -138,6 +145,7 @@ export async function fetchAllBalances(
     kmno: raw.KMNO,
     ray: raw.RAY,
     bonk: raw.BONK,
+    tropi: raw.TROPI ?? 0,
     totalUsd,
     raw,
   };
@@ -154,6 +162,7 @@ export const EMPTY_BALANCES: WalletBalances = {
   kmno: 0,
   ray: 0,
   bonk: 0,
+  tropi: 0,
   totalUsd: 0,
   raw: {},
 };

@@ -305,6 +305,7 @@ function estimatedUsdPrice(symbol: TokenSymbol): number {
     KMNO: 0.12,
     RAY: 2.4,
     BONK: 0.000023,
+    TROPI: 0, // devnet test token, sin valor mainnet
   };
   return prices[symbol] ?? 0;
 }

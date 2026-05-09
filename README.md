@@ -421,10 +421,22 @@ Tropico es **dApp non-custodial** que compón programs públicos de Solana en lu
 **TROPI test token mint** (SPL Token estándar, deployado por nosotros en devnet):
 
 ```
-MINT_ADDRESS_AQUI_DESPUES_DE_DEPLOY
+Mint:      AbkCW6BA2ZVoTw4Q6M1NvATiZjn2aMS3WvWZQbhRQf6K
+Deployer:  EUSqhaDBVLtzjgqwxeTurcksyPqkW37nyyTBWEhKVXDd
+Decimals:  6
+Supply:    1,000,000 TROPI
+Mint tx:   5rnR7yKT7z84awgCfvis4zbv3CDyYkzMUCEiBKJnQnYhNMhxjDbNweDy9kcoqCmBku6JkLcaG1cJxgXMCj7dJB5F
 ```
 
-Verificable en: `https://solscan.io/token/<MINT>?cluster=devnet`
+Verificable en Solscan devnet:
+- Token: https://solscan.io/token/AbkCW6BA2ZVoTw4Q6M1NvATiZjn2aMS3WvWZQbhRQf6K?cluster=devnet
+- Mint tx: https://solscan.io/tx/5rnR7yKT7z84awgCfvis4zbv3CDyYkzMUCEiBKJnQnYhNMhxjDbNweDy9kcoqCmBku6JkLcaG1cJxgXMCj7dJB5F?cluster=devnet
+
+Re-creable en cualquier máquina (Solana CLI + Node + 0.05 SOL devnet):
+
+```bash
+node scripts/create-tropi-token.mjs
+```
 
 **Programa Anchor propio — `tropico_treasury`** (`programs/tropico_treasury/`):
 
