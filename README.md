@@ -22,7 +22,7 @@ Tropico es una red económica non-custodial construida sobre Solana para el vene
 
 El producto tiene dos caras: **Tropico Wallet** para el consumidor (swap, envíos, yield, AI) y **Tropico Comercios** para el merchant (cobros QR con settlement en 1 segundo, fee 1%). Cuando los dos lados están dentro de Tropico, el dinero gira en USDC sin tocar el bolívar ni los bancos.
 
-Encima de eso hay una **capa de integración** — Tropico Pay — que permite a cualquier plataforma externa (delivery, e-commerce, ticketing, SaaS) cobrar en USDC usando el mismo gateway con un solo endpoint REST. Y un **stack agéntico** — Lumen + Hermes + OpenClaw — que alimenta a Carlos, el copiloto venezolano que puede ejecutar acciones on-chain con tu permiso.
+Encima de eso hay una **capa de integración** — Tropico Pay — que permite a cualquier plataforma externa (delivery, e-commerce, ticketing, SaaS) cobrar en USDC usando el mismo gateway con un solo endpoint REST. Y **Carlos AI** corre sobre [**Lumen**](https://github.com/gabogabucho/lumen-agent), el framework open source de agentes en español — el motor que entiende, decide y conversa. El kit de Tropico es replicable: el mismo `KIT + SKILLS + CAPABILITIES` puede correr también con Hermes (memoria persistente) o OpenClaw (firma delegada on-chain) si otros equipos prefieren ese camino.
 
 Este repo es el MVP del hackathon **dev3pack 2026**, desarrollado desde Venezuela para el Caribe. ☀️
 
@@ -237,29 +237,59 @@ Los webhooks van firmados con **HMAC-SHA256**. Ver spec completo en [`docs/INTEG
 
 ---
 
-## Stack agéntico — Lumen + Hermes + OpenClaw
+## Carlos AI corre sobre Lumen 🌟
 
-### Lumen (hoy — MVP)
+**Carlos AI by Lumen.** Tropico eligió [Lumen](https://github.com/gabogabucho/lumen-agent) — framework open source MIT de agentes en español por @gabogabucho — como motor de Carlos. Es lo que entiende, decide y conversa.
 
-Framework open-source MIT que corre en este repo. Arquitectura en 3 capas portables:
+### Por qué Lumen
+
+- **Open source MIT** — auditable, sin vendor lock-in
+- **Pensado en español** — no es wrapper de framework gringo
+- **Arquitectura modular** — 3 capas declarativas (KIT + SKILLS + CAPABILITIES) sin acoplamiento
+- **Tool calling nativo** — LLM puede invocar scripts Python reales (precios, swaps, balances)
+- **Hot reload** — cambias un skill sin restart
+
+### Cómo funciona el Tropico Web3 Kit (3 capas)
 
 ```
-KIT (personality.yaml + module.yaml)
-  └── SKILLS (7 archivos SKILL.md — lo que Carlos sabe hacer)
-        └── CAPABILITIES (scripts Python — herramientas ejecutables)
+KIT (lumen-kit/kit/)
+  ├── module.yaml         → metadatos del módulo
+  └── personality.yaml    → identidad + tono + reglas + knowledge
+        │
+        ▼
+SKILLS (lumen-kit/skills/)
+  ├── tropico-balances/SKILL.md     → "consultar saldos"
+  ├── tropico-prices/SKILL.md       → "cotizar USD/Bs y tokens"
+  ├── tropico-swap/SKILL.md         → "hacer swaps via Jupiter"
+  ├── tropico-pay/SKILL.md          → "generar QRs Solana Pay"
+  ├── tropico-yield/SKILL.md        → "estrategias de yield"
+  ├── tropico-cashback/SKILL.md     → "consultar cashback acumulado"
+  └── tropico-agent-actions/SKILL.md → "DCA, auto-yield, rebalance"
+        │
+        ▼
+CAPABILITIES (lumen-capabilities/)
+  ├── balances/wallet_balances.py  ← Helius RPC
+  ├── prices/{precio_bs,precio_usd}.py ← DolarAPI + Jupiter Price
+  ├── swap/jupiter_quote.py        ← Jupiter v6 Lite API
+  ├── pay/solana_pay_url.py        ← Solana Pay spec
+  ├── yield/yield_estimate.py      ← mSOL/Kamino mock
+  ├── cashback/cashback_summary.py ← store.json
+  └── agent/agent_execute.py       ← OpenClaw stub
 ```
 
-Los 7 skills: `prices`, `balances`, `swap`, `pay`, `yield`, `cashback`, `agent-actions`. Las capabilities Python resuelven cotizaciones reales (ve.dolarapi.com, Jupiter Price API v3).
+### El kit es replicable — Hermes y OpenClaw también pueden correrlo
 
-La arquitectura KIT/SKILLS/CAPABILITIES es portable: se replica en Hermes y OpenClaw con un adapter de ~30 líneas. Ver pseudocode en [`docs/LUMEN_INTEGRATION.md`](docs/LUMEN_INTEGRATION.md) sección 13.
+Decisión clave: el kit (markdown + YAML + Python) **no tiene dependencias propietarias de Lumen**. Otro equipo que prefiera otro orquestador puede portar el mismo kit con un adapter de ~30 líneas:
 
-### Hermes (Q3 2026 — cerebro/memoria)
+| Si prefieres... | Para qué sirve | Adapter |
+|---|---|---|
+| **Lumen** (lo que usa Tropico) | Orquestador completo + tool calling + personality | nativo |
+| **Hermes** ([Nous Research](https://github.com/NousResearch/Hermes-Function-Calling)) | Memoria persistente + razonamiento sobre cuándo proponer | ~30 líneas, ver `docs/LUMEN_INTEGRATION.md` §13 |
+| **OpenClaw** | Firma delegada on-chain con session keys + policy engine | ~30 líneas, mismo doc |
 
-Capa de memoria persistente: contexto de transacciones pasadas, preferencias del usuario, historial de yields. Carlos deja de ser stateless — recuerda qué hiciste ayer.
+**No es combinación obligatoria.** Tropico en MVP corre **sólo sobre Lumen**. Hermes y OpenClaw quedan como upgrade opcional Q3 2026 si queremos memoria persistente y firma autónoma con policies. Otros equipos pueden saltarse Lumen y arrancar directo con Hermes/OpenClaw — el kit funciona igual.
 
-### OpenClaw (Q3 2026 — manos/policy engine)
-
-Motor de delegación con Privy session keys. El usuario firma una política una vez ("ejecutar DCA semanal hasta $50") y OpenClaw la honra sin pedir confirmación cada vez. Cero custodia: Tropico nunca tiene las llaves.
+Doc completa de Carlos: [`docs/CARLOS_AI.md`](docs/CARLOS_AI.md). Replicabilidad: [`docs/LUMEN_INTEGRATION.md`](docs/LUMEN_INTEGRATION.md) §13.
 
 ---
 

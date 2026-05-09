@@ -189,112 +189,140 @@ export default function ModoAgentePage() {
       </section>
 
       {/* ─────────────────────────────────────────────────────────── */}
-      {/* SECCIÓN: Stack agéntico — Lumen + Hermes + OpenClaw         */}
+      {/* SECCIÓN: Carlos AI corre sobre Lumen — Hermes y OpenClaw    */}
+      {/* son alternativas portables (no combinación obligatoria)     */}
       {/* ─────────────────────────────────────────────────────────── */}
       <section className="panel flex flex-col gap-5 p-6">
         <header className="flex items-center gap-3">
-          <span className="text-2xl" aria-hidden>🏗️</span>
+          <span className="text-2xl" aria-hidden>🌟</span>
           <div>
-            <h2 className="font-display text-2xl font-bold">Stack ag&eacute;ntico</h2>
+            <h2 className="font-display text-2xl font-bold">
+              Carlos AI <span className="text-tropico-purple">by Lumen</span>
+            </h2>
             <p className="text-xs text-tropico-mute">
-              Tres piezas, cada una con un rol claro. Hoy MVP corre sobre Lumen; Q3 sumamos las otras dos.
+              Tropico eligi&oacute; Lumen como motor. El kit es portable —
+              Hermes y OpenClaw son alternativas opcionales para quien las quiera.
             </p>
           </div>
         </header>
 
-        <div className="grid gap-4 md:grid-cols-3">
-          {/* Lumen */}
-          <div className="flex flex-col gap-3 rounded-xl border border-tropico-sun/40 bg-tropico-sun/5 p-4">
-            <header className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <span className="text-xl">🎙️</span>
-                <h3 className="font-display text-base font-bold text-tropico-sun">Lumen</h3>
-              </div>
-              <span className="rounded-full bg-tropico-green/20 px-2 py-0.5 text-[10px] font-semibold uppercase text-tropico-green">
-                MVP hoy
-              </span>
-            </header>
-            <p className="text-xs leading-relaxed text-tropico-mute">
-              Orquestador del kit. Carga personality + skills, expone <code>/api/chat</code>,
-              ejecuta capabilities v&iacute;a terminal connector con allowlist de binarios.
-            </p>
-            <ul className="flex flex-col gap-1 text-[11px] text-tropico-mute">
-              <li>• Web server modo</li>
-              <li>• Skills cargadas dynamic (hot reload)</li>
-              <li>• <code>confirm_terminal: false</code> para tool calls fluidos</li>
-            </ul>
-          </div>
+        {/* Lumen — protagonista */}
+        <div className="flex flex-col gap-3 rounded-xl border border-tropico-sun/50 bg-gradient-to-br from-tropico-sun/10 to-tropico-coral/5 p-5">
+          <header className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <span className="text-2xl">🌟</span>
+              <h3 className="font-display text-lg font-bold text-tropico-sun">Lumen — el motor de Carlos</h3>
+            </div>
+            <span className="rounded-full bg-tropico-green/20 px-2 py-0.5 text-[10px] font-semibold uppercase text-tropico-green">
+              Activo en MVP
+            </span>
+          </header>
+          <p className="text-sm leading-relaxed text-tropico-mute">
+            Framework open source MIT en espa&ntilde;ol por{" "}
+            <a
+              href="https://github.com/gabogabucho/lumen-agent"
+              target="_blank"
+              rel="noreferrer"
+              className="font-semibold text-tropico-purple underline"
+            >
+              @gabogabucho
+            </a>. Orquesta el Tropico Web3 Kit completo: carga la personality,
+            invoca skills via tool calling, ejecuta capabilities Python con allowlist de binarios,
+            expone REST API. Es lo que Tropico usa hoy en producci&oacute;n.
+          </p>
+          <ul className="flex flex-col gap-1 text-xs text-tropico-mute">
+            <li>• <strong className="text-tropico-text">Personality + skills + capabilities</strong> en arquitectura declarativa de 3 capas</li>
+            <li>• <strong className="text-tropico-text">Hot reload</strong> de skills sin restart del server</li>
+            <li>• <strong className="text-tropico-text">Espa&ntilde;ol nativo</strong> — no es wrapper de framework gringo</li>
+            <li>• <strong className="text-tropico-text">Tool calling</strong> a scripts Python (Helius, Jupiter, DolarAPI)</li>
+          </ul>
+        </div>
 
+        {/* Hermes / OpenClaw — alternativas opcionales */}
+        <div className="flex flex-col gap-2">
+          <h3 className="font-display text-sm font-bold uppercase tracking-wider text-tropico-mute">
+            Alternativas opcionales · el kit funciona con cualquiera de los tres
+          </h3>
+          <p className="text-xs text-tropico-mute">
+            El Tropico Web3 Kit (markdown + YAML + Python) <strong>no tiene dependencias propietarias de Lumen</strong>.
+            Otro equipo puede portarlo a Hermes u OpenClaw con un adapter de ~30 l&iacute;neas. No es combinaci&oacute;n
+            obligatoria — es elecci&oacute;n de quien implementa.
+          </p>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-2">
           {/* Hermes */}
-          <div className="flex flex-col gap-3 rounded-xl border border-tropico-purple/40 bg-tropico-purple/5 p-4">
+          <div className="flex flex-col gap-3 rounded-xl border border-tropico-purple/30 bg-tropico-purple/5 p-4">
             <header className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="text-xl">🧠</span>
                 <h3 className="font-display text-base font-bold text-tropico-purple">Hermes</h3>
               </div>
-              <span className="rounded-full bg-tropico-coral/20 px-2 py-0.5 text-[10px] font-semibold uppercase text-tropico-coral">
-                Q3 2026
+              <span className="rounded-full bg-tropico-mute/20 px-2 py-0.5 text-[10px] font-semibold uppercase text-tropico-mute">
+                Opcional
               </span>
             </header>
             <p className="text-xs leading-relaxed text-tropico-mute">
-              Memoria persistente por usuario y razonamiento sobre <em>cu&aacute;ndo</em> proponer.
-              Open source de Nous Research. Adapter convierte skills Lumen al formato Hermes.
+              Si quieres memoria persistente por usuario + razonamiento sobre <em>cu&aacute;ndo</em> proponer.
+              Open source de Nous Research. Adapter convierte skills Lumen → formato Hermes en ~30 l&iacute;neas.
             </p>
             <ul className="flex flex-col gap-1 text-[11px] text-tropico-mute">
               <li>• Recuerda conversaciones previas</li>
-              <li>• Decide momento de proactividad</li>
               <li>• Multi-canal (web, Telegram, WhatsApp)</li>
+              <li>• Tropico evaluar&aacute; en Q3 2026 para Carlos proactivo</li>
             </ul>
           </div>
 
           {/* OpenClaw */}
-          <div className="flex flex-col gap-3 rounded-xl border border-tropico-sea/40 bg-tropico-sea/5 p-4">
+          <div className="flex flex-col gap-3 rounded-xl border border-tropico-sea/30 bg-tropico-sea/5 p-4">
             <header className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="text-xl">🤲</span>
                 <h3 className="font-display text-base font-bold text-tropico-sea">OpenClaw</h3>
               </div>
-              <span className="rounded-full bg-tropico-coral/20 px-2 py-0.5 text-[10px] font-semibold uppercase text-tropico-coral">
-                Q3 2026
+              <span className="rounded-full bg-tropico-mute/20 px-2 py-0.5 text-[10px] font-semibold uppercase text-tropico-mute">
+                Opcional
               </span>
             </header>
             <p className="text-xs leading-relaxed text-tropico-mute">
-              Las manos. Session keys delegadas con expiraci&oacute;n, policy engine pre-tx,
-              firma v&iacute;a Privy. Las llaves nunca tocan a Tropico.
+              Si quieres firma delegada on-chain con policy engine. Session keys con expiraci&oacute;n,
+              valida tx pre-firma, integraci&oacute;n con Privy. Llaves nunca tocan al server.
             </p>
             <ul className="flex flex-col gap-1 text-[11px] text-tropico-mute">
               <li>• Sesiones expiran en 1h default (max 24h)</li>
               <li>• Policy engine valida cada tx</li>
-              <li>• Revocable en tiempo real</li>
+              <li>• Tropico evaluar&aacute; en Q3 2026 para Modo Agente real</li>
             </ul>
           </div>
         </div>
 
-        {/* Diagrama del flow */}
+        {/* Diagrama del flow — Lumen es el motor, todo lo demás es opcional */}
         <div className="overflow-x-auto rounded-xl border border-tropico-border bg-tropico-ink/60 p-4 font-mono text-[11px] leading-relaxed text-tropico-mute">
-          <div className="text-tropico-text mb-1">// Flujo de una acci&oacute;n aut&oacute;noma en producci&oacute;n</div>
-          <pre className="whitespace-pre-wrap">{`Usuario  ──▶  Hermes (cerebro + memoria)
-                  │ "DCA semanal toca, propongo $50→SOL"
+          <div className="text-tropico-text mb-1">// Flujo de Carlos sobre Lumen (MVP hoy)</div>
+          <pre className="whitespace-pre-wrap">{`Usuario  ──▶  Lumen (orquestador + tool calling)
+                  │ "DCA semanal — quieres ejecutar?"
                   ▼
-              Lumen Kit (skill: tropico-agent-actions)
+              Tropico Web3 Kit (skill: tropico-agent-actions)
                   │ valida regla activa, arma payload
                   ▼
-              OpenClaw API (policy engine)
-                  │ chequea: max $200/sem, ventana, frequency
-                  ▼
-              Privy delegated session key (firma server-side)
-                  │
+              Capability Python (agent_execute.py)
+                  │ MVP: stub OpenClaw → Q3 firma real
                   ▼
               Solana mainnet ──▶ tx signature ──▶ histórico
+
+// Q3 (opcional): si el equipo quiere memoria + delegated keys
+Usuario  ──▶  [Hermes opcional]  ──▶  Lumen Kit
+                                      ──▶  [OpenClaw opcional] ──▶ Privy ──▶ Solana
 `}</pre>
         </div>
 
         <p className="text-xs text-tropico-mute">
-          <strong className="text-tropico-text">Por qu&eacute; estos tres juntos:</strong>{" "}
-          Lumen ya nos da el orquestador y la voz; Hermes a&ntilde;ade memoria y proactividad
-          (decide <em>cu&aacute;ndo</em>); OpenClaw a&ntilde;ade ejecuci&oacute;n on-chain
-          segura con policies (decide <em>si se puede</em>). El Web3 Kit es la pieza
-          comp&uacute;n que viaja entre los tres.
+          <strong className="text-tropico-text">Resumen:</strong>{" "}
+          Tropico hoy corre <strong className="text-tropico-sun">Carlos AI by Lumen</strong>.
+          Hermes a&ntilde;ade memoria persistente si lo quieres; OpenClaw a&ntilde;ade firma
+          delegada on-chain si la quieres. El Tropico Web3 Kit es la pieza com&uacute;n que
+          puede viajar entre los tres — eso lo hace replicable. <strong className="text-tropico-text">
+          No son combinaci&oacute;n obligatoria.</strong>
         </p>
       </section>
 
