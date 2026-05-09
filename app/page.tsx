@@ -18,6 +18,7 @@ import {
   Users,
   CheckCircle2,
   Globe,
+  Scale,
 } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { AuthCTA } from "@/components/AuthCTA";
@@ -219,6 +220,105 @@ export default function LandingPage() {
               proveedor, no eres dueño. Eres usuario.
             </p>
           </article>
+        </div>
+      </ScrollReveal>
+
+      {/* COMPARATIVA — wallets venezolanas/LATAM similares vs Tropico */}
+      <ScrollReveal direction="up" as="section" className="flex flex-col gap-6">
+        <div className="space-y-2">
+          <span className="inline-flex items-center gap-1.5 text-xs uppercase tracking-widest text-tropico-coral">
+            <Scale className="size-3.5" /> Comparativa honesta
+          </span>
+          <h2 className="font-display text-3xl font-bold md:text-4xl">
+            Conoces estas wallets.{" "}
+            <span className="text-tropico-mute">Esto es en lo que nos parecemos —</span>
+            <br />
+            <span className="bg-clip-text text-transparent" style={{
+              backgroundImage: "linear-gradient(135deg, #06D6A0 0%, #FFD166 50%, #EF476F 100%)",
+            }}>esto es en lo que somos distintos.</span>
+          </h2>
+          <p className="max-w-3xl text-tropico-mute">
+            No vinimos a hablar mal de nadie — todas estas opciones existen porque el venezolano necesita
+            soluciones. Pero hay una diferencia técnica concreta: <strong className="text-tropico-text">
+            Tropico es la única non-custodial real con red multi-feature en Solana</strong>. Mira:
+          </p>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[640px] border-separate border-spacing-y-2 text-sm">
+            <thead>
+              <tr className="text-left text-xs uppercase tracking-widest text-tropico-mute">
+                <th className="px-3 py-2">Wallet / App</th>
+                <th className="px-3 py-2">En qué nos parecemos</th>
+                <th className="px-3 py-2 text-tropico-sun">Diferencial Tropico</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                {
+                  name: "Kontigo",
+                  similar: "USDC + cuenta USD + UX en español para LATAM/VE.",
+                  diff: "Custodia tus llaves. Tropico es non-custodial real (MPC 3-share, exportable a Phantom). Tropico además tiene swap, yield, comercios, AI, remesas — Kontigo es solo cuenta USD.",
+                },
+                {
+                  name: "Crixto",
+                  similar: "Wallet con foco venezolano, soporta criptos.",
+                  diff: "Tropico corre sobre Solana mainnet (no chain propio), comercios afiliados con QR, Carlos AI by Lumen, Tropico Pay como gateway B2B. Multi-feature integrado, no app independiente.",
+                },
+                {
+                  name: "p2p.me",
+                  similar: "Intercambio P2P de USDC contra fiat local.",
+                  diff: "p2p.me es solo trading P2P. Tropico es la wallet completa: yield default, pagos QR, remesas internacionales, servicios públicos, chat AI. P2P es 1 de 7 features.",
+                },
+                {
+                  name: "Reserve App",
+                  similar: "Non-custodial, popular en VE, USDC-based.",
+                  diff: "Reserve es solo wallet + ahorro. Tropico suma: comercios afiliados (red bilateral), Tropico Pay para apps externas, Modo Agente con DCA/auto-yield, swap directo a 9 tokens curados.",
+                },
+                {
+                  name: "AirTM",
+                  similar: "Cuenta USD digital para venezolanos, P2P.",
+                  diff: "AirTM custodia tu plata (puede congelar tu cuenta). Tropico nunca toca tus llaves. AirTM es solo USD; Tropico abre el ecosistema Solana completo (yield ~5% APY, swap, NFTs futuro).",
+                },
+                {
+                  name: "Binance VE",
+                  similar: "P2P USDT/USDC contra Bs, alta liquidez.",
+                  diff: "Binance custodia + KYC obligatorio + sujeto a sanciones. Tropico non-custodial sin KYC del usuario. Binance solo trading; Tropico tiene comercios, remesas, servicios pagables.",
+                },
+                {
+                  name: "Strike",
+                  similar: "Remesas cripto rápidas, popular en LATAM.",
+                  diff: "Strike usa Bitcoin Lightning + custodia. Tropico usa Solana USDC stable (sin volatilidad de BTC) + non-custodial. Strike es solo remesas; Tropico es la wallet completa para el receptor.",
+                },
+              ].map((row) => (
+                <tr key={row.name} className="bg-tropico-ink/40">
+                  <td className="rounded-l-lg border-l border-y border-tropico-border px-3 py-3 align-top">
+                    <strong className="font-display text-tropico-text">{row.name}</strong>
+                  </td>
+                  <td className="border-y border-tropico-border px-3 py-3 align-top text-xs text-tropico-mute">
+                    {row.similar}
+                  </td>
+                  <td className="rounded-r-lg border-r border-y border-tropico-border bg-tropico-sun/5 px-3 py-3 align-top text-xs text-tropico-text">
+                    {row.diff}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="panel flex flex-col gap-3 border-tropico-sea/30 bg-tropico-sea/5 p-5 md:flex-row md:items-center md:gap-5">
+          <Sparkles className="size-6 shrink-0 text-tropico-sea" strokeWidth={1.75} />
+          <div className="flex flex-col gap-1">
+            <p className="text-sm font-semibold text-tropico-text">
+              No vinimos a competir con custodios. Vinimos a darte tu wallet de verdad.
+            </p>
+            <p className="text-xs text-tropico-mute">
+              Si lo que necesitas es solo USDC custodiado o trading P2P, esas opciones funcionan. Si lo que
+              quieres es <strong className="text-tropico-sun">red económica completa + dueño real de tus
+              llaves + ecosistema Solana abierto + AI en venezolano</strong>, eso solo está en Tropico.
+            </p>
+          </div>
         </div>
       </ScrollReveal>
 
