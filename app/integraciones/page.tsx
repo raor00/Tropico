@@ -246,7 +246,7 @@ export default function IntegracionesPage() {
                       </span>
                       <span className="text-[10px] text-tropico-mute">copia · pega · funciona</span>
                     </div>
-                    <pre className="overflow-x-auto text-[11px] leading-relaxed text-tropico-text/90">
+                    <pre className="overflow-x-auto text-[11px] leading-relaxed text-tropico-text/90 whitespace-pre">
                       <code>{p.snippet}</code>
                     </pre>
                   </div>
@@ -268,7 +268,7 @@ export default function IntegracionesPage() {
           `reference` único de la sesión. Cuando se confirma (~1 segundo), tu webhook recibe:
         </p>
         <div className="rounded-xl border border-tropico-border bg-tropico-ink/80 p-4">
-          <pre className="overflow-x-auto text-[11px] leading-relaxed text-tropico-text/90">
+          <pre className="overflow-x-auto whitespace-pre text-[11px] leading-relaxed text-tropico-text/90">
             <code>{`POST https://api.tu-empresa.com/webhooks/tropico
 Content-Type: application/json
 X-Tropico-Signature: sha256=...

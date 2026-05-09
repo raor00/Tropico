@@ -98,11 +98,11 @@ export default async function CheckoutPage({
       {validParams && (
         <>
           {/* Amount block */}
-          <section className="panel flex flex-col items-center gap-3 p-8">
+          <section className="panel flex flex-col items-center gap-3 p-5 md:p-8">
             <span className="text-xs uppercase tracking-widest text-tropico-mute">
               Cliente paga
             </span>
-            <div className="font-display text-5xl font-black text-tropico-coral">
+            <div className="font-display text-4xl font-black text-tropico-coral md:text-5xl">
               {amount.toFixed(amount < 1 ? 4 : 2)} {tokenSymbol}
             </div>
             <span className="text-xs text-tropico-mute">

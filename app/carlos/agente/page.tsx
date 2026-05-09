@@ -292,7 +292,7 @@ export default function ModoAgentePage() {
         {/* Diagrama del flow — Lumen es el motor, todo lo demás es opcional */}
         <div className="overflow-x-auto rounded-xl border border-tropico-border bg-tropico-ink/60 p-3 font-mono text-[10px] leading-relaxed text-tropico-mute sm:p-4 sm:text-[11px]">
           <div className="text-tropico-text mb-1">// Flujo de Carlos sobre Lumen (MVP hoy)</div>
-          <pre className="whitespace-pre-wrap">{`Usuario  ──▶  Lumen (orquestador + tool calling)
+          <pre className="min-w-max whitespace-pre">{`Usuario  ──▶  Lumen (orquestador + tool calling)
                   │ "DCA semanal — quieres ejecutar?"
                   ▼
               Tropico Web3 Kit (skill: tropico-agent-actions)

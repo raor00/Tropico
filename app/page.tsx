@@ -543,7 +543,7 @@ export default function LandingPage() {
             <Sparkles className="size-3" strokeWidth={2.5} />
             Carlos AI <span className="text-tropico-mute">by</span> Lumen
           </div>
-          <h2 className="font-display text-4xl font-black leading-tight md:text-5xl">
+          <h2 className="font-display text-3xl font-black leading-tight md:text-5xl">
             Tu copiloto financiero
             <br />
             <span

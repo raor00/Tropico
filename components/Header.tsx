@@ -215,7 +215,7 @@ function HeaderImpl({
           />
           <aside
             id="mobile-drawer"
-            className={`fixed right-0 top-0 z-40 flex h-dvh w-80 flex-col gap-1 overflow-y-auto border-l border-tropico-border bg-tropico-ink/95 px-5 pb-8 pt-20 backdrop-blur-xl transition-transform duration-300 ease-out md:hidden ${
+            className={`fixed right-0 top-0 z-40 flex h-dvh w-72 max-w-[85vw] flex-col gap-1 overflow-y-auto border-l border-tropico-border bg-tropico-ink/95 px-5 pb-8 pt-20 backdrop-blur-xl transition-transform duration-300 ease-out md:hidden ${
               drawerOpen ? "translate-x-0" : "translate-x-full"
             }`}
             aria-label="Menú móvil"

@@ -151,7 +151,7 @@ export function WalletSessionBar() {
           />
           <div
             role="menu"
-            className="absolute right-0 top-full z-40 mt-2 flex w-72 flex-col gap-1 rounded-xl border border-tropico-border bg-tropico-ink/95 p-2 shadow-xl backdrop-blur-xl"
+            className="absolute right-0 top-full z-40 mt-2 flex w-72 max-w-[calc(100vw-2rem)] flex-col gap-1 rounded-xl border border-tropico-border bg-tropico-ink/95 p-2 shadow-xl backdrop-blur-xl"
           >
             <div className="rounded-lg border border-tropico-border/60 bg-tropico-ink/60 p-3">
               <div className="mb-1 flex items-center justify-between">
