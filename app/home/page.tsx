@@ -18,6 +18,7 @@ import { BalanceList } from "@/components/BalanceList";
 import { Logo } from "@/components/Logo";
 import { Header } from "@/components/Header";
 import { WalletSessionBar } from "@/components/WalletSessionBar";
+import { HomeBalances } from "@/components/HomeBalances";
 import {
   MOCK_BALANCES,
   MOCK_PORTFOLIO,
@@ -117,37 +118,8 @@ export default function HomePage() {
         </Link>
       </section>
 
-      {/* Saldo + yield stats compactos en una sola card */}
-      <section className="panel flex flex-col gap-3 p-4 md:p-5">
-        <header className="flex items-baseline justify-between">
-          <span className="text-xs text-tropico-mute">Saldo total</span>
-          <span className="text-[10px] text-tropico-mute">
-            {formatRelativeTime(MOCK_PORTFOLIO.ultimaActividad)} · demo mock
-          </span>
-        </header>
-        <DualPrice usd={MOCK_PORTFOLIO.total} size="xl" />
-
-        <div className="grid grid-cols-3 gap-2 border-t border-tropico-border pt-3">
-          <div>
-            <div className="text-[10px] uppercase tracking-wider text-tropico-mute">Semana</div>
-            <div className="font-display text-base font-bold text-tropico-green">
-              +{formatUSD(MOCK_PORTFOLIO.yieldGanadoSemana)}
-            </div>
-          </div>
-          <div>
-            <div className="text-[10px] uppercase tracking-wider text-tropico-mute">Mes</div>
-            <div className="font-display text-base font-bold text-tropico-green">
-              +{formatUSD(MOCK_PORTFOLIO.yieldGanadoMes)}
-            </div>
-          </div>
-          <div>
-            <div className="text-[10px] uppercase tracking-wider text-tropico-mute">APY</div>
-            <div className="font-display text-base font-bold">
-              {MOCK_PORTFOLIO.apyActual}%
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Saldo REAL on-chain via Helius RPC + lista de tokens del wallet activo */}
+      <HomeBalances />
 
       {/* Notificaciones Carlos — compactas en grid 2 col */}
       <section className="grid gap-2 sm:grid-cols-2">
@@ -191,16 +163,7 @@ export default function HomePage() {
         ))}
       </section>
 
-      {/* Lista de balances */}
-      <section className="flex flex-col gap-4">
-        <header className="flex items-baseline justify-between">
-          <h2 className="font-display text-xl font-bold">Tus tokens</h2>
-          <Link href="/descubrir" className="text-xs text-tropico-mute hover:text-tropico-text">
-            Descubrir m&aacute;s &rarr;
-          </Link>
-        </header>
-        <BalanceList balances={MOCK_BALANCES} />
-      </section>
+      {/* Lista de tokens reales — ya viene incluida en HomeBalances arriba */}
 
       {/* Banner on-ramp */}
       <Link
