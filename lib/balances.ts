@@ -6,6 +6,10 @@
  */
 
 import { TOKENS, type TokenSymbol } from "./tokens";
+import { getActiveRpcUrl, getActiveCluster } from "./cluster";
+
+// Devnet USDC mint es DIFERENTE de mainnet
+const USDC_DEVNET_MINT = "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU";
 
 export type WalletBalances = {
   sol: number;
@@ -23,15 +27,10 @@ export type WalletBalances = {
   raw: Record<string, number>;
 };
 
-const RPC_URL =
-  typeof process !== "undefined" && process.env.NEXT_PUBLIC_HELIUS_RPC
-    ? process.env.NEXT_PUBLIC_HELIUS_RPC
-    : "https://api.mainnet-beta.solana.com";
-
 /** Devuelve balance SOL en human readable (no lamports) */
 export async function fetchSolBalance(pubkey: string): Promise<number> {
   try {
-    const res = await fetch(RPC_URL, {
+    const res = await fetch(getActiveRpcUrl(), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -55,7 +54,7 @@ export async function fetchSplBalance(
   mint: string
 ): Promise<number> {
   try {
-    const res = await fetch(RPC_URL, {
+    const res = await fetch(getActiveRpcUrl(), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -85,9 +84,13 @@ export async function fetchSplBalance(
 export async function fetchAllBalances(
   pubkey: string
 ): Promise<WalletBalances> {
+  // En devnet USDC tiene mint DISTINTO al mainnet — usar el correcto
+  const cluster = getActiveCluster();
+  const usdcMint = cluster === "devnet" ? USDC_DEVNET_MINT : TOKENS.USDC.mint;
+
   // Tokens del catálogo Tropico (excepto SOL que es nativo)
   const splTokens: { symbol: TokenSymbol; mint: string }[] = [
-    { symbol: "USDC", mint: TOKENS.USDC.mint },
+    { symbol: "USDC", mint: usdcMint },
     { symbol: "USDT", mint: TOKENS.USDT.mint },
     { symbol: "JUP", mint: TOKENS.JUP.mint },
     { symbol: "JTO", mint: TOKENS.JTO.mint },

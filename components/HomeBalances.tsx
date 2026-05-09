@@ -8,6 +8,7 @@ import { BalanceList } from "@/components/BalanceList";
 import { formatUSD } from "@/lib/formato";
 import { fetchAllBalances, EMPTY_BALANCES, type WalletBalances } from "@/lib/balances";
 import { hasLocalWallet, getLocalWalletPubkey } from "@/lib/wallet-local";
+import { getActiveCluster, setActiveCluster, type Cluster } from "@/lib/cluster";
 
 /**
  * HomeBalances — sección client-side que lee balance REAL on-chain del wallet
@@ -26,6 +27,30 @@ export function HomeBalances() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [lastFetch, setLastFetch] = useState<number>(0);
+  const [cluster, setCluster] = useState<Cluster>("mainnet-beta");
+
+  // Sincronizar cluster activo + escuchar cambios
+  useEffect(() => {
+    setCluster(getActiveCluster());
+    const onChange = () => setCluster(getActiveCluster());
+    window.addEventListener("tropico:cluster-changed", onChange);
+    return () => window.removeEventListener("tropico:cluster-changed", onChange);
+  }, []);
+
+  function toggleCluster() {
+    const next: Cluster = cluster === "mainnet-beta" ? "devnet" : "mainnet-beta";
+    setActiveCluster(next);
+    setCluster(next);
+    if (pubkey) {
+      setLoading(true);
+      fetchAllBalances(pubkey)
+        .then(setBalances)
+        .finally(() => {
+          setLoading(false);
+          setLastFetch(Date.now());
+        });
+    }
+  }
 
   // Detectar wallet activa
   useEffect(() => {
@@ -111,18 +136,31 @@ export function HomeBalances() {
     <>
       {/* Saldo total real on-chain */}
       <section className="panel flex flex-col gap-3 p-4 md:p-5">
-        <header className="flex items-baseline justify-between">
+        <header className="flex items-center justify-between gap-2">
           <span className="text-xs text-tropico-mute">Saldo total · on-chain</span>
-          <button
-            onClick={refresh}
-            disabled={loading}
-            className="inline-flex items-center gap-1 text-[10px] text-tropico-mute hover:text-tropico-sun disabled:opacity-50"
-          >
-            <RefreshCw className={`size-3 ${loading ? "animate-spin" : ""}`} />
-            {lastFetch
-              ? `Hace ${Math.max(1, Math.round((Date.now() - lastFetch) / 1000))}s`
-              : "Cargando…"}
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={toggleCluster}
+              className={`rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider transition ${
+                cluster === "mainnet-beta"
+                  ? "bg-tropico-green/15 text-tropico-green hover:bg-tropico-green/25"
+                  : "bg-tropico-coral/15 text-tropico-coral hover:bg-tropico-coral/25"
+              }`}
+              title="Click para cambiar entre mainnet y devnet"
+            >
+              {cluster === "mainnet-beta" ? "MAINNET" : "DEVNET"} ⇄
+            </button>
+            <button
+              onClick={refresh}
+              disabled={loading}
+              className="inline-flex items-center gap-1 text-[10px] text-tropico-mute hover:text-tropico-sun disabled:opacity-50"
+            >
+              <RefreshCw className={`size-3 ${loading ? "animate-spin" : ""}`} />
+              {lastFetch
+                ? `Hace ${Math.max(1, Math.round((Date.now() - lastFetch) / 1000))}s`
+                : "Cargando…"}
+            </button>
+          </div>
         </header>
         <DualPrice usd={balances.totalUsd} size="xl" />
         {error && (
