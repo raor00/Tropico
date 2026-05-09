@@ -143,7 +143,14 @@ function HeaderImpl({
           } ${scrolled ? "gap-2" : "gap-2 md:gap-4"}`}
         >
           <div className="flex items-center gap-2 md:gap-3 min-w-0 shrink">
-            <Logo size={scrolled ? 28 : 36} wordmarkSize={scrolled ? "sm" : "md"} />
+            {/* Logo: en pages con nav center (sin badge), solo icon para evitar
+                 que el wordmark se solape con el nav. En pages con badge,
+                 wordmark visible (no compite con nav). */}
+            <Logo
+              size={scrolled ? 28 : 36}
+              wordmarkSize={scrolled ? "sm" : "md"}
+              iconOnly={!badge && showNav}
+            />
             {/* VE badge tricolor animado — siempre xs en header para mantener pill compacta */}
             <VenezuelaBadge
               size="xs"
