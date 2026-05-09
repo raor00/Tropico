@@ -9,6 +9,10 @@ import {
   Droplets,
   CheckCircle2,
   Sparkles,
+  Smartphone,
+  Building2,
+  CreditCard,
+  TrendingUp,
 } from "lucide-react";
 import { formatUSD } from "@/lib/formato";
 import { checkPerTx, getTodayMovedUsd, recordMovedUsd, AML_LIMITS } from "@/lib/aml";
@@ -30,9 +34,58 @@ const POOL_BS_AVAILABLE = 50_000_000; // mock liquidity Bs
 const POOL_USDC_AVAILABLE = 12_000; // mock liquidity USDC
 
 type Side = "sell-bs" | "buy-bs";
+type Method = "pagomovil" | "banco" | "tarjeta" | "crypto";
+
+const METODOS = [
+  {
+    id: "pagomovil" as Method,
+    label: "Pago Móvil",
+    icon: Smartphone,
+    tiempo: "Inmediato",
+    fee: "1.5%",
+    limite: "$5.000 / tx",
+    color: "text-tropico-green",
+    bg: "bg-tropico-green/10",
+    ring: "ring-tropico-green/30",
+  },
+  {
+    id: "banco" as Method,
+    label: "Transferencia",
+    icon: Building2,
+    tiempo: "Inmediato",
+    fee: "1.5%",
+    limite: "$5.000 / tx",
+    color: "text-tropico-purple",
+    bg: "bg-tropico-purple/10",
+    ring: "ring-tropico-purple/30",
+  },
+  {
+    id: "tarjeta" as Method,
+    label: "Tarjeta USD",
+    icon: CreditCard,
+    tiempo: "Inmediato",
+    fee: "2.5%",
+    limite: "$5.000 / tx",
+    color: "text-tropico-coral",
+    bg: "bg-tropico-coral/10",
+    ring: "ring-tropico-coral/30",
+  },
+  {
+    id: "crypto" as Method,
+    label: "Crypto P2P",
+    icon: TrendingUp,
+    tiempo: "Variable",
+    fee: "Solo gas",
+    limite: "Sin AML",
+    color: "text-tropico-sun",
+    bg: "bg-tropico-sun/10",
+    ring: "ring-tropico-sun/30",
+  },
+];
 
 export function BsSwapForm({ paraleloRate = 36.42 }: { paraleloRate?: number }) {
   const [side, setSide] = useState<Side>("sell-bs");
+  const [method, setMethod] = useState<Method>("pagomovil");
   const [amount, setAmount] = useState("");
   const [executing, setExecuting] = useState(false);
   const [confirmed, setConfirmed] = useState<{
@@ -44,11 +97,15 @@ export function BsSwapForm({ paraleloRate = 36.42 }: { paraleloRate?: number }) 
 
   const amountNum = Number(amount);
   const inputCurrency = side === "sell-bs" ? "Bs" : "USDC";
+  const selectedMethod = METODOS.find((m) => m.id === method)!;
+  // Spread real depende del método (tarjeta cobra más por procesador, crypto solo gas)
+  const effectiveSpreadBps =
+    method === "tarjeta" ? 250 : method === "crypto" ? 0 : SPREAD_BPS;
 
-  // Cálculo del swap con spread
+  // Cálculo del swap con spread del método elegido
   const calc = useMemo(() => {
     if (!amountNum || amountNum <= 0) return null;
-    const spread = SPREAD_BPS / 10000;
+    const spread = effectiveSpreadBps / 10000;
     if (side === "sell-bs") {
       // user da Bs, recibe USDC
       const usdcRaw = amountNum / paraleloRate;
@@ -129,6 +186,55 @@ export function BsSwapForm({ paraleloRate = 36.42 }: { paraleloRate?: number }) 
           USDC → Bs
         </button>
       </div>
+
+      {/* Selector de método — cómo entra/sale el dinero fiat al pool */}
+      {side === "sell-bs" && (
+        <div className="flex flex-col gap-2">
+          <span className="text-xs font-semibold uppercase tracking-wider text-tropico-mute">
+            ¿Cómo vas a depositar los Bs?
+          </span>
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+            {METODOS.map((m) => {
+              const Icon = m.icon;
+              const active = method === m.id;
+              return (
+                <button
+                  key={m.id}
+                  onClick={() => {
+                    setMethod(m.id);
+                    setConfirmed(null);
+                  }}
+                  className={`flex flex-col items-start gap-1.5 rounded-lg border p-2.5 text-left transition ${
+                    active
+                      ? `${m.bg} ${m.color} ring-1 ${m.ring} border-transparent`
+                      : "border-tropico-border bg-tropico-ink/40 text-tropico-mute hover:border-tropico-sea/40"
+                  }`}
+                >
+                  <Icon className="size-4" strokeWidth={1.75} />
+                  <span className="text-xs font-semibold">{m.label}</span>
+                  <span className="text-[10px] text-tropico-mute">
+                    {m.tiempo} · fee {m.fee}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+          {/* Detalle del método activo */}
+          <div className="flex flex-wrap items-center gap-3 rounded-md border border-tropico-border bg-tropico-ink/40 px-3 py-2 text-[11px] text-tropico-mute">
+            <span className="flex items-center gap-1">
+              <Zap className="size-3 text-tropico-sun" /> {selectedMethod.tiempo}
+            </span>
+            <span>·</span>
+            <span>
+              Fee: <strong className={selectedMethod.color}>{selectedMethod.fee}</strong>
+            </span>
+            <span>·</span>
+            <span>
+              Límite: <strong className="text-tropico-text">{selectedMethod.limite}</strong>
+            </span>
+          </div>
+        </div>
+      )}
 
       {/* Pool stats — Bs NO muestra monto (custodia off-chain, privado),
            USDC SÍ muestra (on-chain público en Solscan) */}
