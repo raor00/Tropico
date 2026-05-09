@@ -34,21 +34,21 @@ const DEFAULT_NAV: NavLink[] = [
   // nav desktop limitada a 6 links para no saturar.
 ];
 
-/** Nav extendida para el drawer móvil — incluye TODO, sin límite */
+/** Nav extendida para el drawer móvil — compactada por feedback de usuario.
+ * Cambiar incluye Bs↔USDC ahora (no es ruta separada). Modo Agente vive
+ * dentro de /carlos. Integraciones es B2B, no consumer.
+ */
 const FULL_NAV: NavLink[] = [
   { href: "/home", label: "Wallet" },
   { href: "/cambiar", label: "Cambiar" },
-  { href: "/intercambio-p2p", label: "P2P Bs ↔ USDC" },
   { href: "/cobrar", label: "Cobrar" },
   { href: "/enviar", label: "Enviar" },
   { href: "/guardar", label: "Guardar" },
   { href: "/remesas", label: "Remesas" },
   { href: "/pagar-servicios", label: "Servicios" },
   { href: "/carlos", label: "Carlos AI" },
-  { href: "/carlos/agente", label: "Modo Agente" },
   { href: "/comercios", label: "Comercios" },
-  { href: "/integraciones", label: "Integraciones" },
-  { href: "/descubrir", label: "Descubrir tokens" },
+  { href: "/wallet/abrir", label: "Configuración" },
 ];
 
 const TONE_MAP = {
@@ -203,23 +203,36 @@ function HeaderImpl({
         </div>
       </header>
 
-      {/* Drawer móvil — sólo si la nav está habilitada */}
+      {/* Drawer móvil — z-index >  header (z-40) para que cubra completo, no solape */}
       {showNav && (
         <>
           <div
             onClick={() => setDrawerOpen(false)}
-            className={`fixed inset-0 z-30 bg-tropico-ink/60 backdrop-blur-sm transition-opacity duration-300 md:hidden ${
+            className={`fixed inset-0 z-50 bg-tropico-ink/80 backdrop-blur-md transition-opacity duration-300 md:hidden ${
               drawerOpen ? "opacity-100" : "pointer-events-none opacity-0"
             }`}
             aria-hidden
           />
           <aside
             id="mobile-drawer"
-            className={`fixed right-0 top-0 z-40 flex h-dvh w-72 max-w-[85vw] flex-col gap-1 overflow-y-auto border-l border-tropico-border bg-tropico-ink/95 px-5 pb-8 pt-20 backdrop-blur-xl transition-transform duration-300 ease-out md:hidden ${
+            className={`fixed right-0 top-0 z-[60] flex h-dvh w-72 max-w-[85vw] flex-col gap-1 overflow-y-auto border-l border-tropico-border bg-tropico-ink px-5 pb-8 pt-6 backdrop-blur-xl transition-transform duration-300 ease-out md:hidden ${
               drawerOpen ? "translate-x-0" : "translate-x-full"
             }`}
             aria-label="Menú móvil"
           >
+            {/* Botón cerrar interno + branding */}
+            <header className="mb-4 flex items-center justify-between border-b border-tropico-border pb-3">
+              <span className="font-display text-sm font-bold uppercase tracking-wider text-tropico-mute">
+                Menú
+              </span>
+              <button
+                onClick={() => setDrawerOpen(false)}
+                aria-label="Cerrar menú"
+                className="flex size-8 items-center justify-center rounded-md border border-tropico-border bg-tropico-ink/40 text-tropico-text transition hover:border-tropico-coral hover:text-tropico-coral"
+              >
+                <X className="size-4" />
+              </button>
+            </header>
             {/* En mobile mostramos TODAS las rutas, no solo las del nav desktop */}
             {FULL_NAV.map((link) => {
               const active = isActive(link.href);

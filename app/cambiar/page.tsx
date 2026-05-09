@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import Link from "next/link";
-import { SwapForm } from "@/components/SwapForm";
 import { Header } from "@/components/Header";
+import { CambiarTabs } from "./CambiarTabs";
 
 export const metadata = {
   title: "Cambiar — Tropico",
@@ -10,7 +10,7 @@ export const metadata = {
 export default function CambiarPage() {
   return (
     <main className="mx-auto flex min-h-dvh max-w-2xl flex-col gap-6 px-5 py-10">
-      <Header />
+      <Header badge={{ label: "Cambiar", tone: "sun" }} />
       <header className="flex flex-col gap-2 pt-4">
         <Link
           href="/home"
@@ -20,22 +20,23 @@ export default function CambiarPage() {
         </Link>
         <h1 className="font-display text-3xl font-bold">Cambiar</h1>
         <p className="text-sm text-tropico-mute">
-          Intercambia entre tokens al mejor precio. Cotizaciones en vivo via Jupiter v6.
+          Tokens vía Jupiter v6 (mejor precio del mercado) o Bolívares ↔ USDC vía
+          Tropico Liquidity Pool (settlement &lt;1s, sin esperar contraparte).
         </p>
       </header>
 
       <Suspense
         fallback={
           <div className="panel animate-pulse p-8 text-center text-tropico-mute">
-            Cargando swap…
+            Cargando…
           </div>
         }
       >
-        <SwapForm />
+        <CambiarTabs />
       </Suspense>
 
       <footer className="mt-auto text-xs text-tropico-mute">
-        Powered by{" "}
+        Tokens via{" "}
         <a
           href="https://jup.ag"
           target="_blank"
@@ -44,7 +45,7 @@ export default function CambiarPage() {
         >
           Jupiter Aggregator
         </a>{" "}
-        — el agregador #1 de Solana.
+        · Bolívares via Tropico Liquidity Pool (Carlos AI by Lumen monitorea cada swap).
       </footer>
     </main>
   );
