@@ -130,15 +130,14 @@ function HeaderImpl({
             : "border-b border-transparent bg-transparent"
         }`}
       >
-        <div className="flex items-center justify-between gap-2 md:gap-4">
-          <div className="flex items-center gap-2 md:gap-3 min-w-0 shrink">
-            {/* Logo size FIJO — sin scale on scroll (evita layout shift) */}
+        <div className="flex items-center justify-between gap-3 md:gap-4">
+          {/* Logo wrapper: shrink-0 para que NO se comprima ni se solape con nav */}
+          <div className="flex shrink-0 items-center gap-2 md:gap-3">
             <Logo
               size={36}
               wordmarkSize="md"
               iconOnly={!badge && showNav}
             />
-            {/* VE badge tricolor animado — siempre xs en header para mantener pill compacta */}
             <VenezuelaBadge
               size="xs"
               className={`hidden transition-opacity duration-300 sm:inline-flex ${
@@ -154,16 +153,12 @@ function HeaderImpl({
             )}
           </div>
 
-          {/* Nav desktop — pill grupos. Cuando hay badge, esconder nav desktop
-               para evitar solape (badge + nav center + auth chocan). Mobile
-               drawer sigue activo via hamburger. */}
+          {/* Nav desktop — items COMPACTOS px-3 py-1.5 text-xs (era px-4 py-2 text-sm)
+               para ocupar menos espacio horizontal y no chupar el espacio del Logo.
+               Cuando hay badge, esconder nav desktop. */}
           {showNav && !badge && (
             <nav
-              className={`hidden items-center rounded-full border bg-tropico-ink/40 backdrop-blur-sm md:flex transition-all duration-300 ${
-                scrolled
-                  ? "border-tropico-border/60 gap-0.5 p-1"
-                  : "border-tropico-border gap-1 p-1.5"
-              }`}
+              className="hidden items-center gap-0.5 rounded-full border border-tropico-border bg-tropico-ink/40 p-1 backdrop-blur-sm md:flex"
               aria-label="Navegación principal"
             >
               {nav.map((link) => {
@@ -173,11 +168,7 @@ function HeaderImpl({
                     key={link.href}
                     href={link.href}
                     aria-current={active ? "page" : undefined}
-                    className={`rounded-full font-medium transition-all duration-200 ${
-                      scrolled
-                        ? "px-3 py-1.5 text-xs"
-                        : "px-4 py-2 text-sm"
-                    } ${
+                    className={`whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
                       active
                         ? "bg-tropico-sun text-tropico-ink shadow-sm shadow-tropico-sun/40"
                         : "text-tropico-mute hover:bg-tropico-sun/10 hover:text-tropico-sun"
@@ -190,7 +181,8 @@ function HeaderImpl({
             </nav>
           )}
 
-          <div className="flex items-center gap-2">
+          {/* Right side: AuthCTA + hamburger — shrink-0 para no deformarse */}
+          <div className="flex shrink-0 items-center gap-2">
             <AuthCTA variant="compact" />
             {showNav && (
               <button
@@ -198,9 +190,9 @@ function HeaderImpl({
                 aria-label={drawerOpen ? "Cerrar menú" : "Abrir menú"}
                 aria-expanded={drawerOpen}
                 aria-controls="mobile-drawer"
-                className={`flex items-center justify-center rounded-full border border-tropico-border bg-tropico-ink/40 text-tropico-text transition hover:border-tropico-sun hover:text-tropico-sun ${
-                  scrolled ? "size-9" : "size-10"
-                } ${badge ? "" : "md:hidden"}`}
+                className={`flex size-9 items-center justify-center rounded-full border border-tropico-border bg-tropico-ink/40 text-tropico-text transition hover:border-tropico-sun hover:text-tropico-sun ${
+                  badge ? "" : "md:hidden"
+                }`}
               >
                 {drawerOpen ? <X className="size-4" /> : <Menu className="size-5" />}
               </button>
