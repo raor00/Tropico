@@ -130,26 +130,38 @@ export function BsSwapForm({ paraleloRate = 36.42 }: { paraleloRate?: number }) 
         </button>
       </div>
 
-      {/* Pool stats */}
+      {/* Pool stats — Bs NO muestra monto (custodia off-chain, privado),
+           USDC SÍ muestra (on-chain público en Solscan) */}
       <div className="grid grid-cols-3 gap-2">
         <div className="rounded-lg border border-tropico-border bg-tropico-ink/40 p-2 text-center">
           <Droplets className="mx-auto size-4 text-tropico-sea" strokeWidth={1.75} />
           <div className="mt-1 text-[10px] uppercase text-tropico-mute">Pool Bs</div>
           <div className="font-display text-sm font-bold text-tropico-text">
-            {(POOL_BS_AVAILABLE / 1_000_000).toFixed(0)}M
+            Disponible
+          </div>
+          <div className="text-[9px] text-tropico-mute" title="Bs viven off-chain (custodia agente VE), no se muestra monto público por privacidad">
+            off-chain
           </div>
         </div>
-        <div className="rounded-lg border border-tropico-border bg-tropico-ink/40 p-2 text-center">
+        <a
+          href="https://solscan.io/account/Mer7GhjMAcEYTmpAcePtAgVgkLogo3ZgKHSPaC9Th"
+          target="_blank"
+          rel="noreferrer"
+          className="rounded-lg border border-tropico-border bg-tropico-ink/40 p-2 text-center transition hover:border-tropico-green/40"
+          title="USDC pool on-chain — verificable en Solscan"
+        >
           <Droplets className="mx-auto size-4 text-tropico-green" strokeWidth={1.75} />
           <div className="mt-1 text-[10px] uppercase text-tropico-mute">Pool USDC</div>
           <div className="font-display text-sm font-bold text-tropico-text">
             {(POOL_USDC_AVAILABLE / 1000).toFixed(0)}k
           </div>
-        </div>
+          <div className="text-[9px] text-tropico-green underline">Ver Solscan ↗</div>
+        </a>
         <div className="rounded-lg border border-tropico-border bg-tropico-ink/40 p-2 text-center">
           <Zap className="mx-auto size-4 text-tropico-sun" strokeWidth={1.75} />
           <div className="mt-1 text-[10px] uppercase text-tropico-mute">Settlement</div>
           <div className="font-display text-sm font-bold text-tropico-text">{"<1s"}</div>
+          <div className="text-[9px] text-tropico-mute">on-chain</div>
         </div>
       </div>
 

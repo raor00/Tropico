@@ -21,28 +21,21 @@ export function ModuleCard({
   return (
     <Link
       href={href}
-      className="panel group relative flex flex-col gap-3 overflow-hidden p-5 transition hover:border-tropico-sun/30"
+      className="panel group relative flex flex-col gap-2 overflow-hidden p-3 transition hover:border-tropico-sun/30 md:p-4"
     >
       <div
         className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${gradient} opacity-60 transition group-hover:opacity-100`}
       />
-      <div className="relative flex flex-col gap-3">
-        <div className="flex items-start justify-between">
-          <div className="flex size-12 items-center justify-center rounded-xl bg-tropico-ink/60 text-tropico-sun ring-1 ring-tropico-sun/20 transition group-hover:ring-tropico-sun/50">
-            <Icon className="size-6" strokeWidth={1.75} aria-hidden="true" />
-          </div>
-          {badge && (
-            <span className="rounded-md bg-tropico-ink/80 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-tropico-mute">
-              {badge}
-            </span>
-          )}
+      <div className="relative flex flex-col gap-2">
+        <div className="flex size-9 items-center justify-center rounded-lg bg-tropico-ink/60 text-tropico-sun ring-1 ring-tropico-sun/20 transition group-hover:ring-tropico-sun/50 md:size-10">
+          <Icon className="size-4 md:size-5" strokeWidth={1.75} aria-hidden="true" />
         </div>
         <div>
-          <h3 className="font-display text-xl font-bold leading-tight">
+          <h3 className="font-display text-sm font-bold leading-tight md:text-base">
             {titulo}
           </h3>
           <p
-            className="mt-1 text-sm leading-relaxed text-tropico-mute"
+            className="mt-0.5 text-[11px] leading-snug text-tropico-mute md:text-xs"
             dangerouslySetInnerHTML={{ __html: descripcion }}
           />
         </div>

@@ -101,120 +101,94 @@ const MODULES = [
 
 export default function HomePage() {
   return (
-    <main className="mx-auto flex min-h-dvh max-w-5xl flex-col gap-8 px-5 py-10">
+    <main className="mx-auto flex min-h-dvh max-w-5xl flex-col gap-4 px-5 py-6">
       {/* Header flotante con scroll detection */}
       <Header />
 
-      {/* Wallet session bar — pubkey real + dropdown cerrar/cambiar */}
-      <section className="flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
+      {/* Wallet session bar + Depositar inline compact */}
+      <section className="flex flex-wrap items-center justify-between gap-2">
         <WalletSessionBar />
         <Link
           href="/depositar"
-          className="inline-flex w-fit items-center gap-1 rounded-full border border-tropico-sun/40 bg-tropico-sun/10 px-3 py-1.5 text-xs font-semibold text-tropico-sun transition hover:bg-tropico-sun/20"
+          className="inline-flex items-center gap-1 rounded-full border border-tropico-sun/40 bg-tropico-sun/10 px-3 py-1.5 text-xs font-semibold text-tropico-sun transition hover:bg-tropico-sun/20"
         >
           <Plus className="size-3" strokeWidth={2.5} aria-hidden="true" />
-          Depositar bs
+          Depositar Bs
         </Link>
       </section>
 
-      {/* Banner mock */}
-      <div className="panel flex items-center gap-3 border-tropico-sun/30 bg-tropico-sun/5 p-3 text-xs">
-        <span className="text-base" aria-hidden>👋</span>
-        <span className="text-tropico-mute">
-          Demo del hackathon &mdash; los balances son simulados. En cuanto config&uacute;remos
-          tu wallet con Privy, ver&aacute;s tus balances reales en mainnet.
-        </span>
-      </div>
-
-      {/* Saldo total — la firma del producto */}
-      <section className="panel flex flex-col gap-3 p-6">
+      {/* Saldo + yield stats compactos en una sola card */}
+      <section className="panel flex flex-col gap-3 p-4 md:p-5">
         <header className="flex items-baseline justify-between">
-          <span className="text-sm text-tropico-mute">Saldo total</span>
-          <span className="text-xs text-tropico-mute">
-            &Uacute;ltima actividad {formatRelativeTime(MOCK_PORTFOLIO.ultimaActividad)}
+          <span className="text-xs text-tropico-mute">Saldo total</span>
+          <span className="text-[10px] text-tropico-mute">
+            {formatRelativeTime(MOCK_PORTFOLIO.ultimaActividad)} · demo mock
           </span>
         </header>
         <DualPrice usd={MOCK_PORTFOLIO.total} size="xl" />
 
-        <div className="mt-2 grid grid-cols-3 gap-1 border-t border-tropico-border pt-4 sm:gap-2 md:gap-3">
+        <div className="grid grid-cols-3 gap-2 border-t border-tropico-border pt-3">
           <div>
-            <div className="text-xs text-tropico-mute">Yield esta semana</div>
-            <div className="font-display text-lg font-bold text-tropico-green">
+            <div className="text-[10px] uppercase tracking-wider text-tropico-mute">Semana</div>
+            <div className="font-display text-base font-bold text-tropico-green">
               +{formatUSD(MOCK_PORTFOLIO.yieldGanadoSemana)}
             </div>
           </div>
           <div>
-            <div className="text-xs text-tropico-mute">Yield este mes</div>
-            <div className="font-display text-lg font-bold text-tropico-green">
+            <div className="text-[10px] uppercase tracking-wider text-tropico-mute">Mes</div>
+            <div className="font-display text-base font-bold text-tropico-green">
               +{formatUSD(MOCK_PORTFOLIO.yieldGanadoMes)}
             </div>
           </div>
           <div>
-            <div className="text-xs text-tropico-mute">APY actual</div>
-            <div className="font-display text-lg font-bold">
+            <div className="text-[10px] uppercase tracking-wider text-tropico-mute">APY</div>
+            <div className="font-display text-base font-bold">
               {MOCK_PORTFOLIO.apyActual}%
             </div>
           </div>
         </div>
       </section>
 
-      {/* Notificaciones de Carlos (showcase del Modo Agente) */}
-      <section className="flex flex-col gap-2">
+      {/* Notificaciones Carlos — compactas en grid 2 col */}
+      <section className="grid gap-2 sm:grid-cols-2">
         {MOCK_CASHBACK_PENDIENTE.total > 0 && (
-          <div className="panel flex flex-wrap items-center justify-between gap-3 border-tropico-sun/30 bg-tropico-sun/5 p-4">
-            <div className="flex items-center gap-3">
-              <div className="flex size-10 items-center justify-center rounded-lg bg-tropico-sun/20 text-tropico-sun">
-                <Gift className="size-5" strokeWidth={1.75} aria-hidden="true" />
-              </div>
-              <div>
-                <div className="font-semibold">
-                  Tens {formatUSD(MOCK_CASHBACK_PENDIENTE.total)} de cashback acumulado
-                </div>
-                <div className="text-xs text-tropico-mute">
-                  De {MOCK_CASHBACK_PENDIENTE.comerciosCount} comercios afiliados
-                </div>
-              </div>
-            </div>
-            <Link
-              href="/carlos/agente"
-              className="rounded-lg bg-tropico-sun/20 px-3 py-1.5 text-sm font-semibold text-tropico-sun"
-            >
-              Reclamar
-            </Link>
-          </div>
-        )}
-
-        <div className="panel flex flex-wrap items-center justify-between gap-3 border-tropico-coral/30 bg-tropico-coral/5 p-4">
-          <div className="flex items-center gap-3">
-            <div className="flex size-10 items-center justify-center rounded-lg bg-tropico-coral/20 text-tropico-coral">
-              <CalendarClock className="size-5" strokeWidth={1.75} aria-hidden="true" />
-            </div>
-            <div>
-              <div className="font-semibold">
-                Pr&oacute;ximo DCA: {formatUSD(MOCK_NEXT_DCA.monto)} &rarr; {MOCK_NEXT_DCA.tokenDestino}
-              </div>
-              <div className="text-xs text-tropico-mute">
-                Lunes 10:00 &mdash; Carlos lo ejecuta autom&aacute;tico
-              </div>
-            </div>
-          </div>
           <Link
             href="/carlos/agente"
-            className="rounded-lg bg-tropico-coral/20 px-3 py-1.5 text-sm font-semibold text-tropico-coral"
+            className="panel flex items-center gap-2 border-tropico-sun/30 bg-tropico-sun/5 p-3 transition hover:border-tropico-sun"
           >
-            Ver reglas
+            <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-tropico-sun/20 text-tropico-sun">
+              <Gift className="size-4" strokeWidth={1.75} />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="truncate text-xs font-semibold">
+                {formatUSD(MOCK_CASHBACK_PENDIENTE.total)} cashback · {MOCK_CASHBACK_PENDIENTE.comerciosCount} comercios
+              </div>
+              <div className="text-[10px] text-tropico-mute">Tap para reclamar</div>
+            </div>
           </Link>
-        </div>
+        )}
+
+        <Link
+          href="/carlos/agente"
+          className="panel flex items-center gap-2 border-tropico-coral/30 bg-tropico-coral/5 p-3 transition hover:border-tropico-coral"
+        >
+          <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-tropico-coral/20 text-tropico-coral">
+            <CalendarClock className="size-4" strokeWidth={1.75} />
+          </div>
+          <div className="min-w-0 flex-1">
+            <div className="truncate text-xs font-semibold">
+              DCA Lun 10:00 · {formatUSD(MOCK_NEXT_DCA.monto)} → {MOCK_NEXT_DCA.tokenDestino}
+            </div>
+            <div className="text-[10px] text-tropico-mute">Carlos lo ejecuta automático</div>
+          </div>
+        </Link>
       </section>
 
-      {/* Grid de m&oacute;dulos */}
-      <section className="flex flex-col gap-4">
-        <h2 className="font-display text-xl font-bold">Acciones</h2>
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {MODULES.map((m) => (
-            <ModuleCard key={m.href} {...m} />
-          ))}
-        </div>
+      {/* Grid de módulos — 4 cols compact en md+, sin section title (ya hay context) */}
+      <section className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4">
+        {MODULES.map((m) => (
+          <ModuleCard key={m.href} {...m} />
+        ))}
       </section>
 
       {/* Lista de balances */}

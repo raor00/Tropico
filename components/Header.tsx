@@ -72,14 +72,24 @@ function HeaderImpl({
   const lastStateRef = useRef(false);
   const pathname = usePathname();
 
-  // Scroll detection — solo emite setState al cruzar threshold (8px)
+  // Scroll detection con HYSTERESIS para evitar bounce/loop:
+  // - Compactar cuando scrollY > 80
+  // - Expandir cuando scrollY < 20
+  // El gap entre thresholds previene el flapping cuando el cambio de
+  // altura del header empuja contenido y dispara otro evento scroll.
   useEffect(() => {
+    const COMPACT_AT = 80;
+    const EXPAND_AT = 20;
     const onScroll = () => {
       if (tickingRef.current) return;
       tickingRef.current = true;
       requestAnimationFrame(() => {
-        const next = window.scrollY > 8;
-        if (next !== lastStateRef.current) {
+        const y = window.scrollY;
+        const current = lastStateRef.current;
+        let next = current;
+        if (!current && y > COMPACT_AT) next = true;
+        else if (current && y < EXPAND_AT) next = false;
+        if (next !== current) {
           lastStateRef.current = next;
           setScrolled(next);
         }
