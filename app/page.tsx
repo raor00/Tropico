@@ -22,7 +22,6 @@ import {
 } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { AuthCTA } from "@/components/AuthCTA";
-import { Header } from "@/components/Header";
 import { Badge } from "@/components/Badge";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { VenezuelaBadge } from "@/components/VenezuelaBadge";
@@ -105,7 +104,6 @@ export default function LandingPage() {
   return (
     <main className="mx-auto flex min-h-dvh max-w-6xl flex-col gap-10 px-5 py-10 md:gap-20 md:py-16">
       {/* HEADER flotante — anclado en top, flota al hacer scroll */}
-      <Header />
 
       {/* HERO */}
       <section className="flex flex-col gap-6 animate-fade-up pt-4">

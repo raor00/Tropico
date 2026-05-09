@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Header } from "@/components/Header";
 import { TOKENS, type TokenSymbol } from "@/lib/tokens";
 import { ExternalLink, Wallet, Clock, CheckCircle2 } from "lucide-react";
 
@@ -63,7 +62,6 @@ export default async function CheckoutPage({
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-2xl flex-col gap-6 px-5 py-10">
-      <Header />
 
       <header className="flex flex-col gap-2 pt-4">
         <span className="text-xs uppercase tracking-widest text-tropico-sea">

@@ -17,7 +17,6 @@ import {
   CheckCircle2,
   AlertTriangle,
 } from "lucide-react";
-import { Header } from "@/components/Header";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { VenezuelaBadge } from "@/components/VenezuelaBadge";
 import { QuoteCalculator } from "./QuoteCalculator";
@@ -184,7 +183,6 @@ export default function RemesasPage() {
   return (
     <main className="mx-auto flex min-h-dvh max-w-6xl flex-col gap-10 px-5 py-10 md:gap-20 md:py-16">
       {/* Header global con badge Remesas */}
-      <Header />
 
       {/* ═══ HERO ═══════════════════════════════════════════════════════ */}
       <section className="animate-fade-up flex flex-col gap-6 pt-4">

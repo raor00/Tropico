@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Header } from "@/components/Header";
 import { INTEGRATION_USE_CASES } from "@/lib/checkout";
 import { Code2, Webhook, Link2, Smartphone, ShieldCheck, Zap, Globe, ArrowRight } from "lucide-react";
 
@@ -98,7 +97,6 @@ async function createTropicoCharge(orderId, amount) {
 export default function IntegracionesPage() {
   return (
     <main className="mx-auto flex min-h-dvh max-w-6xl flex-col gap-8 px-5 py-10 md:gap-12">
-      <Header />
 
       {/* HERO */}
       <section className="flex flex-col gap-6 pt-6">

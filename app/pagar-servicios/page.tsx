@@ -1,4 +1,3 @@
-import { Header } from "@/components/Header";
 import { PagarServiciosClient } from "./PagarServiciosClient";
 
 export const dynamic = "force-dynamic";
@@ -12,7 +11,6 @@ export const metadata = {
 export default function PagarServiciosPage() {
   return (
     <main className="mx-auto flex min-h-dvh max-w-5xl flex-col gap-8 px-5 py-10">
-      <Header />
 
       {/* Banner Demo */}
       <div className="rounded-xl border border-tropico-sun/30 bg-tropico-sun/8 px-4 py-3 text-sm text-tropico-sun">

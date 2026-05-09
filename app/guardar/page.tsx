@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Header } from "@/components/Header";
 import { DualPrice } from "@/components/DualPrice";
 import { MOCK_PORTFOLIO } from "@/lib/mock-data";
 import { formatUSD } from "@/lib/formato";
@@ -46,7 +45,6 @@ const ESTRATEGIAS = [
 export default function GuardarPage() {
   return (
     <main className="mx-auto flex min-h-dvh max-w-3xl flex-col gap-8 px-5 py-10">
-      <Header />
       <header className="flex flex-col gap-2 pt-4">
         <Link
           href="/home"

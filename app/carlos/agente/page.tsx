@@ -6,14 +6,12 @@ import { AGENT_ACTIONS } from "@/lib/agent-actions";
 import { AgentToggle } from "@/components/AgentToggle";
 import { AgentActionCard } from "@/components/AgentActionCard";
 import { AgentHistory } from "@/components/AgentHistory";
-import { Header } from "@/components/Header";
 
 export default function ModoAgentePage() {
   const [refreshKey, setRefreshKey] = useState(0);
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-5xl flex-col gap-8 px-5 py-10">
-      <Header />
 
       {/* Header de página */}
       <header className="flex flex-col gap-4 pt-4">

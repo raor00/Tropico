@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Header } from "@/components/Header";
 import {
   Wallet,
   TrendingUp,
@@ -166,7 +165,6 @@ export default function CarlosPage() {
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-3xl flex-col gap-8 px-5 py-10">
-      <Header />
 
       {/* ── Hero ───────────────────────────────────────────────── */}
       <header className="flex flex-col gap-3 pt-4">

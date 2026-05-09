@@ -4,6 +4,7 @@ import "./globals.css";
 import { Providers } from "./providers";
 import { SplashScreen } from "@/components/SplashScreen";
 import { BottomNav } from "@/components/BottomNav";
+import { Header } from "@/components/Header";
 
 // Body / UI: Manrope — geométrica moderna, menos genérica que Inter
 const manrope = Manrope({
@@ -51,6 +52,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="tropico-glow min-h-dvh pb-20 md:pb-0">
         <SplashScreen />
         <Providers>
+          {/* Header global — fuera del main de cada page para usar viewport completo y mantener consistencia */}
+          <Header />
           {children}
           <BottomNav />
         </Providers>

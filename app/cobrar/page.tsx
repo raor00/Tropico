@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Header } from "@/components/Header";
 import { ReceiveQR } from "@/components/ReceiveQR";
 
 export const metadata = {
@@ -8,7 +7,6 @@ export const metadata = {
 export default function CobrarPage() {
   return (
     <main className="mx-auto flex min-h-dvh max-w-xl flex-col gap-6 px-5 py-10">
-      <Header />
       <header className="flex flex-col gap-2 pt-4">
         <Link
           href="/home"
