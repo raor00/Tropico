@@ -169,41 +169,66 @@ export function HomeBalancesCore({ externalPubkey }: { externalPubkey?: string |
 
   return (
     <>
-      {/* Saldo total real on-chain */}
-      <section className="panel flex flex-col gap-3 p-4 md:p-5">
+      {/* Saldo total — minimal mobile, full desktop */}
+      <section className="panel flex flex-col gap-2 p-3 md:gap-3 md:p-5">
         <header className="flex items-center justify-between gap-2">
-          <span className="text-xs text-tropico-mute">Saldo total · on-chain</span>
-          <div className="flex items-center gap-2">
+          <span className="text-[10px] uppercase tracking-wider text-tropico-mute md:text-xs md:normal-case md:tracking-normal">
+            <span className="md:hidden">Saldo</span>
+            <span className="hidden md:inline">Saldo total · on-chain</span>
+          </span>
+          <div className="flex items-center gap-1.5 md:gap-2">
             <button
               onClick={toggleCluster}
-              className={`rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider transition ${
+              className={`rounded-full px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider transition md:px-2 ${
                 cluster === "mainnet-beta"
                   ? "bg-tropico-green/15 text-tropico-green hover:bg-tropico-green/25"
                   : "bg-tropico-coral/15 text-tropico-coral hover:bg-tropico-coral/25"
               }`}
               title="Click para cambiar entre mainnet y devnet"
             >
-              {cluster === "mainnet-beta" ? "MAINNET" : "DEVNET"} ⇄
+              {cluster === "mainnet-beta" ? "MAIN" : "DEV"}
             </button>
             <button
               onClick={refresh}
               disabled={loading}
               className="inline-flex items-center gap-1 text-[10px] text-tropico-mute hover:text-tropico-sun disabled:opacity-50"
+              aria-label="Actualizar"
             >
               <RefreshCw className={`size-3 ${loading ? "animate-spin" : ""}`} />
-              {lastFetch
-                ? `Hace ${Math.max(1, Math.round((Date.now() - lastFetch) / 1000))}s`
-                : "Cargando…"}
+              <span className="hidden md:inline">
+                {lastFetch
+                  ? `Hace ${Math.max(1, Math.round((Date.now() - lastFetch) / 1000))}s`
+                  : "Cargando…"}
+              </span>
             </button>
           </div>
         </header>
-        <DualPrice usd={totalUsdLive} size="xl" />
+        {/* Mobile: solo USD grande, sin Bs ni 3-col. Desktop: layout completo. */}
+        <div className="md:hidden">
+          <div className="font-display text-3xl font-black tabular-nums tracking-tight text-tropico-text">
+            ${totalUsdLive.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+          </div>
+          <div className="mt-0.5 flex items-center gap-2 text-[10px] text-tropico-mute">
+            <span>USDC: <span className="font-semibold text-tropico-green">{balances.usdc.toFixed(2)}</span></span>
+            <span>·</span>
+            <span>SOL: <span className="font-semibold text-tropico-text">{balances.sol.toFixed(4)}</span></span>
+            {balancesList.length > 2 && (
+              <>
+                <span>·</span>
+                <span>+{balancesList.length - 2} tokens</span>
+              </>
+            )}
+          </div>
+        </div>
+        <div className="hidden md:block">
+          <DualPrice usd={totalUsdLive} size="xl" />
+        </div>
         {error && (
-          <p className="text-xs text-tropico-coral">
-            ⚠ Error leyendo balance: {error}
+          <p className="text-[10px] text-tropico-coral md:text-xs">
+            ⚠ Error: {error}
           </p>
         )}
-        <div className="grid grid-cols-3 gap-2 border-t border-tropico-border pt-3">
+        <div className="hidden grid-cols-3 gap-2 border-t border-tropico-border pt-3 md:grid">
           <div>
             <div className="text-[10px] uppercase tracking-wider text-tropico-mute">USDC</div>
             <div className="font-display text-base font-bold text-tropico-green">
