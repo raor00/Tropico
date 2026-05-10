@@ -169,31 +169,32 @@ Sin ninguna key, la app corre en **modo demo** con mocks honestos y banners expl
 
 ---
 
-## Los 8 módulos del consumidor
+## Los 9 módulos del consumidor
 
-> **Crecimos**: arrancamos con 5 módulos en el brief original, llegamos a 8 cubriendo
+> **Crecimos**: arrancamos con 5 módulos en el brief original, llegamos a 9 cubriendo
 > todo el ciclo de vida del dólar digital del venezolano — desde recibir remesa
-> internacional hasta pagar la luz.
+> internacional hasta pagar Pago Móvil VE escaneando un QR Suiche7B.
 
 | # | Módulo | URL | Qué hace |
 |---|---|---|---|
-| 1 | **Wallet / Home** | `/home` | Dashboard: saldo USDC, yield acumulado, accesos rápidos al resto de módulos |
-| 2 | **Cambiar** | `/cambiar` | Swap con cotización real de Jupiter v6 + fee 0.5% (`platformFeeBps=50`) |
-| 3 | **Cobrar** | `/cobrar` | QR Solana Pay generado client-side — cualquier wallet de Solana puede pagar (fee 1% HACIA ARRIBA, merchant recibe el precio exacto) |
-| 4 | **Enviar** | `/enviar` | P2P directo a wallet address o claim link para quien no tiene wallet, compartible por WhatsApp |
-| 5 | **Guardar** | `/guardar` | Yield ~5% APY default ON — mSOL (Marinade) o Kamino bajo el hood |
-| 6 | **Carlos AI by Lumen** | `/carlos` | Copiloto venezolano — 7 capacidades reales (saldos, precios, swap, QR, yield, cashback, agente) powered by [Lumen](https://github.com/gabogabucho/lumen-agent) |
-| 7 | **Pagar Servicios** 🆕 | `/pagar-servicios` | Luz (Corpoelec), agua, gas, teléfono (Movistar/Digitel/Movilnet), internet (CANTV/Inter), streaming, Pago Móvil masivo |
-| 8 | **Remesas** 🆕 | `/remesas` | Puente para que tu familia desde el exterior (USA/España/AR/etc.) te mande USDC en 1 segundo, vía on-ramp aggregator (MoonPay/Transak/Ramp/Stripe Crypto) |
+| 1 | **Wallet / Home** | `/home` | Saludo Caracas + saldo on-chain real (USDC/SOL/SPL) via Helius + acciones rápidas. Saldo card minimal mobile, full desktop. |
+| 2 | **Cambiar** | `/cambiar` | Tab Bolívares ↔ USDC vía Tropico Liquidity Pool (settlement <1s, BCV+1.5%) o tab Tokens vía Jupiter v6 (`platformFeeBps=50`) |
+| 3 | **Cobrar** | `/cobrar` | QR Solana Pay client-side — fee 1% on top, merchant recibe el precio exacto |
+| 4 | **Enviar** | `/enviar` | P2P directo a wallet (firma SPL Token, soporta Privy embedded + local cifrada) o claim link compartible por WhatsApp. Libreta de contactos privada por wallet. |
+| 5 | **Guardar** | `/guardar` | Yield ~5–7% APY automático — mSOL (Marinade) o Kamino |
+| 6 | **Pago Móvil VE** 🆕 | `/pagar-servicios` | Tropico Bs Bridge: scaneás QR Suiche7B del comercio (cámara via html5-qrcode) o llenás los datos manual; Tropico convierte tu USDC → Bs y ejecuta el Pago Móvil real al banco destino en 2-5s, con comprobante bancario adjunto. Soporta los 20+ bancos venezolanos. |
+| 7 | **Carlos AI by Lumen** | `/carlos` | Agente conversacional venezolano — 7 capabilities (saldos, precios, swap, QR, yield, cashback, agente) sobre [Lumen](https://github.com/gabogabucho/lumen-agent) |
+| 8 | **Remesas** | `/remesas` | Puente diáspora → VE en 1s vía on-ramp aggregator (MoonPay/Transak/Ramp/Stripe Crypto) |
+| 9 | **Mi Tropico (Perfil)** 🆕 | `/perfil` | Avatar gradient + nombre editable + pubkey con copy/Solscan + email Privy + cluster activo + cerrar sesión + eliminar wallet + importar otra wallet |
 
 ### Módulos auxiliares (no son consumer-facing principales pero forman parte del flow)
 
 | Módulo | URL | Qué hace |
 |---|---|---|
-| **Depositar / Onramp** | `/depositar` | Bs → USDC vía Pago Móvil, transferencia bancaria, crypto P2P, tarjeta USD |
-| **Descubrir** | `/descubrir` | Catálogo educativo de tokens curados (SOL/USDC/JUP/JTO/mSOL/...) |
+| **Descubrir** | `/descubrir` | Catálogo educativo de tokens curados (SOL/USDC/JUP/JTO/mSOL/KMNO/RAY/BONK/TROPI) |
 | **Claim** | `/claim/[id]` | Página que abre el receptor de un claim link de /enviar |
 | **Modo Agente** | `/carlos/agente` | Showcase de 4 acciones autónomas (DCA / auto-yield / cashback / rebalance) |
+| **Wallet crear/abrir** | `/wallet/crear`, `/wallet/abrir` | Crear wallet local cifrada (AES-GCM 256 + PBKDF2 100k) o desbloquear/importar |
 
 ### Modo Agente — `/carlos/agente`
 
@@ -203,6 +204,32 @@ Carlos puede actuar on-chain con tu permiso explícito. Corre sobre **Lumen** (e
 - **Auto-yield** — mueve el excedente de saldo a la mejor estrategia de yield disponible
 - **Auto-cashback** — aplica cashback automático en cobros Solana Pay
 - **Rebalance** — mantiene la proporción SOL/USDC/mSOL definida por el usuario
+
+---
+
+### Internacionalización (i18n) 🌐
+
+UI traducida a **4 idiomas** con switcher en el header (icono globo):
+
+| Idioma | Código | Cobertura |
+|---|---|---|
+| Español venezolano (default) | `es` | 100% |
+| English | `en` | 100% |
+| Português | `pt` | 100% |
+| Français | `fr` | 100% |
+
+Implementado custom (sin lib externa) en `lib/i18n/dictionary.ts` + `lib/i18n/context.tsx`. Persiste preferencia en localStorage. Pensado para que jurados internacionales del dev3pack puedan navegar sin barrera idiomática.
+
+### Modo demo · devnet (para jurados) 🧪
+
+Botón en `/home` debajo de "Saldo disponible". Al click:
+1. Switchea cluster a devnet (persiste localStorage)
+2. Abre modal con la pubkey del usuario + 2 faucets públicos:
+   - `faucet.solana.com` → 1 SOL devnet (gas)
+   - `faucet.circle.com` → 10 USDC devnet
+3. Cada juez fondea su propia wallet en ~30s
+
+**100% client-side, cero dependencia del equipo Tropico.** Respeta principio non-custodial estricto: el equipo nunca toca fondos. Detalle en [`docs/JUDGE_DEMO_GUIDE.md`](docs/JUDGE_DEMO_GUIDE.md).
 
 ---
 
