@@ -13,8 +13,8 @@
 set -euo pipefail
 
 # ─── Config ────────────────────────────────────────────────────────────────────
-# Reemplazá MINT_ADDRESS con el mint real después de correr TEST_TOKEN_GUIDE.md
-MINT_ADDRESS="${TROPI_TEST_MINT:-REEMPLAZAR_CON_EL_MINT_DEVNET}"
+# Mint TROPI test deployado en devnet (ver scripts/create-tropi-token.mjs)
+MINT_ADDRESS="${TROPI_TEST_MINT:-AbkCW6BA2ZVoTw4Q6M1NvATiZjn2aMS3WvWZQbhRQf6K}"
 KEYPAIR="${TROPICO_DEV_KEYPAIR:-$HOME/.config/solana/devnet-test.json}"
 AMOUNT=100
 CLUSTER="devnet"
@@ -45,8 +45,8 @@ RECIPIENT_WALLET="$1"
 # Validar que el mint está configurado
 if [[ "$MINT_ADDRESS" == "REEMPLAZAR_CON_EL_MINT_DEVNET" ]]; then
   echo -e "${RED}Error: MINT_ADDRESS no está configurado.${NC}"
-  echo "Editá scripts/faucet.sh y reemplazá REEMPLAZAR_CON_EL_MINT_DEVNET"
-  echo "con el mint address real de TROPI-TEST (ver docs/TEST_TOKEN_GUIDE.md)."
+  echo "Editá scripts/faucet.sh con el mint address real de TROPI-TEST."
+  echo "Para crear uno desde cero: node scripts/create-tropi-token.mjs"
   exit 1
 fi
 
