@@ -1,10 +1,26 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Send, AlertTriangle, CheckCircle2, ExternalLink, Eye, EyeOff, Loader2 } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import {
+  Send,
+  AlertTriangle,
+  CheckCircle2,
+  ExternalLink,
+  Eye,
+  EyeOff,
+  Loader2,
+  Users,
+  X,
+} from "lucide-react";
 import { unlockLocalWallet, hasLocalWallet, getLocalWalletPubkey } from "@/lib/wallet-local";
 import { sendSplToken, isValidPubkey, type SendResult } from "@/lib/send-tx";
 import { getActiveCluster } from "@/lib/cluster";
+import {
+  listContacts,
+  recordSend,
+  deleteContact,
+  type Contact,
+} from "@/lib/contacts";
 import { Keypair } from "@solana/web3.js";
 
 /**
@@ -21,11 +37,45 @@ export function SendToAddress() {
   const [result, setResult] = useState<SendResult | null>(null);
   const [walletReady, setWalletReady] = useState(false);
   const [cluster, setCluster] = useState("mainnet-beta");
+  const [ownerPubkey, setOwnerPubkey] = useState<string>("");
+  const [contacts, setContacts] = useState<Contact[]>([]);
+  const [contactName, setContactName] = useState("");
+  const [showSavePrompt, setShowSavePrompt] = useState(false);
+  const [pendingSavePubkey, setPendingSavePubkey] = useState<string>("");
 
   useEffect(() => {
     setWalletReady(hasLocalWallet() || !!localStorage.getItem("tropico:dev-wallet"));
     setCluster(getActiveCluster());
+    const me =
+      getLocalWalletPubkey() ??
+      (() => {
+        try {
+          const dev = JSON.parse(localStorage.getItem("tropico:dev-wallet") ?? "null");
+          return dev?.publicKey ?? "";
+        } catch {
+          return "";
+        }
+      })();
+    setOwnerPubkey(me);
+    if (me) setContacts(listContacts(me));
   }, []);
+
+  function refreshContacts() {
+    if (ownerPubkey) setContacts(listContacts(ownerPubkey));
+  }
+
+  // Match para autocomplete: contactos cuyo pubkey o nombre matchean lo escrito
+  const suggestions = useMemo(() => {
+    const q = destination.trim().toLowerCase();
+    if (q.length < 2) return contacts.slice(0, 5);
+    return contacts
+      .filter(
+        (c) =>
+          c.pubkey.toLowerCase().includes(q) ||
+          c.name?.toLowerCase().includes(q)
+      )
+      .slice(0, 5);
+  }, [destination, contacts]);
 
   async function getActiveKeypair(): Promise<Keypair | null> {
     // Try local wallet first (necesita password)
@@ -72,13 +122,56 @@ export function SendToAddress() {
       setBusy(false);
       return;
     }
-    const r = await sendSplToken(kp, destination.trim(), token, amt);
+    const dest = destination.trim();
+    const r = await sendSplToken(kp, dest, token, amt);
     setResult(r);
     setBusy(false);
     if (r.ok) {
       setAmount("");
       setPassword("");
+      // Triggera prompt para guardar contacto (si aún no tiene nombre)
+      if (ownerPubkey) {
+        const existing = contacts.find((c) => c.pubkey === dest);
+        if (!existing?.name) {
+          setPendingSavePubkey(dest);
+          setShowSavePrompt(true);
+        } else {
+          // Solo incrementa contador, mantiene nombre
+          recordSend(ownerPubkey, dest);
+          refreshContacts();
+        }
+      }
     }
+  }
+
+  function confirmSaveContact() {
+    if (!ownerPubkey || !pendingSavePubkey) return;
+    recordSend(ownerPubkey, pendingSavePubkey, contactName.trim() || undefined);
+    setContactName("");
+    setPendingSavePubkey("");
+    setShowSavePrompt(false);
+    refreshContacts();
+  }
+
+  function dismissSavePrompt() {
+    if (ownerPubkey && pendingSavePubkey) {
+      // Aún registramos el contacto sin nombre (para historial)
+      recordSend(ownerPubkey, pendingSavePubkey);
+      refreshContacts();
+    }
+    setContactName("");
+    setPendingSavePubkey("");
+    setShowSavePrompt(false);
+  }
+
+  function pickContact(c: Contact) {
+    setDestination(c.pubkey);
+  }
+
+  function removeContact(pubkey: string) {
+    if (!ownerPubkey) return;
+    deleteContact(ownerPubkey, pubkey);
+    refreshContacts();
   }
 
   if (!walletReady) {
@@ -129,7 +222,7 @@ export function SendToAddress() {
         </button>
       </div>
 
-      {/* Destino */}
+      {/* Destino + autocomplete contactos */}
       <div className="flex flex-col gap-1.5">
         <label className="text-xs font-semibold uppercase tracking-wider text-tropico-mute">
           Wallet destino (pubkey)
@@ -138,10 +231,33 @@ export function SendToAddress() {
           type="text"
           value={destination}
           onChange={(e) => setDestination(e.target.value)}
-          placeholder="Ej. 7xKXt..."
+          placeholder="Ej. 7xKXt... o escribí el nombre que le pusiste"
           className="rounded-lg border border-tropico-border bg-tropico-ink/60 px-4 py-3 font-mono text-sm focus:border-tropico-sea focus:outline-none"
           autoComplete="off"
         />
+        {suggestions.length > 0 && destination !== "" && !suggestions.some((c) => c.pubkey === destination) && (
+          <ul className="flex flex-col gap-1 rounded-lg border border-tropico-border bg-tropico-ink/40 p-1">
+            {suggestions.map((c) => (
+              <li key={c.pubkey}>
+                <button
+                  type="button"
+                  onClick={() => pickContact(c)}
+                  className="flex w-full items-center justify-between gap-2 rounded-md px-3 py-2 text-left text-xs hover:bg-tropico-sea/10"
+                >
+                  <span className="flex flex-col">
+                    <span className="font-semibold text-tropico-text">
+                      {c.name ?? `${c.pubkey.slice(0, 6)}…${c.pubkey.slice(-4)}`}
+                    </span>
+                    <span className="font-mono text-[10px] text-tropico-mute">
+                      {c.pubkey.slice(0, 8)}…{c.pubkey.slice(-6)} · {c.sentCount} envío{c.sentCount === 1 ? "" : "s"}
+                    </span>
+                  </span>
+                  <Users className="size-3 text-tropico-mute" />
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
       {/* Monto */}
@@ -237,6 +353,102 @@ export function SendToAddress() {
         Tu password descifra la llave privada SOLO en este browser para firmar.
         La tx se broadcast directo a Solana, Tropico no toca llaves.
       </p>
+
+      {/* Lista de contactos guardados (solo si hay) */}
+      {contacts.length > 0 && (
+        <section className="panel mt-2 flex flex-col gap-2 p-3">
+          <header className="flex items-center justify-between">
+            <h4 className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-tropico-mute">
+              <Users className="size-3.5" /> Tus contactos ({contacts.length})
+            </h4>
+            <span className="text-[10px] text-tropico-mute">
+              Solo en este device · privado
+            </span>
+          </header>
+          <ul className="flex flex-col gap-1">
+            {contacts.slice(0, 6).map((c) => (
+              <li
+                key={c.pubkey}
+                className="group flex items-center justify-between gap-2 rounded-md px-2 py-1.5 hover:bg-tropico-ink/40"
+              >
+                <button
+                  type="button"
+                  onClick={() => pickContact(c)}
+                  className="flex flex-1 flex-col text-left"
+                >
+                  <span className="text-sm font-semibold text-tropico-text">
+                    {c.name ?? "(sin nombre)"}
+                  </span>
+                  <span className="font-mono text-[10px] text-tropico-mute">
+                    {c.pubkey.slice(0, 8)}…{c.pubkey.slice(-6)}
+                  </span>
+                </button>
+                <span className="text-[10px] text-tropico-mute">
+                  {c.sentCount}×
+                </span>
+                <button
+                  type="button"
+                  onClick={() => removeContact(c.pubkey)}
+                  className="opacity-0 transition group-hover:opacity-100"
+                  aria-label="Borrar contacto"
+                >
+                  <X className="size-3.5 text-tropico-coral" />
+                </button>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {/* Modal: guardar destinatario después de envío exitoso */}
+      {showSavePrompt && (
+        <div
+          className="fixed inset-0 z-[80] flex items-center justify-center bg-black/60 p-4"
+          onClick={dismissSavePrompt}
+        >
+          <div
+            className="panel flex max-w-sm flex-col gap-3 p-5"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <header className="flex items-center gap-2">
+              <Users className="size-5 text-tropico-sea" />
+              <h3 className="text-base font-bold text-tropico-text">
+                ¿Guardar destinatario?
+              </h3>
+            </header>
+            <p className="text-xs text-tropico-mute">
+              Ponele un nombre privado para reconocerlo después. El nombre se
+              queda solo en TU device, nadie más lo ve.
+            </p>
+            <code className="block break-all rounded-md bg-tropico-ink/50 p-2 font-mono text-[10px] text-tropico-mute">
+              {pendingSavePubkey}
+            </code>
+            <input
+              type="text"
+              value={contactName}
+              onChange={(e) => setContactName(e.target.value)}
+              placeholder="Ej. Mamá, Bodegón Caracas, Pedro freelance"
+              maxLength={40}
+              className="rounded-lg border border-tropico-border bg-tropico-ink/60 px-3 py-2 text-sm focus:border-tropico-sea focus:outline-none"
+              autoFocus
+            />
+            <div className="flex gap-2">
+              <button
+                onClick={dismissSavePrompt}
+                className="flex-1 rounded-lg border border-tropico-border px-3 py-2 text-sm text-tropico-mute hover:text-tropico-text"
+              >
+                Sin nombre
+              </button>
+              <button
+                onClick={confirmSaveContact}
+                className="btn-primary flex-1"
+              >
+                Guardar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
