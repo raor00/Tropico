@@ -27,7 +27,20 @@ import {
   type TropicoRate,
 } from "@/lib/tropico-bs-bridge";
 
-type Stage = "idle" | "scanning" | "review" | "processing" | "done";
+type Stage = "idle" | "scanning" | "manual" | "review" | "processing" | "done";
+
+const BANCOS_OPTIONS = [
+  { code: "0102", name: "Banco de Venezuela" },
+  { code: "0105", name: "Mercantil" },
+  { code: "0108", name: "BBVA Provincial" },
+  { code: "0134", name: "Banesco" },
+  { code: "0151", name: "BFC" },
+  { code: "0163", name: "Tesoro" },
+  { code: "0172", name: "Bancamiga" },
+  { code: "0174", name: "Banplus" },
+  { code: "0175", name: "Bicentenario" },
+  { code: "0191", name: "BNC" },
+];
 
 /**
  * Suiche7BScan — flow QR Pago Móvil VE end-to-end:
@@ -45,6 +58,13 @@ export function Suiche7BScan({
   const [rate, setRate] = useState<TropicoRate | null>(null);
   const [receipt, setReceipt] = useState<BsBridgeReceipt | null>(null);
   const scannerRef = useRef<{ stop: () => Promise<void> } | null>(null);
+  const [manualForm, setManualForm] = useState({
+    banco: "0134",
+    telefono: "",
+    cedula: "",
+    montoBs: "",
+    concepto: "",
+  });
 
   useEffect(() => {
     return () => {
@@ -116,6 +136,52 @@ export function Suiche7BScan({
     setStage("review");
   }
 
+  /** Manual: usuario llena banco/teléfono/cédula/monto a mano */
+  function openManual() {
+    setError(null);
+    setManualForm({
+      banco: "0134",
+      telefono: "",
+      cedula: "",
+      montoBs: "",
+      concepto: "",
+    });
+    setStage("manual");
+  }
+  async function submitManual() {
+    setError(null);
+    const cedulaUp = manualForm.cedula.trim().toUpperCase();
+    const tel = manualForm.telefono.replace(/\D/g, "");
+    const monto = parseFloat(manualForm.montoBs);
+    if (tel.length < 10) {
+      setError("Teléfono inválido (10 dígitos mínimo).");
+      return;
+    }
+    if (!cedulaUp.match(/^[VEJG]\d{6,9}$/)) {
+      setError("Cédula inválida (ej: V12345678 o J123456789).");
+      return;
+    }
+    if (!Number.isFinite(monto) || monto <= 0) {
+      setError("Monto en Bs inválido.");
+      return;
+    }
+    const bancoNombre =
+      BANCOS_OPTIONS.find((b) => b.code === manualForm.banco)?.name ??
+      `Banco ${manualForm.banco}`;
+    const payload: Suiche7BPayload = {
+      banco: manualForm.banco,
+      bancoNombre,
+      telefono: tel,
+      cedula: cedulaUp,
+      montoBs: Math.round(monto * 100) / 100,
+      concepto: manualForm.concepto.trim() || undefined,
+    };
+    setPayee(payload);
+    const r = await fetchTropicoRate();
+    setRate(r);
+    setStage("review");
+  }
+
   async function confirmPay() {
     if (!payee) return;
     setStage("processing");
@@ -160,21 +226,21 @@ export function Suiche7BScan({
 
   return (
     <section className="panel flex flex-col gap-4 p-4 md:p-5">
-      <header className="flex items-start justify-between gap-3">
+      <header className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
         <div className="flex items-start gap-3">
           <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-tropico-green/15 text-tropico-green">
             <QrCode className="size-5" />
           </div>
-          <div>
-            <h3 className="font-display text-lg font-bold text-tropico-text">
+          <div className="flex-1 min-w-0">
+            <h3 className="font-display text-base font-bold text-tropico-text md:text-lg">
               {t("pagomovil.title")}
             </h3>
-            <p className="text-xs text-tropico-mute">
+            <p className="text-xs leading-snug text-tropico-mute">
               {t("pagomovil.subtitle")}
             </p>
           </div>
         </div>
-        <span className="rounded-full bg-tropico-sun/15 px-2 py-0.5 text-[10px] font-bold uppercase text-tropico-sun">
+        <span className="w-fit shrink-0 whitespace-nowrap rounded-full bg-tropico-sun/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-tropico-sun">
           Tropico Bs Bridge
         </span>
       </header>
@@ -186,15 +252,21 @@ export function Suiche7BScan({
         </div>
       )}
 
-      {/* Stage idle: CTA scanear */}
+      {/* Stage idle: CTA scanear + manual */}
       {stage === "idle" && (
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-2">
           <button
             onClick={startScan}
             className="btn-primary inline-flex items-center justify-center gap-2"
           >
             <ScanLine className="size-4" />
             {t("pagomovil.scan.cta")}
+          </button>
+          <button
+            onClick={openManual}
+            className="inline-flex items-center justify-center gap-2 rounded-lg border border-tropico-sea/40 bg-tropico-sea/5 px-3 py-2.5 text-sm font-semibold text-tropico-sea hover:bg-tropico-sea/15"
+          >
+            ✍️ Colocar datos manualmente
           </button>
           <button
             onClick={demoFill}
@@ -206,6 +278,91 @@ export function Suiche7BScan({
           <p className="text-center text-[11px] text-tropico-mute">
             {t("pagomovil.scan.hint")}
           </p>
+        </div>
+      )}
+
+      {/* Stage manual: form sin cámara */}
+      {stage === "manual" && (
+        <div className="flex flex-col gap-3">
+          <h4 className="font-display text-base font-bold">Datos del beneficiario</h4>
+          <div className="flex flex-col gap-1.5">
+            <label className="text-[10px] font-semibold uppercase tracking-wider text-tropico-mute">
+              Banco destino
+            </label>
+            <select
+              value={manualForm.banco}
+              onChange={(e) => setManualForm({ ...manualForm, banco: e.target.value })}
+              className="rounded-lg border border-tropico-border bg-tropico-ink/60 px-3 py-2 text-sm focus:border-tropico-sea focus:outline-none"
+            >
+              {BANCOS_OPTIONS.map((b) => (
+                <option key={b.code} value={b.code}>
+                  {b.code} — {b.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[10px] font-semibold uppercase tracking-wider text-tropico-mute">
+                Teléfono
+              </label>
+              <input
+                value={manualForm.telefono}
+                onChange={(e) => setManualForm({ ...manualForm, telefono: e.target.value })}
+                placeholder="04141234567"
+                inputMode="tel"
+                maxLength={11}
+                className="rounded-lg border border-tropico-border bg-tropico-ink/60 px-3 py-2 text-sm focus:border-tropico-sea focus:outline-none"
+              />
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[10px] font-semibold uppercase tracking-wider text-tropico-mute">
+                Cédula
+              </label>
+              <input
+                value={manualForm.cedula}
+                onChange={(e) => setManualForm({ ...manualForm, cedula: e.target.value })}
+                placeholder="V12345678"
+                maxLength={10}
+                className="rounded-lg border border-tropico-border bg-tropico-ink/60 px-3 py-2 text-sm uppercase focus:border-tropico-sea focus:outline-none"
+              />
+            </div>
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <label className="text-[10px] font-semibold uppercase tracking-wider text-tropico-mute">
+              Monto en Bs
+            </label>
+            <input
+              value={manualForm.montoBs}
+              onChange={(e) => setManualForm({ ...manualForm, montoBs: e.target.value })}
+              placeholder="0.00"
+              inputMode="decimal"
+              className="rounded-lg border border-tropico-border bg-tropico-ink/60 px-3 py-2 text-base font-bold focus:border-tropico-sea focus:outline-none"
+            />
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <label className="text-[10px] font-semibold uppercase tracking-wider text-tropico-mute">
+              Concepto (opcional)
+            </label>
+            <input
+              value={manualForm.concepto}
+              onChange={(e) => setManualForm({ ...manualForm, concepto: e.target.value })}
+              placeholder="Pago"
+              maxLength={60}
+              className="rounded-lg border border-tropico-border bg-tropico-ink/60 px-3 py-2 text-sm focus:border-tropico-sea focus:outline-none"
+            />
+          </div>
+          <div className="flex gap-2">
+            <button
+              onClick={() => setStage("idle")}
+              className="flex-1 rounded-lg border border-tropico-border px-3 py-2 text-sm text-tropico-mute hover:text-tropico-text"
+            >
+              {t("common.cancel")}
+            </button>
+            <button onClick={submitManual} className="btn-primary flex-1">
+              Continuar
+            </button>
+          </div>
         </div>
       )}
 

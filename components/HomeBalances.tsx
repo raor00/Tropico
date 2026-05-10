@@ -12,6 +12,7 @@ import { getActiveCluster, setActiveCluster, type Cluster } from "@/lib/cluster"
 import { HomeBalancesPrivyWrapper } from "@/components/HomeBalancesPrivy";
 import { fetchPrices, type TokenPrice } from "@/lib/prices";
 import type { TokenSymbol } from "@/lib/tokens";
+import { DevnetFaucetButton } from "@/components/DevnetFaucetButton";
 
 const PRIVY_ENABLED = !!process.env.NEXT_PUBLIC_PRIVY_APP_ID;
 
@@ -180,9 +181,12 @@ export function HomeBalancesCore({ externalPubkey }: { externalPubkey?: string |
         <div className="relative flex flex-col gap-3">
           {/* Top row: label + cluster badge */}
           <header className="flex items-center justify-between">
-            <span className="text-[10px] uppercase tracking-[0.18em] text-tropico-mute">
-              Saldo disponible
-            </span>
+            <div className="flex flex-col gap-1.5">
+              <span className="text-[10px] uppercase tracking-[0.18em] text-tropico-mute">
+                Saldo disponible
+              </span>
+              <DevnetFaucetButton />
+            </div>
             <div className="flex items-center gap-1.5">
               <button
                 onClick={toggleCluster}

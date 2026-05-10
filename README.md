@@ -30,6 +30,18 @@ Este repo es el MVP del hackathon **dev3pack 2026**, desarrollado desde Venezuel
 
 ---
 
+## 🎬 Para jueces del hackathon — demo en 2 minutos
+
+1. Abrí el deploy live (URL en el form del hackathon).
+2. **Login con email** — Privy abre modal con email/Google/wallet.
+3. En `/home` click el botón morado **"Modo demo · devnet"** debajo de "Saldo disponible".
+   En ~10 segundos recibís: 100 TROPI test tokens + 0.05 SOL devnet (gas) + cluster ya en devnet.
+4. Probá: enviar, cobrar QR, swap, Pago Móvil VE (scan o manual), Carlos AI, perfil, idiomas.
+
+Detalle técnico completo del faucet en [`docs/JUDGE_DEMO_GUIDE.md`](docs/JUDGE_DEMO_GUIDE.md).
+
+---
+
 ## 🚀 Quick start
 
 ### Requisitos
@@ -79,6 +91,13 @@ NEXT_PUBLIC_TROPICO_FEE_ATA_USDT=
 
 # Cluster
 NEXT_PUBLIC_SOLANA_CLUSTER=mainnet-beta
+
+# Devnet faucet (server-only, NUNCA exponer al browser)
+# Secret key del deployer del TROPI mint, formato array JSON.
+# Lo usa /api/devnet-faucet para mintear 100 TROPI + 0.05 SOL gas a jurados.
+# Generar: solana-keygen new -o ~/.config/solana/tropico-devnet.json
+# Después: cat ese archivo y pegar el array completo acá.
+DEPLOYER_SECRET_KEY_JSON=
 ```
 
 Sin ninguna key, la app corre en **modo demo** con mocks honestos y banners explícitos. Ningún flow visual queda roto.

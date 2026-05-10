@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import Link from "next/link";
+import { ArrowLeftRight } from "lucide-react";
 import { FaucetCard } from "@/components/FaucetCard";
 import { CambiarTabs } from "./CambiarTabs";
 
@@ -10,17 +11,29 @@ export const metadata = {
 export default function CambiarPage() {
   return (
     <main className="mx-auto flex min-h-dvh max-w-2xl flex-col gap-6 px-5 py-10">
-      <header className="flex flex-col gap-2 pt-4">
+      <header className="flex flex-col gap-3 pt-4">
         <Link
           href="/home"
           className="w-fit text-sm text-tropico-mute transition hover:text-tropico-sun"
         >
-          &larr; Volver
+          ← Volver
         </Link>
-        <h1 className="font-display text-3xl font-bold">Cambiar</h1>
+        <div className="flex items-center gap-3">
+          <div className="flex size-12 items-center justify-center rounded-2xl bg-gradient-to-br from-tropico-purple/30 to-tropico-purple/5 ring-1 ring-tropico-purple/40">
+            <ArrowLeftRight className="size-6 text-tropico-purple" strokeWidth={2} />
+          </div>
+          <div className="flex flex-col">
+            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-tropico-purple">
+              Swap · best price
+            </span>
+            <h1 className="font-display text-3xl font-bold leading-tight">
+              Cambiar tokens
+            </h1>
+          </div>
+        </div>
         <p className="text-sm text-tropico-mute">
-          Tokens vía Jupiter v6 (mejor precio del mercado) o Bolívares ↔ USDC vía
-          Tropico Liquidity Pool (settlement &lt;1s, sin esperar contraparte).
+          <strong className="text-tropico-text">Tokens</strong> vía Jupiter v6 (mejor precio del mercado) o
+          <strong className="text-tropico-text"> Bolívares ↔ USDC</strong> vía Tropico Liquidity Pool (settlement &lt;1s, sin esperar contraparte).
         </p>
       </header>
 

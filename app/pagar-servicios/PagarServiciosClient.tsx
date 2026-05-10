@@ -87,16 +87,8 @@ const CATEGORIAS: Categoria[] = [
     placeholder: "Email de la cuenta",
     labelNumero: "Email de la cuenta",
   },
-  {
-    id: "pago-movil",
-    nombre: "Pago Móvil",
-    Icon: Users,
-    color: "text-tropico-sun",
-    gradient: "from-tropico-sun/15 to-tropico-sea/10",
-    proveedores: ["Cualquier banco venezolano"],
-    placeholder: "0412-1234567",
-    labelNumero: "Teléfono del destinatario",
-  },
+  // Pago Móvil ya tiene su propio flow on top via Suiche7BScan (QR + manual).
+  // Removido de esta grid para evitar duplicado y confusión.
 ];
 
 function handlePay(

@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { WalletSessionBar } from "@/components/WalletSessionBar";
 import { HomeBalances } from "@/components/HomeBalances";
+import { Greeting } from "@/components/Greeting";
 import { ModuleCard } from "@/components/ModuleCard";
 import { MOCK_CASHBACK_PENDIENTE, MOCK_NEXT_DCA } from "@/lib/mock-data";
 import { formatUSD } from "@/lib/formato";
@@ -106,6 +107,9 @@ export default function HomePage() {
           Depositar Bs
         </Link>
       </section>
+
+      {/* Saludo Caracas — sutil sobre el saldo */}
+      <Greeting />
 
       {/* Saldo real on-chain (HomeBalances trae card + lista) */}
       <HomeBalances />
