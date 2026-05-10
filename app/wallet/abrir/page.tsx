@@ -10,6 +10,7 @@ import {
   importLocalWallet,
   deleteLocalWallet,
 } from "@/lib/wallet-local";
+import { notifyAuthChanged } from "@/lib/auth-context";
 import {
   KeyRound,
   Eye,
@@ -49,8 +50,9 @@ export default function AbrirWalletPage() {
         setError("Password incorrecto.");
         return;
       }
-      // Wallet desbloqueada — guardar marca de sesión + ir a /home
+      // Wallet desbloqueada — marca de sesión + notify AuthProvider + /home
       sessionStorage.setItem("tropico:wallet:unlocked", "1");
+      notifyAuthChanged();
       router.push("/home");
     } catch (e) {
       setError((e as Error).message);
@@ -70,6 +72,7 @@ export default function AbrirWalletPage() {
       const w = await importLocalWallet(seedHex.trim(), password);
       setPubkey(w.publicKey);
       sessionStorage.setItem("tropico:wallet:unlocked", "1");
+      notifyAuthChanged();
       router.push("/home");
     } catch (e) {
       setError((e as Error).message);

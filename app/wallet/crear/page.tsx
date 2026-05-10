@@ -248,9 +248,9 @@ export default function CrearWalletPage() {
 
           <button
             onClick={() => {
-              // Marca wallet como desbloqueada en sessionStorage para que AuthCTA
-              // muestre "Mi wallet" en lugar de "Abrir wallet"
               sessionStorage.setItem("tropico:wallet:unlocked", "1");
+              // Notify AuthProvider para que detecte la wallet activa
+              window.dispatchEvent(new Event("tropico:auth-changed"));
               setStep("done");
             }}
             disabled={!confirmedBackup}

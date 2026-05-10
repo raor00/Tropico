@@ -55,6 +55,7 @@ function DemoButton({ variant, label }: { variant: Variant; label: string }) {
           network: "devnet",
         })
       );
+      window.dispatchEvent(new Event("tropico:auth-changed"));
       router.push("/home");
     } catch {
       // Fallback: mock pubkey aleatorio si @solana/web3.js no carga en browser
@@ -72,6 +73,7 @@ function DemoButton({ variant, label }: { variant: Variant; label: string }) {
           network: "devnet",
         })
       );
+      window.dispatchEvent(new Event("tropico:auth-changed"));
       router.push("/home");
     } finally {
       setDevLoading(false);
