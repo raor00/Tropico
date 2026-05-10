@@ -169,12 +169,13 @@ export function HomeBalancesCore({ externalPubkey }: { externalPubkey?: string |
 
   return (
     <>
-      {/* MOBILE: card minimalista estilo Kumo con esencia Tropico — gradiente
-          caribeño + isla 🏝️ + connected status + USD grande */}
-      <section className="md:hidden relative overflow-hidden rounded-3xl border border-tropico-sun/15 bg-gradient-to-br from-tropico-ink via-[#1a0d2e] to-[#231038] p-4 shadow-[0_8px_24px_rgba(0,0,0,0.35)]">
-        {/* Sheen radial top-right caribbean */}
-        <div className="pointer-events-none absolute -right-12 -top-12 size-40 rounded-full bg-gradient-to-br from-tropico-sun/25 via-tropico-coral/15 to-transparent blur-2xl" />
-        <div className="pointer-events-none absolute -left-8 bottom-0 size-28 rounded-full bg-tropico-sea/10 blur-2xl" />
+      {/* MOBILE: card minimalista — paleta sobria pro (deep navy + teal),
+          sin saturaciones tipo casino. Detalles sun/sea muy sutiles. */}
+      <section className="md:hidden relative overflow-hidden rounded-3xl border border-white/8 bg-gradient-to-br from-[#0a1929] via-[#0e2233] to-[#0a1a26] p-4 shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
+        {/* Sheen sea muy sutil top-right */}
+        <div className="pointer-events-none absolute -right-16 -top-16 size-44 rounded-full bg-gradient-to-br from-tropico-sea/12 to-transparent blur-3xl" />
+        {/* Acento sun bottom-left aún más sutil */}
+        <div className="pointer-events-none absolute -left-12 -bottom-12 size-32 rounded-full bg-tropico-sun/[0.04] blur-3xl" />
 
         <div className="relative flex flex-col gap-3">
           {/* Top row: label + cluster badge */}
@@ -207,7 +208,7 @@ export function HomeBalancesCore({ externalPubkey }: { externalPubkey?: string |
           {/* Layout 2 col: monto a la izq, isla a la derecha */}
           <div className="flex items-end justify-between gap-2">
             <div className="flex flex-col">
-              <div className="font-display text-[2.5rem] font-black leading-none tracking-tight bg-gradient-to-br from-white via-tropico-sun/95 to-tropico-coral/85 bg-clip-text text-transparent tabular-nums">
+              <div className="font-display text-[2.5rem] font-black leading-none tracking-tight text-white tabular-nums">
                 ${totalUsdLive.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </div>
               <div className="mt-1 text-xs font-semibold text-tropico-mute">
@@ -227,10 +228,10 @@ export function HomeBalancesCore({ externalPubkey }: { externalPubkey?: string |
               </div>
             </div>
 
-            {/* Isla mascot — bouncing emoji con halo */}
+            {/* Isla mascot — halo sea sutil, sin tinte cálido casino */}
             <div className="relative flex size-24 shrink-0 items-center justify-center">
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-tropico-sun/20 to-tropico-coral/10 blur-xl" />
-              <span className="relative text-5xl drop-shadow-[0_4px_12px_rgba(255,180,80,0.3)]">
+              <div className="absolute inset-0 rounded-full bg-tropico-sea/10 blur-xl" />
+              <span className="relative text-5xl drop-shadow-[0_4px_10px_rgba(0,0,0,0.4)] opacity-90">
                 🏝️
               </span>
             </div>
