@@ -9,19 +9,32 @@ import { formatUSD } from "@/lib/formato";
 import { fetchAllBalances, EMPTY_BALANCES, type WalletBalances } from "@/lib/balances";
 import { hasLocalWallet, getLocalWalletPubkey } from "@/lib/wallet-local";
 import { getActiveCluster, setActiveCluster, type Cluster } from "@/lib/cluster";
+import { HomeBalancesPrivyWrapper } from "@/components/HomeBalancesPrivy";
+
+const PRIVY_ENABLED = !!process.env.NEXT_PUBLIC_PRIVY_APP_ID;
+
+/**
+ * Entry: si Privy está habilitado, usa wrapper que también detecta wallets Privy.
+ * Si no, usa la detección local-only directamente.
+ */
+export function HomeBalances() {
+  if (PRIVY_ENABLED) {
+    return <HomeBalancesPrivyWrapper Inner={HomeBalancesCore} />;
+  }
+  return <HomeBalancesCore />;
+}
 
 /**
  * HomeBalances — sección client-side que lee balance REAL on-chain del wallet
- * activo (local o dev). Reemplaza el MOCK_PORTFOLIO en /home.
+ * activo. Detecta wallet en orden:
+ *   1. externalPubkey prop (ej. wallet Privy embedded resuelto por wrapper)
+ *   2. tropico:wallet:v1 (wallet local encriptada)
+ *   3. tropico:dev-wallet (modo dev devnet)
  *
- * Detecta wallet de localStorage:
- *   - tropico:wallet:v1 (wallet local encriptada)
- *   - tropico:dev-wallet (modo dev devnet)
- *
- * Lee SOL + 8 SPL tokens via Helius RPC (NEXT_PUBLIC_HELIUS_RPC).
+ * Lee SOL + SPL tokens via Helius RPC (NEXT_PUBLIC_HELIUS_RPC).
  * Refresh cada 30s + botón manual.
  */
-export function HomeBalances() {
+export function HomeBalancesCore({ externalPubkey }: { externalPubkey?: string | null } = {}) {
   const [pubkey, setPubkey] = useState<string | null>(null);
   const [balances, setBalances] = useState<WalletBalances>(EMPTY_BALANCES);
   const [loading, setLoading] = useState(true);
@@ -52,12 +65,13 @@ export function HomeBalances() {
     }
   }
 
-  // Detectar wallet activa
+  // Detectar wallet activa (orden: externa Privy → local → dev)
   useEffect(() => {
-    let pk: string | null = null;
-    if (hasLocalWallet()) {
+    let pk: string | null = externalPubkey ?? null;
+    if (!pk && hasLocalWallet()) {
       pk = getLocalWalletPubkey();
-    } else {
+    }
+    if (!pk) {
       try {
         const dev = JSON.parse(localStorage.getItem("tropico:dev-wallet") ?? "null");
         pk = dev?.publicKey ?? null;
@@ -65,7 +79,7 @@ export function HomeBalances() {
     }
     setPubkey(pk);
     if (!pk) setLoading(false);
-  }, []);
+  }, [externalPubkey]);
 
   // Fetch balances cuando hay pubkey + auto-refresh cada 30s
   useEffect(() => {
