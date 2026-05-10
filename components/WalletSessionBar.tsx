@@ -18,20 +18,34 @@ import {
   getLocalWalletPubkey,
   deleteLocalWallet,
 } from "@/lib/wallet-local";
+import { WalletSessionBarPrivyWrapper } from "@/components/WalletSessionBarPrivy";
+
+const PRIVY_ENABLED = !!process.env.NEXT_PUBLIC_PRIVY_APP_ID;
 
 /**
- * WalletSessionBar — barra de sesión que aparece en /home y rutas autenticadas.
+ * Entry: si Privy está habilitado, usa wrapper que resuelve pubkey real via hooks.
+ * Si no, usa core con detección legacy (local/dev + cookie sniff).
+ */
+export function WalletSessionBar() {
+  if (PRIVY_ENABLED) {
+    return <WalletSessionBarPrivyWrapper Inner={WalletSessionBarCore} />;
+  }
+  return <WalletSessionBarCore />;
+}
+
+/**
+ * WalletSessionBarCore — barra de sesión.
  *
- * Detecta wallet activa (local, dev devnet, o Privy) y muestra:
+ * Detecta wallet activa (local, dev devnet, o Privy injected) y muestra:
  *  - Pubkey truncada (copy + Solscan link)
  *  - Indicador de tipo de wallet (Local / Privy / Dev)
  *  - Dropdown con: Cambiar wallet · Cerrar sesión · Borrar wallet
- *
- * En móvil se compacta a un único pill clickeable.
  */
 type WalletSource = "local" | "privy" | "dev" | null;
 
-export function WalletSessionBar() {
+export function WalletSessionBarCore({
+  injectedPrivyPubkey,
+}: { injectedPrivyPubkey?: string | null } = {}) {
   const [source, setSource] = useState<WalletSource>(null);
   const [pubkey, setPubkey] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
@@ -43,7 +57,7 @@ export function WalletSessionBar() {
     const onStorage = () => refresh();
     window.addEventListener("storage", onStorage);
     return () => window.removeEventListener("storage", onStorage);
-  }, []);
+  }, [injectedPrivyPubkey]);
 
   function refresh() {
     if (hasLocalWallet()) {
@@ -60,15 +74,19 @@ export function WalletSessionBar() {
         return;
       } catch {}
     }
-    // Privy: si está conectado, expone wallet via window.privy o cookie
-    // En MVP detectamos solo por la presencia del flag de sesión Privy
-    // Privy SDK guarda token en cookie 'privy-token' después de login
+    // Privy: el wrapper resuelve el pubkey real via useSolanaWallets y nos lo
+    // pasa como prop. Sin wrapper (Privy disabled), caemos al cookie sniff
+    // que solo detecta presencia (sin pubkey real).
+    if (injectedPrivyPubkey) {
+      setSource("privy");
+      setPubkey(injectedPrivyPubkey);
+      return;
+    }
     if (typeof document !== "undefined") {
       const privyToken = document.cookie
         .split("; ")
         .find((c) => c.startsWith("privy-token="));
       if (privyToken) {
-        // Pubkey real solo se lee con el SDK lazy-loaded — placeholder visible
         setSource("privy");
         setPubkey("Privy MPC · cargando pubkey…");
         return;
