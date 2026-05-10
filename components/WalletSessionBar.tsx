@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import {
   Wallet as WalletIcon,
   LogOut,
@@ -51,6 +52,36 @@ export function WalletSessionBarCore({
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [revealed, setRevealed] = useState(false); // pubkey hidden por default
+  const [mounted, setMounted] = useState(false);
+  const [pos, setPos] = useState<{ top: number; left: number; width: number } | null>(null);
+  const btnRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => setMounted(true), []);
+
+  useLayoutEffect(() => {
+    if (!open) return;
+    function update() {
+      const r = btnRef.current?.getBoundingClientRect();
+      if (!r) return;
+      const desiredW = 288; // w-72
+      const margin = 12;
+      const maxW = Math.min(desiredW, window.innerWidth - margin * 2);
+      // Anchor right-aligned al botón, pero clamp a viewport
+      let left = r.right - maxW;
+      if (left < margin) left = margin;
+      if (left + maxW > window.innerWidth - margin) {
+        left = window.innerWidth - margin - maxW;
+      }
+      setPos({ top: r.bottom + 8, left, width: maxW });
+    }
+    update();
+    window.addEventListener("scroll", update, true);
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update, true);
+      window.removeEventListener("resize", update);
+    };
+  }, [open]);
 
   useEffect(() => {
     refresh();
@@ -154,6 +185,7 @@ export function WalletSessionBarCore({
   return (
     <div className="relative">
       <button
+        ref={btnRef}
         onClick={() => setOpen((v) => !v)}
         className="flex items-center gap-2 rounded-full border border-tropico-border bg-tropico-ink/60 px-3 py-1.5 text-xs transition hover:border-tropico-sun"
         aria-haspopup="menu"
@@ -177,17 +209,19 @@ export function WalletSessionBarCore({
         />
       </button>
 
-      {open && (
-        <>
-          <div
-            className="fixed inset-0 z-30"
-            onClick={() => setOpen(false)}
-            aria-hidden
-          />
-          <div
-            role="menu"
-            className="absolute right-0 top-full z-40 mt-2 flex w-72 max-w-[calc(100vw-2rem)] flex-col gap-1 rounded-xl border border-tropico-border bg-tropico-ink/95 p-2 shadow-xl backdrop-blur-xl"
-          >
+      {open && mounted && pos &&
+        createPortal(
+          <>
+            <div
+              className="fixed inset-0 z-[9990]"
+              onClick={() => setOpen(false)}
+              aria-hidden
+            />
+            <div
+              role="menu"
+              className="fixed z-[9999] flex flex-col gap-1 rounded-xl border border-tropico-border bg-tropico-ink/95 p-2 shadow-2xl backdrop-blur-xl"
+              style={{ top: pos.top, left: pos.left, width: pos.width }}
+            >
             <div className="rounded-lg border border-tropico-border/60 bg-tropico-ink/60 p-3">
               <div className="mb-1 flex items-center justify-between">
                 <span className="text-[10px] font-semibold uppercase tracking-wider text-tropico-mute">
@@ -280,7 +314,8 @@ export function WalletSessionBarCore({
               Borrar es irreversible. Asegúrate de tener tu secret key guardado.
             </p>
           </div>
-        </>
+        </>,
+        document.body
       )}
     </div>
   );

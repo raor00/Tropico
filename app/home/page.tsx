@@ -100,7 +100,7 @@ export default function HomePage() {
       <section className="flex flex-wrap items-center justify-between gap-2">
         <WalletSessionBar />
         <Link
-          href="/depositar"
+          href="/cambiar?tab=bs"
           className="inline-flex items-center gap-1 rounded-full border border-tropico-sun/40 bg-tropico-sun/10 px-3 py-1.5 text-xs font-semibold text-tropico-sun transition hover:bg-tropico-sun/20"
         >
           <Plus className="size-3" strokeWidth={2.5} />
