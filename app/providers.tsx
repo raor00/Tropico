@@ -31,12 +31,19 @@ export function Providers({ children }: { children: ReactNode }) {
 
   const privyAppId = process.env.NEXT_PUBLIC_PRIVY_APP_ID;
 
+  // Privy modal corre en iframe propio — necesita URL ABSOLUTA del logo.
+  // Construimos desde NEXT_PUBLIC_BASE_URL si existe; fallback a window.location en client.
+  const baseUrl =
+    process.env.NEXT_PUBLIC_BASE_URL ??
+    (typeof window !== "undefined" ? window.location.origin : "");
+  const logoUrl = `${baseUrl}/icons/tropico-logo.png`;
+
   const privyConfig = useMemo(
     () => ({
       appearance: {
         theme: "dark" as const,
         accentColor: "#9945FF" as `#${string}`,
-        logo: "/icons/tropico.svg",
+        logo: logoUrl,
         showWalletLoginFirst: false,
       },
       loginMethods: ["email", "google", "wallet"] as (
@@ -55,7 +62,7 @@ export function Providers({ children }: { children: ReactNode }) {
         },
       ],
     }),
-    []
+    [logoUrl]
   );
 
   // Modo demo: sin Privy App ID, la app corre sin auth wrapper.
