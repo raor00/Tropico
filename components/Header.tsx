@@ -3,10 +3,25 @@
 import Link from "next/link";
 import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import {
+  Menu,
+  X,
+  Wallet,
+  ArrowLeftRight,
+  QrCode,
+  Send,
+  Sprout,
+  Globe,
+  Receipt,
+  Bot,
+  Store,
+  KeyRound,
+  type LucideIcon,
+} from "lucide-react";
 import { Logo } from "./Logo";
 import { AuthCTA } from "./AuthCTA";
 import { VenezuelaBadge } from "./VenezuelaBadge";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 
 /**
  * Header optimizado.
@@ -21,34 +36,45 @@ import { VenezuelaBadge } from "./VenezuelaBadge";
  *  - Esc/click-fuera cierra el drawer móvil
  */
 
-export type NavLink = { href: string; label: string };
+export type NavLink = {
+  href: string;
+  label: string;
+  icon?: LucideIcon;
+  /** Color tema del item — drawer mobile pinta el icon tile con este tono */
+  tone?: "sun" | "sea" | "coral" | "purple" | "green" | "mute";
+};
 
 const DEFAULT_NAV: NavLink[] = [
-  { href: "/home", label: "Wallet" },
-  { href: "/cambiar", label: "Cambiar" },
-  { href: "/cobrar", label: "Cobrar" },
-  { href: "/remesas", label: "Remesas" },
-  { href: "/carlos", label: "Carlos" },
-  { href: "/comercios", label: "Comercios" },
-  // Servicios + Integraciones viven en drawer mobile + footer landing.
+  { href: "/home", label: "Wallet", icon: Wallet, tone: "sun" },
+  { href: "/cambiar", label: "Cambiar", icon: ArrowLeftRight, tone: "purple" },
+  { href: "/cobrar", label: "Cobrar", icon: QrCode, tone: "coral" },
+  { href: "/remesas", label: "Remesas", icon: Globe, tone: "sea" },
+  { href: "/carlos", label: "Carlos", icon: Bot, tone: "green" },
+  { href: "/comercios", label: "Comercios", icon: Store, tone: "sun" },
 ];
 
-/** Nav extendida para el drawer móvil — compactada por feedback de usuario.
- * Cambiar incluye Bs↔USDC ahora (no es ruta separada). Modo Agente vive
- * dentro de /carlos. Integraciones es B2B, no consumer.
- */
+/** Nav extendida para el drawer móvil — cada item con su icono + color */
 const FULL_NAV: NavLink[] = [
-  { href: "/home", label: "Wallet" },
-  { href: "/cambiar", label: "Cambiar" },
-  { href: "/cobrar", label: "Cobrar" },
-  { href: "/enviar", label: "Enviar" },
-  { href: "/guardar", label: "Guardar" },
-  { href: "/remesas", label: "Remesas" },
-  { href: "/pagar-servicios", label: "Servicios" },
-  { href: "/carlos", label: "Carlos AI" },
-  { href: "/comercios", label: "Comercios" },
-  { href: "/wallet/abrir", label: "Mi wallet" },
+  { href: "/home", label: "Wallet", icon: Wallet, tone: "sun" },
+  { href: "/cambiar", label: "Cambiar", icon: ArrowLeftRight, tone: "purple" },
+  { href: "/cobrar", label: "Cobrar", icon: QrCode, tone: "coral" },
+  { href: "/enviar", label: "Enviar", icon: Send, tone: "sea" },
+  { href: "/guardar", label: "Guardar", icon: Sprout, tone: "green" },
+  { href: "/remesas", label: "Remesas", icon: Globe, tone: "sea" },
+  { href: "/pagar-servicios", label: "Servicios", icon: Receipt, tone: "coral" },
+  { href: "/carlos", label: "Carlos AI", icon: Bot, tone: "green" },
+  { href: "/comercios", label: "Comercios", icon: Store, tone: "sun" },
+  { href: "/wallet/abrir", label: "Mi wallet", icon: KeyRound, tone: "purple" },
 ];
+
+const TONE_TILES: Record<NonNullable<NavLink["tone"]>, string> = {
+  sun: "bg-tropico-sun/15 text-tropico-sun border-tropico-sun/30",
+  sea: "bg-tropico-sea/15 text-tropico-sea border-tropico-sea/30",
+  coral: "bg-tropico-coral/15 text-tropico-coral border-tropico-coral/30",
+  purple: "bg-tropico-purple/15 text-tropico-purple border-tropico-purple/30",
+  green: "bg-tropico-green/15 text-tropico-green border-tropico-green/30",
+  mute: "bg-tropico-mute/15 text-tropico-mute border-tropico-mute/30",
+};
 
 const TONE_MAP = {
   sea: "bg-tropico-sea/15 text-tropico-sea border-tropico-sea/30",
@@ -187,8 +213,9 @@ function HeaderImpl({
             </nav>
           )}
 
-          {/* Right side: AuthCTA + hamburger — shrink-0 para no deformarse */}
+          {/* Right side: lang + AuthCTA + hamburger — shrink-0 para no deformarse */}
           <div className="flex shrink-0 items-center gap-2">
+            <LanguageSwitcher />
             <AuthCTA variant="compact" />
             {showNav && (
               <button
@@ -221,39 +248,54 @@ function HeaderImpl({
           />
           <aside
             id="mobile-drawer"
-            className={`fixed right-0 top-0 z-[60] flex h-dvh w-72 max-w-[85vw] flex-col gap-1 overflow-y-auto border-l border-tropico-border bg-tropico-ink px-5 pb-8 pt-6 backdrop-blur-xl transition-transform duration-300 ease-out ${
+            className={`fixed right-0 top-0 z-[60] flex h-dvh w-80 max-w-[88vw] flex-col gap-1 overflow-y-auto border-l border-tropico-border bg-gradient-to-b from-tropico-ink via-tropico-ink to-[#0d0716] px-4 pb-8 pt-5 backdrop-blur-xl transition-transform duration-300 ease-out ${
               badge ? "" : "md:hidden"
             } ${drawerOpen ? "translate-x-0" : "translate-x-full"}`}
             aria-label="Menú de navegación"
           >
-            {/* Botón cerrar interno + branding */}
-            <header className="mb-4 flex items-center justify-between border-b border-tropico-border pb-3">
-              <span className="font-display text-sm font-bold uppercase tracking-wider text-tropico-mute">
-                Menú
-              </span>
+            {/* Header drawer con gradient + branding wordmark */}
+            <header className="mb-3 flex items-center justify-between border-b border-tropico-border pb-3">
+              <div className="flex items-center gap-2">
+                <span className="text-2xl">🏝️</span>
+                <span className="font-display text-base font-black tracking-tight bg-gradient-to-r from-tropico-sun via-tropico-coral to-tropico-purple bg-clip-text text-transparent">
+                  Tropico
+                </span>
+              </div>
               <button
                 onClick={() => setDrawerOpen(false)}
                 aria-label="Cerrar menú"
-                className="flex size-8 items-center justify-center rounded-md border border-tropico-border bg-tropico-ink/40 text-tropico-text transition hover:border-tropico-coral hover:text-tropico-coral"
+                className="flex size-8 items-center justify-center rounded-full border border-tropico-border bg-tropico-ink/60 text-tropico-text transition hover:border-tropico-coral hover:text-tropico-coral"
               >
                 <X className="size-4" />
               </button>
             </header>
-            {/* En mobile mostramos TODAS las rutas, no solo las del nav desktop */}
+            {/* Mobile drawer: cada item con tile icono + color tema */}
             {FULL_NAV.map((link) => {
               const active = isActive(link.href);
+              const Icon = link.icon;
+              const tone = link.tone ?? "sun";
+              const tileCls = TONE_TILES[tone];
               return (
                 <Link
                   key={link.href}
                   href={link.href}
                   aria-current={active ? "page" : undefined}
-                  className={`rounded-lg px-3 py-2.5 text-sm transition-colors ${
+                  className={`group flex items-center gap-3 rounded-xl border px-3 py-2.5 transition-all ${
                     active
-                      ? "bg-tropico-sun/15 font-semibold text-tropico-sun"
-                      : "text-tropico-text hover:bg-tropico-sun/10 hover:text-tropico-sun"
+                      ? `${tileCls} font-semibold`
+                      : "border-transparent text-tropico-text hover:border-tropico-border hover:bg-tropico-ink/40"
                   }`}
                 >
-                  {link.label}
+                  <span
+                    className={`flex size-9 shrink-0 items-center justify-center rounded-lg border transition-transform group-hover:scale-105 ${
+                      active ? tileCls : `${tileCls.replace("/15", "/10")}`
+                    }`}
+                  >
+                    {Icon && <Icon className="size-4" strokeWidth={2.2} />}
+                  </span>
+                  <span className="flex flex-col text-left">
+                    <span className="text-sm leading-tight">{link.label}</span>
+                  </span>
                 </Link>
               );
             })}

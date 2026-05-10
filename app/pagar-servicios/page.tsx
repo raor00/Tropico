@@ -1,4 +1,5 @@
 import { PagarServiciosClient } from "./PagarServiciosClient";
+import { Suiche7BScan } from "@/components/Suiche7BScan";
 
 export const dynamic = "force-dynamic";
 
@@ -27,6 +28,9 @@ export default function PagarServiciosPage() {
           Sin colas, sin recargo, sin Bs en el medio. Tropico convierte tu USDC al rate del momento y emite el pago al proveedor.
         </p>
       </section>
+
+      {/* Tropico Bs Bridge — escanea QR Suiche7B y paga con USDC */}
+      <Suiche7BScan />
 
       {/* Client interactivo: grid de categorías + modal de pago */}
       <PagarServiciosClient />

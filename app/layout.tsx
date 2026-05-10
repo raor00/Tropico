@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Manrope, Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
+import { LanguageProvider } from "@/lib/i18n/context";
 import { SplashScreen } from "@/components/SplashScreen";
 import { BottomNav } from "@/components/BottomNav";
 import { Header } from "@/components/Header";
@@ -52,10 +53,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="tropico-glow min-h-dvh pb-20 md:pb-0">
         <SplashScreen />
         <Providers>
-          {/* Header global — fuera del main de cada page para usar viewport completo y mantener consistencia */}
-          <Header />
-          {children}
-          <BottomNav />
+          <LanguageProvider>
+            {/* Header global — fuera del main de cada page para usar viewport completo y mantener consistencia */}
+            <Header />
+            {children}
+            <BottomNav />
+          </LanguageProvider>
         </Providers>
       </body>
     </html>
