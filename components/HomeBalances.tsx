@@ -10,6 +10,8 @@ import { fetchAllBalances, EMPTY_BALANCES, type WalletBalances } from "@/lib/bal
 import { hasLocalWallet, getLocalWalletPubkey } from "@/lib/wallet-local";
 import { getActiveCluster, setActiveCluster, type Cluster } from "@/lib/cluster";
 import { HomeBalancesPrivyWrapper } from "@/components/HomeBalancesPrivy";
+import { fetchPrices, type TokenPrice } from "@/lib/prices";
+import type { TokenSymbol } from "@/lib/tokens";
 
 const PRIVY_ENABLED = !!process.env.NEXT_PUBLIC_PRIVY_APP_ID;
 
@@ -37,6 +39,7 @@ export function HomeBalances() {
 export function HomeBalancesCore({ externalPubkey }: { externalPubkey?: string | null } = {}) {
   const [pubkey, setPubkey] = useState<string | null>(null);
   const [balances, setBalances] = useState<WalletBalances>(EMPTY_BALANCES);
+  const [prices, setPrices] = useState<Record<TokenSymbol, TokenPrice> | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [lastFetch, setLastFetch] = useState<number>(0);
@@ -81,7 +84,7 @@ export function HomeBalancesCore({ externalPubkey }: { externalPubkey?: string |
     if (!pk) setLoading(false);
   }, [externalPubkey]);
 
-  // Fetch balances cuando hay pubkey + auto-refresh cada 30s
+  // Fetch balances + precios cuando hay pubkey + auto-refresh cada 30s
   useEffect(() => {
     if (!pubkey) return;
     let cancelled = false;
@@ -90,9 +93,13 @@ export function HomeBalancesCore({ externalPubkey }: { externalPubkey?: string |
     async function load() {
       try {
         setError(null);
-        const b = await fetchAllBalances(pubkey!);
+        const [b, p] = await Promise.all([
+          fetchAllBalances(pubkey!),
+          fetchPrices(),
+        ]);
         if (!cancelled) {
           setBalances(b);
+          setPrices(p);
           setLastFetch(Date.now());
         }
       } catch (e) {
@@ -112,9 +119,10 @@ export function HomeBalancesCore({ externalPubkey }: { externalPubkey?: string |
   function refresh() {
     if (!pubkey) return;
     setLoading(true);
-    fetchAllBalances(pubkey)
-      .then((b) => {
+    Promise.all([fetchAllBalances(pubkey), fetchPrices()])
+      .then(([b, p]) => {
         setBalances(b);
+        setPrices(p);
         setLastFetch(Date.now());
       })
       .catch((e) => setError((e as Error).message))
@@ -133,18 +141,31 @@ export function HomeBalancesCore({ externalPubkey }: { externalPubkey?: string |
     );
   }
 
-  // Mapear a BalanceList format
+  // Mapear a BalanceList format usando precios LIVE de Jupiter v3.
+  // Mientras carga, usa fallback estático (no rompe UI).
+  const px = (sym: TokenSymbol) => prices?.[sym] ?? { usd: 0, change24h: 0 };
   const balancesList = [
-    { symbol: "SOL", amount: balances.sol, usdValue: balances.sol * 180 },
-    { symbol: "USDC", amount: balances.usdc, usdValue: balances.usdc },
-    { symbol: "USDT", amount: balances.usdt, usdValue: balances.usdt },
-    { symbol: "JUP", amount: balances.jup, usdValue: balances.jup * 0.85 },
-    { symbol: "JTO", amount: balances.jto, usdValue: balances.jto * 3.2 },
-    { symbol: "mSOL", amount: balances.msol, usdValue: balances.msol * 200 },
-    { symbol: "KMNO", amount: balances.kmno, usdValue: balances.kmno * 0.08 },
-    { symbol: "RAY", amount: balances.ray, usdValue: balances.ray * 4.5 },
-    { symbol: "BONK", amount: balances.bonk, usdValue: balances.bonk * 0.000020 },
-  ].filter((b) => b.amount > 0); // solo mostrar tokens con saldo
+    { symbol: "SOL" as const, amount: balances.sol },
+    { symbol: "USDC" as const, amount: balances.usdc },
+    { symbol: "USDT" as const, amount: balances.usdt },
+    { symbol: "JUP" as const, amount: balances.jup },
+    { symbol: "JTO" as const, amount: balances.jto },
+    { symbol: "mSOL" as const, amount: balances.msol },
+    { symbol: "KMNO" as const, amount: balances.kmno },
+    { symbol: "RAY" as const, amount: balances.ray },
+    { symbol: "BONK" as const, amount: balances.bonk },
+    { symbol: "TROPI" as const, amount: balances.tropi },
+  ]
+    .filter((b) => b.amount > 0)
+    .map((b) => ({
+      symbol: b.symbol,
+      amount: b.amount,
+      valueUSD: b.amount * px(b.symbol).usd,
+      cambio24h: px(b.symbol).change24h,
+    }));
+
+  // Total real recalculado con precios live
+  const totalUsdLive = balancesList.reduce((acc, b) => acc + b.valueUSD, 0);
 
   return (
     <>
@@ -176,7 +197,7 @@ export function HomeBalancesCore({ externalPubkey }: { externalPubkey?: string |
             </button>
           </div>
         </header>
-        <DualPrice usd={balances.totalUsd} size="xl" />
+        <DualPrice usd={totalUsdLive} size="xl" />
         {error && (
           <p className="text-xs text-tropico-coral">
             ⚠ Error leyendo balance: {error}
@@ -210,7 +231,7 @@ export function HomeBalancesCore({ externalPubkey }: { externalPubkey?: string |
           <h2 className="text-xs font-semibold uppercase tracking-wider text-tropico-mute">
             Tus tokens
           </h2>
-          <BalanceList balances={balancesList as never} />
+          <BalanceList balances={balancesList} />
         </section>
       )}
 
