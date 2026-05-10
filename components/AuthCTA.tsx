@@ -94,7 +94,7 @@ function DemoButton({ variant, label }: { variant: Variant; label: string }) {
   // Resolver href + label según estado
   const cta = (() => {
     if (walletState === "unlocked") {
-      return { href: "/home", label: "Ir a mi wallet", labelCompact: "Mi wallet" };
+      return { href: "/perfil", label: "Mi Tropico", labelCompact: "Mi Tropico" };
     }
     if (walletState === "locked") {
       return { href: "/wallet/abrir", label: "Desbloquear wallet", labelCompact: "Abrir wallet" };
@@ -171,18 +171,18 @@ function PrivyButton({ variant, label }: { variant: Variant; label: string }) {
     if (variant === "primary") {
       return (
         <Link
-          href="/home"
+          href="/perfil"
           className="btn-primary inline-flex items-center gap-2"
         >
           <Wallet className="size-4" strokeWidth={2} aria-hidden="true" />
-          Abrir mi Tropico
+          Mi Tropico
           <ArrowRight className="size-4" strokeWidth={2} aria-hidden="true" />
         </Link>
       );
     }
     return (
       <Link
-        href="/home"
+        href="/perfil"
         className="rounded-full border border-tropico-sun/40 bg-tropico-sun/10 px-3 py-1 text-xs font-semibold text-tropico-sun"
       >
         Mi Tropico

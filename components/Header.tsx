@@ -81,7 +81,7 @@ const FULL_NAV: NavLink[] = [
   { href: "/pagar-servicios", label: "Servicios", icon: Receipt, tone: "coral" },
   { href: "/carlos", label: "Carlos AI", icon: Bot, tone: "green" },
   { href: "/comercios", label: "Comercios", icon: Store, tone: "sun" },
-  { href: "/perfil", label: "Mi perfil", icon: KeyRound, tone: "purple" },
+  { href: "/perfil", label: "Mi Tropico", icon: KeyRound, tone: "purple" },
 ];
 
 const TONE_TILES: Record<NonNullable<NavLink["tone"]>, string> = {
