@@ -16,12 +16,16 @@ import {
   Bot,
   Store,
   KeyRound,
+  Sparkles,
+  HandHeart,
+  TrendingUp,
   type LucideIcon,
 } from "lucide-react";
 import { Logo } from "./Logo";
 import { AuthCTA } from "./AuthCTA";
 import { VenezuelaBadge } from "./VenezuelaBadge";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { useWalletAuth } from "@/lib/auth-context";
 
 /**
  * Header optimizado.
@@ -51,6 +55,19 @@ const DEFAULT_NAV: NavLink[] = [
   { href: "/remesas", label: "Remesas", icon: Globe, tone: "sea" },
   { href: "/carlos", label: "Carlos", icon: Bot, tone: "green" },
   { href: "/comercios", label: "Comercios", icon: Store, tone: "sun" },
+];
+
+/**
+ * Landing nav — anchors a secciones de la misma landing (no rutas app).
+ * Solo se usa cuando NO hay wallet activa: el visitante explora landing
+ * sin entrar a /home, /cambiar, etc.
+ */
+const LANDING_NAV: NavLink[] = [
+  { href: "#producto", label: "Producto", icon: Sparkles, tone: "sun" },
+  { href: "#cambiar", label: "Cambiar", icon: ArrowLeftRight, tone: "purple" },
+  { href: "#remesas", label: "Remesas", icon: Globe, tone: "sea" },
+  { href: "#carlos", label: "Carlos", icon: Bot, tone: "green" },
+  { href: "#comercios", label: "Comercios", icon: Store, tone: "coral" },
 ];
 
 /** Nav extendida para el drawer móvil — cada item con su icono + color */
@@ -83,7 +100,7 @@ const TONE_MAP = {
 } as const;
 
 function HeaderImpl({
-  nav = DEFAULT_NAV,
+  nav: navProp,
   badge,
   showNav = true,
 }: {
@@ -91,6 +108,11 @@ function HeaderImpl({
   badge?: { label: string; tone?: keyof typeof TONE_MAP };
   showNav?: boolean;
 }) {
+  const { authed } = useWalletAuth();
+  // Si no se pasa nav explícito, decidimos según auth:
+  //   - authed → DEFAULT_NAV (rutas reales del wallet)
+  //   - sin wallet → LANDING_NAV (anchors a secciones de la landing)
+  const nav = navProp ?? (authed ? DEFAULT_NAV : LANDING_NAV);
   // Header static — sin compact-on-scroll. El cambio de altura on scroll
   // causaba content shift que re-disparaba scroll events en loop infinito
   // ("header saltando"). Mejor: padding fijo siempre, layout estable.
@@ -195,17 +217,30 @@ function HeaderImpl({
             >
               {nav.map((link) => {
                 const active = isActive(link.href);
+                const Icon = link.icon;
+                const tone = link.tone ?? "sun";
                 return (
                   <Link
                     key={link.href}
                     href={link.href}
                     aria-current={active ? "page" : undefined}
-                    className={`whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
+                    className={`group flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1.5 text-xs font-medium transition-colors ${
                       active
                         ? "bg-tropico-sun text-tropico-ink shadow-sm shadow-tropico-sun/40"
                         : "text-tropico-mute hover:bg-tropico-sun/10 hover:text-tropico-sun"
                     }`}
                   >
+                    {Icon && (
+                      <span
+                        className={`flex size-5 items-center justify-center rounded-full transition-colors ${
+                          active
+                            ? "bg-tropico-ink/20"
+                            : `${TONE_TILES[tone].split(" ")[0]} ${TONE_TILES[tone].split(" ")[1]}`
+                        }`}
+                      >
+                        <Icon className="size-3" strokeWidth={2.4} />
+                      </span>
+                    )}
                     {link.label}
                   </Link>
                 );

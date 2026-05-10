@@ -24,6 +24,7 @@ import { Logo } from "@/components/Logo";
 import { AuthCTA } from "@/components/AuthCTA";
 import { Badge } from "@/components/Badge";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import { AuthRedirect } from "@/components/AuthRedirect";
 import { VenezuelaBadge } from "@/components/VenezuelaBadge";
 
 const VALUE_CARDS = [
@@ -103,6 +104,8 @@ const REVENUE_STREAMS = [
 export default function LandingPage() {
   return (
     <main className="mx-auto flex min-h-dvh max-w-6xl flex-col gap-10 px-5 py-10 md:gap-20 md:py-16">
+      {/* Si user ya tiene wallet activa, mandar directo a /home */}
+      <AuthRedirect to="/home" />
       {/* HEADER flotante — anclado en top, flota al hacer scroll */}
 
       {/* HERO */}
@@ -154,7 +157,7 @@ export default function LandingPage() {
       </section>
 
       {/* PARA TODOS — onboarding accesible + dueño real de tu wallet */}
-      <ScrollReveal direction="up" as="section" className="flex flex-col gap-8">
+      <ScrollReveal id="producto" direction="up" as="section" className="flex flex-col gap-8 scroll-mt-24">
         <div className="space-y-2">
           <span className="inline-flex items-center gap-1.5 text-xs uppercase tracking-widest text-tropico-sea">
             <Users className="size-3.5" /> Para cualquier venezolano
@@ -363,7 +366,7 @@ export default function LandingPage() {
       </ScrollReveal>
 
       {/* EL PROBLEMA — 4 stats grandes */}
-      <ScrollReveal direction="up" as="section" className="flex flex-col gap-8">
+      <ScrollReveal id="remesas" direction="up" as="section" className="flex flex-col gap-8 scroll-mt-24">
         <div className="space-y-2">
           <span className="text-xs uppercase tracking-widest text-tropico-coral">
             El problema
@@ -407,7 +410,7 @@ export default function LandingPage() {
       </ScrollReveal>
 
       {/* VALUE CARDS — Conoce / Cambia / Crece */}
-      <ScrollReveal direction="up" delay={100} as="section" className="flex flex-col gap-8">
+      <ScrollReveal id="cambiar" direction="up" delay={100} as="section" className="flex flex-col gap-8 scroll-mt-24">
         <div className="space-y-2">
           <span className="text-xs uppercase tracking-widest text-tropico-sun">
             La solución
@@ -486,7 +489,7 @@ export default function LandingPage() {
       </ScrollReveal>
 
       {/* PARA COMERCIOS — preview con comparativa POS tradicional */}
-      <ScrollReveal direction="left" as="section" className="grid gap-6 panel p-5 md:grid-cols-2 md:items-center md:p-8">
+      <ScrollReveal id="comercios" direction="left" as="section" className="grid gap-6 panel p-5 md:grid-cols-2 md:items-center md:p-8 scroll-mt-24">
         <div className="flex flex-col gap-4">
           <div className="inline-flex w-fit items-center gap-2 rounded-md bg-tropico-coral/15 px-2 py-0.5 text-xs font-semibold uppercase tracking-widest text-tropico-coral">
             <Store className="size-3" strokeWidth={2.5} />
@@ -526,7 +529,7 @@ export default function LandingPage() {
       </ScrollReveal>
 
       {/* CARLOS AI BY LUMEN — sección dedicada, el diferencial principal */}
-      <ScrollReveal direction="right" as="section" className="relative flex flex-col gap-8 overflow-hidden">
+      <ScrollReveal id="carlos" direction="right" as="section" className="relative flex flex-col gap-8 overflow-hidden scroll-mt-24">
         {/* Background accent */}
         <div
           className="pointer-events-none absolute inset-0 -z-10 opacity-30"
