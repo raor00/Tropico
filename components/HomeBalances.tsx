@@ -169,60 +169,104 @@ export function HomeBalancesCore({ externalPubkey }: { externalPubkey?: string |
 
   return (
     <>
-      {/* Saldo total — minimal mobile, full desktop */}
-      <section className="panel flex flex-col gap-2 p-3 md:gap-3 md:p-5">
+      {/* MOBILE: card minimalista estilo Kumo con esencia Tropico — gradiente
+          caribeño + isla 🏝️ + connected status + USD grande */}
+      <section className="md:hidden relative overflow-hidden rounded-3xl border border-tropico-sun/15 bg-gradient-to-br from-tropico-ink via-[#1a0d2e] to-[#231038] p-4 shadow-[0_8px_24px_rgba(0,0,0,0.35)]">
+        {/* Sheen radial top-right caribbean */}
+        <div className="pointer-events-none absolute -right-12 -top-12 size-40 rounded-full bg-gradient-to-br from-tropico-sun/25 via-tropico-coral/15 to-transparent blur-2xl" />
+        <div className="pointer-events-none absolute -left-8 bottom-0 size-28 rounded-full bg-tropico-sea/10 blur-2xl" />
+
+        <div className="relative flex flex-col gap-3">
+          {/* Top row: label + cluster badge */}
+          <header className="flex items-center justify-between">
+            <span className="text-[10px] uppercase tracking-[0.18em] text-tropico-mute">
+              Saldo disponible
+            </span>
+            <div className="flex items-center gap-1.5">
+              <button
+                onClick={toggleCluster}
+                className={`rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider transition ${
+                  cluster === "mainnet-beta"
+                    ? "bg-tropico-green/15 text-tropico-green ring-1 ring-tropico-green/30"
+                    : "bg-tropico-coral/15 text-tropico-coral ring-1 ring-tropico-coral/30"
+                }`}
+              >
+                {cluster === "mainnet-beta" ? "MAIN" : "DEV"}
+              </button>
+              <button
+                onClick={refresh}
+                disabled={loading}
+                className="text-tropico-mute hover:text-tropico-sun disabled:opacity-50"
+                aria-label="Actualizar"
+              >
+                <RefreshCw className={`size-3 ${loading ? "animate-spin" : ""}`} />
+              </button>
+            </div>
+          </header>
+
+          {/* Layout 2 col: monto a la izq, isla a la derecha */}
+          <div className="flex items-end justify-between gap-2">
+            <div className="flex flex-col">
+              <div className="font-display text-[2.5rem] font-black leading-none tracking-tight bg-gradient-to-br from-white via-tropico-sun/95 to-tropico-coral/85 bg-clip-text text-transparent tabular-nums">
+                ${totalUsdLive.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              </div>
+              <div className="mt-1 text-xs font-semibold text-tropico-mute">
+                {balances.usdc.toFixed(2)} USDC
+                {balancesList.length > 1 && (
+                  <span className="text-tropico-mute/70"> · +{balancesList.length - 1} más</span>
+                )}
+              </div>
+
+              {/* Connected pill — Solana on-chain */}
+              <div className="mt-3 inline-flex w-fit items-center gap-1.5 rounded-full border border-tropico-green/30 bg-tropico-green/10 px-2.5 py-1 text-[10px] font-semibold text-tropico-green">
+                <span className="relative flex size-1.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-tropico-green opacity-60" />
+                  <span className="relative inline-flex size-1.5 rounded-full bg-tropico-green" />
+                </span>
+                On-chain · Solana
+              </div>
+            </div>
+
+            {/* Isla mascot — bouncing emoji con halo */}
+            <div className="relative flex size-24 shrink-0 items-center justify-center">
+              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-tropico-sun/20 to-tropico-coral/10 blur-xl" />
+              <span className="relative text-5xl drop-shadow-[0_4px_12px_rgba(255,180,80,0.3)]">
+                🏝️
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* DESKTOP: panel completo con DualPrice + 3-col breakdown */}
+      <section className="hidden md:flex panel flex-col gap-3 p-5">
         <header className="flex items-center justify-between gap-2">
-          <span className="text-[10px] uppercase tracking-wider text-tropico-mute md:text-xs md:normal-case md:tracking-normal">
-            <span className="md:hidden">Saldo</span>
-            <span className="hidden md:inline">Saldo total · on-chain</span>
-          </span>
-          <div className="flex items-center gap-1.5 md:gap-2">
+          <span className="text-xs text-tropico-mute">Saldo total · on-chain</span>
+          <div className="flex items-center gap-2">
             <button
               onClick={toggleCluster}
-              className={`rounded-full px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider transition md:px-2 ${
+              className={`rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider transition ${
                 cluster === "mainnet-beta"
                   ? "bg-tropico-green/15 text-tropico-green hover:bg-tropico-green/25"
                   : "bg-tropico-coral/15 text-tropico-coral hover:bg-tropico-coral/25"
               }`}
               title="Click para cambiar entre mainnet y devnet"
             >
-              {cluster === "mainnet-beta" ? "MAIN" : "DEV"}
+              {cluster === "mainnet-beta" ? "MAINNET" : "DEVNET"} ⇄
             </button>
             <button
               onClick={refresh}
               disabled={loading}
               className="inline-flex items-center gap-1 text-[10px] text-tropico-mute hover:text-tropico-sun disabled:opacity-50"
-              aria-label="Actualizar"
             >
               <RefreshCw className={`size-3 ${loading ? "animate-spin" : ""}`} />
-              <span className="hidden md:inline">
-                {lastFetch
-                  ? `Hace ${Math.max(1, Math.round((Date.now() - lastFetch) / 1000))}s`
-                  : "Cargando…"}
-              </span>
+              {lastFetch
+                ? `Hace ${Math.max(1, Math.round((Date.now() - lastFetch) / 1000))}s`
+                : "Cargando…"}
             </button>
           </div>
         </header>
-        {/* Mobile: solo USD grande, sin Bs ni 3-col. Desktop: layout completo. */}
-        <div className="md:hidden">
-          <div className="font-display text-3xl font-black tabular-nums tracking-tight text-tropico-text">
-            ${totalUsdLive.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-          </div>
-          <div className="mt-0.5 flex items-center gap-2 text-[10px] text-tropico-mute">
-            <span>USDC: <span className="font-semibold text-tropico-green">{balances.usdc.toFixed(2)}</span></span>
-            <span>·</span>
-            <span>SOL: <span className="font-semibold text-tropico-text">{balances.sol.toFixed(4)}</span></span>
-            {balancesList.length > 2 && (
-              <>
-                <span>·</span>
-                <span>+{balancesList.length - 2} tokens</span>
-              </>
-            )}
-          </div>
-        </div>
-        <div className="hidden md:block">
-          <DualPrice usd={totalUsdLive} size="xl" />
-        </div>
+        <DualPrice usd={totalUsdLive} size="xl" />
         {error && (
           <p className="text-[10px] text-tropico-coral md:text-xs">
             ⚠ Error: {error}
