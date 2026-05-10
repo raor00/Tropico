@@ -188,17 +188,17 @@ export function HomeBalancesCore({ externalPubkey }: { externalPubkey?: string |
               <DevnetFaucetButton />
             </div>
             <div className="flex items-center gap-1.5">
-              {/* Solo mostrar pill si está en devnet (modo demo). En mainnet no aparece. */}
-              {cluster === "devnet" && (
-                <button
-                  onClick={toggleCluster}
-                  className="inline-flex items-center gap-1 rounded-full bg-tropico-coral/15 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-tropico-coral ring-1 ring-tropico-coral/30 transition hover:bg-tropico-coral/25"
-                  title="Click para volver a mainnet"
-                >
-                  <span className="size-1.5 animate-pulse rounded-full bg-tropico-coral" />
-                  Modo demo
-                </button>
-              )}
+              <button
+                onClick={toggleCluster}
+                className={`rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider transition ${
+                  cluster === "mainnet-beta"
+                    ? "bg-tropico-green/15 text-tropico-green ring-1 ring-tropico-green/30 hover:bg-tropico-green/25"
+                    : "bg-tropico-coral/15 text-tropico-coral ring-1 ring-tropico-coral/30 hover:bg-tropico-coral/25"
+                }`}
+                title="Click para cambiar entre mainnet y devnet"
+              >
+                {cluster === "mainnet-beta" ? "MAIN" : "DEV"}
+              </button>
               <button
                 onClick={refresh}
                 disabled={loading}
@@ -249,16 +249,17 @@ export function HomeBalancesCore({ externalPubkey }: { externalPubkey?: string |
         <header className="flex items-center justify-between gap-2">
           <span className="text-xs text-tropico-mute">Saldo total · on-chain</span>
           <div className="flex items-center gap-2">
-            {cluster === "devnet" && (
-              <button
-                onClick={toggleCluster}
-                className="inline-flex items-center gap-1.5 rounded-full bg-tropico-coral/15 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-tropico-coral hover:bg-tropico-coral/25"
-                title="Click para volver a mainnet"
-              >
-                <span className="size-1.5 animate-pulse rounded-full bg-tropico-coral" />
-                Modo demo
-              </button>
-            )}
+            <button
+              onClick={toggleCluster}
+              className={`rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider transition ${
+                cluster === "mainnet-beta"
+                  ? "bg-tropico-green/15 text-tropico-green hover:bg-tropico-green/25"
+                  : "bg-tropico-coral/15 text-tropico-coral hover:bg-tropico-coral/25"
+              }`}
+              title="Click para cambiar entre mainnet y devnet"
+            >
+              {cluster === "mainnet-beta" ? "MAINNET" : "DEVNET"} ⇄
+            </button>
             <button
               onClick={refresh}
               disabled={loading}
