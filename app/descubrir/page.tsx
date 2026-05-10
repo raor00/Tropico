@@ -17,12 +17,12 @@ export default function DescubrirPage() {
           &larr; Volver
         </Link>
         <span className="inline-flex w-fit items-center gap-2 rounded-full border border-tropico-border bg-tropico-panel px-3 py-1 text-xs text-tropico-purple">
-          M&aacute;s all&aacute; del USDT
+          Más allá del USDT
         </span>
         <h1 className="h-display">Descubre el ecosistema</h1>
         <p className="max-w-2xl text-tropico-mute">
-          Solana tiene mucho m&aacute;s que USDT. Conoce ocho tokens curados, qu&eacute; hacen,
-          y por qu&eacute; podr&iacute;an importarte. Tap a cualquiera para cambiar a ese token.
+          Solana tiene mucho más que USDT. Conoce ocho tokens curados, qué hacen,
+          y por qué podrían importarte. Tap a cualquiera para cambiar a ese token.
         </p>
       </header>
       <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -31,7 +31,7 @@ export default function DescubrirPage() {
         ))}
       </section>
       <footer className="mt-auto border-t border-tropico-border pt-6 text-xs text-tropico-mute">
-        Tropico no es asesor financiero. Esta informaci&oacute;n es educativa, panita.
+        Tropico no es asesor financiero. Esta información es educativa, panita.
       </footer>
     </main>
   );

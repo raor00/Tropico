@@ -20,10 +20,10 @@ export function ComparativaTabla() {
     <div className="panel overflow-hidden">
       <div className="border-b border-tropico-border bg-tropico-ink/40 px-5 py-4">
         <h3 className="font-display text-xl font-bold">
-          Cu&aacute;nto te ahorras vs POS tradicional
+          Cuánto te ahorras vs POS tradicional
         </h3>
         <p className="text-sm text-tropico-mute">
-          Sobre tu volumen mensual real de ventas. C&aacute;lculo conservador, sin contar
+          Sobre tu volumen mensual real de ventas. Cálculo conservador, sin contar
           tiempo ahorrado en settlement ni chargebacks evitados.
         </p>
       </div>
@@ -73,8 +73,8 @@ export function ComparativaTabla() {
 
       <div className="border-t border-tropico-border bg-gradient-to-r from-tropico-green/10 to-transparent px-5 py-4">
         <p className="text-sm text-tropico-text/90">
-          Eso son entre <strong>$420</strong> y <strong>$10.500</strong> al a&ntilde;o
-          en tu bolsillo. Por solo cambiar tu m&eacute;todo de cobro.
+          Eso son entre <strong>$420</strong> y <strong>$10.500</strong> al año
+          en tu bolsillo. Por solo cambiar tu método de cobro.
         </p>
         <p className="mt-2 text-xs text-tropico-mute">
           Con Tropico, <span className="font-semibold text-tropico-sea">recibes el 100% del precio que pones</span>.

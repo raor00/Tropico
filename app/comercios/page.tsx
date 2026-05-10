@@ -5,7 +5,7 @@ import { Logo } from "@/components/Logo";
 import { InAppPreviewBanner } from "@/components/InAppPreviewBanner";
 
 export const metadata = {
-  title: "Tropico Comercios — Cobra en d&oacute;lares sin banco tradicional",
+  title: "Tropico Comercios — Cobra en dólares sin banco tradicional",
   description:
     "Aceptá pagos en USDC con un código QR. La plata te llega al instante. Pagas 1% en lugar del 4.5% del POS tradicional. Sin contrato, sin POS, sin esperas.",
 };
@@ -18,12 +18,12 @@ const FEATURES = [
   },
   {
     titulo: "Settlement <1 segundo",
-    detalle: "vs 24-72 horas del POS tradicional. La plata es tuya al instante, no en 3 d&iacute;as.",
+    detalle: "vs 24-72 horas del POS tradicional. La plata es tuya al instante, no en 3 días.",
     color: "from-tropico-purple/30 to-transparent",
   },
   {
     titulo: "Sin chargebacks",
-    detalle: "Pagos on-chain son finales. Nadie te puede revertir un cobro despu&eacute;s.",
+    detalle: "Pagos on-chain son finales. Nadie te puede revertir un cobro después.",
     color: "from-tropico-coral/30 to-transparent",
   },
   {
@@ -32,8 +32,8 @@ const FEATURES = [
     color: "from-tropico-sun/30 to-transparent",
   },
   {
-    titulo: "Cobras en d&oacute;lares (USDC)",
-    detalle: "No m&aacute;s bol&iacute;vares devalu&aacute;ndose entre la venta y el cierre del d&iacute;a.",
+    titulo: "Cobras en dólares (USDC)",
+    detalle: "No más bolívares devaluándose entre la venta y el cierre del día.",
     color: "from-tropico-sea/30 to-transparent",
   },
   {
@@ -46,7 +46,7 @@ const FEATURES = [
 const STEPS = [
   {
     paso: "1",
-    titulo: "Conect&aacute; tu wallet",
+    titulo: "Conectá tu wallet",
     detalle:
       "Login con email. Sin instalar nada, sin conocimientos de cripto. 30 segundos.",
   },
@@ -54,7 +54,7 @@ const STEPS = [
     paso: "2",
     titulo: "Genera tu QR",
     detalle:
-      "Ingresa el monto a cobrar. Un c&oacute;digo aparece en tu pantalla.",
+      "Ingresa el monto a cobrar. Un código aparece en tu pantalla.",
   },
   {
     paso: "3",
@@ -89,7 +89,7 @@ export default function ComerciosPage() {
           Para bodegas, freelancers y comercios venezolanos
         </span>
         <h1 className="h-display break-words">
-          Cobra en d&oacute;lares.<br />
+          Cobra en dólares.<br />
           <span className="bg-gradient-to-r from-tropico-coral to-tropico-sun bg-clip-text text-transparent">
             Sin banco tradicional. Sin POS. Sin esperas.
           </span>
@@ -105,7 +105,7 @@ export default function ComerciosPage() {
             Quiero afiliar mi negocio &rarr;
           </Link>
           <Link href="#como-funciona" className="btn-ghost">
-            C&oacute;mo funciona en 60 segundos
+            Cómo funciona en 60 segundos
           </Link>
         </div>
       </section>
@@ -119,7 +119,7 @@ export default function ComerciosPage() {
       <section className="flex flex-col gap-6">
         <div>
           <h2 className="font-display text-3xl font-bold">
-            Por qu&eacute; los comercios eligen Tropico
+            Por qué los comercios eligen Tropico
           </h2>
           <p className="text-tropico-mute">
             6 razones concretas, sin marketing hueco.
@@ -146,11 +146,11 @@ export default function ComerciosPage() {
         </div>
       </section>
 
-      {/* C&oacute;mo funciona — 3 pasos */}
+      {/* Cómo funciona — 3 pasos */}
       <section id="como-funciona" className="flex flex-col gap-6">
         <div>
           <h2 className="font-display text-3xl font-bold">
-            C&oacute;mo funciona
+            Cómo funciona
           </h2>
           <p className="text-tropico-mute">3 pasos. Cero burocracia.</p>
         </div>
@@ -204,7 +204,7 @@ export default function ComerciosPage() {
         </div>
       </section>
 
-      {/* Form de afiliaci&oacute;n */}
+      {/* Form de afiliación */}
       <section id="afiliar" className="grid gap-8 md:grid-cols-2 md:items-start">
         <div className="flex flex-col gap-4">
           <h2 className="font-display text-3xl font-bold">
@@ -217,11 +217,11 @@ export default function ComerciosPage() {
           <ul className="flex flex-col gap-2 text-sm">
             <li className="flex items-start gap-2">
               <span className="text-tropico-green">✓</span>
-              <span>Cero costo de afiliaci&oacute;n</span>
+              <span>Cero costo de afiliación</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-tropico-green">✓</span>
-              <span>Soporte en WhatsApp en espa&ntilde;ol</span>
+              <span>Soporte en WhatsApp en español</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-tropico-green">✓</span>
@@ -229,12 +229,12 @@ export default function ComerciosPage() {
             </li>
             <li className="flex items-start gap-2">
               <span className="text-tropico-green">✓</span>
-              <span>Logo &laquo;Acepta Tropico&raquo; descargable para tu vidriera</span>
+              <span>Logo «Acepta Tropico» descargable para tu vidriera</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-tropico-green">✓</span>
               <span>
-                Listado p&uacute;blico en el directorio para que clientes te encuentren
+                Listado público en el directorio para que clientes te encuentren
               </span>
             </li>
           </ul>
@@ -244,8 +244,8 @@ export default function ComerciosPage() {
 
       {/* Footer */}
       <footer className="mt-auto flex flex-col gap-2 border-t border-tropico-border pt-6 text-xs text-tropico-mute md:flex-row md:justify-between">
-        <span>&copy; 2026 Red Tropico &middot; dev3pack hackathon</span>
-        <span>Hecho en Venezuela &middot; Construido sobre Solana</span>
+        <span>&copy; 2026 Red Tropico · dev3pack hackathon</span>
+        <span>Hecho en Venezuela · Construido sobre Solana</span>
       </footer>
     </main>
   );

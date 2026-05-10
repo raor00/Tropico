@@ -45,7 +45,7 @@ const MODULES = [
     href: "/enviar",
     Icon: Send,
     titulo: "Enviar",
-    descripcion: "Manda USDC a quien quieras, instant&aacute;neo",
+    descripcion: "Manda USDC a quien quieras, instantáneo",
     gradient: "from-tropico-sun/30 to-tropico-coral/15",
     badge: "Send",
   },
@@ -53,7 +53,7 @@ const MODULES = [
     href: "/guardar",
     Icon: Sprout,
     titulo: "Guardar",
-    descripcion: "Tu plata generando ~5% al a&ntilde;o autom&aacute;tico",
+    descripcion: "Tu plata generando ~5% al año automático",
     gradient: "from-tropico-sea/30 to-tropico-green/10",
     badge: "Yield",
   },
@@ -140,10 +140,10 @@ export default function HomePage() {
           </div>
           <div className="min-w-0 flex-1">
             <div className="text-sm font-semibold text-tropico-text">
-              Pr&oacute;ximo DCA: {formatUSD(MOCK_NEXT_DCA.monto)} → {MOCK_NEXT_DCA.tokenDestino}
+              Próximo DCA: {formatUSD(MOCK_NEXT_DCA.monto)} → {MOCK_NEXT_DCA.tokenDestino}
             </div>
             <div className="text-xs text-tropico-mute">
-              Lunes 10:00 — Carlos lo ejecuta autom&aacute;tico
+              Lunes 10:00 — Carlos lo ejecuta automático
             </div>
           </div>
         </Link>

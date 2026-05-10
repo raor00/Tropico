@@ -81,7 +81,7 @@ export function ReceiveQR() {
     return (
       <div className="flex flex-col gap-6">
         <div className="panel flex flex-col gap-4 p-6">
-          <h2 className="font-display text-xl font-bold">Cu&aacute;nto cobras?</h2>
+          <h2 className="font-display text-xl font-bold">Cuánto cobras?</h2>
           <input
             type="number"
             inputMode="decimal"
@@ -127,7 +127,7 @@ export function ReceiveQR() {
           <div className="flex-1 text-sm">
             <div className="font-semibold">Esperando pago…</div>
             <div className="text-xs text-tropico-mute">
-              Pasame el c&oacute;digo a tu cliente para que escanee
+              Pasame el código a tu cliente para que escanee
             </div>
           </div>
         </div>
@@ -140,7 +140,7 @@ export function ReceiveQR() {
             <div
               className="size-72"
               dangerouslySetInnerHTML={{ __html: qrSvg }}
-              aria-label="C&oacute;digo QR de cobro"
+              aria-label="Código QR de cobro"
             />
           ) : (
             <div className="size-72 animate-pulse bg-tropico-ink" />
@@ -166,7 +166,7 @@ export function ReceiveQR() {
             </p>
           </div>
           <p className="mt-3 text-xs text-tropico-mute">
-            Fee 1% se cobra al cliente — tú recibes lo que pediste. Cobro en USDC &middot; Solana
+            Fee 1% se cobra al cliente — tú recibes lo que pediste. Cobro en USDC · Solana
           </p>
         </div>
       </div>
@@ -195,8 +195,8 @@ export function ReceiveQR() {
       </div>
 
       <p className="text-center text-xs text-tropico-mute">
-        En producci&oacute;n, Tropico escucha la blockchain con `findReference` y detecta
-        el pago autom&aacute;tico. Para demo, usa el bot&oacute;n &laquo;Simular&raquo;.
+        En producción, Tropico escucha la blockchain con `findReference` y detecta
+        el pago automático. Para demo, usa el botón «Simular».
       </p>
     </div>
   );

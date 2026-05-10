@@ -48,7 +48,7 @@ export function VenezuelaBadge({
         <span className="size-1.5 rounded-full bg-tropico-sun animate-pulse-warm" />
         <span aria-hidden>🇻🇪</span>
         Hecho en Venezuela
-        <span className="text-tropico-mute">&middot;</span>
+        <span className="text-tropico-mute">·</span>
         <span className="text-tropico-sea">Para el Caribe</span>
       </span>
     </span>

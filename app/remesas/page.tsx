@@ -573,7 +573,7 @@ export default function RemesasPage() {
           </Link>
         </div>
         <p className="text-xs">
-          Tropico nunca toca tus llaves &middot; Non-custodial on Solana &middot; Verifica
+          Tropico nunca toca tus llaves · Non-custodial on Solana · Verifica
           cada transacción en{" "}
           <a
             href="https://solscan.io"

@@ -47,7 +47,7 @@ export function TokenCard({ token }: { token: TokenInfo }) {
       <p className="text-sm font-medium text-tropico-text/90">{token.vibe}</p>
       <p
         className="text-sm leading-relaxed text-tropico-mute"
-        // dangerouslySetInnerHTML porque el copy contiene HTML entities (&aacute;, &eacute;, etc.)
+        // dangerouslySetInnerHTML porque el copy contiene HTML entities (á, é, etc.)
         dangerouslySetInnerHTML={{ __html: token.pitchVE }}
       />
 

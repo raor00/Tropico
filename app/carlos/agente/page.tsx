@@ -30,7 +30,7 @@ export default function ModoAgentePage() {
             <div>
               <h1 className="font-display text-3xl font-bold">Modo Agente</h1>
               <p className="text-sm text-tropico-mute">
-                Carlos puede ejecutar acciones con tu permiso, dentro de l&iacute;mites que tú defines
+                Carlos puede ejecutar acciones con tu permiso, dentro de límites que tú defines
               </p>
             </div>
           </div>
@@ -44,8 +44,8 @@ export default function ModoAgentePage() {
         <div className="flex flex-col gap-1">
           <span className="font-semibold text-tropico-coral">Demo del hackathon</span>
           <span className="text-tropico-mute">
-            Las acciones se ejecutan manualmente con un click. En producci&oacute;n
-            (Q3 2026) van sobre el stack ag&eacute;ntico h&iacute;brido descrito m&aacute;s abajo.
+            Las acciones se ejecutan manualmente con un click. En producción
+            (Q3 2026) van sobre el stack agéntico híbrido descrito más abajo.
           </span>
         </div>
       </div>
@@ -85,7 +85,7 @@ export default function ModoAgentePage() {
           >
             Lumen
           </a>
-          , el framework open source de agentes en espa&ntilde;ol creado por{" "}
+          , el framework open source de agentes en español creado por{" "}
           <a
             href="https://github.com/gabogabucho/lumen-agent"
             target="_blank"
@@ -95,7 +95,7 @@ export default function ModoAgentePage() {
             @gabogabucho
           </a>
           .
-          Construimos un kit de tres capas — <strong>KIT &middot; SKILLS &middot; CAPABILITIES</strong> — que
+          Construimos un kit de tres capas — <strong>KIT · SKILLS · CAPABILITIES</strong> — que
           es portable a cualquier orquestador compatible con la spec de skills (incluido
           Hermes/OpenClaw).
         </p>
@@ -112,8 +112,8 @@ export default function ModoAgentePage() {
               <code className="text-tropico-text">personality.yaml</code>
             </p>
             <p className="mt-2 text-xs text-tropico-mute">
-              Define qu&eacute; es Carlos, c&oacute;mo habla (espa&ntilde;ol venezolano, sin jerga),
-              qu&eacute; nunca hace (pol&iacute;tica, prometer rendimientos).
+              Define qué es Carlos, cómo habla (español venezolano, sin jerga),
+              qué nunca hace (política, prometer rendimientos).
             </p>
           </div>
           <div className="rounded-xl border border-tropico-sea/30 bg-tropico-sea/5 p-4">
@@ -125,8 +125,8 @@ export default function ModoAgentePage() {
               <code className="text-tropico-text">SKILL.md</code> + <code className="text-tropico-text">module.yaml</code> por skill
             </p>
             <p className="mt-2 text-xs text-tropico-mute">
-              Hoja de ruta operativa que el LLM lee para saber qu&eacute; comandos
-              correr y c&oacute;mo rutear pedidos.
+              Hoja de ruta operativa que el LLM lee para saber qué comandos
+              correr y cómo rutear pedidos.
             </p>
           </div>
           <div className="rounded-xl border border-tropico-coral/30 bg-tropico-coral/5 p-4">
@@ -139,7 +139,7 @@ export default function ModoAgentePage() {
             </p>
             <p className="mt-2 text-xs text-tropico-mute">
               Lo que se ejecuta de verdad — quote a Jupiter, lookup de saldo,
-              tasa USD/Bs, firma v&iacute;a Privy delegated key.
+              tasa USD/Bs, firma vía Privy delegated key.
             </p>
           </div>
         </div>
@@ -152,13 +152,13 @@ export default function ModoAgentePage() {
           <ul className="grid gap-x-6 gap-y-1.5 text-xs text-tropico-mute md:grid-cols-2">
             <li><code className="text-tropico-sun">tropico-balances</code> — saldos SPL del wallet</li>
             <li><code className="text-tropico-sun">tropico-prices</code> — USD/Bs, USD/SOL via DolarAPI</li>
-            <li><code className="text-tropico-sun">tropico-swap</code> — quote v&iacute;a Jupiter v6 + 0.5% fee</li>
+            <li><code className="text-tropico-sun">tropico-swap</code> — quote vía Jupiter v6 + 0.5% fee</li>
             <li><code className="text-tropico-sun">tropico-pay</code> — Solana Pay QR + reference tracking</li>
             <li><code className="text-tropico-sun">tropico-yield</code> — vaults Marinade/Kamino, APY estimado</li>
             <li><code className="text-tropico-sun">tropico-cashback</code> — saldo acumulado por merchant</li>
             <li className="md:col-span-2 mt-1 border-t border-tropico-border pt-1.5">
               <code className="text-tropico-purple">tropico-agent-actions</code> —
-              orquesta las 4 acciones aut&oacute;nomas v&iacute;a OpenClaw + Privy delegated keys
+              orquesta las 4 acciones autónomas vía OpenClaw + Privy delegated keys
             </li>
           </ul>
         </div>
@@ -166,15 +166,15 @@ export default function ModoAgentePage() {
         {/* Por qué importa */}
         <div className="grid gap-3 text-xs text-tropico-mute md:grid-cols-2">
           <div className="rounded-lg bg-tropico-ink/40 p-3">
-            <strong className="text-tropico-text">¿Por qu&eacute; un kit?</strong>{" "}
+            <strong className="text-tropico-text">¿Por qué un kit?</strong>{" "}
             En lugar de un prompt monstruo, separamos personalidad de capacidades. Puedes
-            cambiar el modelo (DeepSeek hoy, Claude ma&ntilde;ana) sin tocar las skills.
+            cambiar el modelo (DeepSeek hoy, Claude mañana) sin tocar las skills.
           </div>
           <div className="rounded-lg bg-tropico-ink/40 p-3">
-            <strong className="text-tropico-text">¿Por qu&eacute; replicable?</strong>{" "}
-            Las skills son markdown + YAML — la misma definici&oacute;n corre sobre Lumen,
-            Hermes (a trav&eacute;s de un adapter) o cualquier MCP server. Las capabilities son
-            scripts Python est&aacute;ndar.
+            <strong className="text-tropico-text">¿Por qué replicable?</strong>{" "}
+            Las skills son markdown + YAML — la misma definición corre sobre Lumen,
+            Hermes (a través de un adapter) o cualquier MCP server. Las capabilities son
+            scripts Python estándar.
           </div>
         </div>
       </section>
@@ -191,7 +191,7 @@ export default function ModoAgentePage() {
               Carlos AI <span className="text-tropico-purple">by Lumen</span>
             </h2>
             <p className="text-xs text-tropico-mute">
-              Tropico eligi&oacute; Lumen como motor. El kit es portable —
+              Tropico eligió Lumen como motor. El kit es portable —
               Hermes y OpenClaw son alternativas opcionales para quien las quiera.
             </p>
           </div>
@@ -209,7 +209,7 @@ export default function ModoAgentePage() {
             </span>
           </header>
           <p className="text-sm leading-relaxed text-tropico-mute">
-            Framework open source MIT en espa&ntilde;ol por{" "}
+            Framework open source MIT en español por{" "}
             <a
               href="https://github.com/gabogabucho/lumen-agent"
               target="_blank"
@@ -219,12 +219,12 @@ export default function ModoAgentePage() {
               @gabogabucho
             </a>. Orquesta el Tropico Web3 Kit completo: carga la personality,
             invoca skills via tool calling, ejecuta capabilities Python con allowlist de binarios,
-            expone REST API. Es lo que Tropico usa hoy en producci&oacute;n.
+            expone REST API. Es lo que Tropico usa hoy en producción.
           </p>
           <ul className="flex flex-col gap-1 text-xs text-tropico-mute">
             <li>• <strong className="text-tropico-text">Personality + skills + capabilities</strong> en arquitectura declarativa de 3 capas</li>
             <li>• <strong className="text-tropico-text">Hot reload</strong> de skills sin restart del server</li>
-            <li>• <strong className="text-tropico-text">Espa&ntilde;ol nativo</strong> — no es orquestador con diseño nativo para LATAM</li>
+            <li>• <strong className="text-tropico-text">Español nativo</strong> — no es orquestador con diseño nativo para LATAM</li>
             <li>• <strong className="text-tropico-text">Tool calling</strong> a scripts Python (Helius, Jupiter, DolarAPI)</li>
           </ul>
         </div>
@@ -236,8 +236,8 @@ export default function ModoAgentePage() {
           </h3>
           <p className="text-xs text-tropico-mute">
             El Tropico Web3 Kit (markdown + YAML + Python) <strong>no tiene dependencias propietarias de Lumen</strong>.
-            Otro equipo puede portarlo a Hermes u OpenClaw con un adapter de ~30 l&iacute;neas. No es combinaci&oacute;n
-            obligatoria — es elecci&oacute;n de quien implementa.
+            Otro equipo puede portarlo a Hermes u OpenClaw con un adapter de ~30 líneas. No es combinación
+            obligatoria — es elección de quien implementa.
           </p>
         </div>
 
@@ -254,13 +254,13 @@ export default function ModoAgentePage() {
               </span>
             </header>
             <p className="text-xs leading-relaxed text-tropico-mute">
-              Si quieres memoria persistente por usuario + razonamiento sobre <em>cu&aacute;ndo</em> proponer.
-              Open source de Nous Research. Adapter convierte skills Lumen → formato Hermes en ~30 l&iacute;neas.
+              Si quieres memoria persistente por usuario + razonamiento sobre <em>cuándo</em> proponer.
+              Open source de Nous Research. Adapter convierte skills Lumen → formato Hermes en ~30 líneas.
             </p>
             <ul className="flex flex-col gap-1 text-[11px] text-tropico-mute">
               <li>• Recuerda conversaciones previas</li>
               <li>• Multi-canal (web, Telegram, WhatsApp)</li>
-              <li>• Tropico evaluar&aacute; en Q3 2026 para Carlos proactivo</li>
+              <li>• Tropico evaluará en Q3 2026 para Carlos proactivo</li>
             </ul>
           </div>
 
@@ -276,13 +276,13 @@ export default function ModoAgentePage() {
               </span>
             </header>
             <p className="text-xs leading-relaxed text-tropico-mute">
-              Si quieres firma delegada on-chain con policy engine. Session keys con expiraci&oacute;n,
-              valida tx pre-firma, integraci&oacute;n con Privy. Llaves nunca tocan al server.
+              Si quieres firma delegada on-chain con policy engine. Session keys con expiración,
+              valida tx pre-firma, integración con Privy. Llaves nunca tocan al server.
             </p>
             <ul className="flex flex-col gap-1 text-[11px] text-tropico-mute">
               <li>• Sesiones expiran en 1h default (max 24h)</li>
               <li>• Policy engine valida cada tx</li>
-              <li>• Tropico evaluar&aacute; en Q3 2026 para Modo Agente real</li>
+              <li>• Tropico evaluará en Q3 2026 para Modo Agente real</li>
             </ul>
           </div>
         </div>
@@ -310,10 +310,10 @@ Usuario  ──▶  [Hermes opcional]  ──▶  Lumen Kit
         <p className="text-xs text-tropico-mute">
           <strong className="text-tropico-text">Resumen:</strong>{" "}
           Tropico hoy corre <strong className="text-tropico-sun">Carlos AI by Lumen</strong>.
-          Hermes a&ntilde;ade memoria persistente si lo quieres; OpenClaw a&ntilde;ade firma
-          delegada on-chain si la quieres. El Tropico Web3 Kit es la pieza com&uacute;n que
+          Hermes añade memoria persistente si lo quieres; OpenClaw añade firma
+          delegada on-chain si la quieres. El Tropico Web3 Kit es la pieza común que
           puede viajar entre los tres — eso lo hace replicable. <strong className="text-tropico-text">
-          No son combinaci&oacute;n obligatoria.</strong>
+          No son combinación obligatoria.</strong>
         </p>
       </section>
 
@@ -322,8 +322,8 @@ Usuario  ──▶  [Hermes opcional]  ──▶  Lumen Kit
         <div>
           <h2 className="font-display text-2xl font-bold">Las 4 acciones disponibles</h2>
           <p className="text-sm text-tropico-mute">
-            Activa las que te interesen. Configurar&aacute;s los l&iacute;mites espec&iacute;ficos
-            para cada una. Cada acci&oacute;n requiere tu permiso explicito al activarse.
+            Activa las que te interesen. Configurarás los límites específicos
+            para cada una. Cada acción requiere tu permiso explicito al activarse.
           </p>
         </div>
 
@@ -351,7 +351,7 @@ Usuario  ──▶  [Hermes opcional]  ──▶  Lumen Kit
           Las sesiones del agente son scoped y expiran solas.
         </p>
         <p>
-          <strong>Auditor&iacute;a:</strong> cada acci&oacute;n queda en blockchain p&uacute;blica.
+          <strong>Auditoría:</strong> cada acción queda en blockchain pública.
           Verifica en{" "}
           <a
             href="https://solscan.io"
@@ -364,9 +364,9 @@ Usuario  ──▶  [Hermes opcional]  ──▶  Lumen Kit
           .
         </p>
         <p>
-          <strong>Gu&iacute;a t&eacute;cnica:</strong>{" "}
+          <strong>Guía técnica:</strong>{" "}
           <Link href="/docs/lumen" className="text-tropico-sun underline">
-            c&oacute;mo se construye el Tropico Web3 Kit (Lumen)
+            cómo se construye el Tropico Web3 Kit (Lumen)
           </Link>{" "}
           — open source, MIT, replicable.
         </p>

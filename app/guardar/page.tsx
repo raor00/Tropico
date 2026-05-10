@@ -13,7 +13,7 @@ const ESTRATEGIAS = [
   {
     nombre: "mSOL Liquid Staking",
     descripcion:
-      "Tu USDC se convierte autom&aacute;tico en mSOL (Marinade). Ganas ~7% al a&ntilde;o estimado. Sin lock — puedes salir cuando quieras.",
+      "Tu USDC se convierte automático en mSOL (Marinade). Ganas ~7% al año estimado. Sin lock — puedes salir cuando quieras.",
     apy: 7.0,
     riesgo: "Bajo",
     riesgoColor: "text-tropico-sea",
@@ -23,7 +23,7 @@ const ESTRATEGIAS = [
   {
     nombre: "Kamino USDC Vault",
     descripcion:
-      "Prestas tu USDC en el vault de Kamino. Yield ~5% al a&ntilde;o, m&aacute;s estable que mSOL. Cero exposici&oacute;n a SOL.",
+      "Prestas tu USDC en el vault de Kamino. Yield ~5% al año, más estable que mSOL. Cero exposición a SOL.",
     apy: 5.2,
     riesgo: "Bajo",
     riesgoColor: "text-tropico-sea",
@@ -54,7 +54,7 @@ export default function GuardarPage() {
         </Link>
         <h1 className="font-display text-3xl font-bold">Guardar</h1>
         <p className="text-sm text-tropico-mute">
-          Tu plata trabajando mientras duermes. Yield autom&aacute;tico,
+          Tu plata trabajando mientras duermes. Yield automático,
           non-custodial, sin penalizaciones.
         </p>
       </header>
@@ -69,7 +69,7 @@ export default function GuardarPage() {
         </header>
         <DualPrice usd={MOCK_PORTFOLIO.total * 0.7} size="xl" />
         <p className="text-xs text-tropico-mute">
-          70% de tu saldo USDC est&aacute; generando rendimiento
+          70% de tu saldo USDC está generando rendimiento
         </p>
         <div className="mt-2 grid grid-cols-3 gap-1 border-t border-tropico-border pt-4 sm:gap-2 md:gap-3">
           <div>
@@ -97,8 +97,8 @@ export default function GuardarPage() {
       <div className="panel flex items-center gap-3 border-tropico-coral/30 bg-tropico-coral/5 p-4 text-sm">
         <span className="text-xl" aria-hidden>⚠️</span>
         <span className="text-tropico-mute">
-          Demo del hackathon &mdash; n&uacute;meros simulados. En producci&oacute;n
-          tu USDC se convierte autom&aacute;tico v&iacute;a Jupiter route a la estrategia que
+          Demo del hackathon &mdash; números simulados. En producción
+          tu USDC se convierte automático vía Jupiter route a la estrategia que
           elijas. Q3 2026.
         </span>
       </div>
@@ -147,13 +147,13 @@ export default function GuardarPage() {
       {/* Disclaimer */}
       <section className="panel flex flex-col gap-2 p-5 text-xs text-tropico-mute">
         <p>
-          <strong>Importante:</strong> los APY son estimados y no est&aacute;n garantizados.
+          <strong>Importante:</strong> los APY son estimados y no están garantizados.
           El precio de los tokens subyacentes puede subir o bajar. Tropico no es asesor
           financiero.
         </p>
         <p>
           <strong>Non-custodial:</strong> tu plata sigue siendo tuya. Las estrategias
-          interact&uacute;an con protocolos abiertos (Marinade, Kamino) directo desde tu wallet.
+          interactúan con protocolos abiertos (Marinade, Kamino) directo desde tu wallet.
         </p>
       </section>
     </main>

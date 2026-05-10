@@ -134,7 +134,7 @@ export function QuoteCalculator() {
       </button>
 
       <p className="text-center text-xs text-tropico-mute">
-        Cotizaci&oacute;n indicativa. El precio final se confirma en el checkout del partner seleccionado.
+        Cotización indicativa. El precio final se confirma en el checkout del partner seleccionado.
       </p>
     </div>
   );

@@ -46,7 +46,7 @@ export function SendForm() {
   }
 
   function onShareWhatsApp() {
-    const message = `🌴 Te mand&eacute; ${formatUSD(amountNumber)} v&iacute;a Tropico\n\nAbr&iacute; este link para reclamar tu plata. No necesitas tener wallet — la creamos cuando entres con tu email.`;
+    const message = `🌴 Te mandé ${formatUSD(amountNumber)} vía Tropico\n\nAbrí este link para reclamar tu plata. No necesitas tener wallet — la creamos cuando entres con tu email.`;
     window.open(whatsappShareUrl(message, claimUrl), "_blank");
     setStep("shared");
   }
@@ -69,18 +69,18 @@ export function SendForm() {
     return (
       <form onSubmit={onGenerar} className="flex flex-col gap-4">
         <div className="panel flex flex-col gap-4 p-6">
-          <h2 className="font-display text-xl font-bold">A qui&eacute;n le mandas?</h2>
+          <h2 className="font-display text-xl font-bold">A quién le mandas?</h2>
           <input
             value={destinatario}
             onChange={(e) => setDestinatario(e.target.value)}
-            placeholder="Nombre o WhatsApp (ej. Mi t&iacute;a Carmen)"
+            placeholder="Nombre o WhatsApp (ej. Mi tía Carmen)"
             required
             className="rounded-lg border border-tropico-border bg-tropico-ink px-4 py-3 outline-none transition focus:border-tropico-purple"
           />
         </div>
 
         <div className="panel flex flex-col gap-4 p-6">
-          <h2 className="font-display text-xl font-bold">Cu&aacute;nto?</h2>
+          <h2 className="font-display text-xl font-bold">Cuánto?</h2>
           <input
             type="number"
             inputMode="decimal"
@@ -94,7 +94,7 @@ export function SendForm() {
           {amountNumber > 0 && (
             <div className="rounded-lg border border-tropico-border bg-tropico-ink/40 px-4 py-3 text-sm">
               <div className="flex justify-between">
-                <span className="text-tropico-mute">Mont&aacute; a enviar</span>
+                <span className="text-tropico-mute">Montá a enviar</span>
                 <span>{formatUSD(amountNumber)}</span>
               </div>
               <div className="flex justify-between">
@@ -102,7 +102,7 @@ export function SendForm() {
                 <span>{formatUSD(fee)}</span>
               </div>
               <div className="mt-2 flex justify-between border-t border-tropico-border pt-2 font-semibold">
-                <span>Recibir&aacute;</span>
+                <span>Recibirá</span>
                 <span className="text-tropico-green">
                   {formatUSD(amountNumber - fee)}
                 </span>
@@ -136,7 +136,7 @@ export function SendForm() {
             <h2 className="font-display text-xl font-bold">¡Link generado!</h2>
           </header>
           <p className="text-sm text-tropico-mute">
-            Comparti&eacute;ndoselo a <strong className="text-tropico-text">{destinatario}</strong>{" "}
+            Compartiéndoselo a <strong className="text-tropico-text">{destinatario}</strong>{" "}
             por WhatsApp para que reclame {formatUSD(amountNumber - fee)}.
           </p>
 
@@ -155,7 +155,7 @@ export function SendForm() {
           onClick={onReset}
           className="text-center text-sm text-tropico-mute transition hover:text-tropico-text"
         >
-          Crear otro env&iacute;o
+          Crear otro envío
         </button>
       </div>
     );

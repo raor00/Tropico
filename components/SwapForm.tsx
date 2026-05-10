@@ -160,7 +160,7 @@ export function SwapForm() {
               <Row
                 label={
                   <span className="flex items-center gap-1 font-semibold text-tropico-green">
-                    Comisi&oacute;n Tropico (0.5%)
+                    Comisión Tropico (0.5%)
                     <span
                       title="Tropico cobra 0.5% del swap — ya incluido en el monto que recibes, no se descuenta después."
                       className="cursor-help rounded-full border border-tropico-border px-1 text-[10px] text-tropico-mute"
@@ -205,15 +205,15 @@ export function SwapForm() {
         className="btn-primary disabled:cursor-not-allowed disabled:opacity-50"
       >
         {!quote
-          ? "Esperando cotizaci&oacute;n…"
+          ? "Esperando cotización…"
           : !checkPerTx(fromUSD).ok
-          ? `Excede l&iacute;mite AML ($${AML_LIMITS.PER_TX_USD.toLocaleString()})`
+          ? `Excede límite AML ($${AML_LIMITS.PER_TX_USD.toLocaleString()})`
           : `Cambiar ${fromSymbol} → ${toSymbol} (DEMO)`}
       </button>
 
       <p className="text-center text-xs text-tropico-mute">
-        Demo del hackathon &mdash; cuando configur&eacute;s tu wallet con Privy, este
-        bot&oacute;n firmar&aacute; la transacci&oacute;n real con la fee aterrizando
+        Demo del hackathon &mdash; cuando configurés tu wallet con Privy, este
+        botón firmará la transacción real con la fee aterrizando
         en la cuenta de Tropico (verificable en Solscan).
       </p>
     </div>

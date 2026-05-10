@@ -15,7 +15,7 @@ export function AfiliarForm() {
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    // En producci&oacute;n: POST a /api/comercios/afiliar
+    // En producción: POST a /api/comercios/afiliar
     // En MVP: guarda en localStorage + muestra success
     const formData = new FormData(e.currentTarget);
     const payload = Object.fromEntries(formData.entries());
@@ -40,8 +40,8 @@ export function AfiliarForm() {
           &iexcl;Listo, panita!
         </h3>
         <p className="text-tropico-mute">
-          Te contactamos por WhatsApp en las pr&oacute;ximas 24 horas con tu QR de cobro
-          y el logo &laquo;Acepta Tropico&raquo; para tu local.
+          Te contactamos por WhatsApp en las próximas 24 horas con tu QR de cobro
+          y el logo «Acepta Tropico» para tu local.
         </p>
         <p className="text-xs text-tropico-mute">
           Mientras tanto, dile a tus clientes que ya pueden pagarte con Tropico.
@@ -53,9 +53,9 @@ export function AfiliarForm() {
   return (
     <form onSubmit={onSubmit} className="panel flex flex-col gap-4 p-6">
       <div>
-        <h3 className="font-display text-2xl font-bold">Afili&aacute; tu negocio gratis</h3>
+        <h3 className="font-display text-2xl font-bold">Afiliá tu negocio gratis</h3>
         <p className="text-sm text-tropico-mute">
-          Sin contrato, sin papeles, sin RIF. 5 minutos m&aacute;ximo.
+          Sin contrato, sin papeles, sin RIF. 5 minutos máximo.
         </p>
       </div>
 
@@ -76,7 +76,7 @@ export function AfiliarForm() {
           name="nombre"
           required
           maxLength={60}
-          placeholder="Ej. Mar&iacute;a P&eacute;rez"
+          placeholder="Ej. María Pérez"
           className="rounded-lg border border-tropico-border bg-tropico-ink px-3 py-2 outline-none transition focus:border-tropico-purple"
         />
       </label>
@@ -136,7 +136,7 @@ export function AfiliarForm() {
       </button>
 
       <p className="text-center text-xs text-tropico-mute">
-        Cero costo de afiliaci&oacute;n. Solo pagas 1% por cobro recibido.
+        Cero costo de afiliación. Solo pagas 1% por cobro recibido.
       </p>
     </form>
   );
