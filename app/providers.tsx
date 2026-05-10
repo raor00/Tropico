@@ -51,9 +51,14 @@ export function Providers({ children }: { children: ReactNode }) {
         | "google"
         | "wallet"
       )[],
+      // Privy v2 separa wallet por chain. Sin esto Privy crea Ethereum
+      // por default → addresses 0x... que fallan validación base58 de Solana.
+      // Tropico es Solana-only: forzamos Solana embedded, Ethereum off.
       embeddedWallets: {
-        createOnLogin: "users-without-wallets" as const,
+        ethereum: { createOnLogin: "off" as const },
+        solana: { createOnLogin: "users-without-wallets" as const },
         requireUserPasswordOnCreate: false,
+        showWalletUIs: false,
       },
       solanaClusters: [
         {

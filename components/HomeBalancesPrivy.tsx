@@ -1,34 +1,42 @@
 "use client";
 
-import type { ComponentType } from "react";
-import { usePrivy } from "@privy-io/react-auth";
-import { useSolanaWallets } from "@privy-io/react-auth";
+import { useEffect, useRef, type ComponentType } from "react";
+import { usePrivy, useSolanaWallets } from "@privy-io/react-auth";
 
 /**
- * Wrapper que resuelve el pubkey de la wallet embedded de Privy y lo inyecta
- * en el componente Inner. Si Privy aún no está ready, le pasa null y deja
- * que Inner caiga al detection legacy (local / dev wallet).
+ * Resuelve el pubkey de la wallet embedded de Solana de Privy.
  *
- * Solo se monta cuando NEXT_PUBLIC_PRIVY_APP_ID está seteado, garantizando
- * que los hooks de Privy estén disponibles.
+ * Si el usuario fue creado con config legacy (Ethereum por default), llama
+ * createWallet() para crearle una Solana automáticamente — Tropico es Solana-only.
  */
 export function HomeBalancesPrivyWrapper({
   Inner,
 }: {
   Inner: ComponentType<{ externalPubkey?: string | null }>;
 }) {
-  const { ready, authenticated, user } = usePrivy();
-  const { wallets } = useSolanaWallets();
+  const { ready, authenticated } = usePrivy();
+  const { wallets, createWallet } = useSolanaWallets();
+  const triggeredCreate = useRef(false);
+
+  useEffect(() => {
+    if (
+      ready &&
+      authenticated &&
+      wallets.length === 0 &&
+      !triggeredCreate.current
+    ) {
+      triggeredCreate.current = true;
+      createWallet().catch((e) => {
+        console.error("[Privy] Failed to create Solana wallet:", e);
+        triggeredCreate.current = false;
+      });
+    }
+  }, [ready, authenticated, wallets.length, createWallet]);
 
   let pubkey: string | null = null;
-  if (ready && authenticated) {
-    // 1) wallet embedded de Solana (createOnLogin)
+  if (ready && authenticated && wallets.length > 0) {
     const embedded = wallets.find((w) => w.walletClientType === "privy");
     pubkey = embedded?.address ?? wallets[0]?.address ?? null;
-    // 2) fallback al user.wallet (cuenta linked)
-    if (!pubkey && user?.wallet?.address) {
-      pubkey = user.wallet.address;
-    }
   }
 
   return <Inner externalPubkey={pubkey} />;
