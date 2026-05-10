@@ -1,12 +1,15 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useWalletAuth } from "@/lib/auth-context";
 
 type LogoProps = {
   /** Tamaño del icono PNG en px (default 40) */
   size?: number;
   /** Tamaño del wordmark — "sm" | "md" | "lg" (default "md") */
   wordmarkSize?: "sm" | "md" | "lg";
-  /** Si es true, envuelve en <Link href="/"> */
+  /** Si es true, envuelve en <Link>. Href dinámico: authed → /home, sino → / */
   asLink?: boolean;
   /** Mostrar solo el icono sin wordmark */
   iconOnly?: boolean;
@@ -29,6 +32,11 @@ export function Logo({
   wordmarkClass = "",
   className = "",
 }: LogoProps) {
+  const { authed } = useWalletAuth();
+  // Authed → click logo va directo a /home (sin pasar por landing → redirect → flash).
+  // Sin login → click va a la landing.
+  const href = authed ? "/home" : "/";
+
   const inner = (
     <span className={`flex items-center gap-3 ${className}`}>
       <Image
@@ -62,7 +70,7 @@ export function Logo({
 
   if (asLink) {
     return (
-      <Link href="/" className="inline-flex items-center hover:opacity-90 transition">
+      <Link href={href} className="inline-flex items-center hover:opacity-90 transition">
         {inner}
       </Link>
     );
