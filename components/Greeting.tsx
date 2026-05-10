@@ -34,16 +34,17 @@ export function Greeting() {
   }, [pubkey]);
 
   const greeting = getGreeting(lang, hour);
-  const display = name ? `${greeting}, ${name}` : greeting;
 
   return (
-    <div className="flex items-baseline gap-2 px-1">
-      <span className="text-sm font-medium text-tropico-mute md:text-base">
-        {display}
-      </span>
-      <span className="text-xs text-tropico-mute/60" aria-label="Hora Caracas">
-        · Caracas
-      </span>
+    <div className="flex flex-col gap-0.5 px-1">
+      <h2 className="font-display text-xl font-bold leading-tight text-tropico-text md:text-2xl">
+        {greeting}{name ? "," : ""}
+        {name && (
+          <span className="bg-gradient-to-r from-tropico-sun via-tropico-coral to-tropico-purple bg-clip-text text-transparent">
+            {" "}{name}
+          </span>
+        )}
+      </h2>
     </div>
   );
 }
