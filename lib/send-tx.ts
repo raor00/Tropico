@@ -38,6 +38,19 @@ export type SendResult = {
   error: string;
 };
 
+/**
+ * Signer abstraction — soporta:
+ *  - Keypair local (sender tiene la secret key descifrada)
+ *  - Privy embedded wallet (firma via SDK, nunca expone la key)
+ */
+export type Signer =
+  | { type: "keypair"; kp: Keypair; address: string }
+  | { type: "privy"; address: string; signTransaction: (tx: Transaction) => Promise<Transaction> };
+
+export function makeKeypairSigner(kp: Keypair): Signer {
+  return { type: "keypair", kp, address: kp.publicKey.toBase58() };
+}
+
 /** Validar pubkey base58 */
 export function isValidPubkey(s: string): boolean {
   try {
@@ -220,4 +233,132 @@ export async function sendSplToken(
     }
     return { ok: false, error: msg };
   }
+}
+
+/**
+ * Versión genérica que acepta Signer abstracto (keypair O Privy).
+ * Reusa toda la lógica de construcción de tx, solo difiere el step de firma.
+ */
+export async function sendWithSigner(
+  signer: Signer,
+  toPubkey: string,
+  tokenSymbol: TokenSymbol,
+  amount: number
+): Promise<SendResult> {
+  try {
+    if (!isValidPubkey(toPubkey)) {
+      return { ok: false, error: "Pubkey destino inválida" };
+    }
+    const fromPub = new PublicKey(signer.address);
+    const cluster = getActiveCluster();
+    const conn = new Connection(getActiveRpcUrl(), "confirmed");
+    const usdEstimate = amount * (tokenSymbol === "SOL" ? 180 : 1);
+    const aml = checkPerTx(usdEstimate);
+    if (!aml.ok) return { ok: false, error: `${aml.message} ${aml.suggested}` };
+
+    // SOL nativo
+    if (tokenSymbol === "SOL") {
+      const lamports = Math.floor(amount * LAMPORTS_PER_SOL);
+      const tx = new Transaction().add(
+        SystemProgram.transfer({
+          fromPubkey: fromPub,
+          toPubkey: new PublicKey(toPubkey),
+          lamports,
+        })
+      );
+      const { blockhash } = await conn.getLatestBlockhash();
+      tx.recentBlockhash = blockhash;
+      tx.feePayer = fromPub;
+      const sig = await signAndBroadcast(signer, tx, conn);
+      recordMovedUsd(usdEstimate);
+      return {
+        ok: true,
+        signature: sig,
+        cluster,
+        explorer: `https://solscan.io/tx/${sig}${cluster === "devnet" ? "?cluster=devnet" : ""}`,
+      };
+    }
+
+    // SPL token
+    let mintAddress = TOKENS[tokenSymbol].mint;
+    if (tokenSymbol === "USDC" && cluster === "devnet") mintAddress = USDC_DEVNET_MINT;
+    const decimals = TOKENS[tokenSymbol].decimals;
+    const mint = new PublicKey(mintAddress);
+    const toPub = new PublicKey(toPubkey);
+
+    const senderSolLamports = await conn.getBalance(fromPub);
+    if (senderSolLamports / LAMPORTS_PER_SOL < 0.003) {
+      return {
+        ok: false,
+        error: `Tu wallet no tiene SOL para pagar gas (mínimo ~0.003). En ${cluster}: pide airdrop en https://faucet.solana.com pegando ${signer.address}`,
+      };
+    }
+
+    const fromAta = await getAssociatedTokenAddress(mint, fromPub);
+    const toAta = await getAssociatedTokenAddress(mint, toPub);
+
+    const fromAtaInfo = await conn.getAccountInfo(fromAta);
+    if (!fromAtaInfo) {
+      return {
+        ok: false,
+        error: `Tu wallet no tiene cuenta de ${tokenSymbol} en ${cluster}. Recibí ${tokenSymbol} primero.`,
+      };
+    }
+
+    const tx = new Transaction();
+    const toAtaInfo = await conn.getAccountInfo(toAta);
+    if (!toAtaInfo) {
+      tx.add(
+        createAssociatedTokenAccountInstruction(fromPub, toAta, toPub, mint)
+      );
+    }
+
+    const lamports = BigInt(Math.floor(amount * 10 ** decimals));
+    tx.add(
+      createTransferInstruction(fromAta, toAta, fromPub, lamports, [], TOKEN_PROGRAM_ID)
+    );
+
+    const { blockhash } = await conn.getLatestBlockhash();
+    tx.recentBlockhash = blockhash;
+    tx.feePayer = fromPub;
+
+    const sig = await signAndBroadcast(signer, tx, conn);
+    recordMovedUsd(usdEstimate);
+    return {
+      ok: true,
+      signature: sig,
+      cluster,
+      explorer: `https://solscan.io/tx/${sig}${cluster === "devnet" ? "?cluster=devnet" : ""}`,
+    };
+  } catch (e) {
+    const msg = (e as Error).message;
+    if (msg.includes("found no record of a prior credit")) {
+      return {
+        ok: false,
+        error: "Tu wallet no tiene SOL para gas + rent. Pide airdrop devnet en https://faucet.solana.com",
+      };
+    }
+    if (msg.includes("InsufficientFundsForRent")) {
+      return { ok: false, error: "Saldo SOL insuficiente para rent (~0.002 SOL)." };
+    }
+    return { ok: false, error: msg };
+  }
+}
+
+async function signAndBroadcast(
+  signer: Signer,
+  tx: Transaction,
+  conn: Connection
+): Promise<string> {
+  if (signer.type === "keypair") {
+    tx.sign(signer.kp);
+    const sig = await conn.sendRawTransaction(tx.serialize());
+    await conn.confirmTransaction(sig, "confirmed");
+    return sig;
+  }
+  // Privy: firma via SDK, devuelve Transaction firmada
+  const signed = await signer.signTransaction(tx);
+  const sig = await conn.sendRawTransaction(signed.serialize());
+  await conn.confirmTransaction(sig, "confirmed");
+  return sig;
 }

@@ -13,7 +13,13 @@ import {
   X,
 } from "lucide-react";
 import { unlockLocalWallet, hasLocalWallet, getLocalWalletPubkey } from "@/lib/wallet-local";
-import { sendSplToken, isValidPubkey, type SendResult } from "@/lib/send-tx";
+import {
+  sendWithSigner,
+  makeKeypairSigner,
+  isValidPubkey,
+  type SendResult,
+  type Signer,
+} from "@/lib/send-tx";
 import { getActiveCluster } from "@/lib/cluster";
 import {
   listContacts,
@@ -21,13 +27,25 @@ import {
   deleteContact,
   type Contact,
 } from "@/lib/contacts";
-import { Keypair } from "@solana/web3.js";
+import { Keypair, type Transaction } from "@solana/web3.js";
+
+/**
+ * Privy signer inyectado: address + closure que firma una Transaction.
+ * Si el wrapper Privy resuelve uno, lo pasamos abajo y SendToAddress lo usa
+ * sin necesidad de password (la auth ya pasó al login con Privy).
+ */
+export type PrivySignerInjected = {
+  address: string;
+  signTransaction: (tx: Transaction) => Promise<Transaction>;
+};
 
 /**
  * SendToAddress — envío directo a wallet address (no claim link).
  * Pide password para desbloquear keypair, firma tx SPL Token, broadcast.
  */
-export function SendToAddress() {
+export function SendToAddress({
+  privySigner,
+}: { privySigner?: PrivySignerInjected | null } = {}) {
   const [destination, setDestination] = useState("");
   const [amount, setAmount] = useState("");
   const [token, setToken] = useState<"USDC" | "SOL">("USDC");
@@ -44,9 +62,13 @@ export function SendToAddress() {
   const [pendingSavePubkey, setPendingSavePubkey] = useState<string>("");
 
   useEffect(() => {
-    setWalletReady(hasLocalWallet() || !!localStorage.getItem("tropico:dev-wallet"));
+    const hasLocal = hasLocalWallet();
+    const hasDev = !!localStorage.getItem("tropico:dev-wallet");
+    const hasPrivy = !!privySigner?.address;
+    setWalletReady(hasLocal || hasDev || hasPrivy);
     setCluster(getActiveCluster());
     const me =
+      privySigner?.address ??
       getLocalWalletPubkey() ??
       (() => {
         try {
@@ -58,7 +80,7 @@ export function SendToAddress() {
       })();
     setOwnerPubkey(me);
     if (me) setContacts(listContacts(me));
-  }, []);
+  }, [privySigner?.address]);
 
   function refreshContacts() {
     if (ownerPubkey) setContacts(listContacts(ownerPubkey));
@@ -77,8 +99,16 @@ export function SendToAddress() {
       .slice(0, 5);
   }, [destination, contacts]);
 
-  async function getActiveKeypair(): Promise<Keypair | null> {
-    // Try local wallet first (necesita password)
+  async function getActiveSigner(): Promise<Signer | null> {
+    // Privy embedded — no necesita password
+    if (privySigner?.address && privySigner?.signTransaction) {
+      return {
+        type: "privy",
+        address: privySigner.address,
+        signTransaction: privySigner.signTransaction,
+      };
+    }
+    // Local wallet (necesita password para descifrar)
     if (hasLocalWallet()) {
       if (!password) {
         setResult({ ok: false, error: "Password requerido para desbloquear wallet local" });
@@ -89,16 +119,16 @@ export function SendToAddress() {
         setResult({ ok: false, error: "Password incorrecto" });
         return null;
       }
-      return kp;
+      return makeKeypairSigner(kp);
     }
-    // Dev wallet (sin password — almacenada plain en localStorage)
+    // Dev wallet
     try {
       const dev = JSON.parse(localStorage.getItem("tropico:dev-wallet") ?? "null");
       if (!dev?.secretKey || !Array.isArray(dev.secretKey)) {
         setResult({ ok: false, error: "Dev wallet inválida" });
         return null;
       }
-      return Keypair.fromSecretKey(new Uint8Array(dev.secretKey));
+      return makeKeypairSigner(Keypair.fromSecretKey(new Uint8Array(dev.secretKey)));
     } catch {
       setResult({ ok: false, error: "Error leyendo dev wallet" });
       return null;
@@ -117,13 +147,13 @@ export function SendToAddress() {
       return;
     }
     setBusy(true);
-    const kp = await getActiveKeypair();
-    if (!kp) {
+    const signer = await getActiveSigner();
+    if (!signer) {
       setBusy(false);
       return;
     }
     const dest = destination.trim();
-    const r = await sendSplToken(kp, dest, token, amt);
+    const r = await sendWithSigner(signer, dest, token, amt);
     setResult(r);
     setBusy(false);
     if (r.ok) {
@@ -182,8 +212,10 @@ export function SendToAddress() {
     );
   }
 
-  const fromPubkey = getLocalWalletPubkey() ?? "Dev wallet";
-  const needsPassword = hasLocalWallet();
+  const fromPubkey =
+    privySigner?.address ?? getLocalWalletPubkey() ?? "Dev wallet";
+  // Solo wallet local (cifrada) requiere password. Privy + dev no.
+  const needsPassword = !privySigner?.address && hasLocalWallet();
 
   return (
     <div className="flex flex-col gap-4">

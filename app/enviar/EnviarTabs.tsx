@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Wallet, Link as LinkIcon } from "lucide-react";
 import { SendForm } from "@/components/SendForm";
-import { SendToAddress } from "@/components/SendToAddress";
+import { SendToAddressEntry } from "@/components/SendToAddressPrivy";
 
 type Tab = "address" | "claim";
 
@@ -37,7 +37,7 @@ export function EnviarTabs() {
         </button>
       </div>
 
-      {tab === "address" ? <SendToAddress /> : <SendForm />}
+      {tab === "address" ? <SendToAddressEntry /> : <SendForm />}
     </div>
   );
 }
