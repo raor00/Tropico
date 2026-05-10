@@ -45,6 +45,9 @@ export function Providers({ children }: { children: ReactNode }) {
         accentColor: "#9945FF" as `#${string}`,
         logo: logoUrl,
         showWalletLoginFirst: false,
+        // Texto bajo el logo en el modal
+        landingHeader: "Tropico Wallet",
+        loginMessage: "Tu wallet caribeña en Solana",
       },
       loginMethods: ["email", "google", "wallet"] as (
         | "email"

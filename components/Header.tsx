@@ -189,8 +189,8 @@ function HeaderImpl({
           <div className="flex shrink-0 items-center gap-2 md:gap-3">
             <Logo
               size={36}
-              wordmarkSize={badge || !showNav ? "md" : "sm"}
-              wordmarkClass={!badge && showNav ? "hidden lg:inline-block" : ""}
+              wordmarkSize="sm"
+              wordmarkClass="inline-block"
             />
             <VenezuelaBadge
               size="xs"
@@ -252,7 +252,10 @@ function HeaderImpl({
           <div className="flex shrink-0 items-center gap-2">
             <LanguageSwitcher />
             <AuthCTA variant="compact" />
-            {showNav && (
+            {/* Hamburger SOLO si hay wallet activa — sin login el nav landing
+                en desktop ya tiene los anchors visibles, y en mobile no queremos
+                drawer porque no hay nada útil dentro. */}
+            {showNav && authed && (
               <button
                 onClick={toggleDrawer}
                 aria-label={drawerOpen ? "Cerrar menú" : "Abrir menú"}
@@ -269,10 +272,8 @@ function HeaderImpl({
         </div>
       </header>
 
-      {/* Drawer — z-index >  header (z-40). En pages con badge también
-           visible en desktop (no solo md:hidden) porque el nav desktop
-           está oculto y necesitamos forma de navegar. */}
-      {showNav && (
+      {/* Drawer — solo aparece si hay wallet activa */}
+      {showNav && authed && (
         <>
           <div
             onClick={() => setDrawerOpen(false)}
