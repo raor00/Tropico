@@ -20,6 +20,8 @@ import { getProfile, setProfileName, clearProfile } from "@/lib/profile-store";
 import { deleteLocalWallet } from "@/lib/wallet-local";
 import { getActiveCluster } from "@/lib/cluster";
 import { ProfilePrivyEmail } from "@/components/ProfilePrivyEmail";
+import { ProfilePrivyLogout } from "@/components/ProfilePrivyLogout";
+import { LogOut } from "lucide-react";
 
 const PRIVY_ENABLED = !!process.env.NEXT_PUBLIC_PRIVY_APP_ID;
 
@@ -207,6 +209,29 @@ export function ProfileView() {
         <h3 className="px-1 text-xs font-bold uppercase tracking-wider text-tropico-mute">
           Acciones
         </h3>
+
+        {/* Logout — varía según source */}
+        {source === "privy" && PRIVY_ENABLED && <ProfilePrivyLogout />}
+        {source === "local" && (
+          <button
+            onClick={() => {
+              if (!confirm("¿Cerrar sesión? Tu wallet local sigue cifrada en este device.")) return;
+              sessionStorage.removeItem("tropico:wallet:unlocked");
+              window.dispatchEvent(new Event("tropico:auth-changed"));
+              window.location.href = "/wallet/abrir";
+            }}
+            className="flex items-center gap-3 rounded-xl border border-tropico-border bg-tropico-ink/40 px-4 py-3 text-left text-sm text-tropico-text transition hover:border-tropico-sun"
+          >
+            <LogOut className="size-4 text-tropico-sun" />
+            <span className="flex flex-col">
+              <span className="font-semibold">Cerrar sesión</span>
+              <span className="text-[11px] text-tropico-mute">
+                Mantiene la wallet cifrada. Vas a necesitar tu password para volver a entrar.
+              </span>
+            </span>
+          </button>
+        )}
+
         <Link
           href="/wallet/abrir"
           className="flex items-center gap-3 rounded-xl border border-tropico-border bg-tropico-ink/40 px-4 py-3 text-sm text-tropico-text transition hover:border-tropico-sea"
