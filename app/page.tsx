@@ -109,8 +109,8 @@ export default function LandingPage() {
       {/* HEADER flotante — anclado en top, flota al hacer scroll */}
 
       {/* HERO */}
-      <section className="flex flex-col gap-6 animate-fade-up pt-4">
-        <div className="space-y-4">
+      <section className="flex flex-col items-center gap-6 animate-fade-up pt-4 text-center">
+        <div className="flex flex-col items-center space-y-4">
           <VenezuelaBadge />
 
           <h1 className="h-display max-w-4xl">
@@ -133,14 +133,14 @@ export default function LandingPage() {
           </p>
         </div>
 
-        <div className="flex flex-col gap-3 sm:flex-row">
+        <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
           <AuthCTA variant="primary" label="Crear mi wallet con email" />
           <Link href="/comercios" className="btn-ghost">
             Soy comercio, quiero afiliarme
           </Link>
         </div>
 
-        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 pt-4 text-xs text-tropico-mute">
+        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 pt-4 text-xs text-tropico-mute">
           <span className="flex items-center gap-1.5">
             <ShieldCheck className="size-4 text-tropico-sea" strokeWidth={1.75} />
             Non-custodial
