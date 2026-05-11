@@ -69,7 +69,7 @@ function RateBadge({ rate }: { rate: RateState }) {
     >
       <span>
         <strong>{rate.usdToBs.toFixed(2)} Bs/USDC</strong> ·{" "}
-        {live ? "paralelo live (DolarAPI)" : "fallback estático"}
+        {live ? "tasa en vivo" : "tasa de referencia"}
       </span>
       <span className="text-tropico-mute">act. {ts}</span>
     </div>
