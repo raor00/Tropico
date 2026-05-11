@@ -252,36 +252,19 @@ export function BsSwapForm({
 
   return (
     <div className="flex flex-col gap-4">
-      {/* Tab side */}
-      <div className="grid grid-cols-2 gap-2 rounded-lg border border-tropico-border bg-tropico-ink/40 p-1">
-        <button
-          type="button"
-          onClick={() => {
-            setSide("sell-bs");
-            setConfirmed(null);
-          }}
-          className={`rounded-md px-3 py-2.5 text-sm font-semibold transition ${
-            side === "sell-bs"
-              ? "bg-tropico-sun text-tropico-ink shadow-sm shadow-tropico-sun/40"
-              : "text-tropico-mute hover:text-tropico-text"
-          }`}
-        >
-          Bs → USDC
-        </button>
-        <button
-          type="button"
-          onClick={() => {
-            setSide("buy-bs");
-            setConfirmed(null);
-          }}
-          className={`rounded-md px-3 py-2.5 text-sm font-semibold transition ${
-            side === "buy-bs"
-              ? "bg-tropico-sun text-tropico-ink shadow-sm shadow-tropico-sun/40"
-              : "text-tropico-mute hover:text-tropico-text"
-          }`}
-        >
-          USDC → Bs
-        </button>
+      {/* Single side — solo on-ramp Bs → USDC. Off-ramp (pagar en Bs) vive en /enviar */}
+      <div className="flex flex-col gap-1.5 rounded-lg border border-tropico-sun/30 bg-tropico-sun/5 px-4 py-3">
+        <div className="flex items-center gap-2">
+          <span className="rounded-md bg-tropico-sun/20 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-tropico-sun">
+            On-ramp
+          </span>
+          <span className="text-sm font-semibold text-tropico-text">Bs → USDC</span>
+        </div>
+        <p className="text-[11px] text-tropico-mute">
+          Recibí Bs vía Pago Móvil → Tropico te acredita USDC en segundos. Para <strong>pagar en Bs</strong> a un
+          comercio usá <a href="/enviar" className="font-semibold text-tropico-sun hover:underline">/enviar</a> —
+          Tropico convierte USDC y ejecuta Pago Móvil al destinatario automático.
+        </p>
       </div>
 
       {/* Selector de método — cómo entra/sale el dinero fiat al pool */}
@@ -586,14 +569,14 @@ export function BsSwapForm({
           {confirmed.onchain && side === "buy-bs" && (
             <div className="mt-1 flex flex-col gap-1 rounded-md border border-tropico-sun/30 bg-tropico-sun/5 p-2.5 text-[11px]">
               <div className="flex items-center justify-between">
-                <span className="text-tropico-mute">Bs por acreditar a tu banco VE</span>
+                <span className="text-tropico-mute">Bs pagados al destinatario</span>
                 <strong className="text-tropico-sun">
                   {confirmed.bs.toLocaleString("es-VE", { maximumFractionDigits: 0 })} Bs
                 </strong>
               </div>
               <div className="text-tropico-mute">
-                Llegan a tu Pago Móvil / Banesco / Mercantil en <strong className="text-tropico-text">~5 min</strong>.
-                Tropico NO tokeniza el bolívar — el USDC va on-chain, los Bs aterrizan en tu cuenta bancaria real.
+                Tropico convirtió tus USDC y envió Pago Móvil al comercio/persona en <strong className="text-tropico-text">&lt;5s</strong>.
+                Vos seguís con USDC — el bolívar se usa solo al momento del pago. Sin cuenta bancaria, sin holds.
               </div>
             </div>
           )}
