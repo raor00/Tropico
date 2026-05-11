@@ -1,5 +1,19 @@
 "use client";
 
+import type { PrivySignerInjected } from "@/components/BsSwapForm";
+import { AML_LIMITS, checkPerTx } from "@/lib/aml";
+import { type Signer, makeKeypairSigner, sendWithSigner } from "@/lib/send-tx";
+import { DEMO_MERCHANT_WALLET as POOL_WALLET } from "@/lib/solana-pay";
+import {
+  type Suiche7BPayload,
+  buildDemoQRPayload,
+  parseSuiche7BQR,
+} from "@/lib/suiche7b-parser";
+import {
+  getLocalWalletPubkey,
+  hasLocalWallet,
+  unlockLocalWallet,
+} from "@/lib/wallet-local";
 import {
   AlertTriangle,
   CheckCircle2,
@@ -11,24 +25,6 @@ import {
   Zap,
 } from "lucide-react";
 import { useMemo, useState } from "react";
-import {
-  buildDemoQRPayload,
-  parseSuiche7BQR,
-  type Suiche7BPayload,
-} from "@/lib/suiche7b-parser";
-import { DEMO_MERCHANT_WALLET as POOL_WALLET } from "@/lib/solana-pay";
-import {
-  type Signer,
-  makeKeypairSigner,
-  sendWithSigner,
-} from "@/lib/send-tx";
-import {
-  getLocalWalletPubkey,
-  hasLocalWallet,
-  unlockLocalWallet,
-} from "@/lib/wallet-storage";
-import { AML_LIMITS, checkPerTx } from "@/lib/aml";
-import type { PrivySignerInjected } from "@/components/BsSwapForm";
 
 type Step = "scan" | "review" | "confirmed";
 
@@ -185,7 +181,9 @@ export function PagarComercioBs({
       <div className="panel flex flex-col gap-4 border-tropico-green/30 bg-tropico-green/5 p-5">
         <header className="flex items-center gap-2">
           <CheckCircle2 className="size-6 text-tropico-green" />
-          <strong className="font-display text-xl text-tropico-green">¡Pago enviado!</strong>
+          <strong className="font-display text-xl text-tropico-green">
+            ¡Pago enviado!
+          </strong>
           {confirmed.explorer && (
             <span className="ml-auto rounded-full border border-tropico-green/40 bg-tropico-green/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-tropico-green">
               devnet · real
@@ -203,12 +201,17 @@ export function PagarComercioBs({
           <div className="mb-2 flex items-center justify-between">
             <span className="text-tropico-mute">Monto</span>
             <strong className="text-tropico-sun">
-              {confirmed.bs.toLocaleString("es-VE", { minimumFractionDigits: 2 })} Bs
+              {confirmed.bs.toLocaleString("es-VE", {
+                minimumFractionDigits: 2,
+              })}{" "}
+              Bs
             </strong>
           </div>
           <div className="flex items-center justify-between border-t border-tropico-border pt-2 text-xs">
             <span className="text-tropico-mute">Salió de tu wallet</span>
-            <span className="text-tropico-text">{confirmed.usdc.toFixed(4)} USDC</span>
+            <span className="text-tropico-text">
+              {confirmed.usdc.toFixed(4)} USDC
+            </span>
           </div>
         </div>
 
@@ -216,9 +219,12 @@ export function PagarComercioBs({
           <div className="flex items-start gap-2">
             <Zap className="mt-0.5 size-4 shrink-0 text-tropico-sun" />
             <div className="text-tropico-text/85">
-              Tropico convirtió tus USDC → Bs y envió Pago Móvil al comercio vía Suiche 7B.{" "}
-              <strong className="text-tropico-sun">Acreditado en &lt;5s.</strong> Tú sigues
-              con USDC — sin cuenta bancaria, sin colas.
+              Tropico convirtió tus USDC → Bs y envió Pago Móvil al comercio vía
+              Suiche 7B.{" "}
+              <strong className="text-tropico-sun">
+                Acreditado en &lt;5s.
+              </strong>{" "}
+              Tú sigues con USDC — sin cuenta bancaria, sin colas.
             </div>
           </div>
         </div>
@@ -233,14 +239,12 @@ export function PagarComercioBs({
             Ver tx on-chain en Solscan <ExternalLink className="size-3.5" />
           </a>
         ) : (
-          <code className="break-all text-[10px] text-tropico-mute">{confirmed.txSig}</code>
+          <code className="break-all text-[10px] text-tropico-mute">
+            {confirmed.txSig}
+          </code>
         )}
 
-        <button
-          type="button"
-          onClick={reset}
-          className="btn-ghost mt-2"
-        >
+        <button type="button" onClick={reset} className="btn-ghost mt-2">
           Pagar otro
         </button>
       </div>
@@ -281,7 +285,9 @@ export function PagarComercioBs({
           </div>
           <div className="flex items-center justify-between text-xs text-tropico-mute">
             <span>Equivalente USDC (auto-FX)</span>
-            <strong className="text-tropico-text">{calc.usdc.toFixed(4)} USDC</strong>
+            <strong className="text-tropico-text">
+              {calc.usdc.toFixed(4)} USDC
+            </strong>
           </div>
           <div className="flex items-center justify-between text-[11px] text-tropico-mute">
             <span>Tasa · spread Tropico 1.5%</span>
@@ -293,8 +299,12 @@ export function PagarComercioBs({
           <div className="panel flex items-start gap-3 border-tropico-coral/30 bg-tropico-coral/5 p-4">
             <AlertTriangle className="mt-0.5 size-5 shrink-0 text-tropico-coral" />
             <div className="text-sm">
-              <strong className="text-tropico-coral">{amlResult.message}</strong>
-              <p className="mt-1 text-xs text-tropico-mute">{amlResult.suggested}</p>
+              <strong className="text-tropico-coral">
+                {amlResult.message}
+              </strong>
+              <p className="mt-1 text-xs text-tropico-mute">
+                {amlResult.suggested}
+              </p>
             </div>
           </div>
         )}
@@ -312,7 +322,8 @@ export function PagarComercioBs({
             </>
           ) : (
             <>
-              <Sparkles className="size-3" /> Demo · simulado (conecta Privy o wallet local para tx real)
+              <Sparkles className="size-3" /> Demo · simulado (conecta Privy o
+              wallet local para tx real)
             </>
           )}
         </div>
@@ -353,11 +364,17 @@ export function PagarComercioBs({
               </>
             ) : (
               <>
-                <Zap className="size-4" /> Pagar {calc.bs.toLocaleString("es-VE", { maximumFractionDigits: 0 })} Bs · settlement &lt;5s
+                <Zap className="size-4" /> Pagar{" "}
+                {calc.bs.toLocaleString("es-VE", { maximumFractionDigits: 0 })}{" "}
+                Bs · settlement &lt;5s
               </>
             )}
           </button>
-          <button type="button" onClick={reset} className="text-xs text-tropico-mute hover:text-tropico-text">
+          <button
+            type="button"
+            onClick={reset}
+            className="text-xs text-tropico-mute hover:text-tropico-text"
+          >
             ← Escanear otro QR
           </button>
         </div>
@@ -372,11 +389,14 @@ export function PagarComercioBs({
       <div className="panel flex flex-col gap-3 p-5">
         <header className="flex items-center gap-2">
           <QrCode className="size-5 text-tropico-sun" />
-          <strong className="font-display text-lg">Pagar a comercio en Bs</strong>
+          <strong className="font-display text-lg">
+            Pagar a comercio en Bs
+          </strong>
         </header>
         <p className="text-sm text-tropico-mute">
-          Escanea el QR Suiche 7B del comercio. Tropico convierte tus USDC y ejecuta Pago Móvil
-          al destinatario en segundos. Tú nunca dejas de tener USDC.
+          Escanea el QR Suiche 7B del comercio. Tropico convierte tus USDC y
+          ejecuta Pago Móvil al destinatario en segundos. Tú nunca dejas de
+          tener USDC.
         </p>
       </div>
 
@@ -419,7 +439,8 @@ export function PagarComercioBs({
           </button>
         </div>
         <p className="text-[11px] text-tropico-mute">
-          Por ahora pegas el contenido manualmente. Cámara nativa: roadmap Q3 2026.
+          Por ahora pegas el contenido manualmente. Cámara nativa: roadmap Q3
+          2026.
         </p>
       </div>
 
@@ -427,9 +448,10 @@ export function PagarComercioBs({
         <div className="flex items-start gap-2">
           <Sparkles className="mt-0.5 size-3.5 shrink-0 text-tropico-purple" />
           <div className="text-tropico-mute">
-            <strong className="text-tropico-purple">Carlos AI</strong> valida el QR, calcula la
-            mejor tasa de FX en tiempo real y audita el pago. Si excede límite AML (${AML_LIMITS.PER_TX_USD.toLocaleString()}/tx),
-            te avisa antes.
+            <strong className="text-tropico-purple">Carlos AI</strong> valida el
+            QR, calcula la mejor tasa de FX en tiempo real y audita el pago. Si
+            excede límite AML (${AML_LIMITS.PER_TX_USD.toLocaleString()}/tx), te
+            avisa antes.
           </div>
         </div>
       </div>
@@ -437,7 +459,10 @@ export function PagarComercioBs({
   );
 }
 
-function Row({ label, children }: { label: string; children: React.ReactNode }) {
+function Row({
+  label,
+  children,
+}: { label: string; children: React.ReactNode }) {
   return (
     <div className="flex items-center justify-between">
       <span className="text-tropico-mute">{label}</span>

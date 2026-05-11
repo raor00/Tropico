@@ -1,23 +1,25 @@
-import Link from "next/link";
+import { Greeting } from "@/components/Greeting";
+import { HomeBalances } from "@/components/HomeBalances";
+import { ModuleCard } from "@/components/ModuleCard";
+import { WalletSessionBar } from "@/components/WalletSessionBar";
+import { formatUSD } from "@/lib/formato";
+import { MOCK_CASHBACK_PENDIENTE, MOCK_NEXT_DCA } from "@/lib/mock-data";
 import {
   ArrowLeftRight,
-  Send,
-  Sprout,
-  QrCode,
-  Sparkles,
-  Compass,
-  Zap,
-  Globe,
-  Plus,
-  Gift,
   CalendarClock,
+  Compass,
+  Gift,
+  Globe,
+  MessageCircle,
+  Plus,
+  QrCode,
+  Send,
+  Sparkles,
+  Sprout,
+  WifiOff,
+  Zap,
 } from "lucide-react";
-import { WalletSessionBar } from "@/components/WalletSessionBar";
-import { HomeBalances } from "@/components/HomeBalances";
-import { Greeting } from "@/components/Greeting";
-import { ModuleCard } from "@/components/ModuleCard";
-import { MOCK_CASHBACK_PENDIENTE, MOCK_NEXT_DCA } from "@/lib/mock-data";
-import { formatUSD } from "@/lib/formato";
+import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
@@ -75,6 +77,22 @@ const MODULES = [
     badge: "Pay",
   },
   {
+    href: "/offline",
+    Icon: WifiOff,
+    titulo: "Offline",
+    descripcion: "Firma txs sin conexión con durable nonces de Solana",
+    gradient: "from-tropico-sea/25 to-tropico-purple/10",
+    badge: "Nonces",
+  },
+  {
+    href: "/carlos/whatsapp",
+    Icon: MessageCircle,
+    titulo: "WhatsApp Bot",
+    descripcion: "Controla tu wallet desde WhatsApp con comandos de texto",
+    gradient: "from-tropico-green/20 to-tropico-sea/10",
+    badge: "Bot",
+  },
+  {
     href: "/descubrir",
     Icon: Compass,
     titulo: "Descubrir",
@@ -87,7 +105,6 @@ const MODULES = [
 export default function HomePage() {
   return (
     <main className="mx-auto flex min-h-dvh max-w-5xl flex-col gap-6 px-5 py-8">
-
       {/* Wallet session + Depositar */}
       <section className="flex flex-wrap items-center justify-between gap-2">
         <WalletSessionBar />
@@ -126,7 +143,8 @@ export default function HomePage() {
               </span>
             </div>
             <p className="text-xs leading-snug text-tropico-text/85 md:text-sm">
-              IA dentro de tu wallet — ejecuta swaps, DCA y cashback automático. Vos dirigís, Carlos actúa.
+              IA dentro de tu wallet — ejecuta swaps, DCA y cashback automático.
+              Tú diriges, Carlos actúa.
             </p>
           </div>
           <div className="relative hidden items-center self-center text-tropico-sun/80 transition group-hover:translate-x-1 group-hover:text-tropico-sun md:flex">
@@ -147,10 +165,12 @@ export default function HomePage() {
             </div>
             <div className="min-w-0 flex-1">
               <div className="text-sm font-semibold text-tropico-text">
-                Tienes {formatUSD(MOCK_CASHBACK_PENDIENTE.total)} de cashback acumulado
+                Tienes {formatUSD(MOCK_CASHBACK_PENDIENTE.total)} de cashback
+                acumulado
               </div>
               <div className="text-xs text-tropico-mute">
-                De {MOCK_CASHBACK_PENDIENTE.comerciosCount} comercios afiliados — tap para reclamar
+                De {MOCK_CASHBACK_PENDIENTE.comerciosCount} comercios afiliados
+                — tap para reclamar
               </div>
             </div>
           </Link>
@@ -165,7 +185,8 @@ export default function HomePage() {
           </div>
           <div className="min-w-0 flex-1">
             <div className="text-sm font-semibold text-tropico-text">
-              Próximo DCA: {formatUSD(MOCK_NEXT_DCA.monto)} → {MOCK_NEXT_DCA.tokenDestino}
+              Próximo DCA: {formatUSD(MOCK_NEXT_DCA.monto)} →{" "}
+              {MOCK_NEXT_DCA.tokenDestino}
             </div>
             <div className="text-xs text-tropico-mute">
               Lunes 10:00 — Carlos lo ejecuta automático
