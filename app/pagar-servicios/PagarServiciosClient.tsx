@@ -12,8 +12,10 @@ import {
   Users,
   X,
   ChevronRight,
+  ExternalLink,
 } from "lucide-react";
 import { DualPrice } from "@/components/DualPrice";
+import { whatsappShareUrl } from "@/lib/solana-pay";
 
 type Categoria = {
   id: string;
@@ -91,19 +93,28 @@ const CATEGORIAS: Categoria[] = [
   // Removido de esta grid para evitar duplicado y confusión.
 ];
 
-function handlePay(
-  proveedor: string,
-  numero: string,
-  monto: number,
-  cedula?: string
-) {
-  const cedulaInfo = cedula ? ` (cédula: ${cedula})` : "";
-  alert(
-    `Demo: pagaste $${monto.toFixed(2)} a ${proveedor} — cuenta ${numero}${cedulaInfo}.\n\n` +
-      `En producción Tropico haría:\n` +
-      `1) Swap USDC→Bs interno al rate paralelo (Jupiter)\n` +
-      `2) Transferencia Bs al proveedor vía agregador de pagos (PagoChain/Reserve API)\n` +
-      `3) Confirmación SMS al usuario`
+type ReciboDemo = {
+  proveedor: string;
+  numero: string;
+  monto: number;
+  cedula?: string;
+  txSig: string;
+};
+
+function mockTxSignature() {
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz123456789";
+  let s = "";
+  for (let i = 0; i < 88; i++) s += chars[Math.floor(Math.random() * chars.length)];
+  return s;
+}
+
+function buildReciboMessage(r: ReciboDemo): string {
+  const cedula = r.cedula ? `\nCédula: ${r.cedula}` : "";
+  return (
+    `🌴 Recibo Tropico\n\n` +
+      `Pagaste $${r.monto.toFixed(2)} USDC a ${r.proveedor}\n` +
+      `Cuenta: ${r.numero}${cedula}\n\n` +
+      `Verificable on-chain:\nhttps://solscan.io/tx/${r.txSig}`
   );
 }
 
@@ -118,9 +129,15 @@ function PagoModal({
   const [numero, setNumero] = useState("");
   const [cedula, setCedula] = useState("");
   const [monto, setMonto] = useState(10);
+  const [recibo, setRecibo] = useState<ReciboDemo | null>(null);
 
   const esPagoMovil = cat.id === "pago-movil";
   const esStreaming = cat.id === "streaming";
+
+  function compartirWhatsApp() {
+    if (!recibo) return;
+    window.open(whatsappShareUrl(buildReciboMessage(recibo)), "_blank");
+  }
 
   return (
     <div
@@ -213,19 +230,58 @@ function PagoModal({
         </div>
 
         {/* CTA */}
-        <button
-          onClick={() => {
-            if (!numero.trim()) {
-              alert("Por favor escribe el número de servicio.");
-              return;
-            }
-            handlePay(proveedor, numero, monto, esPagoMovil ? cedula : undefined);
-          }}
-          className="btn-primary mt-1 flex h-12 w-full items-center justify-center gap-2 rounded-xl font-semibold"
-        >
-          Pagar con Tropico
-          <ChevronRight className="size-4" strokeWidth={2.5} />
-        </button>
+        {recibo ? (
+          <div className="flex flex-col gap-3">
+            <div className="rounded-xl border border-tropico-green/40 bg-tropico-green/10 p-4">
+              <div className="flex items-center gap-2 font-display text-base font-bold text-tropico-green">
+                <span aria-hidden>✅</span> Pago confirmado on-chain
+              </div>
+              <p className="mt-1 text-xs text-tropico-mute">
+                ${recibo.monto.toFixed(2)} USDC a {recibo.proveedor} — cuenta {recibo.numero}.
+              </p>
+              <a
+                href={`https://solscan.io/tx/${recibo.txSig}`}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-tropico-green hover:underline"
+              >
+                Ver en Solscan <ExternalLink className="size-3" />
+              </a>
+            </div>
+            <button
+              onClick={compartirWhatsApp}
+              className="btn-primary flex h-12 w-full items-center justify-center gap-2 rounded-xl font-semibold"
+            >
+              Compartir recibo por WhatsApp 📱
+            </button>
+            <button
+              onClick={onClose}
+              className="btn-ghost h-10 rounded-xl text-sm"
+            >
+              Cerrar
+            </button>
+          </div>
+        ) : (
+          <button
+            onClick={() => {
+              if (!numero.trim()) {
+                alert("Por favor escribe el número de servicio.");
+                return;
+              }
+              setRecibo({
+                proveedor,
+                numero,
+                monto,
+                cedula: esPagoMovil ? cedula : undefined,
+                txSig: mockTxSignature(),
+              });
+            }}
+            className="btn-primary mt-1 flex h-12 w-full items-center justify-center gap-2 rounded-xl font-semibold"
+          >
+            Pagar con Tropico
+            <ChevronRight className="size-4" strokeWidth={2.5} />
+          </button>
+        )}
 
         <p className="text-center text-[11px] text-tropico-mute">
           Demo hackathon — sin cargos reales. En producción vía agregador BCV-compliant.

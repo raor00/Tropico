@@ -1,5 +1,6 @@
 import { PagarServiciosClient } from "./PagarServiciosClient";
 import { Suiche7BScan } from "@/components/Suiche7BScan";
+import { RailStatusBanner } from "@/components/RailStatusBanner";
 
 export const dynamic = "force-dynamic";
 
@@ -18,6 +19,9 @@ export default function PagarServiciosPage() {
         <span className="font-semibold">Demo del hackathon</span>
         {" — "}partnerships activas Q3 2026. En producción conectamos con un agregador de pagos venezolano licenciado (BCV-compliant).
       </div>
+
+      {/* Rail Resilient — failover Pago Móvil → Solana Pay */}
+      <RailStatusBanner />
 
       {/* Hero */}
       <section className="flex flex-col gap-3">

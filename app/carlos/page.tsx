@@ -12,6 +12,9 @@ import {
   Bot,
   ExternalLink,
   Send,
+  MessageCircle,
+  Fingerprint,
+  Shield,
 } from "lucide-react";
 
 const CAPABILITIES = [
@@ -350,6 +353,55 @@ export default function CarlosPage() {
           >
             Ver kit en GitHub <ExternalLink className="size-3" />
           </a>
+        </div>
+      </section>
+
+      {/* ── Carlos WhatsApp · próximamente ─────────────────────── */}
+      <section className="panel relative overflow-hidden p-6">
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-tropico-green/10 via-transparent to-tropico-purple/10" />
+        <div className="relative flex flex-col gap-4">
+          <div className="flex items-start gap-4">
+            <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-tropico-green/15 text-tropico-green">
+              <MessageCircle className="size-6" />
+            </div>
+            <div className="flex flex-col gap-1">
+              <div className="flex flex-wrap items-center gap-2">
+                <h3 className="font-display text-xl font-bold">Carlos por WhatsApp</h3>
+                <span className="rounded-full bg-tropico-sun/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-tropico-sun">
+                  Próximamente · Q3 2026
+                </span>
+              </div>
+              <p className="text-sm text-tropico-mute">
+                El venezolano vive en WhatsApp. Carlos también. Consultá saldo, simulá un swap o
+                generá un QR de cobro escribiéndole al bot — sin abrir la app.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid gap-2 sm:grid-cols-2">
+            <div className="flex items-start gap-2 rounded-lg border border-tropico-border bg-tropico-ink/40 p-3">
+              <Fingerprint className="mt-0.5 size-4 shrink-0 text-tropico-green" />
+              <div>
+                <p className="text-xs font-semibold text-tropico-text">Aprobación biométrica</p>
+                <p className="text-[11px] text-tropico-mute">
+                  Cada acción on-chain se confirma en la app con Face ID. WhatsApp solo conversa.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start gap-2 rounded-lg border border-tropico-border bg-tropico-ink/40 p-3">
+              <Shield className="mt-0.5 size-4 shrink-0 text-tropico-purple" />
+              <div>
+                <p className="text-xs font-semibold text-tropico-text">Las llaves no salen de tu teléfono</p>
+                <p className="text-[11px] text-tropico-mute">
+                  Privy MPC sigue al mando. WhatsApp es un canal de UX, no de custodia.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <p className="text-[11px] italic text-tropico-mute">
+            “carlos saldo” → respuesta en 1s. “carlos cobrar 5” → QR Solana Pay listo para reenviar.
+          </p>
         </div>
       </section>
 
