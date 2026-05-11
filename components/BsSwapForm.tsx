@@ -580,9 +580,23 @@ export function BsSwapForm({
                   : `${confirmed.bs.toLocaleString("es-VE", { maximumFractionDigits: 0 })} Bs`}
             </strong>{" "}
             {confirmed.onchain
-              ? "al pool Tropico — Bs se acreditan en background."
+              ? "al pool Tropico (tx real on-chain)."
               : "en tu wallet."}
           </p>
+          {confirmed.onchain && side === "buy-bs" && (
+            <div className="mt-1 flex flex-col gap-1 rounded-md border border-tropico-sun/30 bg-tropico-sun/5 p-2.5 text-[11px]">
+              <div className="flex items-center justify-between">
+                <span className="text-tropico-mute">Bs por acreditar a tu banco VE</span>
+                <strong className="text-tropico-sun">
+                  {confirmed.bs.toLocaleString("es-VE", { maximumFractionDigits: 0 })} Bs
+                </strong>
+              </div>
+              <div className="text-tropico-mute">
+                Llegan a tu Pago Móvil / Banesco / Mercantil en <strong className="text-tropico-text">~5 min</strong>.
+                Tropico NO tokeniza el bolívar — el USDC va on-chain, los Bs aterrizan en tu cuenta bancaria real.
+              </div>
+            </div>
+          )}
           {confirmed.explorer ? (
             <a
               href={confirmed.explorer}
