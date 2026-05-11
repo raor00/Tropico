@@ -1,21 +1,21 @@
 "use client";
 
-import Link from "next/link";
-import { useState } from "react";
 import {
-  Wallet,
-  TrendingUp,
   ArrowLeftRight,
-  QrCode,
-  Sprout,
-  Gift,
   Bot,
   ExternalLink,
-  Send,
-  MessageCircle,
   Fingerprint,
+  Gift,
+  MessageCircle,
+  QrCode,
+  Send,
   Shield,
+  Sprout,
+  TrendingUp,
+  Wallet,
 } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
 
 const CAPABILITIES = [
   {
@@ -83,7 +83,10 @@ const CAPABILITIES = [
   },
 ];
 
-const COLOR_MAP: Record<string, { border: string; bg: string; text: string; badge: string }> = {
+const COLOR_MAP: Record<
+  string,
+  { border: string; bg: string; text: string; badge: string }
+> = {
   sea: {
     border: "border-tropico-sea/30",
     bg: "bg-tropico-sea/5",
@@ -129,7 +132,9 @@ const CANNED: Record<string, string> = {
 
 export default function CarlosPage() {
   const [input, setInput] = useState("");
-  const [messages, setMessages] = useState<{ role: "user" | "carlos"; text: string }[]>([]);
+  const [messages, setMessages] = useState<
+    { role: "user" | "carlos"; text: string }[]
+  >([]);
 
   const hasApiKey =
     typeof process !== "undefined" &&
@@ -153,22 +158,31 @@ export default function CarlosPage() {
       const res = await fetch("/api/carlos", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: text, history: [], currentScreen: "carlos" }),
+        body: JSON.stringify({
+          message: text,
+          history: [],
+          currentScreen: "carlos",
+        }),
       });
       const data = await res.json();
-      setMessages((prev) => [...prev, { role: "carlos", text: data.text ?? "Sin respuesta." }]);
+      setMessages((prev) => [
+        ...prev,
+        { role: "carlos", text: data.text ?? "Sin respuesta." },
+      ]);
     } catch {
       console.log("[Carlos stub] prompt:", text);
       setMessages((prev) => [
         ...prev,
-        { role: "carlos", text: "¡Epa! Algo salió mal conectando con el backend. Intenta de nuevo, panita." },
+        {
+          role: "carlos",
+          text: "¡Epa! Algo salió mal conectando con el backend. Intenta de nuevo, panita.",
+        },
       ]);
     }
   };
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-3xl flex-col gap-8 px-5 py-10">
-
       {/* ── Hero ───────────────────────────────────────────────── */}
       <header className="flex flex-col gap-3 pt-4">
         <Link
@@ -208,7 +222,7 @@ export default function CarlosPage() {
           </p>
           {messages.map((m, i) => (
             <div
-              key={i}
+              key={`${m.role}-${i}-${m.text.slice(0, 16)}`}
               className={`rounded-xl px-4 py-3 text-sm ${
                 m.role === "user"
                   ? "self-end bg-tropico-purple/20 text-tropico-text"
@@ -270,6 +284,7 @@ export default function CarlosPage() {
         <div className="flex flex-wrap gap-2">
           {Object.keys(CANNED).map((p) => (
             <button
+              type="button"
               key={p}
               onClick={() => send(p)}
               className="rounded-full border border-tropico-border bg-tropico-panel px-3 py-1.5 text-sm transition hover:border-tropico-purple hover:text-tropico-text"
@@ -287,7 +302,8 @@ export default function CarlosPage() {
             Las 7 capacidades de Carlos
           </h2>
           <p className="mt-1 text-sm text-tropico-mute">
-            Cada capacidad es un skill de Lumen respaldado por una capability Python real.
+            Cada capacidad es un skill de Lumen respaldado por una capability
+            Python real.
           </p>
         </div>
 
@@ -305,11 +321,15 @@ export default function CarlosPage() {
                   <h3 className={`font-display text-base font-bold ${c.text}`}>
                     {cap.name}
                   </h3>
-                  <span className={`ml-auto rounded-full px-2 py-0.5 text-[10px] font-mono ${c.badge}`}>
+                  <span
+                    className={`ml-auto rounded-full px-2 py-0.5 text-[10px] font-mono ${c.badge}`}
+                  >
                     {cap.skill}
                   </span>
                 </header>
-                <p className="text-xs leading-relaxed text-tropico-mute">{cap.desc}</p>
+                <p className="text-xs leading-relaxed text-tropico-mute">
+                  {cap.desc}
+                </p>
                 <div className="rounded-lg bg-tropico-ink/60 px-3 py-2">
                   <p className="mb-1 text-[10px] font-semibold uppercase tracking-wider text-tropico-mute">
                     Ejemplo de pregunta
@@ -366,14 +386,17 @@ export default function CarlosPage() {
             </div>
             <div className="flex flex-col gap-1">
               <div className="flex flex-wrap items-center gap-2">
-                <h3 className="font-display text-xl font-bold">Carlos por WhatsApp</h3>
+                <h3 className="font-display text-xl font-bold">
+                  Carlos por WhatsApp
+                </h3>
                 <span className="rounded-full bg-tropico-sun/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-tropico-sun">
                   Próximamente · Q3 2026
                 </span>
               </div>
               <p className="text-sm text-tropico-mute">
-                El venezolano vive en WhatsApp. Carlos también. Consultá saldo, simulá un swap o
-                generá un QR de cobro escribiéndole al bot — sin abrir la app.
+                El venezolano vive en WhatsApp. Carlos también. Consultá saldo,
+                simulá un swap o generá un QR de cobro escribiéndole al bot —
+                sin abrir la app.
               </p>
             </div>
           </div>
@@ -382,25 +405,32 @@ export default function CarlosPage() {
             <div className="flex items-start gap-2 rounded-lg border border-tropico-border bg-tropico-ink/40 p-3">
               <Fingerprint className="mt-0.5 size-4 shrink-0 text-tropico-green" />
               <div>
-                <p className="text-xs font-semibold text-tropico-text">Aprobación biométrica</p>
+                <p className="text-xs font-semibold text-tropico-text">
+                  Aprobación biométrica
+                </p>
                 <p className="text-[11px] text-tropico-mute">
-                  Cada acción on-chain se confirma en la app con Face ID. WhatsApp solo conversa.
+                  Cada acción on-chain se confirma en la app con Face ID.
+                  WhatsApp solo conversa.
                 </p>
               </div>
             </div>
             <div className="flex items-start gap-2 rounded-lg border border-tropico-border bg-tropico-ink/40 p-3">
               <Shield className="mt-0.5 size-4 shrink-0 text-tropico-purple" />
               <div>
-                <p className="text-xs font-semibold text-tropico-text">Las llaves no salen de tu teléfono</p>
+                <p className="text-xs font-semibold text-tropico-text">
+                  Las llaves no salen de tu teléfono
+                </p>
                 <p className="text-[11px] text-tropico-mute">
-                  Privy MPC sigue al mando. WhatsApp es un canal de UX, no de custodia.
+                  Privy MPC sigue al mando. WhatsApp es un canal de UX, no de
+                  custodia.
                 </p>
               </div>
             </div>
           </div>
 
           <p className="text-[11px] italic text-tropico-mute">
-            “carlos saldo” → respuesta en 1s. “carlos cobrar 5” → QR Solana Pay listo para reenviar.
+            “carlos saldo” → respuesta en 1s. “carlos cobrar 5” → QR Solana Pay
+            listo para reenviar.
           </p>
         </div>
       </section>

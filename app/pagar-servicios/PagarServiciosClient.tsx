@@ -1,21 +1,21 @@
 "use client";
 
-import { useState } from "react";
-import {
-  Zap,
-  Droplets,
-  Flame,
-  Smartphone,
-  Wifi,
-  Tv,
-  Play,
-  Users,
-  X,
-  ChevronRight,
-  ExternalLink,
-} from "lucide-react";
 import { DualPrice } from "@/components/DualPrice";
 import { whatsappShareUrl } from "@/lib/solana-pay";
+import {
+  ChevronRight,
+  Droplets,
+  ExternalLink,
+  Flame,
+  Play,
+  Smartphone,
+  Tv,
+  Users,
+  Wifi,
+  X,
+  Zap,
+} from "lucide-react";
+import { useState } from "react";
 
 type Categoria = {
   id: string;
@@ -104,18 +104,14 @@ type ReciboDemo = {
 function mockTxSignature() {
   const chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz123456789";
   let s = "";
-  for (let i = 0; i < 88; i++) s += chars[Math.floor(Math.random() * chars.length)];
+  for (let i = 0; i < 88; i++)
+    s += chars[Math.floor(Math.random() * chars.length)];
   return s;
 }
 
 function buildReciboMessage(r: ReciboDemo): string {
   const cedula = r.cedula ? `\nCédula: ${r.cedula}` : "";
-  return (
-    `🌴 Recibo Tropico\n\n` +
-      `Pagaste $${r.monto.toFixed(2)} USDC a ${r.proveedor}\n` +
-      `Cuenta: ${r.numero}${cedula}\n\n` +
-      `Verificable on-chain:\nhttps://solscan.io/tx/${r.txSig}`
-  );
+  return `🌴 Recibo Tropico\n\nPagaste $${r.monto.toFixed(2)} USDC a ${r.proveedor}\nCuenta: ${r.numero}${cedula}\n\nVerificable on-chain:\nhttps://solscan.io/tx/${r.txSig}`;
 }
 
 function PagoModal({
@@ -145,17 +141,25 @@ function PagoModal({
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
+      onKeyDown={(e) => {
+        if (e.key === "Escape") onClose();
+      }}
     >
       <div className="panel relative flex w-full max-w-md flex-col gap-5 rounded-t-3xl p-6 sm:rounded-2xl">
         {/* Header modal */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className={`flex size-10 items-center justify-center rounded-xl bg-tropico-ink/60 ${cat.color}`}>
+            <div
+              className={`flex size-10 items-center justify-center rounded-xl bg-tropico-ink/60 ${cat.color}`}
+            >
               <cat.Icon className="size-5" strokeWidth={1.75} aria-hidden />
             </div>
-            <h2 className="font-display text-xl font-bold">Pagar {cat.nombre}</h2>
+            <h2 className="font-display text-xl font-bold">
+              Pagar {cat.nombre}
+            </h2>
           </div>
           <button
+            type="button"
             onClick={onClose}
             aria-label="Cerrar"
             className="flex size-9 items-center justify-center rounded-lg border border-tropico-border text-tropico-mute transition hover:border-tropico-coral hover:text-tropico-coral"
@@ -167,8 +171,14 @@ function PagoModal({
         {/* Proveedor */}
         {cat.proveedores.length > 1 && (
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-medium text-tropico-mute">Proveedor</label>
+            <label
+              htmlFor="pago-proveedor"
+              className="text-xs font-medium text-tropico-mute"
+            >
+              Proveedor
+            </label>
             <select
+              id="pago-proveedor"
               value={proveedor}
               onChange={(e) => setProveedor(e.target.value)}
               className="h-11 rounded-xl border border-tropico-border bg-tropico-ink px-3 text-sm text-tropico-text focus:border-tropico-sun focus:outline-none"
@@ -184,8 +194,14 @@ function PagoModal({
 
         {/* Número de servicio */}
         <div className="flex flex-col gap-1.5">
-          <label className="text-xs font-medium text-tropico-mute">{cat.labelNumero}</label>
+          <label
+            htmlFor="pago-numero"
+            className="text-xs font-medium text-tropico-mute"
+          >
+            {cat.labelNumero}
+          </label>
           <input
+            id="pago-numero"
             type={esStreaming ? "email" : "text"}
             value={numero}
             onChange={(e) => setNumero(e.target.value)}
@@ -197,8 +213,14 @@ function PagoModal({
         {/* Cédula — solo para Pago Móvil */}
         {esPagoMovil && (
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-medium text-tropico-mute">Cédula del destinatario</label>
+            <label
+              htmlFor="pago-cedula"
+              className="text-xs font-medium text-tropico-mute"
+            >
+              Cédula del destinatario
+            </label>
             <input
+              id="pago-cedula"
               type="text"
               value={cedula}
               onChange={(e) => setCedula(e.target.value)}
@@ -210,12 +232,18 @@ function PagoModal({
 
         {/* Monto */}
         <div className="flex flex-col gap-1.5">
-          <label className="text-xs font-medium text-tropico-mute">Monto en USD</label>
+          <label
+            htmlFor="pago-monto"
+            className="text-xs font-medium text-tropico-mute"
+          >
+            Monto en USD
+          </label>
           <div className="relative">
             <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-tropico-mute">
               $
             </span>
             <input
+              id="pago-monto"
               type="number"
               min={1}
               step={0.5}
@@ -237,7 +265,8 @@ function PagoModal({
                 <span aria-hidden>✅</span> Pago confirmado on-chain
               </div>
               <p className="mt-1 text-xs text-tropico-mute">
-                ${recibo.monto.toFixed(2)} USDC a {recibo.proveedor} — cuenta {recibo.numero}.
+                ${recibo.monto.toFixed(2)} USDC a {recibo.proveedor} — cuenta{" "}
+                {recibo.numero}.
               </p>
               <a
                 href={`https://solscan.io/tx/${recibo.txSig}`}
@@ -249,12 +278,14 @@ function PagoModal({
               </a>
             </div>
             <button
+              type="button"
               onClick={compartirWhatsApp}
               className="btn-primary flex h-12 w-full items-center justify-center gap-2 rounded-xl font-semibold"
             >
               Compartir recibo por WhatsApp 📱
             </button>
             <button
+              type="button"
               onClick={onClose}
               className="btn-ghost h-10 rounded-xl text-sm"
             >
@@ -263,6 +294,7 @@ function PagoModal({
           </div>
         ) : (
           <button
+            type="button"
             onClick={() => {
               if (!numero.trim()) {
                 alert("Por favor escribe el número de servicio.");
@@ -284,7 +316,8 @@ function PagoModal({
         )}
 
         <p className="text-center text-[11px] text-tropico-mute">
-          Demo hackathon — sin cargos reales. En producción vía agregador BCV-compliant.
+          Demo hackathon — sin cargos reales. En producción vía agregador
+          BCV-compliant.
         </p>
       </div>
     </div>
@@ -301,18 +334,23 @@ export function PagarServiciosClient() {
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {CATEGORIAS.map((cat) => (
             <button
+              type="button"
               key={cat.id}
               onClick={() => setCatActiva(cat)}
-              className={`panel group relative flex flex-col gap-3 overflow-hidden p-5 text-left transition hover:border-tropico-sun/30`}
+              className="panel group relative flex flex-col gap-3 overflow-hidden p-5 text-left transition hover:border-tropico-sun/30"
             >
               <div
                 className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${cat.gradient} opacity-60 transition group-hover:opacity-100`}
               />
               <div className="relative flex flex-col gap-2">
-                <div className={`flex size-11 items-center justify-center rounded-xl bg-tropico-ink/60 ring-1 ring-tropico-sun/20 transition group-hover:ring-tropico-sun/50 ${cat.color}`}>
+                <div
+                  className={`flex size-11 items-center justify-center rounded-xl bg-tropico-ink/60 ring-1 ring-tropico-sun/20 transition group-hover:ring-tropico-sun/50 ${cat.color}`}
+                >
                   <cat.Icon className="size-5" strokeWidth={1.75} aria-hidden />
                 </div>
-                <h3 className="font-display text-lg font-bold leading-tight">{cat.nombre}</h3>
+                <h3 className="font-display text-lg font-bold leading-tight">
+                  {cat.nombre}
+                </h3>
                 <p className="text-xs leading-relaxed text-tropico-mute">
                   {cat.proveedores.join(" · ")}
                 </p>

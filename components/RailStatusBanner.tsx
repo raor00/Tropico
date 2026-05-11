@@ -1,7 +1,7 @@
 "use client";
 
+import { AlertTriangle, Radio, ShieldCheck } from "lucide-react";
 import { useState } from "react";
-import { Radio, ShieldCheck, AlertTriangle } from "lucide-react";
 
 type Rail = "online" | "fallback";
 
@@ -21,9 +21,15 @@ export function RailStatusBanner() {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-start gap-3">
           {online ? (
-            <ShieldCheck className="mt-0.5 size-5 shrink-0 text-tropico-green" aria-hidden />
+            <ShieldCheck
+              className="mt-0.5 size-5 shrink-0 text-tropico-green"
+              aria-hidden
+            />
           ) : (
-            <AlertTriangle className="mt-0.5 size-5 shrink-0 text-tropico-sun" aria-hidden />
+            <AlertTriangle
+              className="mt-0.5 size-5 shrink-0 text-tropico-sun"
+              aria-hidden
+            />
           )}
           <div className="flex flex-col gap-0.5">
             <div className="flex items-center gap-2">
@@ -63,7 +69,10 @@ export function RailStatusBanner() {
         </div>
 
         <button
-          onClick={() => setRail((r) => (r === "online" ? "fallback" : "online"))}
+          type="button"
+          onClick={() =>
+            setRail((r) => (r === "online" ? "fallback" : "online"))
+          }
           className="self-start rounded-lg border border-tropico-border bg-tropico-ink/40 px-3 py-1.5 text-[11px] font-semibold text-tropico-mute transition hover:border-tropico-sun hover:text-tropico-text sm:self-center"
         >
           <span className="inline-flex items-center gap-1.5">
