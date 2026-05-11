@@ -1,21 +1,47 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
 import {
-  ArrowDownUp,
-  Zap,
-  ShieldCheck,
-  AlertTriangle,
-  Droplets,
-  CheckCircle2,
-  Sparkles,
-  Smartphone,
-  Building2,
-  CreditCard,
-  TrendingUp,
-} from "lucide-react";
+  AML_LIMITS,
+  checkPerTx,
+  getTodayMovedUsd,
+  recordMovedUsd,
+} from "@/lib/aml";
+import { getActiveCluster } from "@/lib/cluster";
 import { formatUSD } from "@/lib/formato";
-import { checkPerTx, getTodayMovedUsd, recordMovedUsd, AML_LIMITS } from "@/lib/aml";
+import { type Signer, makeKeypairSigner, sendWithSigner } from "@/lib/send-tx";
+import {
+  getLocalWalletPubkey,
+  hasLocalWallet,
+  unlockLocalWallet,
+} from "@/lib/wallet-local";
+import type { Transaction } from "@solana/web3.js";
+import {
+  AlertTriangle,
+  ArrowDownUp,
+  Building2,
+  CheckCircle2,
+  CreditCard,
+  Droplets,
+  ExternalLink,
+  Radio,
+  ShieldCheck,
+  Smartphone,
+  Sparkles,
+  TrendingUp,
+  Zap,
+} from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+
+export type PrivySignerInjected = {
+  address: string;
+  signTransaction: (tx: Transaction) => Promise<Transaction>;
+};
+
+/**
+ * Wallet destino del pool Tropico (devnet). En demo apunta al merchant placeholder.
+ * En producción se reemplaza por la wallet real de la liquidity pool.
+ */
+const POOL_WALLET = "Mer7GhjMAcEYTmpAcePtAgVgkLogo3ZgKHSPaC9Th";
 
 /**
  * BsSwapForm — Bs ↔ USDC inmediato vía Tropico Liquidity Pool.
@@ -72,24 +98,66 @@ const METODOS = [
   },
 ];
 
-export function BsSwapForm({ paraleloRate = 36.42 }: { paraleloRate?: number }) {
+export function BsSwapForm({
+  paraleloRate = 36.42,
+  privySigner = null,
+}: {
+  paraleloRate?: number;
+  privySigner?: PrivySignerInjected | null;
+}) {
   const [side, setSide] = useState<Side>("sell-bs");
   const [method, setMethod] = useState<Method>("pagomovil");
   const [amount, setAmount] = useState("");
   const [executing, setExecuting] = useState(false);
+  const [password, setPassword] = useState("");
+  const [needsPassword, setNeedsPassword] = useState(false);
+  const [txError, setTxError] = useState<string | null>(null);
   const [confirmed, setConfirmed] = useState<{
     bs: number;
     usdc: number;
     txSig: string;
     ts: string;
+    onchain: boolean;
+    explorer?: string;
+    cluster?: string;
   } | null>(null);
+
+  const cluster = getActiveCluster();
+  const localPubkey =
+    typeof window !== "undefined" && hasLocalWallet()
+      ? getLocalWalletPubkey()
+      : null;
+  // Real tx posible solo en buy-bs (user envía USDC al pool) y con signer disponible
+  const canDoRealTx = side === "buy-bs" && (!!privySigner || !!localPubkey);
+
+  async function getActiveSigner(): Promise<Signer | null> {
+    if (privySigner) {
+      return {
+        type: "privy",
+        address: privySigner.address,
+        signTransaction: privySigner.signTransaction,
+      };
+    }
+    if (localPubkey) {
+      if (!password) {
+        setNeedsPassword(true);
+        return null;
+      }
+      const kp = await unlockLocalWallet(password);
+      if (!kp) {
+        setTxError("Contraseña incorrecta");
+        return null;
+      }
+      return makeKeypairSigner(kp);
+    }
+    return null;
+  }
 
   const amountNum = Number(amount);
   const inputCurrency = side === "sell-bs" ? "Bs" : "USDC";
   const selectedMethod = METODOS.find((m) => m.id === method)!;
   // Spread real depende del método (tarjeta cobra más por procesador, crypto solo gas)
-  const effectiveSpreadBps =
-    method === "tarjeta" ? 250 : SPREAD_BPS;
+  const effectiveSpreadBps = method === "tarjeta" ? 250 : SPREAD_BPS;
 
   // Cálculo del swap con spread del método elegido
   const calc = useMemo(() => {
@@ -129,8 +197,45 @@ export function BsSwapForm({ paraleloRate = 36.42 }: { paraleloRate?: number }) 
 
   async function execute() {
     if (!calc || !amlResult?.ok) return;
+    setTxError(null);
     setExecuting(true);
-    // Simula tx <1s
+
+    // Path real: buy-bs con signer disponible → transferencia USDC devnet
+    if (canDoRealTx) {
+      const signer = await getActiveSigner();
+      if (!signer) {
+        setExecuting(false);
+        return;
+      }
+      const res = await sendWithSigner(
+        signer,
+        POOL_WALLET,
+        "USDC",
+        calc.usdcIn!,
+      );
+      if (!res.ok) {
+        setTxError(res.error);
+        setExecuting(false);
+        return;
+      }
+      // recordMovedUsd ya lo hace sendWithSigner
+      setConfirmed({
+        bs: calc.bsOut!,
+        usdc: calc.usdcIn!,
+        txSig: res.signature,
+        ts: new Date().toISOString(),
+        onchain: true,
+        explorer: res.explorer,
+        cluster: res.cluster,
+      });
+      setExecuting(false);
+      setAmount("");
+      setPassword("");
+      setNeedsPassword(false);
+      return;
+    }
+
+    // Path mock: sell-bs (Bs entran off-chain) o sin signer conectado
     await new Promise((r) => setTimeout(r, 900));
     const txSig = `DEMO_${Math.random().toString(36).slice(2, 14)}`;
     recordMovedUsd(calc.usdValue);
@@ -139,6 +244,7 @@ export function BsSwapForm({ paraleloRate = 36.42 }: { paraleloRate?: number }) 
       usdc: side === "sell-bs" ? calc.usdcOut! : calc.usdcIn!,
       txSig,
       ts: new Date().toISOString(),
+      onchain: false,
     });
     setExecuting(false);
     setAmount("");
@@ -149,6 +255,7 @@ export function BsSwapForm({ paraleloRate = 36.42 }: { paraleloRate?: number }) 
       {/* Tab side */}
       <div className="grid grid-cols-2 gap-2 rounded-lg border border-tropico-border bg-tropico-ink/40 p-1">
         <button
+          type="button"
           onClick={() => {
             setSide("sell-bs");
             setConfirmed(null);
@@ -162,6 +269,7 @@ export function BsSwapForm({ paraleloRate = 36.42 }: { paraleloRate?: number }) 
           Bs → USDC
         </button>
         <button
+          type="button"
           onClick={() => {
             setSide("buy-bs");
             setConfirmed(null);
@@ -188,6 +296,7 @@ export function BsSwapForm({ paraleloRate = 36.42 }: { paraleloRate?: number }) 
               const active = method === m.id;
               return (
                 <button
+                  type="button"
                   key={m.id}
                   onClick={() => {
                     setMethod(m.id);
@@ -211,15 +320,22 @@ export function BsSwapForm({ paraleloRate = 36.42 }: { paraleloRate?: number }) 
           {/* Detalle del método activo */}
           <div className="flex flex-wrap items-center gap-3 rounded-md border border-tropico-border bg-tropico-ink/40 px-3 py-2 text-[11px] text-tropico-mute">
             <span className="flex items-center gap-1">
-              <Zap className="size-3 text-tropico-sun" /> {selectedMethod.tiempo}
+              <Zap className="size-3 text-tropico-sun" />{" "}
+              {selectedMethod.tiempo}
             </span>
             <span>·</span>
             <span>
-              Fee: <strong className={selectedMethod.color}>{selectedMethod.fee}</strong>
+              Fee:{" "}
+              <strong className={selectedMethod.color}>
+                {selectedMethod.fee}
+              </strong>
             </span>
             <span>·</span>
             <span>
-              Límite: <strong className="text-tropico-text">{selectedMethod.limite}</strong>
+              Límite:{" "}
+              <strong className="text-tropico-text">
+                {selectedMethod.limite}
+              </strong>
             </span>
           </div>
         </div>
@@ -229,12 +345,20 @@ export function BsSwapForm({ paraleloRate = 36.42 }: { paraleloRate?: number }) 
            USDC SÍ muestra (on-chain público en Solscan) */}
       <div className="grid grid-cols-3 gap-2">
         <div className="rounded-lg border border-tropico-border bg-tropico-ink/40 p-2 text-center">
-          <Droplets className="mx-auto size-4 text-tropico-sea" strokeWidth={1.75} />
-          <div className="mt-1 text-[10px] uppercase text-tropico-mute">Pool Bs</div>
+          <Droplets
+            className="mx-auto size-4 text-tropico-sea"
+            strokeWidth={1.75}
+          />
+          <div className="mt-1 text-[10px] uppercase text-tropico-mute">
+            Pool Bs
+          </div>
           <div className="font-display text-sm font-bold text-tropico-text">
             Disponible
           </div>
-          <div className="text-[9px] text-tropico-mute" title="Bs viven off-chain (custodia agente VE), no se muestra monto público por privacidad">
+          <div
+            className="text-[9px] text-tropico-mute"
+            title="Bs viven off-chain (custodia agente VE), no se muestra monto público por privacidad"
+          >
             off-chain
           </div>
         </div>
@@ -245,28 +369,43 @@ export function BsSwapForm({ paraleloRate = 36.42 }: { paraleloRate?: number }) 
           className="rounded-lg border border-tropico-border bg-tropico-ink/40 p-2 text-center transition hover:border-tropico-green/40"
           title="USDC pool on-chain — verificable en Solscan"
         >
-          <Droplets className="mx-auto size-4 text-tropico-green" strokeWidth={1.75} />
-          <div className="mt-1 text-[10px] uppercase text-tropico-mute">Pool USDC</div>
+          <Droplets
+            className="mx-auto size-4 text-tropico-green"
+            strokeWidth={1.75}
+          />
+          <div className="mt-1 text-[10px] uppercase text-tropico-mute">
+            Pool USDC
+          </div>
           <div className="font-display text-sm font-bold text-tropico-text">
             {(POOL_USDC_AVAILABLE / 1000).toFixed(0)}k
           </div>
-          <div className="text-[9px] text-tropico-green underline">Ver Solscan ↗</div>
+          <div className="text-[9px] text-tropico-green underline">
+            Ver Solscan ↗
+          </div>
         </a>
         <div className="rounded-lg border border-tropico-border bg-tropico-ink/40 p-2 text-center">
           <Zap className="mx-auto size-4 text-tropico-sun" strokeWidth={1.75} />
-          <div className="mt-1 text-[10px] uppercase text-tropico-mute">Settlement</div>
-          <div className="font-display text-sm font-bold text-tropico-text">{"<1s"}</div>
+          <div className="mt-1 text-[10px] uppercase text-tropico-mute">
+            Settlement
+          </div>
+          <div className="font-display text-sm font-bold text-tropico-text">
+            {"<1s"}
+          </div>
           <div className="text-[9px] text-tropico-mute">on-chain</div>
         </div>
       </div>
 
       {/* Input */}
       <div className="flex flex-col gap-2">
-        <label className="text-xs font-semibold uppercase tracking-wider text-tropico-mute">
+        <label
+          htmlFor="bs-swap-amount"
+          className="text-xs font-semibold uppercase tracking-wider text-tropico-mute"
+        >
           Monto en {inputCurrency}
         </label>
         <div className="flex items-center gap-2 rounded-lg border border-tropico-border bg-tropico-ink/60 px-4 py-3">
           <input
+            id="bs-swap-amount"
             type="number"
             value={amount}
             onChange={(e) => {
@@ -278,10 +417,14 @@ export function BsSwapForm({ paraleloRate = 36.42 }: { paraleloRate?: number }) 
             step={side === "sell-bs" ? "1000" : "1"}
             className="flex-1 bg-transparent text-2xl font-bold focus:outline-none"
           />
-          <span className="text-sm font-semibold text-tropico-mute">{inputCurrency}</span>
+          <span className="text-sm font-semibold text-tropico-mute">
+            {inputCurrency}
+          </span>
         </div>
         <div className="text-[11px] text-tropico-mute">
-          Tasa actual: <strong className="text-tropico-text">{paraleloRate} Bs/USDC</strong> · Spread Tropico: 1.5%
+          Tasa actual:{" "}
+          <strong className="text-tropico-text">{paraleloRate} Bs/USDC</strong>{" "}
+          · Spread Tropico: 1.5%
         </div>
       </div>
 
@@ -292,8 +435,8 @@ export function BsSwapForm({ paraleloRate = 36.42 }: { paraleloRate?: number }) 
             <span className="text-tropico-mute">Recibes (instantáneo)</span>
             <span className="font-display text-2xl font-bold text-tropico-green">
               {side === "sell-bs"
-                ? `${calc.usdcOut!.toFixed(2)} USDC`
-                : `${calc.bsOut!.toLocaleString("es-VE", { maximumFractionDigits: 0 })} Bs`}
+                ? `${calc.usdcOut?.toFixed(2)} USDC`
+                : `${calc.bsOut?.toLocaleString("es-VE", { maximumFractionDigits: 0 })} Bs`}
             </span>
           </div>
           <div className="flex items-center justify-between text-xs text-tropico-mute">
@@ -327,14 +470,74 @@ export function BsSwapForm({ paraleloRate = 36.42 }: { paraleloRate?: number }) 
         <div className="flex items-center gap-2 rounded-md border border-tropico-sea/20 bg-tropico-sea/5 p-2 text-[11px] text-tropico-mute">
           <ShieldCheck className="size-3.5 text-tropico-sea" />
           <span>
-            Hoy llevas movido <strong className="text-tropico-text">${todayMoved.toLocaleString()}</strong> de
-            ${AML_LIMITS.PER_DAY_USD.toLocaleString()} permitidos
+            Hoy llevas movido{" "}
+            <strong className="text-tropico-text">
+              ${todayMoved.toLocaleString()}
+            </strong>{" "}
+            de ${AML_LIMITS.PER_DAY_USD.toLocaleString()} permitidos
           </span>
+        </div>
+      )}
+
+      {/* Badge: onchain real vs mock */}
+      {calc && (
+        <div
+          className={`flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-[11px] ${
+            canDoRealTx
+              ? "border-tropico-green/30 bg-tropico-green/5 text-tropico-green"
+              : "border-tropico-border bg-tropico-ink/40 text-tropico-mute"
+          }`}
+        >
+          <Radio className="size-3" />
+          {canDoRealTx ? (
+            <span>
+              <strong>
+                {cluster === "devnet" ? "Devnet onchain" : "Onchain"}
+              </strong>{" "}
+              · tx real USDC firmada por tu wallet
+            </span>
+          ) : (
+            <span>
+              <strong>Demo</strong> ·{" "}
+              {side === "sell-bs"
+                ? "Bs entran off-chain por Pago Móvil/banco"
+                : "conectá wallet para ejecutar tx real"}
+            </span>
+          )}
+        </div>
+      )}
+
+      {/* Password modal — solo si local wallet sin Privy */}
+      {needsPassword && !privySigner && (
+        <div className="flex flex-col gap-2 rounded-md border border-tropico-sun/30 bg-tropico-sun/5 p-3">
+          <label
+            htmlFor="bs-swap-pwd"
+            className="text-xs font-semibold text-tropico-sun"
+          >
+            Contraseña de tu wallet local
+          </label>
+          <input
+            id="bs-swap-pwd"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="••••••••"
+            className="h-10 rounded-md border border-tropico-border bg-tropico-ink px-3 text-sm focus:border-tropico-sun focus:outline-none"
+          />
+        </div>
+      )}
+
+      {/* Error tx */}
+      {txError && (
+        <div className="panel flex items-start gap-3 border-tropico-coral/30 bg-tropico-coral/5 p-3 text-xs">
+          <AlertTriangle className="mt-0.5 size-4 shrink-0 text-tropico-coral" />
+          <span className="text-tropico-coral">{txError}</span>
         </div>
       )}
 
       {/* Botón ejecutar */}
       <button
+        type="button"
         onClick={execute}
         disabled={!calc || !amlResult?.ok || executing}
         className="btn-primary inline-flex items-center justify-center gap-2 disabled:opacity-50"
@@ -358,20 +561,42 @@ export function BsSwapForm({ paraleloRate = 36.42 }: { paraleloRate?: number }) 
           <header className="flex items-center gap-2">
             <CheckCircle2 className="size-5 text-tropico-green" />
             <strong className="text-tropico-green">¡Listo!</strong>
+            {confirmed.onchain && (
+              <span className="rounded-full border border-tropico-green/40 bg-tropico-green/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-tropico-green">
+                {confirmed.cluster ?? "onchain"} · real
+              </span>
+            )}
             <span className="ml-auto text-xs text-tropico-mute">
               {new Date(confirmed.ts).toLocaleTimeString("es-VE")}
             </span>
           </header>
           <p className="text-sm text-tropico-text">
-            Recibiste{" "}
+            {confirmed.onchain ? "Enviaste " : "Recibiste "}
             <strong className="text-tropico-green">
-              {side === "sell-bs"
+              {confirmed.onchain
                 ? `${confirmed.usdc.toFixed(2)} USDC`
-                : `${confirmed.bs.toLocaleString("es-VE", { maximumFractionDigits: 0 })} Bs`}
+                : side === "sell-bs"
+                  ? `${confirmed.usdc.toFixed(2)} USDC`
+                  : `${confirmed.bs.toLocaleString("es-VE", { maximumFractionDigits: 0 })} Bs`}
             </strong>{" "}
-            en tu wallet.
+            {confirmed.onchain
+              ? "al pool Tropico — Bs se acreditan en background."
+              : "en tu wallet."}
           </p>
-          <code className="break-all text-[10px] text-tropico-mute">{confirmed.txSig}</code>
+          {confirmed.explorer ? (
+            <a
+              href={confirmed.explorer}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-tropico-green hover:underline"
+            >
+              Ver en Solscan <ExternalLink className="size-3" />
+            </a>
+          ) : (
+            <code className="break-all text-[10px] text-tropico-mute">
+              {confirmed.txSig}
+            </code>
+          )}
         </div>
       )}
 
@@ -379,9 +604,10 @@ export function BsSwapForm({ paraleloRate = 36.42 }: { paraleloRate?: number }) 
       <div className="flex items-start gap-2 rounded-md border border-tropico-purple/20 bg-tropico-purple/5 p-3 text-xs">
         <Sparkles className="mt-0.5 size-3.5 shrink-0 text-tropico-purple" />
         <div className="text-tropico-mute">
-          <strong className="text-tropico-purple">Carlos AI by Lumen</strong> monitorea la
-          pool, valida AML, ejecuta y audita en segundos. La pool rota Bs↔USDC en background
-          entre vendedores y compradores — tú nunca esperas.
+          <strong className="text-tropico-purple">Carlos AI by Lumen</strong>{" "}
+          monitorea la pool, valida AML, ejecuta y audita en segundos. La pool
+          rota Bs↔USDC en background entre vendedores y compradores — tú nunca
+          esperas.
         </div>
       </div>
     </div>

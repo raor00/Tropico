@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { ArrowLeftRight, Banknote } from "lucide-react";
+import { BsSwapFormEntry } from "@/components/BsSwapFormPrivy";
 import { SwapForm } from "@/components/SwapForm";
-import { BsSwapForm } from "@/components/BsSwapForm";
+import { ArrowLeftRight, Banknote } from "lucide-react";
+import { useState } from "react";
 
 type Tab = "bolivares" | "tokens";
 
@@ -39,7 +39,7 @@ export function CambiarTabs() {
         </button>
       </div>
 
-      {tab === "bolivares" ? <BsSwapForm /> : <SwapForm />}
+      {tab === "bolivares" ? <BsSwapFormEntry /> : <SwapForm />}
     </div>
   );
 }
