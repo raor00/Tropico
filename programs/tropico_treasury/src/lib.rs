@@ -18,7 +18,7 @@
 
 use anchor_lang::prelude::*;
 
-declare_id!("TROPCo1Yj4hKqNz4QXhFqTm5RpdJa7VmLFkX9JMP9N4");
+declare_id!("3a5NkTssAsVaarUPqx4YokNwUcfxHnNebGugrgBBxe8S");
 
 #[program]
 pub mod tropico_treasury {

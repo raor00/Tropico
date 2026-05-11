@@ -6,10 +6,12 @@ seeds = false
 skip-lint = false
 
 [programs.devnet]
-tropico_treasury = "TROPCo1Yj4hKqNz4QXhFqTm5RpdJa7VmLFkX9JMP9N4"
+tropico_treasury = "3a5NkTssAsVaarUPqx4YokNwUcfxHnNebGugrgBBxe8S"
+tropico_bs = "EdWuyZDXao86mTcUSpRVzNXaT9Tb5muU6YGubFhADWdN"
 
 [programs.localnet]
-tropico_treasury = "TROPCo1Yj4hKqNz4QXhFqTm5RpdJa7VmLFkX9JMP9N4"
+tropico_treasury = "3a5NkTssAsVaarUPqx4YokNwUcfxHnNebGugrgBBxe8S"
+tropico_bs = "EdWuyZDXao86mTcUSpRVzNXaT9Tb5muU6YGubFhADWdN"
 
 [registry]
 url = "https://api.apr.dev"

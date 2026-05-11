@@ -1,76 +1,87 @@
-<!-- Banner v2 — pixel art atardecer caribeño: palmera con coco, guacamaya roja-azul-amarilla, sol radiante, mar turquesa, montañas, wordmark TROPICO con gradient sunset (rojo→amarillo→verde→teal) y los 3 pilares: Wallet · Comercios · Carlos AI. Guarda el archivo en docs/images/banner.png para reemplazar el viejo. -->
-<p align="center">
-  <img src="docs/images/banner.png" alt="Tropico — Wallet · Comercios · Carlos AI · La red económica caribeña en Solana" width="100%" />
-</p>
+<!-- English summary for international judges — rest of this README is in Spanish -->
+> **For international judges**: Tropico Wallet is a non-custodial financial app for Venezuela built on Solana. The Colosseum differential is **BsX** — the first sovereign-stable, USDC-backed, on-chain Bolívar primitive with cryptographic reserve attestation. The wallet wraps it with a Pago Móvil VE rail (Venezuela's dominant payment network, first Solana integration), offline payments via durable nonces, and Carlos AI (an agent built on the Lumen runtime) that understands commands like "cobrale 50 USDT a María en BsX". See [`docs/COLOSSEUM_SUBMISSION.md`](docs/COLOSSEUM_SUBMISSION.md) for the full submission.
 
-# Tropico 🌴
-
-**La wallet caribeña en Solana. USDC + yield + QR para comercios. Hecho en Venezuela.**
-
-> _Ahorra ganando intereses. Paga sin perder valor._
-
-> Fintech non-custodial para venezolanos: gestiona dólares digitales, cobra con QR en un segundo, recibe yield automático y deja que tu copiloto AI actúe por ti — sin custodiar tu plata, sin permiso del banco.
+---
 
 [![Solana](https://img.shields.io/badge/Built_on-Solana-9945FF?logo=solana)](https://solana.com)
-[![License](https://img.shields.io/badge/License-MIT-14F195)](#license)
-[![Hackathon](https://img.shields.io/badge/Hackathon-dev3pack_2026-FFD166)](https://dev3pack.com)
+[![Next.js](https://img.shields.io/badge/Next.js-15-000000?logo=next.js)](https://nextjs.org)
+[![Anchor](https://img.shields.io/badge/Anchor-0.30.1-512BD4)](https://www.anchor-lang.com)
+[![Privy](https://img.shields.io/badge/Wallet-Privy_MPC-7C3AED)](https://privy.io)
+[![License](https://img.shields.io/badge/License-MIT-14F195)](LICENSE)
+[![Colosseum](https://img.shields.io/badge/Hackathon-Colosseum_2026-FFD166)](https://colosseum.org)
 [![Made in Venezuela](https://img.shields.io/badge/Hecho_en-🇻🇪_Venezuela-EF476F)](#)
+[![Dev3pack](https://img.shields.io/badge/Dev3pack_2026-%231_Venezuela_·_%2328_Global-FFD700)](https://hack.dev3pack.xyz/leaderboard)
+
+# Tropico Wallet 🌴
+
+> 🏆 **Dev3pack Global Hackathon 2026 — #1 Venezuela · #28 Global · #10 LatAm** (de 386 proyectos)
+
+**La primera capa de moneda soberana-estable para Venezuela, construida en Solana.**
+
+El diferencial de Colosseum es **BsX**: un token sintético que representa el bolívar venezolano, respaldado 1:1 en reservas USDC custodiadas on-chain por el programa `tropico_bs`, con atestación pública de reservas que cualquiera puede invocar y verificar en Solscan.
+
+Tropico es la consumer app construida encima: nueve módulos que cubren el ciclo económico completo del venezolano — swap, QR merchant, yield, remesas, **Pago Móvil VE** (primer proyecto Solana con esta integración), y **Carlos AI** como copiloto financiero en español venezolano.
 
 ---
 
-## ¿Qué es Tropico?
+## Submisión Colosseum
 
-Tropico es una red económica non-custodial construida sobre Solana para el venezolano que ya usa dólares digitales pero no tiene infraestructura que le responda. No dependes de ningún banco, no entregas tus llaves privadas y puedes verificar cada centavo en Solana Explorer.
+**Founder**: Rafael Oviedo — solo founder, venezolano, 6 años cripto, 3 años software. Antecedente: Tropico fue **#1 Venezuela / #28 global / #10 LatAm** en Dev3pack 2026 (386 proyectos).
 
-El producto tiene dos caras: **Tropico Wallet** para el consumidor (swap, envíos, yield, AI) y **Tropico Comercios** para el merchant (cobros QR con settlement en 1 segundo, fee 1%). Cuando los dos lados están dentro de Tropico, el dinero gira en USDC sin tocar el bolívar ni los bancos.
+### Mapeo directo a los 6 criterios oficiales
 
-Encima de eso hay una **capa de integración** — Tropico Pay — que permite a cualquier plataforma externa (delivery, e-commerce, ticketing, SaaS) cobrar en USDC usando el mismo gateway con un solo endpoint REST. Y **Carlos AI** corre sobre [**Lumen**](https://github.com/gabogabucho/lumen-agent), el framework open source de agentes en español — el motor que entiende, decide y conversa. El kit de Tropico es replicable: el mismo `KIT + SKILLS + CAPABILITIES` puede correr también con Hermes (memoria persistente) o OpenClaw (firma delegada on-chain) si otros equipos prefieren ese camino.
+| Criterio | Doc dedicado |
+|---|---|
+| 1. **Founder + Market Fit** | [`docs/TEAM.md`](docs/TEAM.md) · [`docs/FOUNDER_NARRATIVE.md`](docs/FOUNDER_NARRATIVE.md) |
+| 2. **Insight** | [`docs/INSIGHT.md`](docs/INSIGHT.md) — validado contra el corpus oficial Colosseum (5.400+ proyectos) |
+| 3. **Product + Execution** | [`docs/COLOSSEUM_SUBMISSION.md`](docs/COLOSSEUM_SUBMISSION.md) · [`docs/PROTOCOL_BSX.md`](docs/PROTOCOL_BSX.md) · [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) · demo live |
+| 4. **Market Size** | [`docs/MARKET_OPPORTUNITY.md`](docs/MARKET_OPPORTUNITY.md) — fuentes: Chainalysis, Galaxy, a16z, Pantera, BID |
+| 5. **Founder Communication** | [`docs/PITCH.md`](docs/PITCH.md) · [`docs/FAQ_FOR_JUDGES.md`](docs/FAQ_FOR_JUDGES.md) |
+| 6. **Viability** | [`docs/BUSINESS_MODEL.md`](docs/BUSINESS_MODEL.md) · [`docs/COMPETITIVE_LANDSCAPE.md`](docs/COMPETITIVE_LANDSCAPE.md) |
 
-Este repo es el MVP del hackathon **dev3pack 2026**, desarrollado desde Venezuela para el Caribe. ☀️
+### Otros docs operacionales
 
----
-
-## 🎬 Para jueces del hackathon — demo en 2 minutos
-
-1. Abrí el deploy live (URL en el form del hackathon).
-2. **Login con email** — Privy abre modal con email/Google/wallet. Privy crea automático tu wallet Solana embedded (es tuya, no custodia Tropico).
-3. En `/home` click el botón morado **"Modo demo · devnet"** debajo de "Saldo disponible". Se abre modal con tu pubkey + links a faucets públicos:
-   - `faucet.solana.com` → 1 SOL devnet (gas)
-   - `faucet.circle.com` → 10 USDC devnet
-   
-   En ~30 segundos tenés tu wallet fondeada con tokens de prueba (sin valor real).
-4. Probá: enviar, cobrar QR, swap, Pago Móvil VE (scan o manual), Carlos AI, perfil, idiomas.
-
-Detalle técnico completo en [`docs/JUDGE_DEMO_GUIDE.md`](docs/JUDGE_DEMO_GUIDE.md).
+- [`docs/COLOSSEUM_SUBMISSION.md`](docs/COLOSSEUM_SUBMISSION.md) — narrative completa para jueces
+- [`docs/SUBMISSION_CHECKLIST.md`](docs/SUBMISSION_CHECKLIST.md) — checklist operacional pre-submit
 
 ---
 
-## 🚀 Quick start
+## Demo rápido (para jueces)
 
-### Requisitos
+```
+Demo live: https://tropico-rho.vercel.app
+```
 
-- Node.js 20+ (probado en 22.x)
-- npm 10+
-- Python 3.11+ (solo si vas a correr las capabilities de Lumen)
+1. Login con email → Privy crea wallet Solana embedded en 15 segundos
+2. En `/home` → botón "Modo demo · devnet" → fondear con faucets públicos (SOL + USDC devnet)
+3. `/cambiar` tab Bolívares → flujo BsX: depositá USDC, recibís BsX a la tasa del día
+4. `/pagar-servicios` → Pago Móvil VE: escaneá QR Suiche7B o ingresá datos manual
+5. `/carlos` → preguntá "¿cuánto vale el dólar hoy?" o "cobrale $5 a Juan en BsX"
 
-### Setup
+Detalle completo: [`docs/JUDGE_DEMO_GUIDE.md`](docs/JUDGE_DEMO_GUIDE.md)
+
+---
+
+## Quick start
 
 ```bash
-# 1. Clonar el repo
-git clone https://github.com/[tu-usuario]/Hackathon.git tropico
+# 1. Clonar
+git clone https://github.com/[tu-usuario]/Tropico.git tropico
 cd tropico
 
 # 2. Instalar dependencias
 npm install
 
-# 3. Configurar variables de entorno (todas opcionales — sin ellas corre con mocks)
-cp .env.example .env.local 2>/dev/null || touch .env.local
+# 3. Configurar variables de entorno
+cp .env.example .env.local
 # Editar .env.local con tus keys (ver sección Variables de entorno)
 
 # 4. Levantar dev server
 npm run dev
 # → http://localhost:3000
 ```
+
+Sin ninguna key, la app corre en **modo demo** con mocks honestos y banners explícitos. Carlos AI usa smart fallback (sin LLM real). Ningún flow visual queda roto.
 
 ### Variables de entorno
 
@@ -82,11 +93,11 @@ NEXT_PUBLIC_PRIVY_APP_ID=
 NEXT_PUBLIC_HELIUS_RPC=https://mainnet.helius-rpc.com/?api-key=YOUR_KEY
 HELIUS_API_KEY=
 
-# Carlos AI — Gemini como LLM (o DeepSeek vía LiteLLM)
-GOOGLE_GENERATIVE_AI_API_KEY=
-# DEEPSEEK_API_KEY=          # alternativa si querés DeepSeek
+# Carlos AI — LLM (elige uno)
+GOOGLE_GENERATIVE_AI_API_KEY=   # Gemini 2.0 Flash
+# DEEPSEEK_API_KEY=              # alternativa más barata
 
-# Fee accounts (wallet que recibe los fees de Tropico)
+# Fee accounts de Tropico
 NEXT_PUBLIC_TROPICO_FEE_OWNER=
 NEXT_PUBLIC_TROPICO_FEE_ATA_USDC=
 NEXT_PUBLIC_TROPICO_FEE_ATA_SOL=
@@ -96,120 +107,213 @@ NEXT_PUBLIC_TROPICO_FEE_ATA_USDT=
 NEXT_PUBLIC_SOLANA_CLUSTER=mainnet-beta
 ```
 
-> El "Modo demo · devnet" del UI NO requiere env vars del lado servidor.
-> Es 100% client-side: switchea cluster + abre faucets públicos (Solana + Circle).
-> Cada usuario fondea su propia wallet sin pasar por el deployer Tropico.
+---
 
-Sin ninguna key, la app corre en **modo demo** con mocks honestos y banners explícitos. Ningún flow visual queda roto.
+## Arquitectura
+
+```
+CAPAS DE TROPICO
+═══════════════════════════════════════════════════════════════════
+
+CAPA PROTOCOLO (Solana programs / Anchor)
+  programs/tropico_bs/          ← BsX: mint/burn/attest/oracle
+  programs/tropico_treasury/    ← registro on-chain de fees (audit)
+
+CAPA INTEGRACIÓN (bridges)
+  lib/tropico-bs-bridge.ts      ← USDC → Bs → Pago Móvil VE
+  lib/suiche7b-parser.ts        ← QR Suiche7B (formato bancario VE)
+  lib/jupiter.ts                ← swap Jupiter v6 platformFeeBps=50
+  lib/solana-pay.ts             ← Solana Pay + durable nonces offline
+
+CAPA AGENTE (Lumen runtime + Carlos)
+  lumen-kit/                    ← KIT + 7 SKILLS declarativas (Lumen)
+  lumen-capabilities/           ← scripts Python ejecutables (Lumen)
+  lib/carlos-prompt.ts          ← system prompt Carlos AI
+  app/api/carlos/               ← proxy LLM (DeepSeek / Gemini / fallback)
+
+CAPA APLICACIÓN
+  app/ (Next.js 15 App Router)  ← 9 módulos consumer + merchant
+  lib/i18n/                     ← 4 idiomas (es/en/pt/fr)
+
+WALLET / AUTH
+  Privy MPC embedded            ← login email, non-custodial real
+  Solana Wallet Adapter         ← Phantom / Solflare fallback
+```
+
+Ver [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) para diagramas detallados y descripción de cada módulo.
 
 ---
 
-## 📂 Estructura del repo
+## BsX — el protocolo
 
-```
-.
-├── app/                          # Next.js App Router
-│   ├── page.tsx                  # Landing pública
-│   ├── home/                     # Dashboard del usuario
-│   ├── cambiar/                  # Swap con Jupiter v6
-│   ├── cobrar/                   # QR Solana Pay para merchants
-│   ├── enviar/                   # P2P + claim links por WhatsApp
-│   ├── guardar/                  # Yield (mSOL / Kamino)
-│   ├── depositar/                # Onramp stub + faucet
-│   ├── descubrir/                # Catálogo educativo de tokens
-│   ├── comercios/                # Landing del lado merchant
-│   ├── integraciones/            # Tropico Pay — 3 patrones de integración
-│   ├── carlos/                   # Carlos AI chat
-│   │   └── agente/               # Modo Agente — 4 acciones autónomas
-│   └── api/
-│       ├── checkout/create/      # POST endpoint de Tropico Pay
-│       └── carlos/               # Proxy LLM para Carlos
-├── components/                   # React UI components
-│   ├── Header.tsx                # Sticky, compacta en scroll, drawer mobile
-│   ├── VenezuelaBadge.tsx        # Tricolor animado (3 variants: xs/sm/md)
-│   ├── DualPrice.tsx             # Precio USD + VES en tiempo real
-│   ├── SwapForm.tsx              # Form swap con Jupiter Quote API
-│   ├── ReceiveQR.tsx             # QR Solana Pay generado client-side
-│   ├── ModuleCard.tsx            # Card de módulo reutilizable
-│   ├── AgentActionCard.tsx       # UI de acciones del Modo Agente
-│   ├── SplashScreen.tsx          # Animación pixel-art al cargar
-│   └── ...                       # TokenCard, PixelLoader, ScrollReveal, etc.
-├── lib/                          # Helpers y lógica de negocio
-│   ├── checkout.ts               # createCheckoutSession() — Tropico Pay
-│   ├── jupiter.ts                # Swap con platformFeeBps=50
-│   ├── solana-pay.ts             # buildSolanaPayUrl() + QR
-│   ├── carlos-prompt.ts          # System prompt de Carlos
-│   ├── agent-actions.ts          # DCA, auto-yield, cashback, rebalance
-│   └── mock-data.ts              # Datos mock para modo demo
-├── lumen-kit/                    # Tropico Web3 Kit (Lumen)
-│   ├── kit/
-│   │   ├── personality.yaml      # Personalidad de Carlos
-│   │   └── module.yaml           # Declaración del módulo
-│   └── skills/                   # 7 skills: prices, balances, swap,
-│       │                         #   pay, yield, cashback, agent-actions
-│       └── [skill]/SKILL.md      # Definición de cada skill
-├── lumen-capabilities/           # Scripts Python ejecutables
-│   ├── prices/
-│   │   ├── precio_bs.py          # Cotización USD/VES (paralelo + BCV)
-│   │   └── precio_usd.py         # Precio de cualquier token en USD
-│   └── swap/
-│       └── jupiter_quote.py      # Quote real de Jupiter v6
-├── docs/
-│   ├── TROPICO_BRIEF.md          # Fuente de verdad técnica completa
-│   ├── INTEGRATION_API.md        # Spec completo de Tropico Pay
-│   ├── LUMEN_INTEGRATION.md      # Doc maestro de Lumen + adapter pseudocode
-│   ├── BACKEND_ROADMAP.md        # Roadmap de infraestructura Q3/Q4
-│   ├── WALLET_GUIDE.md           # Privy MPC explicado para el usuario
-│   ├── ROADMAP.md                # Visión Q3 → Q1 2027
-│   ├── DEPLOY.md                 # Guía de deploy a Vercel
-│   └── PITCH_DECK.md             # Pitch 6 slides (Marp)
-└── scripts/
-    └── screenshots.mjs           # Playwright — regenera los 17 screenshots
-```
+`programs/tropico_bs/` es el programa Anchor que implementa el bolívar sintético on-chain:
+
+| Instrucción | Qué hace |
+|---|---|
+| `initialize(peg_rate)` | crea PDAs del protocolo, delega mint authority |
+| `update_peg(new_rate)` | oracle_authority actualiza la tasa Bs/USD |
+| `mint_bsx(usdc_amount)` | usuario deposita USDC → recibe BsX |
+| `burn_bsx(bsx_amount)` | usuario quema BsX → recupera USDC |
+| `attest_reserves()` | cualquiera escribe snapshot on-chain (usdc_reserves, bsx_supply) |
+| `set_pause(paused)` | admin pausa/reactiva en emergencias |
+
+Matemática: `bsx = usdc * peg_rate / 1_000_000` donde `peg_rate = Bs por 1 USD × 1_000_000`.
+
+Spec completa: [`docs/PROTOCOL_BSX.md`](docs/PROTOCOL_BSX.md)
 
 ---
 
 ## Los 9 módulos del consumidor
 
-> **Crecimos**: arrancamos con 5 módulos en el brief original, llegamos a 9 cubriendo
-> todo el ciclo de vida del dólar digital del venezolano — desde recibir remesa
-> internacional hasta pagar Pago Móvil VE escaneando un QR Suiche7B.
-
 | # | Módulo | URL | Qué hace |
 |---|---|---|---|
-| 1 | **Wallet / Home** | `/home` | Saludo Caracas + saldo on-chain real (USDC/SOL/SPL) via Helius + acciones rápidas. Saldo card minimal mobile, full desktop. |
-| 2 | **Cambiar** | `/cambiar` | Tab Bolívares ↔ USDC vía Tropico Liquidity Pool (settlement <1s, BCV+1.5%) o tab Tokens vía Jupiter v6 (`platformFeeBps=50`) |
-| 3 | **Cobrar** | `/cobrar` | QR Solana Pay client-side — fee 1% on top, merchant recibe el precio exacto |
-| 4 | **Enviar** | `/enviar` | P2P directo a wallet (firma SPL Token, soporta Privy embedded + local cifrada) o claim link compartible por WhatsApp. Libreta de contactos privada por wallet. |
-| 5 | **Guardar** | `/guardar` | Yield ~5–7% APY automático — mSOL (Marinade) o Kamino |
-| 6 | **Pago Móvil VE** 🆕 | `/pagar-servicios` | Tropico Bs Bridge: scaneás QR Suiche7B del comercio (cámara via html5-qrcode) o llenás los datos manual; Tropico convierte tu USDC → Bs y ejecuta el Pago Móvil real al banco destino en 2-5s, con comprobante bancario adjunto. Soporta los 20+ bancos venezolanos. |
-| 7 | **Carlos AI by Lumen** | `/carlos` | Agente conversacional venezolano — 7 capabilities (saldos, precios, swap, QR, yield, cashback, agente) sobre [Lumen](https://github.com/gabogabucho/lumen-agent) |
-| 8 | **Remesas** | `/remesas` | Puente diáspora → VE en 1s vía on-ramp aggregator (MoonPay/Transak/Ramp/Stripe Crypto) |
-| 9 | **Mi Tropico (Perfil)** 🆕 | `/perfil` | Avatar gradient + nombre editable + pubkey con copy/Solscan + email Privy + cluster activo + cerrar sesión + eliminar wallet + importar otra wallet |
+| 1 | **Wallet / Home** | `/home` | Saldo on-chain real (USDC/SOL/SPL) via Helius + acciones rápidas |
+| 2 | **Cambiar** | `/cambiar` | Tab Bolívares: USDC ↔ BsX vía protocolo BsX. Tab Tokens: Jupiter v6 (`platformFeeBps=50`) |
+| 3 | **Cobrar** | `/cobrar` | QR Solana Pay client-side, fee 1% hacia arriba, merchant recibe monto exacto |
+| 4 | **Enviar** | `/enviar` | P2P directo + claim links compartibles por WhatsApp |
+| 5 | **Guardar** | `/guardar` | Yield ~5-7% APY — mSOL (Marinade) o Kamino |
+| 6 | **Pago Móvil VE** | `/pagar-servicios` | QR Suiche7B + conversión USDC→Bs + Pago Móvil al banco destino en 2-5s |
+| 7 | **Carlos AI** | `/carlos` | Agente venezolano sobre Lumen — 7 capabilities + Modo Agente |
+| 8 | **Remesas** | `/remesas` | On-ramp aggregator (MoonPay/Transak/Ramp/Stripe Crypto) |
+| 9 | **Mi Tropico** | `/perfil` | Avatar, nombre editable, pubkey, cluster, importar wallet |
 
-### Módulos auxiliares (no son consumer-facing principales pero forman parte del flow)
+### Módulos auxiliares
 
 | Módulo | URL | Qué hace |
 |---|---|---|
-| **Descubrir** | `/descubrir` | Catálogo educativo de tokens curados (SOL/USDC/JUP/JTO/mSOL/KMNO/RAY/BONK/TROPI) |
-| **Claim** | `/claim/[id]` | Página que abre el receptor de un claim link de /enviar |
-| **Modo Agente** | `/carlos/agente` | Showcase de 4 acciones autónomas (DCA / auto-yield / cashback / rebalance) |
-| **Wallet crear/abrir** | `/wallet/crear`, `/wallet/abrir` | Crear wallet local cifrada (AES-GCM 256 + PBKDF2 100k) o desbloquear/importar |
-
-### Modo Agente — `/carlos/agente`
-
-Carlos puede actuar on-chain con tu permiso explícito. Corre sobre **Lumen** (el motor de Carlos), que invoca la skill `tropico-agent-actions` y ejecuta vía la capability Python `agent_execute.py`. Hoy MVP confirma con un click; Q3 2026 sumamos firma delegada (Privy session keys, opcionalmente vía OpenClaw policy engine) para que las 4 acciones corran 100% autónomas:
-
-- **DCA** — compra periódica de USDC/SOL a intervalos definidos por el usuario
-- **Auto-yield** — mueve el excedente de saldo a la mejor estrategia de yield disponible
-- **Auto-cashback** — aplica cashback automático en cobros Solana Pay
-- **Rebalance** — mantiene la proporción SOL/USDC/mSOL definida por el usuario
+| **Descubrir** | `/descubrir` | Catálogo educativo de 9 tokens curados |
+| **Claim** | `/claim/[id]` | Receptor de claim links de /enviar |
+| **Modo Agente** | `/carlos/agente` | 4 acciones autónomas: DCA, auto-yield, cashback, rebalance |
+| **Wallet crear/abrir** | `/wallet/crear`, `/wallet/abrir` | Wallet local cifrada AES-GCM 256 + PBKDF2 100k |
 
 ---
 
-### Internacionalización (i18n) 🌐
+## Carlos AI y Lumen
 
-UI traducida a **4 idiomas** con switcher en el header (icono globo):
+**Lumen** (`lumen-kit/`, `lumen-capabilities/`) es el runtime de agentes — framework open-source por @gabogabucho. Define personalidad (YAML), skills (markdown), y ejecuta capabilities (scripts Python).
+
+**Carlos** (`lib/carlos-prompt.ts`, `app/carlos/`) es el agente de producto construido sobre Lumen. Habla venezolano, conoce Solana, y tiene reglas inviolables (cero política, cero garantías de rendimientos).
+
+```
+KIT (lumen-kit/kit/)
+  personality.yaml  → identidad Carlos: voz VE, reglas, knowledge
+        │
+        ▼
+SKILLS (lumen-kit/skills/)
+  tropico-balances  tropico-prices   tropico-swap
+  tropico-pay       tropico-yield    tropico-cashback
+  tropico-agent-actions
+        │
+        ▼
+CAPABILITIES (lumen-capabilities/)
+  precio_bs.py      ← cotización USD/VES real (ve.dolarapi.com)
+  precio_usd.py     ← precio token USD (Jupiter Price API v3)
+  jupiter_quote.py  ← quote real Jupiter v6 con fee 0.5%
+  [+ 5 capabilities pendientes post-hackathon]
+```
+
+Doc completa: [`docs/CARLOS_AI.md`](docs/CARLOS_AI.md) — [`docs/LUMEN_INTEGRATION.md`](docs/LUMEN_INTEGRATION.md)
+
+---
+
+## Stack técnico
+
+| Capa | Tecnología |
+|---|---|
+| Framework | Next.js 15 (App Router) + React 19 + Tailwind 3 |
+| Wallet | Privy MPC embedded + Solana Wallet Adapter |
+| On-chain | SPL Token, Jupiter v6, Marinade, Kamino |
+| Programs propios | Anchor 0.30.1 — `tropico_bs` + `tropico_treasury` |
+| RPC | Helius |
+| AI | DeepSeek-V4 / Gemini 2.0 Flash / smart fallback |
+| Datos VE | ve.dolarapi.com (tasa USD/VES) |
+| State | TanStack Query 5 |
+| i18n | custom (es/en/pt/fr), sin librería externa |
+
+---
+
+## On-chain footprint
+
+### Programs propios
+
+| Program | Address (devnet) | Estado |
+|---|---|---|
+| `tropico_treasury` | `3a5NkTssAsVaarUPqx4YokNwUcfxHnNebGugrgBBxe8S` | implementado, listo para deploy a devnet |
+| `tropico_bs` | `EdWuyZDXao86mTcUSpRVzNXaT9Tb5muU6YGubFhADWdN` | implementado, listo para deploy a devnet |
+
+### Programs públicos usados
+
+| Program | Address | Para qué |
+|---|---|---|
+| SPL Token | `TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA` | transfers USDC, ATAs |
+| Jupiter v6 | `JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4` | swaps |
+| Marinade | `MarBmsSgKXdrN1egZf5sqe1TMThczhMLJhTndPfxN1V` | yield mSOL |
+| Kamino | `KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD` | vaults USDC |
+
+### TROPI test token (devnet)
+
+```
+Mint:    AbkCW6BA2ZVoTw4Q6M1NvATiZjn2aMS3WvWZQbhRQf6K
+Tx mint: 5rnR7yKT7z84awgCfvis4zbv3CDyYkzMUCEiBKJnQnYhNMhxjDbNweDy9kcoqCmBku6JkLcaG1cJxgXMCj7dJB5F
+```
+
+---
+
+## Tropico Pay — para merchants e integradores
+
+Cualquier plataforma puede cobrar en USDC sobre Solana con un solo endpoint:
+
+```bash
+POST /api/checkout/create
+{
+  "merchantWallet": "Mer7Ghj...",
+  "amount": 12.50,
+  "tokenSymbol": "USDC",
+  "partnerId": "yummy-rides",
+  "orderId": "ORD-9182",
+  "webhookUrl": "https://api.tuapp.com/webhook/tropico"
+}
+```
+
+Devuelve: `sessionId`, `solanaPayUrl`, `hostedCheckoutUrl`, `customerPays`, `merchantReceives`. Webhooks firmados con HMAC-SHA256.
+
+Spec completa: [`docs/INTEGRATION_API.md`](docs/INTEGRATION_API.md)
+
+---
+
+## Modelo de negocio
+
+| Stream | Tasa | Mecánica |
+|---|---|---|
+| Swap | 0.5% | Jupiter `platformFeeBps=50` al ATA de Tropico |
+| Send | 0.3% | spread USDC en envíos P2P |
+| Yield | 2% del yield | performance fee sobre mSOL/Kamino |
+| Merchant fee | 1% | cada cobro QR (cargo al cliente) |
+| Tropico Pay | 0.5% | cada checkout de plataforma externa |
+
+---
+
+## Non-custodial — cómo funciona
+
+Privy MPC divide la clave privada en 3 shares:
+
+```
+Login usuario (email/Google)
+  ├── share-1 → dispositivo del usuario (encriptado)
+  ├── share-2 → infraestructura Privy (encriptado)
+  └── share-3 → guardian backup (encriptado)
+
+La llave privada completa NUNCA existe en ningún servidor.
+Para firmar una tx, 2 de 3 shares cooperan sin reconstruirla.
+```
+
+El usuario puede exportar su seed phrase desde `/perfil` en cualquier momento. Tropico nunca accede a ningún share.
+
+---
+
+## Internacionalización
+
+UI disponible en 4 idiomas. Switcher en el header (icono globo):
 
 | Idioma | Código | Cobertura |
 |---|---|---|
@@ -218,388 +322,44 @@ UI traducida a **4 idiomas** con switcher en el header (icono globo):
 | Português | `pt` | 100% |
 | Français | `fr` | 100% |
 
-Implementado custom (sin lib externa) en `lib/i18n/dictionary.ts` + `lib/i18n/context.tsx`. Persiste preferencia en localStorage. Pensado para que jurados internacionales del dev3pack puedan navegar sin barrera idiomática.
-
-### Modo demo · devnet (para jurados) 🧪
-
-Botón en `/home` debajo de "Saldo disponible". Al click:
-1. Switchea cluster a devnet (persiste localStorage)
-2. Abre modal con la pubkey del usuario + 2 faucets públicos:
-   - `faucet.solana.com` → 1 SOL devnet (gas)
-   - `faucet.circle.com` → 10 USDC devnet
-3. Cada juez fondea su propia wallet en ~30s
-
-**100% client-side, cero dependencia del equipo Tropico.** Respeta principio non-custodial estricto: el equipo nunca toca fondos. Detalle en [`docs/JUDGE_DEMO_GUIDE.md`](docs/JUDGE_DEMO_GUIDE.md).
+Implementado custom en `lib/i18n/dictionary.ts` + `lib/i18n/context.tsx`. Sin librería externa.
 
 ---
 
-## Tropico Comercios + Tropico Pay 🌊
+## Roadmap
 
-### Lado merchant (`/comercios`)
-
-Cualquier comercio puede afiliarse sin hardware ni contrato:
-
-- Cobra con QR Solana Pay — settlement **< 1 segundo**
-- Fee **1%** por transacción (pagado por el cliente, el merchant recibe su monto exacto)
-- Dashboard de ventas del día en USDC
-- Logo "Acepta Tropico" descargable para la vidriera
-
-### Tropico Pay — capa de integración (`/integraciones`)
-
-Tropico Pay es el gateway que permite a plataformas externas cobrar en USDC sobre Solana. Tres patrones:
-
-| Patrón | Cuándo usarlo |
+| Período | Hitos |
 |---|---|
-| **Solana Pay link** | QR físico, links por WhatsApp, ticketing, integraciones rápidas |
-| **REST + webhook** | E-commerce, marketplaces, cualquier backend que necesite confirmación on-chain |
-| **Drop-in button** | Apps móviles o web que quieren embeber el checkout sin tocar el flow de pago |
-
-**Endpoint REST:**
-
-```bash
-POST /api/checkout/create
-Content-Type: application/json
-
-{
-  "merchantWallet": "Mer7GhjMAcEYTmpAcePtAgVgkLogo3ZgKHSPaC9Th",
-  "amount": 12.50,
-  "tokenSymbol": "USDC",
-  "partnerId": "yummy-rides",
-  "orderId": "ORD-9182",
-  "channel": "delivery",
-  "webhookUrl": "https://api.tupplataforma.com/webhook/tropico"
-}
-```
-
-```json
-{
-  "sessionId": "tps_a3f8b2c1d4e5...",
-  "reference": "a3f8b2c1d4e5f6a7b8c9...",
-  "solanaPayUrl": "solana:Mer7Ghj...?amount=12.5625&spl-token=EPjFW...",
-  "hostedCheckoutUrl": "https://tropico.app/checkout?session=tps_...",
-  "customerPays": 12.56,
-  "merchantReceives": 12.50,
-  "feeBps": 50,
-  "expiresAt": "2026-05-08T15:30:00Z"
-}
-```
-
-Los webhooks van firmados con **HMAC-SHA256**. Ver spec completo en [`docs/INTEGRATION_API.md`](docs/INTEGRATION_API.md).
-
-**4 verticales soportadas:** delivery (estilo apps de comida), e-commerce (marketplaces), ticketing (QR único por evento), SaaS/suscripciones (recurrente vía Modo Agente).
-
-**3 surfaces de integración listas:**
-
-| Surface | Path | Para qué |
-|---|---|---|
-| **REST API** | `app/api/checkout/create/route.ts` | Server-to-server con auth Bearer + CORS abierto. Devuelve la sesión + URL Solana Pay. |
-| **Hosted checkout** | `app/checkout/page.tsx` (`/checkout?session=…`) | Página white-label con QR + deeplink wallet. El partner redirige al usuario aquí. |
-| **Drop-in SDK** | `public/sdk/tropico-pay.js` | `<script>` + `<button data-tropico-pay …>`. Auto-monta modal con QR + polling. Cero estado en el partner. |
-
-**Modelo de fee — HACIA ARRIBA**: el merchant siempre recibe el precio que pidió. El cliente absorbe el fee (0.5% en Tropico Pay, 1% en Cobrar merchant-facing). `customerPays = amount × (1 + feeBps/10000)`, `merchantReceives = amount` exacto.
+| **Post-Colosseum** | Deploy `tropico_bs` mainnet, oracle v2 con Pyth, multi-sig Squads |
+| **Q3 2026** | Lumen server en producción, tool calling real, Tropico Pay GA, on-ramp real |
+| **Q4 2026** | Tropico Card (debit USDC + cashback), Tropico Vaults, bug bounty público |
+| **Q1 2027** | Expansión LATAM (CO, AR, MX, PE, CL), app React Native, Solana Mobile dApp Store |
 
 ---
 
-## Carlos AI corre sobre Lumen 🌟
+## Documentación
 
-**Carlos AI by Lumen.** Tropico eligió [Lumen](https://github.com/gabogabucho/lumen-agent) — framework open source MIT de agentes en español por @gabogabucho — como motor de Carlos. Es lo que entiende, decide y conversa.
-
-### Por qué Lumen
-
-- **Open source MIT** — auditable, sin vendor lock-in
-- **Pensado en español** — no es orquestador con diseño nativo para LATAM
-- **Arquitectura modular** — 3 capas declarativas (KIT + SKILLS + CAPABILITIES) sin acoplamiento
-- **Tool calling nativo** — LLM puede invocar scripts Python reales (precios, swaps, balances)
-- **Hot reload** — cambias un skill sin restart
-
-### Cómo funciona el Tropico Web3 Kit (3 capas)
-
-```
-KIT (lumen-kit/kit/)
-  ├── module.yaml         → metadatos del módulo
-  └── personality.yaml    → identidad + tono + reglas + knowledge
-        │
-        ▼
-SKILLS (lumen-kit/skills/)
-  ├── tropico-balances/SKILL.md     → "consultar saldos"
-  ├── tropico-prices/SKILL.md       → "cotizar USD/Bs y tokens"
-  ├── tropico-swap/SKILL.md         → "hacer swaps via Jupiter"
-  ├── tropico-pay/SKILL.md          → "generar QRs Solana Pay"
-  ├── tropico-yield/SKILL.md        → "estrategias de yield"
-  ├── tropico-cashback/SKILL.md     → "consultar cashback acumulado"
-  └── tropico-agent-actions/SKILL.md → "DCA, auto-yield, rebalance"
-        │
-        ▼
-CAPABILITIES (lumen-capabilities/)
-  ├── balances/wallet_balances.py  ← Helius RPC
-  ├── prices/{precio_bs,precio_usd}.py ← DolarAPI + Jupiter Price
-  ├── swap/jupiter_quote.py        ← Jupiter v6 Lite API
-  ├── pay/solana_pay_url.py        ← Solana Pay spec
-  ├── yield/yield_estimate.py      ← mSOL/Kamino mock
-  ├── cashback/cashback_summary.py ← store.json
-  └── agent/agent_execute.py       ← OpenClaw stub
-```
-
-### El kit es replicable — Hermes y OpenClaw también pueden correrlo
-
-Decisión clave: el kit (markdown + YAML + Python) **no tiene dependencias propietarias de Lumen**. Otro equipo que prefiera otro orquestador puede portar el mismo kit con un adapter de ~30 líneas:
-
-| Si prefieres... | Para qué sirve | Adapter |
-|---|---|---|
-| **Lumen** (lo que usa Tropico) | Orquestador completo + tool calling + personality | nativo |
-| **Hermes** ([Nous Research](https://github.com/NousResearch/Hermes-Function-Calling)) | Memoria persistente + razonamiento sobre cuándo proponer | ~30 líneas, ver `docs/LUMEN_INTEGRATION.md` §13 |
-| **OpenClaw** | Firma delegada on-chain con session keys + policy engine | ~30 líneas, mismo doc |
-
-**No es combinación obligatoria.** Tropico en MVP corre **sólo sobre Lumen**. Hermes y OpenClaw quedan como upgrade opcional Q3 2026 si queremos memoria persistente y firma autónoma con policies. Otros equipos pueden saltarse Lumen y arrancar directo con Hermes/OpenClaw — el kit funciona igual.
-
-Doc completa de Carlos: [`docs/CARLOS_AI.md`](docs/CARLOS_AI.md). Replicabilidad: [`docs/LUMEN_INTEGRATION.md`](docs/LUMEN_INTEGRATION.md) §13.
-
----
-
-## Non-custodial de verdad 🔐
-
-Tropico usa **Privy embedded wallet** con **MPC (Multi-Party Computation)**:
-
-```
-Usuario hace login con email → OTP
-Privy ejecuta MPC handshake en el browser:
-  ├── share-1 → dispositivo del usuario (encriptado)
-  ├── share-2 → infraestructura Privy (encriptada)
-  └── share-3 → guardian backup (encriptado)
-
-La llave privada completa NUNCA existe en ningún servidor.
-Para firmar una tx, los 3 shares cooperan sin reconstruirla.
-```
-
-Lo que no necesitas: seed phrase, extensión de browser, app nativa, recordar palabras.
-
-Lo que sí tienes: login con email en 15 segundos, biométrica opcional (TouchID/FaceID), recuperación cross-device, export de seed phrase si querés moverte a otra wallet sin pedir permiso.
-
-**¿Es non-custodial de verdad?** Sí, técnicamente. Privy no puede firmar nada sin el share del dispositivo del usuario. La transparencia es verificable: cada transacción aparece en Solscan con tu pubkey.
-
-> Cuidado con los "casi" non-custodial — si no puedes mover tu plata a otra wallet sin pedir permiso, no eres el dueño. En Tropico puedes exportar tu seed phrase desde configuración en cualquier momento.
-
----
-
-## Identidad visual
-
-**Paleta caribeña venezolana** (Solana como acento, no como base):
-
-| Color | Hex | Uso |
-|---|---|---|
-| Sun (amarillo caribeño) | `#FFD166` | Acentos cálidos, sol, badges |
-| Coral (hot pink) | `#EF476F` | Acción, atardecer, plumaje guacamaya |
-| Sea (verde tropical) | `#06D6A0` | Mar, confirmaciones, frondas |
-| Sand beige | `#d4b896` | Fondos cálidos, playa |
-| Solana Purple | `#9945FF` | Acento tech (no dominante) |
-| Ink (fondo base) | `#0a0a14` | Background con gradient warm overlay |
-
-**Tipografía**: Honk (wordmark), Bricolage Grotesque (titulares), Manrope (body/UI).
-
-**Header v2**: sticky, compacta en scroll (logo 40px → 24px), drawer hamburger en mobile, active link highlight. `components/Header.tsx`.
-
-**VenezuelaBadge**: tricolor animado con `conic-gradient` + `@property --vz-angle`, texto "Hecho en Venezuela · Para el Caribe". 3 variants: `xs / sm / md`. `components/VenezuelaBadge.tsx`.
-
----
-
-## Rutas para explorar
-
-| URL | Qué muestra |
+| Documento | Contenido |
 |---|---|
-| `/` | Landing pública — hero + "Para cualquier venezolano" + cards módulos |
-| `/home` | Dashboard: saldo USDC + yield + 6 ModuleCards + balances |
-| `/cambiar` | Swap con cotización **Jupiter Quote API real** |
-| `/cobrar` | QR Solana Pay generado real + listener simulado |
-| `/enviar` | Form send + claim link + WhatsApp deep link funcional |
-| `/guardar` | Yield UI con 3 estrategias (mSOL, Kamino USDC, Kamino LP) |
-| `/depositar` | Onramp stub honesto + faucet button |
-| `/descubrir` | Catálogo educativo de 8 tokens en venezolano |
-| `/comercios` | Landing del lado merchant con comparativa vs POS tradicional |
-| `/integraciones` | Tropico Pay — 3 patrones de integración + verticales |
-| `/carlos` | Carlos AI by Lumen — chat + 7 capacidades + input funcional |
-| `/carlos/agente` | Modo Agente — 4 acciones autónomas (DCA, auto-yield, auto-cashback, rebalance) powered by Lumen |
-
----
-
-## Stack técnico
-
-### Frontend
-- **Framework**: Next.js 15 (App Router) + React 19 + Tailwind 3
-- **Animaciones**: CSS keyframes + variable fonts + `@property` CSS (sin librerías pesadas)
-- **Iconos**: Lucide React — open-source, tree-shakeable
-
-### Wallet y blockchain
-- **Wallet primario**: [Privy](https://privy.io) embedded MPC (login con email)
-- **Wallet fallback**: Solana Wallet Adapter (Phantom, Solflare)
-- **Swap**: [Jupiter v6](https://lite-api.jup.ag) con `platformFeeBps=50`
-- **Pay**: [Solana Pay spec](https://docs.solanapay.com) + QR client-side (`qrcode`)
-- **RPC**: [Helius](https://helius.dev)
-
-### Datos en vivo
-- **Tasa USD/VES**: [ve.dolarapi.com](https://ve.dolarapi.com) (paralelo + BCV oficial)
-- **Precios tokens**: Jupiter Price API v3
-- **State**: TanStack Query 5
-
-### Principios no negociables
-1. **Cero Anchor para custodia o lógica de fondos** — solo SPL Token, Jupiter, Solana Pay (programs públicos auditados). El único Anchor program propio (`tropico_treasury`) NO custodia fondos — solo registra metadata pública (transparencia radical).
-2. **Cero backend persistente** — solo Edge routes `/api/*`
-3. **Non-custodial estricto** — Tropico nunca accede a llaves privadas
-4. **API keys secretas solo server-side** — nunca en client
-5. **Mobile-first PWA** — funciona en Android viejo, instalable sin app store
-6. **Cero opinión política** en Carlos AI
-7. **Cero promesas de rendimientos garantizados**
-
----
-
-## 🔗 On-chain footprint
-
-Tropico es **dApp non-custodial** que compón programs públicos de Solana en lugar de escribir Anchor para custodia. Esto es **decisión arquitectural**: cero superficie de ataque custom, auditable, ship rápido.
-
-**Programs públicos que Tropico USA** (no nuestros, pero parte del stack):
-
-| Program | Address | Para qué |
-|---|---|---|
-| SPL Token Program | `TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA` | Transfers USDC, mint TROPI, ATAs |
-| Jupiter v6 Aggregator | `JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4` | Swaps con `platformFeeBps=50` |
-| Marinade Liquid Staking | `MarBmsSgKXdrN1egZf5sqe1TMThczhMLJhTndPfxN1V` | Yield mSOL ~7% APY |
-| Kamino Lending | `KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD` | Vaults USDC ~5%, LP ~12% |
-
-**TROPI test token mint** (SPL Token estándar, deployado por nosotros en devnet):
-
-```
-Mint:      AbkCW6BA2ZVoTw4Q6M1NvATiZjn2aMS3WvWZQbhRQf6K
-Deployer:  EUSqhaDBVLtzjgqwxeTurcksyPqkW37nyyTBWEhKVXDd
-Decimals:  6
-Supply:    1,000,000 TROPI
-Mint tx:   5rnR7yKT7z84awgCfvis4zbv3CDyYkzMUCEiBKJnQnYhNMhxjDbNweDy9kcoqCmBku6JkLcaG1cJxgXMCj7dJB5F
-```
-
-Verificable en Solscan devnet:
-- Token: https://solscan.io/token/AbkCW6BA2ZVoTw4Q6M1NvATiZjn2aMS3WvWZQbhRQf6K?cluster=devnet
-- Mint tx: https://solscan.io/tx/5rnR7yKT7z84awgCfvis4zbv3CDyYkzMUCEiBKJnQnYhNMhxjDbNweDy9kcoqCmBku6JkLcaG1cJxgXMCj7dJB5F?cluster=devnet
-
-Re-creable en cualquier máquina (Solana CLI + Node + 0.05 SOL devnet):
-
-```bash
-node scripts/create-tropi-token.mjs
-```
-
-**Programa Anchor propio — `tropico_treasury`** (`programs/tropico_treasury/`):
-
-~150 LOC Rust. Registra cada fee de Tropico on-chain con auditabilidad pública. NO custodia tokens. Solo emite events `FeeRecorded` para que el dashboard `/transparency` (Q3 2026) muestre live cuánto cobra el proyecto y de qué módulo.
-
-```rust
-record_fee(amount, module, user)
-// emit! FeeRecorded { user, module, amount, new_total, tx_count, timestamp }
-```
-
-8 módulos enum: `Swap · Pay · Yield · Cashback · Remesas · Servicios · P2pBs · TropicoPay`.
-
-Listo para deploy. Setup + comandos en [`docs/ANCHOR_PROGRAM.md`](docs/ANCHOR_PROGRAM.md).
-
-```bash
-anchor build
-anchor deploy --provider.cluster devnet
-# → Program ID asignado
-```
-
-**Migration path**:
-- HOY: TROPI test mint (SPL standard, address verificable)
-- Q3: Deploy `tropico_treasury` + wire post-tx hooks → dashboard `/transparency` LIVE
-- Q4: Multi-sig Squads como authority + audit antes de mainnet
-
----
-
-## Modelo de negocio
-
-| Stream | Tasa | Mecánica |
-|---|---|---|
-| **Swap** | 0.5% | Jupiter `platformFeeBps=50` al ATA propio |
-| **Send** | 0.3% | Spread USDC en envíos |
-| **Yield** | 2% del yield | Performance fee sobre mSOL/Kamino |
-| **Merchant fee** | 1% | Por cada cobro QR (cargo al cliente) |
-| **Tropico Pay** | 0.5% | Por cada checkout de plataforma externa |
-
----
-
-## Roadmap Q3/Q4
-
-- **Q3 2026**: Privy + Helius conectados en prod, Lumen tool calling real (capabilities ejecutables), Privy delegated session keys (opcionalmente OpenClaw policy engine), Hermes memoria, on-ramp con partners P2P
-- **Q3 2026**: Tropico Pay en producción — primeros merchants integrados (delivery, ticketing)
-- **Q4 2026**: Tropico Card (debit Visa backed por USDC + cashback), Tropico Vaults (Kamino), bug bounty público
-- **Q1 2027**: Expansión LATAM (Colombia, Argentina, México, Perú, Chile), Solana Mobile app nativa
-
----
-
-## 📸 Pantallas
-
-> Captura full-page con Playwright · `node scripts/screenshots.mjs`
-
-### Landing y consumer
-| | | |
-|---|---|---|
-| ![Landing](docs/images/screens/01-landing-desktop.png) <br/>**Landing** — `/` | ![Home](docs/images/screens/02-home-desktop.png) <br/>**Wallet/Home** — `/home` | ![Cambiar](docs/images/screens/03-cambiar-desktop.png) <br/>**Cambiar** — `/cambiar` |
-| ![Cobrar](docs/images/screens/04-cobrar-desktop.png) <br/>**Cobrar QR** — `/cobrar` | ![Enviar](docs/images/screens/05-enviar-desktop.png) <br/>**Enviar + claim** — `/enviar` | ![Guardar](docs/images/screens/06-guardar-desktop.png) <br/>**Yield** — `/guardar` |
-
-### Carlos AI by Lumen + Modo Agente
-| | |
-|---|---|
-| ![Carlos](docs/images/screens/09-carlos-desktop.png) <br/>**Carlos AI** — `/carlos` (7 capacidades) | ![Modo Agente](docs/images/screens/10-carlos-agente-desktop.png) <br/>**Modo Agente** — `/carlos/agente` (4 acciones autónomas) |
-
-### Wallet 100% in-app + Onramp
-| | | |
-|---|---|---|
-| ![Crear wallet](docs/images/screens/12-wallet-crear-desktop.png) <br/>**Crear wallet** — `/wallet/crear` | ![Abrir wallet](docs/images/screens/13-wallet-abrir-desktop.png) <br/>**Abrir wallet** — `/wallet/abrir` | ![Onramp](docs/images/screens/07-depositar-desktop.png) <br/>**Onramp Bs→USDC** — `/depositar` |
-
-### Servicios + Remesas
-| | |
-|---|---|
-| ![Pagar Servicios](docs/images/screens/14-pagar-servicios-desktop.png) <br/>**Pagar Servicios VE** — `/pagar-servicios` (luz, agua, internet, teléfono, recargas) | ![Remesas](docs/images/screens/15-remesas-desktop.png) <br/>**Remesas internacionales** — `/remesas` |
-
-### Lado merchant + Tropico Pay
-| | | |
-|---|---|---|
-| ![Comercios](docs/images/screens/08-comercios-desktop.png) <br/>**Comercios** — `/comercios` | ![Integraciones](docs/images/screens/16-integraciones-desktop.png) <br/>**Tropico Pay** — `/integraciones` (REST + drop-in + hosted) | ![Checkout](docs/images/screens/17-checkout-desktop.png) <br/>**Hosted checkout** — `/checkout` |
-
----
-
-## 📚 Docs
-
-| Documento | Qué contiene |
-|---|---|
-| [`docs/TROPICO_BRIEF.md`](docs/TROPICO_BRIEF.md) | Fuente de verdad técnica completa del proyecto |
-| [`docs/INTEGRATION_API.md`](docs/INTEGRATION_API.md) | Spec completo de Tropico Pay: endpoints, webhooks HMAC, ejemplos |
-| [`docs/LUMEN_INTEGRATION.md`](docs/LUMEN_INTEGRATION.md) | Doc maestro de Lumen + adapter pseudocode para Hermes/OpenClaw |
-| [`docs/WALLET_GUIDE.md`](docs/WALLET_GUIDE.md) | Privy MPC explicado paso a paso para el usuario final |
+| [`docs/COLOSSEUM_SUBMISSION.md`](docs/COLOSSEUM_SUBMISSION.md) | Submisión completa a Colosseum |
+| [`docs/PROTOCOL_BSX.md`](docs/PROTOCOL_BSX.md) | Spec técnica del protocolo BsX |
+| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Arquitectura de componentes |
+| [`docs/CARLOS_AI.md`](docs/CARLOS_AI.md) | Carlos AI: arquitectura, capabilities, FAQ |
+| [`docs/LUMEN_INTEGRATION.md`](docs/LUMEN_INTEGRATION.md) | Lumen runtime: setup, deployment, replicabilidad |
+| [`docs/INTEGRATION_API.md`](docs/INTEGRATION_API.md) | Spec Tropico Pay: endpoints, webhooks HMAC |
+| [`docs/ANCHOR_PROGRAM.md`](docs/ANCHOR_PROGRAM.md) | Deploy de los programas Anchor |
+| [`docs/BLOCKCHAIN_BACKEND.md`](docs/BLOCKCHAIN_BACKEND.md) | Stack on-chain: flows end-to-end |
 | [`docs/ROADMAP.md`](docs/ROADMAP.md) | Visión detallada Q3 2026 → Q1 2027 |
-| [`docs/DEPLOY.md`](docs/DEPLOY.md) | Guía de deploy a Vercel |
 | [`docs/PITCH_DECK.md`](docs/PITCH_DECK.md) | Pitch deck 6 slides (Marp) |
+| [`docs/JUDGE_DEMO_GUIDE.md`](docs/JUDGE_DEMO_GUIDE.md) | Guía de demo para jueces |
+| [`docs/SUBMISSION_CHECKLIST.md`](docs/SUBMISSION_CHECKLIST.md) | Checklist pre-submisión |
 
 ---
 
-## 🤝 Contribuir
-
-MVP del hackathon dev3pack 2026. Post-hackathon:
-
-- Issues en GitHub para bugs y features
-- Programa de afiliación de comercios
-- Bug bounty público (Q3 2026)
-- Más estrategias de yield (Jito Restaking, Sanctum)
-
----
-
-## 📜 License
+## License
 
 MIT — ver [`LICENSE`](LICENSE).
 
 ---
 
-## 👤 Autor
-
-Construido por **Rafa Oviedo** — venezolano, para venezolanos. 🇻🇪
-
-- **Hackathon**: [dev3pack 2026](https://dev3pack.com), Caracas hub
-
----
-
-> **Tropico no es una wallet. Es la infraestructura económica que el venezolano necesita y que nadie le está dando — hasta hoy.** 🌴
+> **Tropico no es una wallet. Es la infraestructura económica que el venezolano necesita — y el bolívar primitivo que Solana no tenía.** 🌴

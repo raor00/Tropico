@@ -1,8 +1,35 @@
-# Lumen Integration — Carlos como motor agéntico de Tropico
+# Lumen Integration — el runtime agéntico de Tropico
 
-> **Decisión arquitectural**: Lumen reemplaza a la combinación Hermes + Gemini como motor agéntico principal de Carlos. La capa de ejecución on-chain (firma autónoma con session keys) sigue siendo OpenClaw + Privy. **Tres roles, tres tecnologías, sin overlap**.
+> **Decisión arquitectural**: Lumen es el runtime/framework de agentes sobre el que está construido Carlos AI. OpenClaw + Privy manejan la capa de firma autónoma en Modo Agente. **Tres roles, tres tecnologías, sin overlap**.
 
-**Última actualización**: 2026-05-08
+**Última actualización**: 2026-05-11
+
+---
+
+## Lumen vs Carlos — aclaración fundamental
+
+Esta distinción era borrosa en versiones anteriores de la documentación. La establecemos aquí antes de cualquier otra cosa:
+
+**Lumen** es el runtime/framework de agentes. Es open-source MIT por @gabogabucho (`github.com/gabogabucho/lumen-agent`). Provee la arquitectura de 3 capas (KIT + SKILLS + CAPABILITIES), tool calling hacia scripts externos, personality YAML editable sin recompilar, memoria persistente SQLite + FTS5, y soporte multi-plataforma (web, Telegram, WhatsApp). Lumen no tiene conocimiento de Tropico ni de Venezuela. Es infrastructure-agnostic.
+
+Dónde vive en este repo:
+- `lumen-kit/` — KIT declarativo: `module.yaml` + `personality.yaml` + 7 `SKILL.md`
+- `lumen-capabilities/` — scripts Python ejecutables que Lumen invoca via terminal connector
+
+**Carlos** es el agente de producto construido encima de Lumen. Habla español venezolano, conoce el ecosistema Solana, tiene reglas estrictas inviolables (cero política, cero garantías financieras), y opera en el contexto de la app Tropico.
+
+Dónde vive en este repo:
+- `lib/carlos-prompt.ts` — system prompt: identidad + tono + reglas
+- `lib/agent-actions.ts` — las 4 acciones del Modo Agente
+- `lib/agent-rules-store.ts` — persistencia de reglas por usuario (localStorage)
+- `app/carlos/` — UI del chat
+- `app/carlos/agente/` — UI del Modo Agente
+
+**Regla de oro**: cuando alguien dice "Carlos" se refiere al agente de producto. Cuando dice "Lumen" se refiere al runtime. Son capas distintas con responsabilidades distintas.
+
+En el MVP actual, el frontend llama directamente al LLM en `app/api/carlos/route.ts` sin pasar por un servidor Lumen. El Web3 Kit (`lumen-kit/`) está completo y listo para ser cargado; la integración real con `lumen server` es trabajo post-Colosseum (ver sección 4 de este doc).
+
+---
 
 ---
 

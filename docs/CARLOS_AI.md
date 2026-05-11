@@ -2,8 +2,30 @@
 
 > Cómo funciona Carlos, qué puede hacer, qué NO puede, cómo correr LLM real, arquitectura end-to-end.
 
-**Última actualización**: 2026-05-09
+**Última actualización**: 2026-05-11
 **Estado MVP**: API funcional, fallback inteligente sin keys, soporte LLM real con DeepSeek o Gemini.
+
+---
+
+## Lumen vs Carlos — aclaración fundamental
+
+Esta distinción era borrosa en versiones anteriores de la documentación. La establecemos aquí de forma definitiva:
+
+**Lumen** es el runtime/framework de agentes. Es open-source MIT por @gabogabucho (`github.com/gabogabucho/lumen-agent`). Define la arquitectura de 3 capas (KIT + SKILLS + CAPABILITIES), maneja tool calling hacia scripts externos, personality YAML configurable, y soporte multi-plataforma. Lumen no sabe nada de Tropico ni de Venezuela por sí solo. Vive en:
+- `lumen-kit/` — definición declarativa (YAML + markdown)
+- `lumen-capabilities/` — scripts Python que Lumen ejecuta
+
+**Carlos** es el agente de producto construido sobre Lumen. Conoce el ecosistema Solana, habla español venezolano, tiene reglas estrictas (cero política, cero garantías de rendimientos), y guía al usuario por los módulos de Tropico. Carlos vive en:
+- `lib/carlos-prompt.ts` — system prompt: identidad + tono + reglas
+- `lib/agent-actions.ts` — las 4 acciones del Modo Agente
+- `lib/agent-rules-store.ts` — persistencia de reglas por usuario
+- `app/carlos/` — UI del chat y del Modo Agente
+
+**Analogía directa**: Lumen es el motor. Carlos es el conductor que sabe adónde ir.
+
+En el MVP actual, `app/api/carlos/route.ts` llama directamente al LLM (DeepSeek → Gemini → fallback) sin pasar por un servidor Lumen real. El Tropico Web3 Kit (`lumen-kit/`) está estructurado y listo; la integración con `lumen server` ocurre post-Colosseum.
+
+---
 
 ---
 

@@ -58,3 +58,11 @@ dev.log
 
 # Plans temporales
 .claude/plans/
+
+# Anchor / Rust build artifacts
+target/
+**/target/
+programs/**/Cargo.lock
+
+# Anchor program keypairs (NUNCA commitear — son authority real)
+**/*-keypair.json

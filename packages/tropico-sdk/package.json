@@ -1,0 +1,52 @@
+{
+  "name": "@tropico/sdk",
+  "version": "0.1.0",
+  "private": false,
+  "description": "Merchant integration SDK for Bolívares Onchain (BsX) + Pago Móvil VE on Solana",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./bsx": {
+      "import": "./dist/bsx.js",
+      "types": "./dist/bsx.d.ts"
+    },
+    "./solana-pay": {
+      "import": "./dist/solana-pay.js",
+      "types": "./dist/solana-pay.d.ts"
+    },
+    "./pago-movil": {
+      "import": "./dist/pago-movil.js",
+      "types": "./dist/pago-movil.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p .",
+    "clean": "rm -rf dist"
+  },
+  "peerDependencies": {
+    "@coral-xyz/anchor": ">=0.30.0",
+    "@solana/spl-token": ">=0.4.0",
+    "@solana/web3.js": ">=1.95.0"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.0"
+  },
+  "keywords": [
+    "solana",
+    "solana-pay",
+    "pago-movil",
+    "venezuela",
+    "bsx",
+    "usdc",
+    "stablecoin",
+    "tropico"
+  ],
+  "license": "MIT"
+}
