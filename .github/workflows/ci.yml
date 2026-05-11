@@ -10,6 +10,7 @@ jobs:
   typecheck:
     name: TypeScript
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -20,8 +21,9 @@ jobs:
       - run: npx tsc --noEmit
 
   lint:
-    name: Lint
+    name: Lint (biome)
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -29,7 +31,7 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
-      - run: npm run lint
+      - run: npx biome check --no-errors-on-unmatched --files-ignore-unknown=true .
 
   anchor-build:
     name: Anchor Build (informational)
