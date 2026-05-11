@@ -484,7 +484,7 @@ export function BsSwapForm({
               <strong>Demo</strong> ·{" "}
               {side === "sell-bs"
                 ? "Bs entran off-chain por Pago Móvil/banco"
-                : "conectá wallet para ejecutar tx real"}
+                : "conecta wallet para ejecutar tx real"}
             </span>
           )}
         </div>
@@ -576,7 +576,7 @@ export function BsSwapForm({
               </div>
               <div className="text-tropico-mute">
                 Tropico convirtió tus USDC y envió Pago Móvil al comercio/persona en <strong className="text-tropico-text">&lt;5s</strong>.
-                Vos seguís con USDC — el bolívar se usa solo al momento del pago. Sin cuenta bancaria, sin holds.
+                Tú sigues con USDC — el bolívar se usa solo al momento del pago. Sin cuenta bancaria, sin holds.
               </div>
             </div>
           )}

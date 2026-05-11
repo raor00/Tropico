@@ -136,7 +136,7 @@ export function ClaimView({ id }: { id: string }) {
 
         <ScrollReveal direction="up" delay={200}>
           <p className="text-center text-xs text-tropico-mute">
-            ¿Ya tenés wallet?{" "}
+            ¿Ya tienes wallet?{" "}
             <button
               onClick={() => setHasWallet(true)}
               className="text-tropico-purple underline"

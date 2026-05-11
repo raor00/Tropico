@@ -113,8 +113,8 @@ export function DevnetFaucetButton() {
             {/* Step 1: SOL faucet */}
             <FaucetStep
               num="1"
-              title="Conseguí SOL devnet (para gas)"
-              hint="Pegá tu pubkey en el faucet, recibís 1 SOL en ~5 segundos."
+              title="Consigue SOL devnet (para gas)"
+              hint="Pega tu pubkey en el faucet, recibes 1 SOL en ~5 segundos."
               cta="Abrir faucet.solana.com"
               href="https://faucet.solana.com"
               tone="sun"
@@ -123,7 +123,7 @@ export function DevnetFaucetButton() {
             {/* Step 2: USDC faucet */}
             <FaucetStep
               num="2"
-              title="Conseguí USDC devnet (para enviar/cobrar)"
+              title="Consigue USDC devnet (para enviar/cobrar)"
               hint="Circle te manda 10 USDC devnet a la pubkey que pegues."
               cta="Abrir Circle USDC faucet"
               href="https://faucet.circle.com"
@@ -131,7 +131,7 @@ export function DevnetFaucetButton() {
             />
 
             <p className="text-center text-[11px] text-tropico-mute">
-              Listo. Volvé a la app, dale al refresh del saldo y vas a ver tu balance real on-chain.
+              Listo. Vuelve a la app, dale al refresh del saldo y verás tu balance real on-chain.
             </p>
           </div>
         </div>

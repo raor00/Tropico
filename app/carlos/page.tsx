@@ -231,7 +231,7 @@ export default function CarlosPage() {
             <div>
               <h3 className="font-display text-lg font-bold">Modo Agente</h3>
               <p className="mt-1 text-sm text-tropico-text/85">
-                Carlos <strong>ejecuta acciones</strong> por vos con tus límites: DCA, auto-yield, rebalance, cashback. Vos dirigís, él actúa.
+                Carlos <strong>ejecuta acciones</strong> por ti con tus límites: DCA, auto-yield, rebalance, cashback. Tú diriges, él actúa.
               </p>
             </div>
             <span className="inline-flex items-center gap-1 text-sm font-semibold text-tropico-purple transition group-hover:translate-x-1">
@@ -257,7 +257,7 @@ export default function CarlosPage() {
             <div>
               <h3 className="font-display text-lg font-bold">Modo Chat</h3>
               <p className="mt-1 text-sm text-tropico-text/85">
-                Carlos <strong>te responde</strong> consultas en español venezolano: saldos, precios, qué es cada token, cómo armar un swap.
+                Carlos <strong>te responde</strong> consultas en español: saldos, precios, qué es cada token, cómo armar un swap.
               </p>
             </div>
             <span className="inline-flex items-center gap-1 text-sm font-semibold text-tropico-sea transition group-hover:translate-x-1">

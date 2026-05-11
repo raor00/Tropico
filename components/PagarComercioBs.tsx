@@ -217,7 +217,7 @@ export function PagarComercioBs({
             <Zap className="mt-0.5 size-4 shrink-0 text-tropico-sun" />
             <div className="text-tropico-text/85">
               Tropico convirtió tus USDC → Bs y envió Pago Móvil al comercio vía Suiche 7B.{" "}
-              <strong className="text-tropico-sun">Acreditado en &lt;5s.</strong> Vos seguís
+              <strong className="text-tropico-sun">Acreditado en &lt;5s.</strong> Tú sigues
               con USDC — sin cuenta bancaria, sin colas.
             </div>
           </div>
@@ -308,11 +308,11 @@ export function PagarComercioBs({
         >
           {canDoRealTx ? (
             <>
-              <Zap className="size-3" /> Devnet · firmá la tx real con tu wallet
+              <Zap className="size-3" /> Devnet · firma la tx real con tu wallet
             </>
           ) : (
             <>
-              <Sparkles className="size-3" /> Demo · simulado (conectá Privy o wallet local para tx real)
+              <Sparkles className="size-3" /> Demo · simulado (conecta Privy o wallet local para tx real)
             </>
           )}
         </div>
@@ -375,8 +375,8 @@ export function PagarComercioBs({
           <strong className="font-display text-lg">Pagar a comercio en Bs</strong>
         </header>
         <p className="text-sm text-tropico-mute">
-          Escaneá el QR Suiche 7B del comercio. Tropico convierte tus USDC y ejecuta Pago Móvil
-          al destinatario en segundos. Vos nunca dejás de tener USDC.
+          Escanea el QR Suiche 7B del comercio. Tropico convierte tus USDC y ejecuta Pago Móvil
+          al destinatario en segundos. Tú nunca dejas de tener USDC.
         </p>
       </div>
 
@@ -385,7 +385,7 @@ export function PagarComercioBs({
           htmlFor="qr-suiche"
           className="text-xs font-semibold uppercase tracking-wider text-tropico-mute"
         >
-          Pegá el contenido del QR Suiche 7B
+          Pega el contenido del QR Suiche 7B
         </label>
         <textarea
           id="qr-suiche"
@@ -419,7 +419,7 @@ export function PagarComercioBs({
           </button>
         </div>
         <p className="text-[11px] text-tropico-mute">
-          Por ahora pegás el contenido manualmente. Cámara nativa: roadmap Q3 2026.
+          Por ahora pegas el contenido manualmente. Cámara nativa: roadmap Q3 2026.
         </p>
       </div>
 

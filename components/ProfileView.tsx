@@ -87,7 +87,7 @@ export function ProfileView() {
   function deleteWallet() {
     if (
       !confirm(
-        "¿Eliminar wallet de este device? Si no tenés tu secret key guardado NO podrás recuperarla."
+        "¿Eliminar wallet de este device? Si no tienes tu secret key guardado NO podrás recuperarla."
       )
     )
       return;
@@ -240,7 +240,7 @@ export function ProfileView() {
           <span className="flex flex-col">
             <span className="font-semibold">Importar otra wallet</span>
             <span className="text-[11px] text-tropico-mute">
-              Pegá un secret key existente para usarla acá
+              Pega un secret key existente para usarla aquí
             </span>
           </span>
         </Link>

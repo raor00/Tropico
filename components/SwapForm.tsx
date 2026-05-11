@@ -243,7 +243,7 @@ export function SwapForm() {
       </button>
 
       <p className="text-center text-xs text-tropico-mute">
-        Demo del hackathon &mdash; cuando configurés tu wallet con Privy, este
+        Demo del hackathon &mdash; cuando configures tu wallet con Privy, este
         botón firmará la transacción real con la fee aterrizando
         en la cuenta de Tropico (verificable en Solscan).
       </p>

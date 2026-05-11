@@ -228,7 +228,7 @@ export default function AbrirWalletPage() {
               <AlertTriangle className="mt-0.5 size-4 shrink-0 text-tropico-coral" />
               <span>
                 Importar va a sobrescribir cualquier wallet existente en este
-                navegador. Si tenés otra abierta, asegurate de tener su backup antes.
+                navegador. Si tienes otra abierta, asegúrate de tener su backup antes.
               </span>
             </div>
             <button

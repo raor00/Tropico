@@ -136,7 +136,7 @@ export async function executeBsBridge(
   if (userUsdcBalance < q.totalUsdc) {
     return {
       ok: false,
-      error: `Necesitás ${q.totalUsdc.toFixed(2)} USDC, tenés ${userUsdcBalance.toFixed(2)}.`,
+      error: `Necesitas ${q.totalUsdc.toFixed(2)} USDC, tienes ${userUsdcBalance.toFixed(2)}.`,
       code: "INSUFFICIENT_USDC",
     };
   }
