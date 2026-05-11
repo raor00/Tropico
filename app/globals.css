@@ -17,7 +17,7 @@
 
 @layer components {
   .panel {
-    @apply rounded-2xl border border-tropico-border bg-tropico-panel/80 backdrop-blur-xl;
+    @apply rounded-2xl border border-tropico-border bg-tropico-panel/95 shadow-[0_1px_0_0_rgba(255,255,255,0.03)_inset] backdrop-blur-xl;
   }
   /* Botón primario — gradient atardecer caribeño (coral → sun → sea) */
   .btn-primary {

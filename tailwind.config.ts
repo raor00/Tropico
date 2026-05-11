@@ -12,8 +12,8 @@ const config: Config = {
         // Tropico palette — Solana-Maxi vibe with Caribbean warmth
         tropico: {
           ink: "#0a0a14",        // background — deep purple-black
-          panel: "#13131f",      // card surfaces
-          border: "#1f1f30",     // hairlines
+          panel: "#1c1c2e",      // card surfaces — más claro para distinguir del fondo
+          border: "#2e2e48",     // hairlines — más visibles
           mute: "#9b9bb4",       // muted text — más claro para legibilidad sobre fondo dark
           text: "#e9e9f1",       // primary text
           // Solana brand colors (the maxi part)

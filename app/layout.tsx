@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Manrope, Bricolage_Grotesque } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import { LanguageProvider } from "@/lib/i18n/context";
@@ -8,20 +8,22 @@ import { SplashScreen } from "@/components/SplashScreen";
 import { BottomNav } from "@/components/BottomNav";
 import { Header } from "@/components/Header";
 
-// Body / UI: Manrope — geométrica moderna, menos genérica que Inter
-const manrope = Manrope({
+// Inter — diseñada para UI screens, máxima legibilidad en cualquier tamaño/monitor.
+// Una sola familia para body + display: consistencia y rendering crisp en HiDPI 27"+.
+const inter = Inter({
   subsets: ["latin"],
   variable: "--font-manrope",
   display: "swap",
   preload: true,
+  weight: ["400", "500", "600", "700", "800"],
 });
 
-// Display secundario: Bricolage Grotesque — titulares h1/h2/h3 + wordmark
-const bricolage = Bricolage_Grotesque({
+const interDisplay = Inter({
   subsets: ["latin"],
   variable: "--font-bricolage",
   display: "swap",
   preload: true,
+  weight: ["600", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -50,7 +52,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es-VE" className={`${manrope.variable} ${bricolage.variable}`}>
+    <html lang="es-VE" className={`${inter.variable} ${interDisplay.variable}`}>
       <body className="tropico-glow min-h-dvh pb-20 md:pb-0">
         <SplashScreen />
         <Providers>
