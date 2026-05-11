@@ -9,8 +9,6 @@ import {
   Flame,
   Play,
   Smartphone,
-  Tv,
-  Users,
   Wifi,
   X,
   Zap,

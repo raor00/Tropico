@@ -92,7 +92,7 @@ function buildResponse(cmd: ReturnType<typeof parseCommand>): Partial<Message> {
       };
     case "cobrar":
       return {
-        text: `Link de cobro creado ✅\n\n*Monto:* ${cmd.amount?.toFixed(2)} USDC\n*Link:* tropico.app/claim/demo?monto=${cmd.amount}\n\n_Comparte este link para recibir el pago_`,
+        text: `Link de cobro creado ✅\n\n*Monto:* ${cmd.amount?.toFixed(2)} USDC\n*Link:* tropico.app/claim/${Date.now().toString(36)}?monto=${cmd.amount}\n\n_Comparte este link para recibir el pago_`,
       };
     case "ayuda":
       return {
