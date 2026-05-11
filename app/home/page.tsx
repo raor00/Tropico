@@ -75,14 +75,6 @@ const MODULES = [
     badge: "Pay",
   },
   {
-    href: "/carlos",
-    Icon: Sparkles,
-    titulo: "Carlos AI",
-    descripcion: "Tu copiloto venezolano powered by Lumen",
-    gradient: "from-tropico-coral/20 to-tropico-purple/15",
-    badge: "AI",
-  },
-  {
     href: "/descubrir",
     Icon: Compass,
     titulo: "Descubrir",
@@ -113,6 +105,35 @@ export default function HomePage() {
 
       {/* Saldo real on-chain (HomeBalances trae card + lista) */}
       <HomeBalances />
+
+      {/* Carlos AI — featured: agente autónomo dentro del wallet (diferencial único) */}
+      <section className="flex flex-col gap-2">
+        <Link
+          href="/carlos/agente"
+          className="panel group relative flex items-stretch gap-4 overflow-hidden border-tropico-purple/40 p-4 transition hover:border-tropico-purple/70 md:p-5"
+        >
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-tropico-purple/25 via-tropico-coral/15 to-tropico-sun/10 opacity-70 transition group-hover:opacity-100" />
+          <div className="relative flex size-12 shrink-0 items-center justify-center rounded-xl bg-tropico-ink/70 text-tropico-sun ring-1 ring-tropico-sun/30 md:size-14">
+            <Sparkles className="size-6 md:size-7" strokeWidth={2} />
+          </div>
+          <div className="relative flex min-w-0 flex-1 flex-col justify-center gap-1">
+            <div className="flex items-center gap-2">
+              <h3 className="font-display text-lg font-bold leading-tight md:text-xl">
+                Carlos AI — Agente autónomo
+              </h3>
+              <span className="rounded-md bg-tropico-sun/20 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-tropico-sun">
+                Único
+              </span>
+            </div>
+            <p className="text-xs leading-snug text-tropico-text/85 md:text-sm">
+              IA dentro de tu wallet — ejecuta swaps, DCA y cashback automático. Vos dirigís, Carlos actúa.
+            </p>
+          </div>
+          <div className="relative hidden items-center self-center text-tropico-sun/80 transition group-hover:translate-x-1 group-hover:text-tropico-sun md:flex">
+            <span className="text-sm font-semibold">Abrir →</span>
+          </div>
+        </Link>
+      </section>
 
       {/* Notificaciones Carlos — descriptivas, sin saturar */}
       <section className="grid gap-3 md:grid-cols-2">
