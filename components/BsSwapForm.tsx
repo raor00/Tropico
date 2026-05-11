@@ -41,7 +41,7 @@ export type PrivySignerInjected = {
  * Wallet destino del pool Tropico (devnet). En demo apunta al merchant placeholder.
  * En producción se reemplaza por la wallet real de la liquidity pool.
  */
-const POOL_WALLET = "Mer7GhjMAcEYTmpAcePtAgVgkLogo3ZgKHSPaC9Th";
+const POOL_WALLET = "G4BPreo5Sbcr9WDf7ykzJ3yHMBMNHwWacYYxzSs4GSJB";
 
 /**
  * BsSwapForm — Bs ↔ USDC inmediato vía Tropico Liquidity Pool.
@@ -262,7 +262,7 @@ export function BsSwapForm({
           }}
           className={`rounded-md px-3 py-2.5 text-sm font-semibold transition ${
             side === "sell-bs"
-              ? "bg-tropico-sea/15 text-tropico-sea"
+              ? "bg-tropico-sun text-tropico-ink shadow-sm shadow-tropico-sun/40"
               : "text-tropico-mute hover:text-tropico-text"
           }`}
         >
@@ -276,7 +276,7 @@ export function BsSwapForm({
           }}
           className={`rounded-md px-3 py-2.5 text-sm font-semibold transition ${
             side === "buy-bs"
-              ? "bg-tropico-sea/15 text-tropico-sea"
+              ? "bg-tropico-sun text-tropico-ink shadow-sm shadow-tropico-sun/40"
               : "text-tropico-mute hover:text-tropico-text"
           }`}
         >
@@ -363,7 +363,7 @@ export function BsSwapForm({
           </div>
         </div>
         <a
-          href="https://solscan.io/account/Mer7GhjMAcEYTmpAcePtAgVgkLogo3ZgKHSPaC9Th"
+          href="https://solscan.io/account/G4BPreo5Sbcr9WDf7ykzJ3yHMBMNHwWacYYxzSs4GSJB"
           target="_blank"
           rel="noreferrer"
           className="rounded-lg border border-tropico-border bg-tropico-ink/40 p-2 text-center transition hover:border-tropico-green/40"

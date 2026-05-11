@@ -69,4 +69,4 @@ export function whatsappShareUrl(message: string, url?: string): string {
  * Wallet de demo del merchant (placeholder para que /cobrar funcione sin Privy).
  * En producción se reemplaza por la pubkey del wallet conectado.
  */
-export const DEMO_MERCHANT_WALLET = "Mer7GhjMAcEYTmpAcePtAgVgkLogo3ZgKHSPaC9Th";
+export const DEMO_MERCHANT_WALLET = "G4BPreo5Sbcr9WDf7ykzJ3yHMBMNHwWacYYxzSs4GSJB";
