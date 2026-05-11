@@ -14,7 +14,7 @@ const config: Config = {
           ink: "#0a0a14",        // background — deep purple-black
           panel: "#13131f",      // card surfaces
           border: "#1f1f30",     // hairlines
-          mute: "#5a5a6e",       // muted text
+          mute: "#9b9bb4",       // muted text — más claro para legibilidad sobre fondo dark
           text: "#e9e9f1",       // primary text
           // Solana brand colors (the maxi part)
           purple: "#9945FF",

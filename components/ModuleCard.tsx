@@ -32,7 +32,7 @@ export function ModuleCard({
             <Icon className="size-4 md:size-6" strokeWidth={2} aria-hidden="true" />
           </div>
           {badge && (
-            <span className="rounded-md bg-tropico-ink/80 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-tropico-mute md:text-[10px]">
+            <span className="rounded-md bg-tropico-ink/80 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-tropico-text/70 md:text-[10px]">
               {badge}
             </span>
           )}
@@ -42,7 +42,7 @@ export function ModuleCard({
             {titulo}
           </h3>
           <p
-            className="mt-0.5 hidden text-xs leading-snug text-tropico-mute sm:block md:mt-1 md:text-sm"
+            className="mt-0.5 hidden text-xs leading-snug text-tropico-text/80 sm:block md:mt-1 md:text-sm"
             dangerouslySetInnerHTML={{ __html: descripcion }}
           />
         </div>
