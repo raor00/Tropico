@@ -92,9 +92,40 @@ export function SwapForm() {
   const platformFeeHuman = quote?.platformFee
     ? Number(quote.platformFee.amount) / 10 ** toToken.decimals
     : 0;
-  const platformFeeUSD = platformFeeHuman * estimatedUsdPrice(toSymbol);
-  const fromUSD = amountNumber * estimatedUsdPrice(fromSymbol);
-  const toUSD = outAmountHuman * estimatedUsdPrice(toSymbol);
+
+  // Si uno de los lados es stable, anclamos USD ahí y derivamos el otro del quote.
+  // Esto evita desincronía entre precio hardcoded y precio real de Jupiter.
+  const fromStable = isStable(fromSymbol);
+  const toStable = isStable(toSymbol);
+  const stableAmount = fromStable
+    ? amountNumber
+    : toStable
+      ? outAmountHuman
+      : 0;
+  const fromUSD =
+    fromStable || toStable
+      ? fromStable
+        ? amountNumber
+        : outAmountHuman > 0
+          ? (amountNumber / outAmountHuman) * stableAmount
+          : 0
+      : amountNumber * estimatedUsdPrice(fromSymbol);
+  const toUSD =
+    fromStable || toStable
+      ? toStable
+        ? outAmountHuman
+        : amountNumber > 0
+          ? (outAmountHuman / amountNumber) * stableAmount
+          : 0
+      : outAmountHuman * estimatedUsdPrice(toSymbol);
+  const platformFeeUSD =
+    fromStable || toStable
+      ? toStable
+        ? platformFeeHuman
+        : outAmountHuman > 0
+          ? platformFeeHuman * (toUSD / outAmountHuman)
+          : 0
+      : platformFeeHuman * estimatedUsdPrice(toSymbol);
 
   return (
     <div className="flex flex-col gap-4">
@@ -290,8 +321,12 @@ function Row({
   );
 }
 
+function isStable(symbol: TokenSymbol): boolean {
+  return symbol === "USDC" || symbol === "USDT";
+}
+
 /**
- * Precios USD estimados HARDCODED para demo.
+ * Precios USD estimados HARDCODED — solo fallback cuando ningún lado es stable.
  * En producción se obtienen de Jupiter `/price` API o Pyth.
  */
 function estimatedUsdPrice(symbol: TokenSymbol): number {
