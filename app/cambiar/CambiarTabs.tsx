@@ -16,6 +16,7 @@ export function CambiarTabs() {
       {/* Tabs — Bolívares primero (caso de uso principal VE) */}
       <div className="grid grid-cols-2 gap-2 rounded-xl border border-tropico-border bg-tropico-ink/40 p-1.5">
         <button
+          type="button"
           onClick={() => setTab("bolivares")}
           className={`flex items-center justify-center gap-2 rounded-lg px-3 py-3 text-sm font-semibold transition ${
             tab === "bolivares"
@@ -27,6 +28,7 @@ export function CambiarTabs() {
           Bolívares ↔ USDC
         </button>
         <button
+          type="button"
           onClick={() => setTab("tokens")}
           className={`flex items-center justify-center gap-2 rounded-lg px-3 py-3 text-sm font-semibold transition ${
             tab === "tokens"
