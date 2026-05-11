@@ -1,53 +1,50 @@
-import Link from "next/link";
-import {
-  ArrowLeftRight,
-  Send,
-  Sprout,
-  QrCode,
-  Sparkles,
-  Compass,
-  ShieldCheck,
-  Zap,
-  TrendingUp,
-  Wallet,
-  Store,
-  Bot,
-  ExternalLink,
-  KeyRound,
-  AlertTriangle,
-  Users,
-  CheckCircle2,
-  Globe,
-  Scale,
-} from "lucide-react";
-import { Logo } from "@/components/Logo";
 import { AuthCTA } from "@/components/AuthCTA";
-import { Badge } from "@/components/Badge";
-import { ScrollReveal } from "@/components/ScrollReveal";
 import { AuthRedirect } from "@/components/AuthRedirect";
+import { Badge } from "@/components/Badge";
+import { Logo } from "@/components/Logo";
+import { ScrollReveal } from "@/components/ScrollReveal";
 import { VenezuelaBadge } from "@/components/VenezuelaBadge";
+import {
+  AlertTriangle,
+  ArrowLeftRight,
+  Bot,
+  CheckCircle2,
+  Compass,
+  ExternalLink,
+  Globe,
+  KeyRound,
+  QrCode,
+  Scale,
+  Send,
+  ShieldCheck,
+  Sparkles,
+  Sprout,
+  Store,
+  TrendingUp,
+  Users,
+  Wallet,
+  Zap,
+} from "lucide-react";
+import Link from "next/link";
 
 const VALUE_CARDS = [
   {
     title: "Conoce",
-    body:
-      "Más allá del USDT. Aprende qué es JTO, JUP, mSOL — sin jerga técnica, en venezolano natural.",
+    body: "Más allá del USDT. Aprende qué es JTO, JUP, mSOL — sin jerga técnica, en venezolano natural.",
     accent: "from-tropico-sun/30 to-transparent",
     badge: "Educa",
     Icon: Compass,
   },
   {
     title: "Cambia",
-    body:
-      "Intercambia entre tokens al mejor precio del mercado. Comisión transparente del 0.5% — punto.",
+    body: "Intercambia entre tokens al mejor precio del mercado. Comisión transparente del 0.5% — punto.",
     accent: "from-tropico-coral/30 to-transparent",
     badge: "Swap",
     Icon: ArrowLeftRight,
   },
   {
     title: "Crece",
-    body:
-      "Carlos, tu copiloto financiero, te acompaña. ¿Qué comprar? ¿Cómo funciona el staking? Te explica.",
+    body: "Carlos, tu copiloto financiero, te acompaña. ¿Qué comprar? ¿Cómo funciona el staking? Te explica.",
     accent: "from-tropico-sea/30 to-transparent",
     badge: "Carlos AI",
     Icon: Sparkles,
@@ -78,19 +75,53 @@ const PROBLEM_STATS = [
 ];
 
 const MODULES = [
-  { Icon: Wallet, name: "Inicio", href: "/home", desc: "Tu saldo + yield + 6 acciones" },
-  { Icon: ArrowLeftRight, name: "Cambiar", href: "/cambiar", desc: "Swap real vía Jupiter" },
+  {
+    Icon: Wallet,
+    name: "Inicio",
+    href: "/home",
+    desc: "Tu saldo + yield + 6 acciones",
+  },
+  {
+    Icon: ArrowLeftRight,
+    name: "Cambiar",
+    href: "/cambiar",
+    desc: "Swap real vía Jupiter",
+  },
   { Icon: QrCode, name: "Cobrar", href: "/cobrar", desc: "QR Solana Pay" },
-  { Icon: Send, name: "Enviar", href: "/enviar", desc: "Claim links por WhatsApp" },
-  { Icon: Sprout, name: "Guardar", href: "/guardar", desc: "Yield mSOL + Kamino" },
-  { Icon: Sparkles, name: "Carlos", href: "/carlos", desc: "Copiloto IA en venezolano" },
+  {
+    Icon: Send,
+    name: "Enviar",
+    href: "/enviar",
+    desc: "Claim links por WhatsApp",
+  },
+  {
+    Icon: Sprout,
+    name: "Guardar",
+    href: "/guardar",
+    desc: "Yield mSOL + Kamino",
+  },
+  {
+    Icon: Sparkles,
+    name: "Carlos",
+    href: "/carlos",
+    desc: "Copiloto IA en venezolano",
+  },
 ];
 
 const AGENT_ACTIONS = [
   { name: "DCA semanal", desc: "Compra $X de un token cada [día] automático" },
-  { name: "Auto-yield al recibir remesa", desc: "Si llega +$50, mueve excedente a Save" },
-  { name: "Auto-cashback claim", desc: "Reclama tu cashback de comercios cada semana" },
-  { name: "Re-balance de portafolio", desc: "Si JTO sube +20%, vende 10% a USDC" },
+  {
+    name: "Auto-yield al recibir remesa",
+    desc: "Si llega +$50, mueve excedente a Save",
+  },
+  {
+    name: "Auto-cashback claim",
+    desc: "Reclama tu cashback de comercios cada semana",
+  },
+  {
+    name: "Re-balance de portafolio",
+    desc: "Si JTO sube +20%, vende 10% a USDC",
+  },
 ];
 
 const REVENUE_STREAMS = [
@@ -127,9 +158,13 @@ export default function LandingPage() {
             ,<br /> en Solana.
           </h1>
           <p className="max-w-2xl text-lg text-tropico-mute">
-            Ahorra ganando intereses. Paga sin perder valor. Una red de pagos non-custodial donde
-            tu plata vive en USDC, genera rendimiento automático, y los comercios pagan{" "}
-            <strong className="text-tropico-text">60% menos en fees vs POS tradicional</strong>.
+            Ahorra ganando intereses. Paga sin perder valor. Una red de pagos
+            non-custodial donde tu plata vive en USDC, genera rendimiento
+            automático, y los comercios pagan{" "}
+            <strong className="text-tropico-text">
+              60% menos en fees vs POS tradicional
+            </strong>
+            .
           </p>
         </div>
 
@@ -142,7 +177,10 @@ export default function LandingPage() {
 
         <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 pt-4 text-xs text-tropico-mute">
           <span className="flex items-center gap-1.5">
-            <ShieldCheck className="size-4 text-tropico-sea" strokeWidth={1.75} />
+            <ShieldCheck
+              className="size-4 text-tropico-sea"
+              strokeWidth={1.75}
+            />
             Non-custodial
           </span>
           <span className="flex items-center gap-1.5">
@@ -150,14 +188,22 @@ export default function LandingPage() {
             Settlement &lt;1s
           </span>
           <span className="flex items-center gap-1.5">
-            <TrendingUp className="size-4 text-tropico-coral" strokeWidth={1.75} />
+            <TrendingUp
+              className="size-4 text-tropico-coral"
+              strokeWidth={1.75}
+            />
             Yield ~5% APY default
           </span>
         </div>
       </section>
 
       {/* PARA TODOS — onboarding accesible + dueño real de tu wallet */}
-      <ScrollReveal id="producto" direction="up" as="section" className="flex flex-col gap-8 scroll-mt-24">
+      <ScrollReveal
+        id="producto"
+        direction="up"
+        as="section"
+        className="flex flex-col gap-8 scroll-mt-24"
+      >
         <div className="space-y-2">
           <span className="inline-flex items-center gap-1.5 text-xs uppercase tracking-widest text-tropico-sea">
             <Users className="size-3.5" /> Para cualquier venezolano
@@ -168,10 +214,11 @@ export default function LandingPage() {
             <span className="text-tropico-mute">Es para todos.</span>
           </h2>
           <p className="max-w-3xl text-tropico-mute">
-            Si tienes un email, ya puedes tener tu wallet. Sin frase semilla de 12 palabras
-            que no entiendes. Sin «modo desarrollador». Sin tener que aprender qué es
-            una blockchain. Tu tía puede usarla. Tu primo del taller también. El que
-            recibe remesas en bolívares y nunca ha tocado cripto, también.
+            Si tienes un email, ya puedes tener tu wallet. Sin frase semilla de
+            12 palabras que no entiendes. Sin «modo desarrollador». Sin tener
+            que aprender qué es una blockchain. Tu tía puede usarla. Tu primo
+            del taller también. El que recibe remesas en bolívares y nunca ha
+            tocado cripto, también.
           </p>
         </div>
 
@@ -184,10 +231,11 @@ export default function LandingPage() {
             </h3>
             <p className="text-sm text-tropico-mute">
               En Tropico tu wallet es{" "}
-              <strong className="text-tropico-text">100% tuya</strong>. Tropico nunca toca
-              tus fondos, no puede congelar tu cuenta, no puede bloquear un retiro. Si
-              Tropico desaparece mañana, tu plata sigue ahí — accesible con tu backup,
-              desde cualquier wallet de Solana del mundo.
+              <strong className="text-tropico-text">100% tuya</strong>. Tropico
+              nunca toca tus fondos, no puede congelar tu cuenta, no puede
+              bloquear un retiro. Si Tropico desaparece mañana, tu plata sigue
+              ahí — accesible con tu backup, desde cualquier wallet de Solana
+              del mundo.
             </p>
             <ul className="mt-1 flex flex-col gap-1.5 text-xs text-tropico-mute">
               <li className="flex items-start gap-1.5">
@@ -200,25 +248,31 @@ export default function LandingPage() {
               </li>
               <li className="flex items-start gap-1.5">
                 <CheckCircle2 className="mt-0.5 size-3.5 shrink-0 text-tropico-sea" />
-                <span>Llaves MPC (3 partes) — Tropico jamás tiene la llave completa</span>
+                <span>
+                  Llaves MPC (3 partes) — Tropico jamás tiene la llave completa
+                </span>
               </li>
             </ul>
           </article>
 
           {/* Card 2 — sutilmente: cuidado con los "casi" non-custodial */}
           <article className="panel flex flex-col gap-3 border-tropico-coral/30 bg-tropico-coral/5 p-6">
-            <AlertTriangle className="size-6 text-tropico-coral" strokeWidth={1.75} />
+            <AlertTriangle
+              className="size-6 text-tropico-coral"
+              strokeWidth={1.75}
+            />
             <h3 className="font-display text-xl font-bold">
               Cuidado con los «casi» non-custodial
             </h3>
             <p className="text-sm text-tropico-mute">
-              Hay apps que dicen ser non-custodial pero en realidad guardan tus llaves en
-              su servidor. Si te dicen «es tu wallet» pero nunca te muestran cómo
-              exportarla a otra app — no es tuya. Es la de ellos, prestada.
+              Hay apps que dicen ser non-custodial pero en realidad guardan tus
+              llaves en su servidor. Si te dicen «es tu wallet» pero nunca te
+              muestran cómo exportarla a otra app — no es tuya. Es la de ellos,
+              prestada.
             </p>
             <p className="text-xs italic text-tropico-mute">
-              Regla simple: si no puedes mover tu plata a otra wallet sin permiso del
-              proveedor, no eres dueño. Eres usuario.
+              Regla simple: si no puedes mover tu plata a otra wallet sin
+              permiso del proveedor, no eres dueño. Eres usuario.
             </p>
           </article>
         </div>
@@ -232,16 +286,29 @@ export default function LandingPage() {
           </span>
           <h2 className="font-display text-3xl font-bold md:text-4xl">
             Conoces estas wallets.{" "}
-            <span className="text-tropico-mute">Esto es en lo que nos parecemos —</span>
+            <span className="text-tropico-mute">
+              Esto es en lo que nos parecemos —
+            </span>
             <br />
-            <span className="bg-clip-text text-transparent" style={{
-              backgroundImage: "linear-gradient(135deg, #06D6A0 0%, #FFD166 50%, #EF476F 100%)",
-            }}>esto es en lo que somos distintos.</span>
+            <span
+              className="bg-clip-text text-transparent"
+              style={{
+                backgroundImage:
+                  "linear-gradient(135deg, #06D6A0 0%, #FFD166 50%, #EF476F 100%)",
+              }}
+            >
+              esto es en lo que somos distintos.
+            </span>
           </h2>
           <p className="max-w-3xl text-tropico-mute">
-            No vinimos a hablar mal de nadie — todas estas opciones existen porque el venezolano necesita
-            soluciones. Pero hay una diferencia técnica concreta: <strong className="text-tropico-text">
-            Tropico es la única non-custodial real con red multi-feature en Solana</strong>. Mira:
+            No vinimos a hablar mal de nadie — todas estas opciones existen
+            porque el venezolano necesita soluciones. Pero hay una diferencia
+            técnica concreta:{" "}
+            <strong className="text-tropico-text">
+              Tropico es la única non-custodial real con red multi-feature en
+              Solana
+            </strong>
+            . Mira:
           </p>
         </div>
 
@@ -251,7 +318,9 @@ export default function LandingPage() {
               <tr className="text-left text-xs uppercase tracking-widest text-tropico-mute">
                 <th className="px-3 py-2">Wallet / App</th>
                 <th className="px-3 py-2">En qué nos parecemos</th>
-                <th className="px-3 py-2 text-tropico-sun">Diferencial Tropico</th>
+                <th className="px-3 py-2 text-tropico-sun">
+                  Diferencial Tropico
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -294,7 +363,9 @@ export default function LandingPage() {
               ].map((row) => (
                 <tr key={row.name} className="bg-tropico-ink/40">
                   <td className="rounded-l-lg border-l border-y border-tropico-border px-3 py-3 align-top">
-                    <strong className="font-display text-tropico-text">{row.name}</strong>
+                    <strong className="font-display text-tropico-text">
+                      {row.name}
+                    </strong>
                   </td>
                   <td className="border-y border-tropico-border px-3 py-3 align-top text-xs text-tropico-mute">
                     {row.similar}
@@ -309,26 +380,39 @@ export default function LandingPage() {
         </div>
 
         <div className="panel flex flex-col gap-3 border-tropico-sea/30 bg-tropico-sea/5 p-5 md:flex-row md:items-center md:gap-5">
-          <Sparkles className="size-6 shrink-0 text-tropico-sea" strokeWidth={1.75} />
+          <Sparkles
+            className="size-6 shrink-0 text-tropico-sea"
+            strokeWidth={1.75}
+          />
           <div className="flex flex-col gap-1">
             <p className="text-sm font-semibold text-tropico-text">
-              No vinimos a competir con custodios. Vinimos a darte tu wallet de verdad.
+              No vinimos a competir con custodios. Vinimos a darte tu wallet de
+              verdad.
             </p>
             <p className="text-xs text-tropico-mute">
-              Si lo que necesitas es solo USDC custodiado o trading P2P, esas opciones funcionan. Si lo que
-              quieres es <strong className="text-tropico-sun">red económica completa + dueño real de tus
-              llaves + ecosistema Solana abierto + AI en venezolano</strong>, eso solo está en Tropico.
+              Si lo que necesitas es solo USDC custodiado o trading P2P, esas
+              opciones funcionan. Si lo que quieres es{" "}
+              <strong className="text-tropico-sun">
+                red económica completa + dueño real de tus llaves + ecosistema
+                Solana abierto + AI en venezolano
+              </strong>
+              , eso solo está en Tropico.
             </p>
           </div>
         </div>
       </ScrollReveal>
 
       {/* REMESAS — puente familiar */}
-      <ScrollReveal direction="up" as="section" className="panel relative flex flex-col gap-6 overflow-hidden p-6 md:p-8">
+      <ScrollReveal
+        direction="up"
+        as="section"
+        className="panel relative flex flex-col gap-6 overflow-hidden p-6 md:p-8"
+      >
         <div
           className="pointer-events-none absolute inset-0 opacity-50"
           style={{
-            background: "linear-gradient(135deg, rgba(6,214,160,0.12) 0%, rgba(255,209,102,0.10) 100%)",
+            background:
+              "linear-gradient(135deg, rgba(6,214,160,0.12) 0%, rgba(255,209,102,0.10) 100%)",
           }}
         />
         <div className="relative flex flex-col gap-6">
@@ -341,8 +425,9 @@ export default function LandingPage() {
               <span className="text-tropico-sea">en 1 segundo.</span>
             </h2>
             <p className="max-w-2xl text-tropico-mute">
-              Sin colas, sin esperar 3 días, sin pagar 10% de comisión. Desde cualquier país del
-              mundo, al wallet de tu familiar en Venezuela — instantáneo y non-custodial.
+              Sin colas, sin esperar 3 días, sin pagar 10% de comisión. Desde
+              cualquier país del mundo, al wallet de tu familiar en Venezuela —
+              instantáneo y non-custodial.
             </p>
           </div>
 
@@ -352,9 +437,16 @@ export default function LandingPage() {
               { v: "1-2%", l: "fee total", c: "text-tropico-green" },
               { v: "150+", l: "países de origen", c: "text-tropico-sun" },
             ].map((stat) => (
-              <div key={stat.l} className="panel flex flex-col items-center justify-center gap-1 p-4 text-center">
-                <div className={`font-display text-3xl font-bold ${stat.c}`}>{stat.v}</div>
-                <div className="text-[10px] uppercase tracking-wider text-tropico-mute">{stat.l}</div>
+              <div
+                key={stat.l}
+                className="panel flex flex-col items-center justify-center gap-1 p-4 text-center"
+              >
+                <div className={`font-display text-3xl font-bold ${stat.c}`}>
+                  {stat.v}
+                </div>
+                <div className="text-[10px] uppercase tracking-wider text-tropico-mute">
+                  {stat.l}
+                </div>
               </div>
             ))}
           </div>
@@ -366,7 +458,12 @@ export default function LandingPage() {
       </ScrollReveal>
 
       {/* EL PROBLEMA — 4 stats grandes */}
-      <ScrollReveal id="remesas" direction="up" as="section" className="flex flex-col gap-8 scroll-mt-24">
+      <ScrollReveal
+        id="remesas"
+        direction="up"
+        as="section"
+        className="flex flex-col gap-8 scroll-mt-24"
+      >
         <div className="space-y-2">
           <span className="text-xs uppercase tracking-widest text-tropico-coral">
             El problema
@@ -375,8 +472,9 @@ export default function LandingPage() {
             El venezolano cripto vive atrapado.
           </h2>
           <p className="max-w-3xl text-tropico-mute">
-            Las apps en español son custodias y solo guardan dólares. Phantom asume usuario experto.
-            Los comercios pagan fees brutales en POS tradicional. Y nadie te explica nada.
+            Las apps en español son custodias y solo guardan dólares. Phantom
+            asume usuario experto. Los comercios pagan fees brutales en POS
+            tradicional. Y nadie te explica nada.
           </p>
         </div>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -410,7 +508,13 @@ export default function LandingPage() {
       </ScrollReveal>
 
       {/* VALUE CARDS — Conoce / Cambia / Crece */}
-      <ScrollReveal id="cambiar" direction="up" delay={100} as="section" className="flex flex-col gap-8 scroll-mt-24">
+      <ScrollReveal
+        id="cambiar"
+        direction="up"
+        delay={100}
+        as="section"
+        className="flex flex-col gap-8 scroll-mt-24"
+      >
         <div className="space-y-2">
           <span className="text-xs uppercase tracking-widest text-tropico-sun">
             La solución
@@ -439,7 +543,9 @@ export default function LandingPage() {
                       {card.badge}
                     </span>
                   </div>
-                  <h3 className="font-display text-2xl font-bold">{card.title}</h3>
+                  <h3 className="font-display text-2xl font-bold">
+                    {card.title}
+                  </h3>
                   <p
                     className="text-sm leading-relaxed text-tropico-mute"
                     dangerouslySetInnerHTML={{ __html: card.body }}
@@ -452,7 +558,11 @@ export default function LandingPage() {
       </ScrollReveal>
 
       {/* 6 MÓDULOS — recorrido del producto */}
-      <ScrollReveal direction="pixel" as="section" className="flex flex-col gap-8">
+      <ScrollReveal
+        direction="pixel"
+        as="section"
+        className="flex flex-col gap-8"
+      >
         <div className="space-y-2">
           <span className="text-xs uppercase tracking-widest text-tropico-sea">
             La app completa
@@ -461,8 +571,9 @@ export default function LandingPage() {
             Una sola app, 6 acciones que cambian tu economía.
           </h2>
           <p className="max-w-3xl text-tropico-mute">
-            Puedes probar TODAS sin instalar nada. Sin Privy configurado, la app corre con
-            datos mock honestos &mdash; ideal para que veas el flow completo en segundos.
+            Puedes probar TODAS sin instalar nada. Sin Privy configurado, la app
+            corre con datos mock honestos &mdash; ideal para que veas el flow
+            completo en segundos.
           </p>
         </div>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -478,7 +589,9 @@ export default function LandingPage() {
                   <Icon className="size-5" strokeWidth={1.75} />
                 </div>
                 <div className="flex flex-1 flex-col">
-                  <span className="font-semibold text-tropico-text">{m.name}</span>
+                  <span className="font-semibold text-tropico-text">
+                    {m.name}
+                  </span>
                   <span className="text-xs text-tropico-mute">{m.desc}</span>
                 </div>
                 <ExternalLink className="size-4 text-tropico-mute group-hover:text-tropico-sun transition" />
@@ -489,7 +602,12 @@ export default function LandingPage() {
       </ScrollReveal>
 
       {/* PARA COMERCIOS — preview con comparativa POS tradicional */}
-      <ScrollReveal id="comercios" direction="left" as="section" className="grid gap-6 panel p-5 md:grid-cols-2 md:items-center md:p-8 scroll-mt-24">
+      <ScrollReveal
+        id="comercios"
+        direction="left"
+        as="section"
+        className="grid gap-6 panel p-5 md:grid-cols-2 md:items-center md:p-8 scroll-mt-24"
+      >
         <div className="flex flex-col gap-4">
           <div className="inline-flex w-fit items-center gap-2 rounded-md bg-tropico-coral/15 px-2 py-0.5 text-xs font-semibold uppercase tracking-widest text-tropico-coral">
             <Store className="size-3" strokeWidth={2.5} />
@@ -497,12 +615,14 @@ export default function LandingPage() {
           </div>
           <h2 className="font-display text-3xl font-bold leading-tight md:text-4xl">
             Cobra en dólares.
-            <br /> <span className="text-tropico-coral">Sin banco tradicional.</span>
+            <br />{" "}
+            <span className="text-tropico-coral">Sin banco tradicional.</span>
           </h2>
           <p className="text-tropico-mute">
-            Bodegas, freelancers, deliveries — pagas <strong className="text-tropico-text">1%</strong>{" "}
-            en lugar del <strong className="text-tropico-coral">4.5%</strong> de POS tradicional.
-            Settlement en menos de 1 segundo. Sin chargebacks.
+            Bodegas, freelancers, deliveries — pagas{" "}
+            <strong className="text-tropico-text">1%</strong> en lugar del{" "}
+            <strong className="text-tropico-coral">4.5%</strong> de POS
+            tradicional. Settlement en menos de 1 segundo. Sin chargebacks.
           </p>
           <Link href="/comercios" className="btn-primary w-fit">
             Ver Tropico Comercios &rarr;
@@ -513,13 +633,19 @@ export default function LandingPage() {
           {[
             { v: "1%", l: "fee Tropico", c: "text-tropico-green" },
             { v: "4.5%", l: "fee banco tradicional", c: "text-tropico-coral" },
-            { v: "$35", l: "ahorro/mes por $1k vendidos", c: "text-tropico-sun" },
+            {
+              v: "$35",
+              l: "ahorro/mes por $1k vendidos",
+              c: "text-tropico-sun",
+            },
           ].map((item) => (
             <div
               key={item.l}
               className="panel flex flex-col items-center justify-center gap-1 p-4"
             >
-              <div className={`font-display text-3xl font-bold ${item.c}`}>{item.v}</div>
+              <div className={`font-display text-3xl font-bold ${item.c}`}>
+                {item.v}
+              </div>
               <div className="text-[10px] uppercase tracking-wider text-tropico-mute">
                 {item.l}
               </div>
@@ -529,7 +655,12 @@ export default function LandingPage() {
       </ScrollReveal>
 
       {/* CARLOS AI BY LUMEN — sección dedicada, el diferencial principal */}
-      <ScrollReveal id="carlos" direction="right" as="section" className="relative flex flex-col gap-8 overflow-hidden scroll-mt-24">
+      <ScrollReveal
+        id="carlos"
+        direction="right"
+        as="section"
+        className="relative flex flex-col gap-8 overflow-hidden scroll-mt-24"
+      >
         {/* Background accent */}
         <div
           className="pointer-events-none absolute inset-0 -z-10 opacity-30"
@@ -558,10 +689,10 @@ export default function LandingPage() {
             </span>
           </h2>
           <p className="max-w-3xl text-base text-tropico-mute md:text-lg">
-            Carlos no es un chatbot. Es un agente con personalidad, conocimiento de
-            dominio y herramientas reales — corriendo sobre{" "}
+            Carlos no es un chatbot. Es un agente con personalidad, conocimiento
+            de dominio y herramientas reales — corriendo sobre{" "}
             <a
-              href="https://github.com/gabogabucho/lumen-agent"
+              href="https://github.com/lumen-agent/lumen"
               target="_blank"
               rel="noreferrer"
               className="font-semibold text-tropico-purple underline"
@@ -569,8 +700,8 @@ export default function LandingPage() {
               Lumen
             </a>
             , el framework open-source de agentes en español. Te entiende en
-            venezolano, ejecuta acciones on-chain con tu permiso, y aprende lo que
-            necesitas hacer con tu plata.
+            venezolano, ejecuta acciones on-chain con tu permiso, y aprende lo
+            que necesitas hacer con tu plata.
           </p>
         </div>
 
@@ -594,8 +725,12 @@ export default function LandingPage() {
                 key={c.name}
                 className="panel flex flex-col gap-1 p-3 transition hover:border-tropico-purple/40"
               >
-                <span className="text-xl" aria-hidden>{c.icon}</span>
-                <span className="text-sm font-semibold text-tropico-text">{c.name}</span>
+                <span className="text-xl" aria-hidden>
+                  {c.icon}
+                </span>
+                <span className="text-sm font-semibold text-tropico-text">
+                  {c.name}
+                </span>
                 <code className="truncate text-[10px] text-tropico-purple">
                   {c.skill}
                 </code>
@@ -616,10 +751,10 @@ export default function LandingPage() {
               <span className="text-tropico-sea">Con tus reglas.</span>
             </h3>
             <p className="max-w-3xl text-sm text-tropico-mute">
-              Activa Modo Agente y Carlos ejecuta 4 acciones autónomas dentro de los
-              límites que TÚ defines. En MVP confirma con un click; Q3 2026 corre 100%
-              autónomo via Privy delegated session keys. Tú revocas cuando quieras.
-              Llaves nunca expuestas.
+              Activa Modo Agente y Carlos ejecuta 4 acciones autónomas dentro de
+              los límites que TÚ defines. En MVP confirma con un click; Q3 2026
+              corre 100% autónomo via Privy delegated session keys. Tú revocas
+              cuando quieras. Llaves nunca expuestas.
             </p>
           </div>
           <div className="grid gap-2 md:grid-cols-2">
@@ -632,7 +767,9 @@ export default function LandingPage() {
                   <Bot className="size-4" strokeWidth={1.75} />
                 </div>
                 <div className="flex flex-col gap-0.5">
-                  <span className="text-sm font-semibold text-tropico-text">{a.name}</span>
+                  <span className="text-sm font-semibold text-tropico-text">
+                    {a.name}
+                  </span>
                   <span
                     className="text-xs text-tropico-mute"
                     dangerouslySetInnerHTML={{ __html: a.desc }}
@@ -651,32 +788,56 @@ export default function LandingPage() {
           <ul className="grid gap-2 text-sm text-tropico-mute md:grid-cols-2">
             <li className="flex items-start gap-2">
               <span className="mt-0.5 text-tropico-purple">→</span>
-              <span><strong className="text-tropico-text">Open source MIT</strong> — auditable, sin vendor lock-in, puedes correrlo en tu propio server.</span>
+              <span>
+                <strong className="text-tropico-text">Open source MIT</strong> —
+                auditable, sin vendor lock-in, puedes correrlo en tu propio
+                server.
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="mt-0.5 text-tropico-purple">→</span>
-              <span><strong className="text-tropico-text">Diseño nativo para LATAM</strong> — el framework entiende contexto regional, no solo traduce inglés.</span>
+              <span>
+                <strong className="text-tropico-text">
+                  Diseño nativo para LATAM
+                </strong>{" "}
+                — el framework entiende contexto regional, no solo traduce
+                inglés.
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="mt-0.5 text-tropico-purple">→</span>
-              <span><strong className="text-tropico-text">Tool calling real</strong> — Carlos invoca scripts Python que tocan Solana RPC, Jupiter, DolarAPI. No es un wrapper de chat.</span>
+              <span>
+                <strong className="text-tropico-text">Tool calling real</strong>{" "}
+                — Carlos invoca scripts Python que tocan Solana RPC, Jupiter,
+                DolarAPI. No es un wrapper de chat.
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="mt-0.5 text-tropico-purple">→</span>
-              <span><strong className="text-tropico-text">Kit replicable</strong> — el Tropico Web3 Kit (KIT + 7 SKILLS + 8 capabilities) es portable a Hermes/OpenClaw con un adapter de ~30 líneas.</span>
+              <span>
+                <strong className="text-tropico-text">Kit replicable</strong> —
+                el Tropico Web3 Kit (KIT + 7 SKILLS + 8 capabilities) es
+                portable a Hermes/OpenClaw con un adapter de ~30 líneas.
+              </span>
             </li>
           </ul>
         </div>
 
         <div className="flex flex-wrap gap-3">
-          <Link href="/carlos" className="btn-primary inline-flex items-center gap-2">
+          <Link
+            href="/carlos"
+            className="btn-primary inline-flex items-center gap-2"
+          >
             <Sparkles className="size-4" /> Hablar con Carlos
           </Link>
-          <Link href="/carlos/agente" className="btn-ghost inline-flex items-center gap-2">
+          <Link
+            href="/carlos/agente"
+            className="btn-ghost inline-flex items-center gap-2"
+          >
             <Bot className="size-4" /> Ver Modo Agente
           </Link>
           <a
-            href="https://github.com/gabogabucho/lumen-agent"
+            href="https://github.com/lumen-agent/lumen"
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-2 rounded-full border border-tropico-purple/40 bg-tropico-purple/10 px-4 py-2 text-sm font-semibold text-tropico-purple transition hover:bg-tropico-purple/20"
@@ -713,12 +874,17 @@ export default function LandingPage() {
         </div>
         <p className="text-sm text-tropico-mute">
           Proyección mes 12: 50.000 usuarios + 2.000 comercios ={" "}
-          <strong className="text-tropico-green">$250K MRR</strong> sobre $44M de volumen.
+          <strong className="text-tropico-green">$250K MRR</strong> sobre $44M
+          de volumen.
         </p>
       </ScrollReveal>
 
       {/* CTA FINAL */}
-      <ScrollReveal direction="pixel" as="section" className="panel relative flex flex-col items-center gap-6 overflow-hidden p-6 text-center md:p-10">
+      <ScrollReveal
+        direction="pixel"
+        as="section"
+        className="panel relative flex flex-col items-center gap-6 overflow-hidden p-6 text-center md:p-10"
+      >
         <div
           className="pointer-events-none absolute inset-0 opacity-60"
           style={{
@@ -742,8 +908,9 @@ export default function LandingPage() {
             .
           </h2>
           <p className="max-w-xl text-tropico-mute">
-            Sin esperar a que un banco te apruebe. Sin que nadie te congele la cuenta.
-            Sin que la inflación te derrita los ahorros. Empieza con tu email.
+            Sin esperar a que un banco te apruebe. Sin que nadie te congele la
+            cuenta. Sin que la inflación te derrita los ahorros. Empieza con tu
+            email.
           </p>
           <div className="flex flex-col gap-3 sm:flex-row">
             <Link href="/home" className="btn-primary">
@@ -763,35 +930,70 @@ export default function LandingPage() {
             <Logo size={32} wordmarkSize="sm" />
             <div className="mt-2 flex flex-col gap-2">
               <VenezuelaBadge size="sm" />
-              <p className="text-xs text-tropico-mute">Construido sobre Solana.</p>
+              <p className="text-xs text-tropico-mute">
+                Construido sobre Solana.
+              </p>
             </div>
           </div>
           <div className="flex flex-col gap-1">
             <span className="text-xs font-semibold uppercase tracking-wider text-tropico-text">
               Producto
             </span>
-            <Link href="/home" className="text-xs hover:text-tropico-sun">Inicio (Wallet)</Link>
-            <Link href="/cambiar" className="text-xs hover:text-tropico-sun">Cambiar</Link>
-            <Link href="/cobrar" className="text-xs hover:text-tropico-sun">Cobrar</Link>
-            <Link href="/enviar" className="text-xs hover:text-tropico-sun">Enviar</Link>
-            <Link href="/guardar" className="text-xs hover:text-tropico-sun">Guardar</Link>
-            <Link href="/depositar" className="text-xs hover:text-tropico-sun">Depositar bs</Link>
+            <Link href="/home" className="text-xs hover:text-tropico-sun">
+              Inicio (Wallet)
+            </Link>
+            <Link href="/cambiar" className="text-xs hover:text-tropico-sun">
+              Cambiar
+            </Link>
+            <Link href="/cobrar" className="text-xs hover:text-tropico-sun">
+              Cobrar
+            </Link>
+            <Link href="/enviar" className="text-xs hover:text-tropico-sun">
+              Enviar
+            </Link>
+            <Link href="/guardar" className="text-xs hover:text-tropico-sun">
+              Guardar
+            </Link>
+            <Link href="/depositar" className="text-xs hover:text-tropico-sun">
+              Depositar bs
+            </Link>
           </div>
           <div className="flex flex-col gap-1">
             <span className="text-xs font-semibold uppercase tracking-wider text-tropico-text">
               Comercios
             </span>
-            <Link href="/comercios" className="text-xs hover:text-tropico-sun">Para comercios</Link>
-            <Link href="/comercios#afiliar" className="text-xs hover:text-tropico-sun">Afiliarme</Link>
-            <Link href="/comercios#como-funciona" className="text-xs hover:text-tropico-sun">Cómo funciona</Link>
+            <Link href="/comercios" className="text-xs hover:text-tropico-sun">
+              Para comercios
+            </Link>
+            <Link
+              href="/comercios#afiliar"
+              className="text-xs hover:text-tropico-sun"
+            >
+              Afiliarme
+            </Link>
+            <Link
+              href="/comercios#como-funciona"
+              className="text-xs hover:text-tropico-sun"
+            >
+              Cómo funciona
+            </Link>
           </div>
           <div className="flex flex-col gap-1">
             <span className="text-xs font-semibold uppercase tracking-wider text-tropico-text">
               IA + Recursos
             </span>
-            <Link href="/carlos" className="text-xs hover:text-tropico-sun">Carlos AI</Link>
-            <Link href="/carlos/agente" className="text-xs hover:text-tropico-sun">Modo Agente</Link>
-            <Link href="/descubrir" className="text-xs hover:text-tropico-sun">Descubrir tokens</Link>
+            <Link href="/carlos" className="text-xs hover:text-tropico-sun">
+              Carlos AI
+            </Link>
+            <Link
+              href="/carlos/agente"
+              className="text-xs hover:text-tropico-sun"
+            >
+              Modo Agente
+            </Link>
+            <Link href="/descubrir" className="text-xs hover:text-tropico-sun">
+              Descubrir tokens
+            </Link>
             <a
               href="https://github.com/raor00/Tropico"
               target="_blank"

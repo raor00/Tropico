@@ -196,17 +196,10 @@ export default function CarlosPage() {
             <span className="text-2xl">🌴</span>
           </div>
           <div>
-            <h1 className="font-display text-3xl font-bold">
-              Carlos AI <span className="text-tropico-purple">by Lumen</span>
-            </h1>
-            <a
-              href="https://github.com/gabogabucho/lumen-agent"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1 text-xs font-semibold text-tropico-purple hover:underline"
-            >
-              by Lumen <ExternalLink className="size-3" />
-            </a>
+            <h1 className="font-display text-3xl font-bold">Carlos AI</h1>
+            <p className="text-xs text-tropico-mute">
+              Agente autónomo sobre Lumen Web3 Kit
+            </p>
           </div>
         </div>
       </header>
@@ -318,16 +311,8 @@ export default function CarlosPage() {
 
         {/* Status bar */}
         <p className="text-center text-[11px] text-tropico-mute">
-          Carlos corre sobre{" "}
-          <a
-            href="https://github.com/gabogabucho/lumen-agent"
-            target="_blank"
-            rel="noreferrer"
-            className="font-semibold text-tropico-purple hover:underline"
-          >
-            Lumen
-          </a>{" "}
-          Web3 Kit — 1 KIT + 7 SKILLS + 8 capabilities Python.{" "}
+          Carlos corre sobre Lumen Web3 Kit — 1 KIT + 7 SKILLS + 8 capabilities
+          Python.{" "}
           <span className="text-tropico-text/70">
             Modelo actual: DeepSeek-V4-flash via LiteLLM
           </span>
@@ -414,7 +399,7 @@ export default function CarlosPage() {
           <p className="text-sm text-tropico-mute">
             Powered by{" "}
             <a
-              href="https://github.com/gabogabucho/lumen-agent"
+              href="https://github.com/lumen-agent/lumen"
               target="_blank"
               rel="noreferrer"
               className="font-bold text-tropico-purple hover:underline"
@@ -423,14 +408,6 @@ export default function CarlosPage() {
             </a>{" "}
             — framework open source de agentes en español.
           </p>
-          <a
-            href="https://github.com/gabogabucho/lumen-agent"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-1 text-xs font-semibold text-tropico-purple hover:underline"
-          >
-            Ver kit en GitHub <ExternalLink className="size-3" />
-          </a>
         </div>
       </section>
 
