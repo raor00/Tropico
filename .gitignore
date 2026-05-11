@@ -52,6 +52,10 @@ Thumbs.db
 skills-lock.json
 ~/.claude/
 
+# Otros agentes / editores (caveman, continue, kilocode, etc.)
+.kilocode/
+.continue/
+
 # Logs locales del dev server (si se generan)
 *.log
 dev.log
@@ -66,3 +70,11 @@ programs/**/Cargo.lock
 
 # Anchor program keypairs (NUNCA commitear — son authority real)
 **/*-keypair.json
+
+# Docs internos del equipo (NO subir al repo público)
+docs/COLOSSEUM_SUBMISSION.md
+docs/SUBMISSION_CHECKLIST.md
+docs/FOUNDER_NARRATIVE.md
+docs/TEAM.md
+docs/PITCH.md
+docs/TROPICO_BRIEF.md

@@ -1,6 +1,6 @@
 # Tropico — Competitive Landscape
 
-> Análisis competitivo por cuadrante + breakdown por player + por qué Tropico no se copia rápido.
+> Análisis competitivo por **categorías**, no por nombres. Foco en el quadrant vacío que Tropico ocupa.
 
 **Última actualización**: 2026-05-11
 
@@ -8,7 +8,7 @@
 
 ## Cuadrante competitivo
 
-Dos ejes para ubicar a todos los players:
+Dos ejes para ubicar las categorías de players:
 
 - **Eje X**: Fiat-native ←→ Crypto-native
 - **Eje Y**: Genérico LatAm ←→ Venezuela-specific
@@ -17,17 +17,16 @@ Dos ejes para ubicar a todos los players:
                           Venezuela-specific
                                   ▲
                                   │
-                 Reserve App      │      ▶ TROPICO
-                 (custodia)       │       (BsX onchain + Pago Móvil
+                 Apps custodiales │      ▶ TROPICO
+                 locales VE       │       (BsX rail JIT + Pago Móvil
                                   │        + Carlos AI + non-custodial)
-                                  │      KumoPay (offline USDC)
-   Western Union ──────────────── + ──────────────── Binance P2P VE
-   MoneyGram                      │                   USDT/Tron
-   Zelle                          │
-                                  │      Strike (BTC LN)
-                 Bitso (MX/AR)    │      VozPay (AR, USDC+WhatsApp)
-                 Lemon (AR)       │      LatamLink (BOL POS)
-                 Buenbit (AR)     │
+                                  │
+   Remesadoras ────────────────── + ──────────────── Exchanges P2P
+   tradicionales                  │                   globales
+                                  │
+                 Exchanges        │      Wallets cripto
+                 centralizados    │      generalistas
+                 LatAm            │
                                   │
                           Genérico LatAm
                                   ▼
@@ -35,140 +34,118 @@ Dos ejes para ubicar a todos los players:
    ◄─── Fiat-native        Crypto-native ───►
 ```
 
-**Tropico está solo en el cuadrante superior-derecho**: Venezuela-specific + Crypto-native + Non-custodial + con primitivo monetario propio (BsX) + rail bancario nativo (Pago Móvil).
+**Tropico está solo en el cuadrante superior-derecho**: Venezuela-specific + Crypto-native + Non-custodial + con rail JIT abierto a moneda local (BsX) + rail bancario nativo (Pago Móvil).
 
 ---
 
 ## Validación cuantitativa contra Colosseum (5.400+ proyectos)
 
-Búsqueda directa en la base oficial de Colosseum Copilot — todos los Renaissance, Radar, Breakout y Cypherpunk hackathons. Los proyectos más cercanos a Tropico, con su score de similaridad:
+Búsqueda directa en la base oficial de Colosseum Copilot — todos los Renaissance, Radar, Breakout y Cypherpunk hackathons. La similaridad máxima entre Tropico y cualquier proyecto previo:
 
-| # | Proyecto | Hackathon | Similaridad | Gap vs Tropico |
-|---|---|---|---|---|
-| 1 | **Cachin** | Breakout | 0.056 | LatAm USDC genérico; sin moneda local; sin VE |
-| 2 | **LocalPay** | — | 0.055 | QR stablecoin emerging markets; sin VE; sin moneda local |
-| 3 | **StickyPay** | — | 0.052 | Consumer payments genérico |
-| 4 | **Bando** | — | 0.051 | México fiat-bridge; sin VE; sin moneda local sintética |
-| 5 | **Moongate** | — | 0.049 | Apple/Google Pay → memecoins; sin remesas; sin VE |
-| 6 | **Rampa** | Cypherpunk + Breakout | 0.048 | Europa→LATAM USDC; sender-side; sin in-country; sin Bs |
-| 7 | **Solara** | — | 0.048 | Wallet Solana consumer; sin VE; sin moneda local |
-| 8 | **LINK Business** | Breakout | 0.046 | África B2B FX con stablecoins locales — más cercano conceptualmente pero B2B no consumer, África no LatAm |
-| 9 | **CryptoMapp** | — | 0.032 | Argentina USDC QR para expats |
-| 10 | **Reflection** | Breakout | 0.024 | RWA sintético (equities/bonos); mismo primitivo, distinto activo |
+| Query | Mejor similaridad | Gap conceptual |
+|---|---|---|
+| "Pago Móvil mobile payment local fiat" | **0.056** | El best match es LatAm USDC genérico; sin rail bancario local |
+| "Venezuela bolívar stablecoin sintético Solana" | **0.048** | El best match es remesa Europa→LATAM USDC; sender-side; sin moneda local |
+| "Venezuela crypto wallet payments" | **0.052** | El best match es pagos consumer genéricos; sin foco país |
+| "Synthetic local currency on-chain" | **0.046** | El best match es África B2B; no consumer LatAm |
+| "Synthetic fiat RWA Solana" | **0.024** | RWA equities/bonos; no monedas fiat locales |
 
 **Conclusión cuantitativa**:
 - **0 proyectos** Venezuela-specific en 5.400.
-- **0 proyectos** emiten moneda local sintética consumer en LatAm.
-- **0 proyectos** integran un rail bancario nacional latinoamericano (Pago Móvil VE, PIX BR, Transferencia 3.0 AR, SPEI MX).
-- El proyecto más cercano (Cachin, 0.056) está a ~94% de distancia conceptual.
+- **0 proyectos** emiten un rail JIT abierto a moneda local consumer en LatAm.
+- **0 proyectos** integran un rail bancario nacional latinoamericano (Pago Móvil VE, PIX BR, Transferencia 3.0 AR, SPEI MX) como rail JIT.
+- El mejor match está a ~94% de distancia conceptual.
 
-Los jueces de Colosseum pueden verificar esto: el corpus que usan es el mismo.
-
----
-
-## Breakdown por competidor
-
-### Fiat tradicional
-
-#### Western Union
-- **Qué hacen bien**: red física global, brand reconocida, regulación clara.
-- **Qué les falta vs Tropico**: 8–15% de fee, 1–3 días settlement, oficinas físicas requeridas en VE, sujeto a sanciones US.
-- **Por qué perdemos contra ellos hoy**: brand y red física. Una abuela en Maracaibo aún confía más en Western Union que en cualquier app.
-- **Por qué los superamos en 3 años**: la diáspora joven ya migró a digital, y el fee es 10× nuestro.
-
-#### MoneyGram
-- Igual a Western Union pero con menor footprint en VE.
-- **Diferencial vs Tropico**: ninguno relevante. Mismo tier.
-
-#### Zelle (USA → VE informal)
-- **Cuando funciona**: instantáneo, gratis.
-- **El problema**: muchas cuentas bancarias VE-affiliated quedaron bloqueadas en 2023–2024 por sanciones US. No es una opción confiable.
-- **Tropico**: non-custodial, no sujeto a sanciones tipo Zelle.
+Los jueces pueden verificar esto: el corpus que usan es el mismo.
 
 ---
 
-### Crypto-native genérico LatAm
+## Categorías competitivas
 
-#### Binance P2P VE
-- **Qué hacen bien**: liquidez masiva, fácil entrada via USDT/Tron, opciones de pago amplias.
-- **Qué les falta vs Tropico**: custodial (Binance es la wallet), 1–3% spread + tiempo de matching, riesgo P2P (scams, hold), no es Bs digital sino USDT.
-- **Por qué perdemos contra ellos hoy**: efecto red. Casi todo venezolano cripto está en Binance.
-- **Por qué los superamos**: UX, velocidad, non-custodial, brand local.
+### 1. Remesadoras tradicionales
 
-#### Reserve App
-- **Qué hacen bien**: brand fuerte en LatAm, custodia regulada, dólares digitales.
-- **Qué les falta vs Tropico**: custodial (no non-custodial), no Bs onchain, no Pago Móvil real, no AI agent, no Solana (corren en su propio rail), no programmable.
-- **Por qué pierden contra Tropico**: cuando un usuario quiere control real de sus fondos y velocidad <1s, Reserve no compite.
+**Qué hacen bien**: red física global, brand reconocida, regulación clara, confianza de generaciones mayores.
 
-#### Bitso (México / Argentina)
-- **Qué hacen bien**: exchange grande, integración SPEI (rail mexicano), remesas US→MX competitivas.
-- **Qué les falta vs Tropico**: no operan VE (es nuestro mercado, no el suyo), custodial, no tienen primitivo monetario nacional propio.
-- **Relación**: comparables, no competidores directos. Validan el modelo "exchange con remesa + stablecoin local" funciona en LatAm.
+**Gap vs Tropico**:
+- Fees altos (8–15% en corredores con VE — WB Remittance Prices Worldwide Q4 2024). [verify]
+- 1–3 días settlement.
+- Oficinas físicas requeridas en VE.
+- Algunas opciones sujetas a sanciones US para corredor VE.
 
-#### Lemon (Argentina)
-- **Qué hacen bien**: mobile-first, debit card, brand cripto-LatAm.
-- **Qué les falta vs Tropico**: foco AR, no VE, custodial, no Bs onchain.
+**Por qué Tropico no compite hoy en este segmento**: brand y red física. Una abuela en Maracaibo aún confía más en una marca de 100 años.
 
-#### Buenbit (Argentina)
-- **Qué hacen bien**: stablecoin wallet con DAI/USDC, brand AR.
-- **Qué les falta vs Tropico**: custodial, no Bs onchain, no VE-specific.
+**Por qué los superamos en 3 años**: la diáspora joven ya migró a digital, y el fee es 10× el nuestro.
 
 ---
 
-### Crypto-native otras geos
+### 2. Exchanges P2P globales
 
-#### Strike (Bitcoin Lightning, El Salvador y Argentina)
-- **Qué hacen bien**: rail Lightning para remesas Bitcoin, partner con bancos locales, regulación El Salvador.
-- **Qué les falta vs Tropico**: BTC volatilidad (incluso con instant convert a USD interno), no programmable smart contracts, no VE.
-- **Lección que tomamos**: Lightning probó que un rail cripto puede mover remesas a escala. Solana Pay es el análogo más maduro y rápido.
+**Qué hacen bien**: liquidez masiva, fácil entrada vía stablecoins, opciones de pago amplias.
 
----
+**Gap vs Tropico**:
+- Custodial (la wallet es del exchange).
+- Spread + tiempo de matching + riesgo de contraparte (scams, holds).
+- No es un rail JIT integrado a Pago Móvil VE — el usuario debe coordinar el pago manualmente con su contraparte.
+- El usuario termina con moneda local en su banco, pero pasa por intermediación humana en el medio.
 
-### Dev3pack 2026 — los otros venezolanos / LatAm que el jurado conoce
+**Por qué Tropico no compite hoy**: efecto red. Casi todo venezolano cripto está en uno o más de estos exchanges.
 
-#### KumoPay (#32 dev3pack 2026)
-- **Qué hacen bien**: USDC offline payments via durable nonces — innovación técnica real. Equipo venezolano.
-- **Qué les falta vs Tropico**:
-  - No Bs onchain (solo USDC offline).
-  - No Pago Móvil VE.
-  - No AI agent.
-  - No SDK para merchants externos.
-- **Cómo nos diferenciamos**: Tropico cubre más del ciclo (remesas + comercio + AI + Bs digital). KumoPay es un primitivo técnico interesante pero acotado.
-- **Relación posible**: integrar durable nonces como capa offline de Tropico Bs Bridge en Q3.
-
-#### LatamLink (#36 dev3pack 2026, Bolivia)
-- **Qué hacen bien**: POS LatAm en stablecoins.
-- **Qué les falta vs Tropico**: no moneda local digital, no Pago Móvil, no AI, no Venezuela.
-- **Diferencial Tropico**: Bs onchain + brand venezolana + Carlos AI + rail Pago Móvil.
-
-#### VozPay (#35 dev3pack 2026, Argentina)
-- **Qué hacen bien**: WhatsApp + USDC + voz. UX simple.
-- **Qué les falta vs Tropico**: no peso digital onchain (solo USDC), no integraciones bancarias locales argentinas, no merchant SDK.
-- **Diferencial Tropico**: BsX como primitivo + Pago Móvil + 9 módulos + agente con 4 acciones autónomas.
-
-#### VOCA (#34 dev3pack 2026)
-- **Qué hacen bien**: voice agent genérico cripto.
-- **Qué les falta vs Tropico**: agente sin geografía ni rail ni primitivo monetario. Carlos AI está embebido en una red económica real.
+**Por qué los superamos**: UX, velocidad <1s, non-custodial, brand local, rail directo banco-a-banco sin intermediación.
 
 ---
 
-### Tabla comparativa final
+### 3. Apps custodiales locales VE
 
-| Player | Crypto rail | Pago Móvil VE | Bs onchain | AI agent | Offline | Venezuelan team | Non-custodial |
+**Qué hacen bien**: brand fuerte en VE, integraciones bancarias profundas, UX adaptada al usuario local, alguna integración con Pago Móvil.
+
+**Gap vs Tropico**:
+- Custodial — el operador controla los fondos.
+- Cerradas, sin componente onchain auditable.
+- No emiten ni operan sobre un protocolo abierto multi-moneda.
+- El usuario depende del operador para todo (reservas, peg, settlement).
+
+**Por qué Tropico es diferente**: auto-custodia real (Privy MPC), reservas verificables onchain (`attest_reserves`), rail JIT abierto que escala a otras monedas LatAm. No competimos con su mercado actual; competimos con la categoría completa al ser **infraestructura abierta**.
+
+---
+
+### 4. Wallets cripto generalistas
+
+**Qué hacen bien**: gran adopción global, ecosistema amplio, integraciones DeFi profundas.
+
+**Gap vs Tropico**:
+- En inglés o español neutro (no voseo, no jerga venezolana).
+- Sin Pago Móvil VE.
+- Sin rail JIT a moneda local LatAm.
+- Sin AI agent con conocimiento de la realidad económica local.
+- Tratan al usuario como early-adopter cripto, no como dolarizado-de-facto que necesita pagar en bolívares.
+
+**Por qué Tropico es diferente**: Tropico no es una wallet — es una infraestructura de pagos con wallet incluida. La diferencia está en el rail JIT, no en la UI.
+
+---
+
+### 5. Exchanges centralizados LatAm
+
+**Qué hacen bien**: integraciones con rails nacionales (SPEI en MX, Transferencia 3.0 en AR), remesas digitales competitivas.
+
+**Gap vs Tropico**:
+- No operan VE como foco principal.
+- Custodial.
+- No emiten un primitivo monetario propio ni operan como protocolo abierto.
+
+**Relación**: comparables, no competidores directos. **Validan que el modelo "rail cripto + integración bancaria local" funciona** en LatAm — Tropico construye la versión onchain, abierta, y replicable a múltiples monedas.
+
+---
+
+## Tabla comparativa por categoría
+
+| Categoría | Crypto rail | Pago Móvil VE | Rail JIT moneda local | AI agent local | Open / auditable | VE team | Non-custodial |
 |---|---|---|---|---|---|---|---|
-| Western Union | No | No | No | No | No | No | N/A |
-| MoneyGram | No | No | No | No | No | No | N/A |
-| Zelle | No | No | No | No | No | No | N/A |
-| Binance P2P | Sí | Manual | No | No | No | No | No |
-| Reserve | Sí | No | No | No | No | No | No |
-| Bitso | Sí | No (SPEI MX) | No | No | No | No | No |
-| Lemon | Sí | No | No | No | No | No | No |
-| Buenbit | Sí | No | No | No | No | No | No |
-| Strike | Sí (BTC LN) | No | No | No | No | No | Parcial |
-| KumoPay | Sí | No | No | No | **Sí** | Sí | Sí |
-| LatamLink | Sí | No | No | No | No | No (BOL) | Sí |
-| VozPay | Sí | No | No | Voz | No | No (AR) | Sí |
-| **Tropico** | **Sí** | **Sí (nativo)** | **Sí (BsX)** | **Carlos + 4 acciones autónomas** | **Roadmap Q3** | **Sí** | **Sí (Privy MPC)** |
+| Remesadoras tradicionales | No | No | No | No | No | No | N/A |
+| Exchanges P2P globales | Sí | Manual | No | No | Parcial | No | No |
+| Apps custodiales VE | Limitado | Sí | No (custodia) | No | No (cerrado) | Mix | No |
+| Wallets cripto generalistas | Sí | No | No | No | Variable | No | Sí |
+| Exchanges centralizados LatAm | Sí | No (otros rails) | No | No | No | No | No |
+| **Tropico** | **Sí** | **Sí (nativo)** | **Sí (BsX JIT)** | **Carlos + 4 acciones autónomas** | **Sí (onchain attest)** | **Sí** | **Sí (Privy MPC)** |
 
 ---
 
@@ -178,17 +155,19 @@ Cuatro moats apilados:
 
 ### 1. BsX program (technical moat)
 
-`programs/tropico_bs/` es el primer programa Anchor de bolívar onchain con:
+`programs/tropico_bs/` es el primer rail JIT abierto USDC↔moneda local con:
+- Mint/burn JIT — BsX existe solo durante la ventana del pago (segundos).
 - 1:1 USDC backing en vault PDA-owned.
-- Oracle peg con authority separada.
-- `attest_reserves` callable por anyone — transparencia verificable.
-- Pause switch para mitigación.
+- Oracle peg con authority separada; tasa default oficial, opt-in para alternativas.
+- `attest_reserves` callable por cualquiera — transparencia verificable.
+- Pause switch.
+- **Multi-moneda**: el mismo primitivo escala a ARS, COP, CUP, PEN.
 
-Una copia necesita: 6–9 meses, un equipo Solana competente, un oracle reputado, y capital para mint inicial. Mientras tanto Tropico ya tiene mainnet + audit + 10k usuarios.
+Una copia necesita: 6–9 meses, un equipo Solana competente, un oracle reputado, capital de seed, y comprensión profunda del marco regulatorio local. Mientras tanto Tropico ya tiene mainnet + audit + base de usuarios.
 
 ### 2. Pago Móvil VE (rail moat)
 
-90% de la economía cotidiana venezolana corre por Pago Móvil. Conocemos los 20+ bancos, los flows, los edge cases (cuando se cae Banesco, cuando Provincial tiene horario reducido). Un equipo extranjero tarda meses solo en mapear esto.
+~90% de la economía cotidiana venezolana corre por Pago Móvil. Conocemos los 20+ bancos, los flows, los edge cases (cuándo se cae Banesco, cuándo Provincial tiene horario reducido, cómo funciona el formato QR de Suiche7B). Un equipo extranjero tarda meses solo en mapear esto.
 
 ### 3. Carlos AI sobre Lumen (capability moat)
 
@@ -199,7 +178,7 @@ Carlos no es un wrapper de LLM:
 - LLM-agnostic (DeepSeek default, Gemini fallback).
 - Memoria persistente (Q3).
 
-Copiar esto requiere conocer Lumen framework + tener identidad venezolana + scripts capability + integración Solana. No es "le metí ChatGPT a una wallet".
+Copiar esto requiere conocer Lumen framework + tener identidad local nativa + scripts capability + integración Solana. No es "le metí un LLM a una wallet".
 
 ### 4. Brand venezolana (network moat)
 
@@ -208,10 +187,10 @@ Copiar esto requiere conocer Lumen framework + tener identidad venezolana + scri
 - Diáspora distribuye orgánicamente.
 - Comercios físicos con sticker "Acepta Tropico".
 
-Una app gringa machine-translated al español NO puede competir con esto.
+Una app extranjera traducida al español neutro no compite con esto.
 
 ---
 
 ## La frase para deck
 
-> *"Hay equipos resolviendo partes del problema. KumoPay hace USDC offline, LatamLink hace POS LatAm, VozPay hace WhatsApp+USDC. Pero ninguno construyó el primitivo monetario nacional venezolano con rail bancario integrado, AI agent en voseo, y SDK merchant — todo en una pieza coherente. Esa pieza es Tropico."*
+> *"Hay categorías resolviendo partes del problema — remesadoras, exchanges P2P, apps custodiales, wallets generalistas. Pero ninguna construyó un rail JIT abierto entre USDC y moneda local LatAm, con `attest_reserves` onchain, integración bancaria nativa, AI agent en voseo, y SDK merchant — todo en una pieza coherente. Esa pieza es Tropico."*

@@ -1,6 +1,6 @@
 # Protocolo BsX — Especificación
 
-> El primer bolívar sintético on-chain: respaldado 1:1 en reservas USDC, con atestación pública verificable en Solana.
+> Rail JIT (just-in-time) abierto entre USDC y el sistema de pagos local: respaldado 1:1 en reservas USDC, con atestación pública verificable en Solana. **BsX no es un instrumento de hold** — es un token transitorio que existe durante la ventana del pago.
 
 **Programa**: `programs/tropico_bs/src/lib.rs`
 **Program ID configurado**: `EdWuyZDXao86mTcUSpRVzNXaT9Tb5muU6YGubFhADWdN` (declarado en `declare_id!()` y `Anchor.toml`)
@@ -11,13 +11,15 @@
 
 ## Motivación
 
-El bolívar venezolano pierde entre el 60% y el 80% de su poder de compra anualmente. El venezolano que quiere protegerse convierte a USDC — pero entonces queda sin un puente nativo con el sistema de pagos venezolano (Pago Móvil, precios en bolívares, comercios locales).
+El bolívar venezolano está en hiperinflación sostenida (7mo año consecutivo). El usuario que quiere protegerse convierte a USDC — pero entonces queda sin un puente nativo con el sistema de pagos venezolano (Pago Móvil, comercios locales).
 
-BsX resuelve esto en la dirección opuesta: en vez de subir desde bolívares hacia cripto, baja desde USDC hacia bolívares —pero sobre una cadena transparente. El usuario deposita USDC, recibe BsX (bolívares sintéticos), y puede usarlos en cualquier contexto que opere en Bs: pagar servicios, enviar remesas en moneda local, o simplemente mostrar precios a un comercio en términos que entiende.
+**BsX resuelve esto sin obligar al usuario a holdear moneda local.** El patrimonio vive en USDC. Cuando el usuario necesita pagar a un comercio en bolívares, BsX se mintea **en el momento exacto del pago** (just-in-time), se libera vía Pago Móvil VE, y cualquier remanente vuelve a USDC inmediatamente. La ventana en la que el usuario está expuesto al bolívar se mide en segundos, no en días.
 
-La diferencia con un simple "cotizador" es la transparencia criptográfica: las reservas USDC que respaldan cada BsX viven en un vault PDA cuya authority es el propio programa — nadie puede tocarlas sin ejecutar `burn_bsx`. La atestación (`attest_reserves`) es pública, gratuita (solo gas), y escribe un snapshot verificable on-chain. Cualquier usuario, auditor, o herramienta puede confirmar que el collateral existe en cualquier momento.
+El default es la **tasa oficial** (compatible con el marco regulatorio local). El usuario puede activar tasas alternativas como configuración opt-in en su perfil — la decisión es del usuario, no del protocolo, y queda dentro de su esfera privada.
 
-Esta es la primitiva que faltaba. No es un stablecoin nuevo — es una capa de representación de la moneda local sobre una infraestructura transparente e inmutable.
+La diferencia con una app custodial: las reservas USDC viven en un vault PDA cuya authority es el propio programa — nadie puede tocarlas sin ejecutar `burn_bsx`. La atestación (`attest_reserves`) es pública, gratuita (solo gas), y escribe un snapshot verificable on-chain. Cualquier usuario, auditor, o herramienta puede confirmar que el collateral existe en cualquier momento.
+
+**El protocolo es multi-moneda**: el mismo primitivo escala a ARS, COP, CUP, PEN. Venezuela es el primer mercado, no el único. BsX es la pieza de infraestructura abierta para conectar USDC con cualquier sistema de pagos local LatAm.
 
 ---
 

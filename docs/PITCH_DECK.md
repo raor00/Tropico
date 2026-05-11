@@ -106,7 +106,7 @@ PAUSA después del título. Mira a la jury. Habla despacio.
 ### El venezolano cripto vive atrapado
 
 - **95% del volumen** vive en USDT/Tron por Binance P2P
-- Las apps en español (Reserve, Kontigo, Zinli) son <span class="accent-coral">**custodias**</span> y solo guardan dólares
+- Las apps locales en español son <span class="accent-coral">**custodias**</span> y solo guardan dólares
 - Phantom es non-custodial pero asume usuario experto
 - Los comercios pagan **<span class="accent-coral">4.5%</span> en POS tradicional** + esperan 24-72h
 - El bolívar **se devalúa entre la venta y el cierre del día**

@@ -41,7 +41,7 @@ Si las roban → roban TODOS los fondos
 - Tiene que entender qué es "private key", "public key", "RPC", etc.
 - Si alguien le hace screen-share viendo la seed → adiós
 
-### Modelo B: Wallet custodial (Binance, Reserve, Kontigo, Coinbase)
+### Modelo B: Wallet custodial (exchanges centralizados y apps custodiales locales)
 
 ```
 Usuario abre cuenta con email + KYC
@@ -58,7 +58,7 @@ Usuario "tiene" plata en la app pero técnicamente la empresa la controla
 
 **Contras**:
 - **Tu plata NO es tuya legalmente** — la empresa puede congelar, requerir KYC, restringir
-- Casos venezolanos: Binance ha restringido cuentas VE varias veces, Zelle bloquea cuentas, Reserve depende de partners
+- Casos venezolanos documentados: exchanges centralizados han restringido cuentas VE en distintas ocasiones; algunos servicios bancarios internacionales bloquean cuentas asociadas a VE; las apps custodiales dependen siempre de sus partners
 - Riesgo regulatorio y de quiebra (FTX, Celsius)
 
 ### Modelo C: Embedded wallet con MPC (Privy, Magic, Web3Auth) — **lo que usa Tropico**

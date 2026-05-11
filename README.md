@@ -1,14 +1,8 @@
-<!-- English summary for international judges — rest of this README is in Spanish -->
-> **For international judges**: Tropico Wallet is a non-custodial financial app for Venezuela built on Solana. The Colosseum differential is **BsX** — the first sovereign-stable, USDC-backed, on-chain Bolívar primitive with cryptographic reserve attestation. The wallet wraps it with a Pago Móvil VE rail (Venezuela's dominant payment network, first Solana integration), offline payments via durable nonces, and Carlos AI (an agent built on the Lumen runtime) that understands commands like "cobrale 50 USDT a María en BsX". See [`docs/COLOSSEUM_SUBMISSION.md`](docs/COLOSSEUM_SUBMISSION.md) for the full submission.
-
----
-
 [![Solana](https://img.shields.io/badge/Built_on-Solana-9945FF?logo=solana)](https://solana.com)
 [![Next.js](https://img.shields.io/badge/Next.js-15-000000?logo=next.js)](https://nextjs.org)
 [![Anchor](https://img.shields.io/badge/Anchor-0.30.1-512BD4)](https://www.anchor-lang.com)
 [![Privy](https://img.shields.io/badge/Wallet-Privy_MPC-7C3AED)](https://privy.io)
 [![License](https://img.shields.io/badge/License-MIT-14F195)](LICENSE)
-[![Colosseum](https://img.shields.io/badge/Hackathon-Colosseum_2026-FFD166)](https://colosseum.org)
 [![Made in Venezuela](https://img.shields.io/badge/Hecho_en-🇻🇪_Venezuela-EF476F)](#)
 [![Dev3pack](https://img.shields.io/badge/Dev3pack_2026-%231_Venezuela_·_%2328_Global-FFD700)](https://hack.dev3pack.xyz/leaderboard)
 
@@ -16,33 +10,11 @@
 
 > 🏆 **Dev3pack Global Hackathon 2026 — #1 Venezuela · #28 Global · #10 LatAm** (de 386 proyectos)
 
-**La primera capa de moneda soberana-estable para Venezuela, construida en Solana.**
+**Infraestructura abierta de pagos: tu plata vive en USDC, pagás en bolívares al instante, sin intermediarios bancarios.**
 
-El diferencial de Colosseum es **BsX**: un token sintético que representa el bolívar venezolano, respaldado 1:1 en reservas USDC custodiadas on-chain por el programa `tropico_bs`, con atestación pública de reservas que cualquiera puede invocar y verificar en Solscan.
+Tropico es la primera wallet non-custodial en Solana que cierra el círculo entre cripto y el sistema de pagos venezolano. Tu patrimonio vive en USDC/SOL, y cuando necesitás pagar a un comercio, Tropico convierte al instante a bolívares vía **Pago Móvil VE** — sin abrir cuentas en otro país, sin hacer P2P en una exchange, sin esperar 30 minutos.
 
-Tropico es la consumer app construida encima: nueve módulos que cubren el ciclo económico completo del venezolano — swap, QR merchant, yield, remesas, **Pago Móvil VE** (primer proyecto Solana con esta integración), y **Carlos AI** como copiloto financiero en español venezolano.
-
----
-
-## Submisión Colosseum
-
-**Founder**: Rafael Oviedo — solo founder, venezolano, 6 años cripto, 3 años software. Antecedente: Tropico fue **#1 Venezuela / #28 global / #10 LatAm** en Dev3pack 2026 (386 proyectos).
-
-### Mapeo directo a los 6 criterios oficiales
-
-| Criterio | Doc dedicado |
-|---|---|
-| 1. **Founder + Market Fit** | [`docs/TEAM.md`](docs/TEAM.md) · [`docs/FOUNDER_NARRATIVE.md`](docs/FOUNDER_NARRATIVE.md) |
-| 2. **Insight** | [`docs/INSIGHT.md`](docs/INSIGHT.md) — validado contra el corpus oficial Colosseum (5.400+ proyectos) |
-| 3. **Product + Execution** | [`docs/COLOSSEUM_SUBMISSION.md`](docs/COLOSSEUM_SUBMISSION.md) · [`docs/PROTOCOL_BSX.md`](docs/PROTOCOL_BSX.md) · [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) · demo live |
-| 4. **Market Size** | [`docs/MARKET_OPPORTUNITY.md`](docs/MARKET_OPPORTUNITY.md) — fuentes: Chainalysis, Galaxy, a16z, Pantera, BID |
-| 5. **Founder Communication** | [`docs/PITCH.md`](docs/PITCH.md) · [`docs/FAQ_FOR_JUDGES.md`](docs/FAQ_FOR_JUDGES.md) |
-| 6. **Viability** | [`docs/BUSINESS_MODEL.md`](docs/BUSINESS_MODEL.md) · [`docs/COMPETITIVE_LANDSCAPE.md`](docs/COMPETITIVE_LANDSCAPE.md) |
-
-### Otros docs operacionales
-
-- [`docs/COLOSSEUM_SUBMISSION.md`](docs/COLOSSEUM_SUBMISSION.md) — narrative completa para jueces
-- [`docs/SUBMISSION_CHECKLIST.md`](docs/SUBMISSION_CHECKLIST.md) — checklist operacional pre-submit
+El moat técnico es **BsX**: un protocolo open-source en Solana que actúa como rail JIT (just-in-time) entre USDC y el sistema bancario local. El mismo protocolo escala a otras monedas LatAm (ARS, COP, CUP, PEN) — Venezuela es el primer mercado, no el único.
 
 ---
 
@@ -144,20 +116,20 @@ Ver [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) para diagramas detallados y d
 
 ---
 
-## BsX — el protocolo
+## BsX — el rail JIT
 
-`programs/tropico_bs/` es el programa Anchor que implementa el bolívar sintético on-chain:
+`programs/tropico_bs/` es el programa Anchor que actúa como **rail just-in-time** entre USDC y el sistema bancario local. **BsX no es un instrumento de hold** — es un token transitorio que existe solo durante la ventana del pago (segundos), para que el patrimonio del usuario nunca se devalúe en bolívares.
 
 | Instrucción | Qué hace |
 |---|---|
 | `initialize(peg_rate)` | crea PDAs del protocolo, delega mint authority |
-| `update_peg(new_rate)` | oracle_authority actualiza la tasa Bs/USD |
-| `mint_bsx(usdc_amount)` | usuario deposita USDC → recibe BsX |
-| `burn_bsx(bsx_amount)` | usuario quema BsX → recupera USDC |
+| `update_peg(new_rate)` | oracle_authority actualiza la tasa del día |
+| `mint_bsx(usdc_amount)` | mint JIT — usuario quema USDC al momento de pagar |
+| `burn_bsx(bsx_amount)` | redime BsX no usados → USDC de vuelta |
 | `attest_reserves()` | cualquiera escribe snapshot on-chain (usdc_reserves, bsx_supply) |
 | `set_pause(paused)` | admin pausa/reactiva en emergencias |
 
-Matemática: `bsx = usdc * peg_rate / 1_000_000` donde `peg_rate = Bs por 1 USD × 1_000_000`.
+Matemática: `bsx = usdc * peg_rate / 1_000_000`. La **tasa default** es la oficial; el usuario puede activar tasas alternativas como configuración opt-in. El mismo protocolo escala a ARS, COP, CUP, PEN — Venezuela es el primer mercado, no el único.
 
 Spec completa: [`docs/PROTOCOL_BSX.md`](docs/PROTOCOL_BSX.md)
 
@@ -168,7 +140,7 @@ Spec completa: [`docs/PROTOCOL_BSX.md`](docs/PROTOCOL_BSX.md)
 | # | Módulo | URL | Qué hace |
 |---|---|---|---|
 | 1 | **Wallet / Home** | `/home` | Saldo on-chain real (USDC/SOL/SPL) via Helius + acciones rápidas |
-| 2 | **Cambiar** | `/cambiar` | Tab Bolívares: USDC ↔ BsX vía protocolo BsX. Tab Tokens: Jupiter v6 (`platformFeeBps=50`) |
+| 2 | **Cambiar** | `/cambiar` | Tab Bolívares: USDC → BsX JIT al momento de pagar. Tab Tokens: Jupiter v6 (`platformFeeBps=50`) |
 | 3 | **Cobrar** | `/cobrar` | QR Solana Pay client-side, fee 1% hacia arriba, merchant recibe monto exacto |
 | 4 | **Enviar** | `/enviar` | P2P directo + claim links compartibles por WhatsApp |
 | 5 | **Guardar** | `/guardar` | Yield ~5-7% APY — mSOL (Marinade) o Kamino |
@@ -341,7 +313,6 @@ Implementado custom en `lib/i18n/dictionary.ts` + `lib/i18n/context.tsx`. Sin li
 
 | Documento | Contenido |
 |---|---|
-| [`docs/COLOSSEUM_SUBMISSION.md`](docs/COLOSSEUM_SUBMISSION.md) | Submisión completa a Colosseum |
 | [`docs/PROTOCOL_BSX.md`](docs/PROTOCOL_BSX.md) | Spec técnica del protocolo BsX |
 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Arquitectura de componentes |
 | [`docs/CARLOS_AI.md`](docs/CARLOS_AI.md) | Carlos AI: arquitectura, capabilities, FAQ |
@@ -350,9 +321,7 @@ Implementado custom en `lib/i18n/dictionary.ts` + `lib/i18n/context.tsx`. Sin li
 | [`docs/ANCHOR_PROGRAM.md`](docs/ANCHOR_PROGRAM.md) | Deploy de los programas Anchor |
 | [`docs/BLOCKCHAIN_BACKEND.md`](docs/BLOCKCHAIN_BACKEND.md) | Stack on-chain: flows end-to-end |
 | [`docs/ROADMAP.md`](docs/ROADMAP.md) | Visión detallada Q3 2026 → Q1 2027 |
-| [`docs/PITCH_DECK.md`](docs/PITCH_DECK.md) | Pitch deck 6 slides (Marp) |
 | [`docs/JUDGE_DEMO_GUIDE.md`](docs/JUDGE_DEMO_GUIDE.md) | Guía de demo para jueces |
-| [`docs/SUBMISSION_CHECKLIST.md`](docs/SUBMISSION_CHECKLIST.md) | Checklist pre-submisión |
 
 ---
 
@@ -362,4 +331,4 @@ MIT — ver [`LICENSE`](LICENSE).
 
 ---
 
-> **Tropico no es una wallet. Es la infraestructura económica que el venezolano necesita — y el bolívar primitivo que Solana no tenía.** 🌴
+> **Tropico no es una wallet. Es la infraestructura abierta de pagos que LatAm necesita — empezando por el bolívar.** 🌴
