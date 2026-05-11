@@ -211,8 +211,64 @@ export default function CarlosPage() {
         </div>
       </header>
 
+      {/* ── Selector de modo — Agente vs Chatbot ────────────────── */}
+      <section className="grid gap-3 md:grid-cols-2">
+        {/* Modo Agente — destacado, gradient purple */}
+        <Link
+          href="/carlos/agente"
+          className="panel group relative overflow-hidden border-tropico-purple/40 p-5 transition hover:border-tropico-purple"
+        >
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-tropico-purple/25 via-tropico-coral/10 to-tropico-sun/10 opacity-80 transition group-hover:opacity-100" />
+          <div className="relative flex flex-col gap-3">
+            <div className="flex items-center gap-2">
+              <div className="flex size-10 items-center justify-center rounded-xl bg-tropico-ink/70 text-tropico-purple ring-1 ring-tropico-purple/40">
+                <Bot className="size-5" />
+              </div>
+              <span className="rounded-md bg-tropico-purple/20 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-tropico-purple">
+                Único · Autónomo
+              </span>
+            </div>
+            <div>
+              <h3 className="font-display text-lg font-bold">Modo Agente</h3>
+              <p className="mt-1 text-sm text-tropico-text/85">
+                Carlos <strong>ejecuta acciones</strong> por vos con tus límites: DCA, auto-yield, rebalance, cashback. Vos dirigís, él actúa.
+              </p>
+            </div>
+            <span className="inline-flex items-center gap-1 text-sm font-semibold text-tropico-purple transition group-hover:translate-x-1">
+              Configurar agente →
+            </span>
+          </div>
+        </Link>
+
+        {/* Modo Chat — secundario */}
+        <a
+          href="#carlos-chat"
+          className="panel group relative overflow-hidden p-5 transition hover:border-tropico-sea/60"
+        >
+          <div className="relative flex flex-col gap-3">
+            <div className="flex items-center gap-2">
+              <div className="flex size-10 items-center justify-center rounded-xl bg-tropico-ink/70 text-tropico-sea ring-1 ring-tropico-sea/30">
+                <MessageCircle className="size-5" />
+              </div>
+              <span className="rounded-md bg-tropico-sea/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-tropico-sea">
+                Conversa
+              </span>
+            </div>
+            <div>
+              <h3 className="font-display text-lg font-bold">Modo Chat</h3>
+              <p className="mt-1 text-sm text-tropico-text/85">
+                Carlos <strong>te responde</strong> consultas en español venezolano: saldos, precios, qué es cada token, cómo armar un swap.
+              </p>
+            </div>
+            <span className="inline-flex items-center gap-1 text-sm font-semibold text-tropico-sea transition group-hover:translate-x-1">
+              Abrir chat ↓
+            </span>
+          </div>
+        </a>
+      </section>
+
       {/* ── Chat ───────────────────────────────────────────────── */}
-      <section className="panel flex flex-col gap-4 p-6">
+      <section id="carlos-chat" className="panel flex flex-col gap-4 p-6">
         {/* Messages */}
         <div className="flex flex-col gap-3">
           <p className="text-tropico-text/90">
@@ -435,25 +491,6 @@ export default function CarlosPage() {
         </div>
       </section>
 
-      {/* ── CTA Modo Agente ───────────────────────────────────── */}
-      <Link
-        href="/carlos/agente"
-        className="panel group relative flex items-center justify-between gap-4 overflow-hidden p-6 transition hover:border-tropico-purple"
-      >
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-tropico-purple/10 to-tropico-sea/10 opacity-0 transition group-hover:opacity-100" />
-        <div className="relative flex items-center gap-4">
-          <Bot className="size-8 text-tropico-purple" aria-hidden />
-          <div>
-            <h3 className="font-display text-lg font-bold">Modo Agente</h3>
-            <p className="text-sm text-tropico-mute">
-              Carlos puede ejecutar acciones autónomas con tus límites
-            </p>
-          </div>
-        </div>
-        <span className="relative text-tropico-mute transition group-hover:text-tropico-purple">
-          Configurar &rarr;
-        </span>
-      </Link>
     </main>
   );
 }
