@@ -135,19 +135,21 @@ Spec completa: [`docs/PROTOCOL_BSX.md`](docs/PROTOCOL_BSX.md)
 
 ---
 
-## Los 9 módulos del consumidor
+## Módulos principales (25 rutas)
 
 | # | Módulo | URL | Qué hace |
 |---|---|---|---|
 | 1 | **Wallet / Home** | `/home` | Saldo on-chain real (USDC/SOL/SPL) via Helius + acciones rápidas |
 | 2 | **Cambiar** | `/cambiar` | Tab Bolívares: USDC → BsX JIT al momento de pagar. Tab Tokens: Jupiter v6 (`platformFeeBps=50`) |
 | 3 | **Cobrar** | `/cobrar` | QR Solana Pay client-side, fee 1% hacia arriba, merchant recibe monto exacto |
-| 4 | **Enviar** | `/enviar` | P2P directo + claim links compartibles por WhatsApp |
+| 4 | **Enviar** | `/enviar` | P2P directo + claim links compartibles + pago a comercio con QR Suiche7B auto FX |
 | 5 | **Guardar** | `/guardar` | Yield ~5-7% APY — mSOL (Marinade) o Kamino |
 | 6 | **Pago Móvil VE** | `/pagar-servicios` | QR Suiche7B + conversión USDC→Bs + Pago Móvil al banco destino en 2-5s |
 | 7 | **Carlos AI** | `/carlos` | Agente venezolano sobre Lumen — 7 capabilities + Modo Agente |
 | 8 | **Remesas** | `/remesas` | On-ramp aggregator (MoonPay/Transak/Ramp/Stripe Crypto) |
 | 9 | **Mi Tropico** | `/perfil` | Avatar, nombre editable, pubkey, cluster, importar wallet |
+| 10 | **Offline** | `/offline` | Firma txs sin conexión con durable nonces de Solana — queue local, sync al reconectar |
+| 11 | **WhatsApp Bot** | `/carlos/whatsapp` | Demo Carlos via WhatsApp Cloud API — comandos de texto, aprobación biométrica on-chain |
 
 ### Módulos auxiliares
 
@@ -156,6 +158,9 @@ Spec completa: [`docs/PROTOCOL_BSX.md`](docs/PROTOCOL_BSX.md)
 | **Descubrir** | `/descubrir` | Catálogo educativo de 9 tokens curados |
 | **Claim** | `/claim/[id]` | Receptor de claim links de /enviar |
 | **Modo Agente** | `/carlos/agente` | 4 acciones autónomas: DCA, auto-yield, cashback, rebalance |
+| **Integraciones** | `/integraciones` | Demo Tropico Pay para merchants e integradores |
+| **Intercambio P2P** | `/intercambio-p2p` | OTC P2P entre usuarios |
+| **Comercios** | `/comercios` | Directorio de comercios afiliados con cashback |
 | **Wallet crear/abrir** | `/wallet/crear`, `/wallet/abrir` | Wallet local cifrada AES-GCM 256 + PBKDF2 100k |
 
 ---
@@ -303,7 +308,7 @@ Implementado custom en `lib/i18n/dictionary.ts` + `lib/i18n/context.tsx`. Sin li
 | Período | Hitos |
 |---|---|
 | **Post-Colosseum** | Deploy `tropico_bs` mainnet, oracle v2 con Pyth, multi-sig Squads |
-| **Q3 2026** | Lumen server en producción, tool calling real, Tropico Pay GA, on-ramp real |
+| **Q3 2026** | WhatsApp Bot en producción (WhatsApp Cloud API), Lumen server real, tool calling, Tropico Pay GA, on-ramp real |
 | **Q4 2026** | Tropico Card (debit USDC + cashback), Tropico Vaults, bug bounty público |
 | **Q1 2027** | Expansión LATAM (CO, AR, MX, PE, CL), app React Native, Solana Mobile dApp Store |
 
