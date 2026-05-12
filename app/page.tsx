@@ -524,10 +524,9 @@ export default function LandingPage() {
               <div className="text-sm font-semibold text-tropico-text">
                 {stat.label}
               </div>
-              <p
-                className="text-xs leading-relaxed text-tropico-mute"
-                dangerouslySetInnerHTML={{ __html: stat.detail }}
-              />
+              <p className="text-xs leading-relaxed text-tropico-mute">
+                {stat.detail}
+              </p>
             </article>
           ))}
         </div>
@@ -572,10 +571,9 @@ export default function LandingPage() {
                   <h3 className="font-display text-2xl font-bold">
                     {card.title}
                   </h3>
-                  <p
-                    className="text-sm leading-relaxed text-tropico-mute"
-                    dangerouslySetInnerHTML={{ __html: card.body }}
-                  />
+                  <p className="text-sm leading-relaxed text-tropico-mute">
+                    {card.body}
+                  </p>
                 </div>
               </article>
             );
@@ -796,10 +794,7 @@ export default function LandingPage() {
                   <span className="text-sm font-semibold text-tropico-text">
                     {a.name}
                   </span>
-                  <span
-                    className="text-xs text-tropico-mute"
-                    dangerouslySetInnerHTML={{ __html: a.desc }}
-                  />
+                  <span className="text-xs text-tropico-mute">{a.desc}</span>
                 </div>
               </article>
             ))}
