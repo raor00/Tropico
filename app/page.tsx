@@ -13,6 +13,7 @@ import {
   ExternalLink,
   Globe,
   KeyRound,
+  MessageCircle,
   QrCode,
   Scale,
   Send,
@@ -23,6 +24,7 @@ import {
   TrendingUp,
   Users,
   Wallet,
+  WifiOff,
   Zap,
 } from "lucide-react";
 import Link from "next/link";
@@ -79,7 +81,7 @@ const MODULES = [
     Icon: Wallet,
     name: "Inicio",
     href: "/home",
-    desc: "Tu saldo + yield + 6 acciones",
+    desc: "Tu saldo + yield + acciones rápidas",
   },
   {
     Icon: ArrowLeftRight,
@@ -101,8 +103,32 @@ const MODULES = [
     desc: "Yield mSOL + Kamino",
   },
   {
+    Icon: Zap,
+    name: "Pago Móvil VE",
+    href: "/pagar-servicios",
+    desc: "QR Suiche7B → USDC a Bs al instante",
+  },
+  {
+    Icon: Globe,
+    name: "Remesas",
+    href: "/remesas",
+    desc: "Recibe del exterior en 1 segundo",
+  },
+  {
+    Icon: WifiOff,
+    name: "Offline",
+    href: "/offline",
+    desc: "Firma txs sin conexión con durable nonces",
+  },
+  {
+    Icon: MessageCircle,
+    name: "WhatsApp Bot",
+    href: "/carlos/whatsapp",
+    desc: "Controla tu wallet desde WhatsApp",
+  },
+  {
     Icon: Sparkles,
-    name: "Carlos",
+    name: "Carlos AI",
     href: "/carlos",
     desc: "Copiloto IA en venezolano",
   },
@@ -568,7 +594,7 @@ export default function LandingPage() {
             La app completa
           </span>
           <h2 className="font-display text-3xl font-bold md:text-4xl">
-            Una sola app, 6 acciones que cambian tu economía.
+            Una sola app, 10 módulos que cambian tu economía.
           </h2>
           <p className="max-w-3xl text-tropico-mute">
             Puedes probar TODAS sin instalar nada. Sin Privy configurado, la app
@@ -990,6 +1016,15 @@ export default function LandingPage() {
               className="text-xs hover:text-tropico-sun"
             >
               Modo Agente
+            </Link>
+            <Link
+              href="/carlos/whatsapp"
+              className="text-xs hover:text-tropico-sun"
+            >
+              WhatsApp Bot
+            </Link>
+            <Link href="/offline" className="text-xs hover:text-tropico-sun">
+              Offline (Nonces)
             </Link>
             <Link href="/descubrir" className="text-xs hover:text-tropico-sun">
               Descubrir tokens
