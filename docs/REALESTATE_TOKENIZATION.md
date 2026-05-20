@@ -1,5 +1,7 @@
 # Trópico × Crixto — Tokenización de Inmuebles en Solana (POC para pitch)
 
+> 📌 **¿Buscás el estado actual / cómo correr el demo?** Ver [`REALESTATE_DEMO_GUIA.md`](./REALESTATE_DEMO_GUIA.md) — direcciones devnet reales, env vars de Vercel y qué falta. Este archivo es el **plan de diseño** original.
+
 > **Estado:** plan aprobado, listo para ejecución.
 > **Branch de trabajo:** `claude/tropico-wallet-mvp-roadmap-JEAda`.
 > **Última revisión:** 2026-05-20.
