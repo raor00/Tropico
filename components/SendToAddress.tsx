@@ -60,6 +60,7 @@ export function SendToAddress({
   const [contactName, setContactName] = useState("");
   const [showSavePrompt, setShowSavePrompt] = useState(false);
   const [pendingSavePubkey, setPendingSavePubkey] = useState<string>("");
+  const [showConfirm, setShowConfirm] = useState(false);
 
   useEffect(() => {
     const hasLocal = hasLocalWallet();
@@ -135,7 +136,27 @@ export function SendToAddress({
     }
   }
 
+  // Valida y abre la ventana de confirmación antes de firmar/broadcast.
+  function requestSend() {
+    setResult(null);
+    if (!isValidPubkey(destination.trim())) {
+      setResult({ ok: false, error: "Pubkey destino inválida — debe ser base58 32-44 chars" });
+      return;
+    }
+    const amt = Number(amount);
+    if (!amt || amt <= 0) {
+      setResult({ ok: false, error: "Monto debe ser positivo" });
+      return;
+    }
+    if (needsPassword && !password) {
+      setResult({ ok: false, error: "Password requerido para desbloquear wallet local" });
+      return;
+    }
+    setShowConfirm(true);
+  }
+
   async function handleSend() {
+    setShowConfirm(false);
     setResult(null);
     if (!isValidPubkey(destination.trim())) {
       setResult({ ok: false, error: "Pubkey destino inválida — debe ser base58 32-44 chars" });
@@ -366,7 +387,7 @@ export function SendToAddress({
 
       {/* Botón */}
       <button
-        onClick={handleSend}
+        onClick={requestSend}
         disabled={busy || !destination || !amount || (needsPassword && !password)}
         className="btn-primary inline-flex items-center justify-center gap-2 disabled:opacity-50"
       >
@@ -430,6 +451,84 @@ export function SendToAddress({
             ))}
           </ul>
         </section>
+      )}
+
+      {/* Modal: confirmar envío antes de firmar */}
+      {showConfirm && (
+        <div
+          className="fixed inset-0 z-[80] flex items-center justify-center bg-black/60 p-4"
+          onClick={() => setShowConfirm(false)}
+        >
+          <div
+            className="panel flex max-w-sm flex-col gap-4 p-5"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <header className="flex items-center gap-2">
+              <Send className="size-5 text-tropico-sea" />
+              <h3 className="text-base font-bold text-tropico-text">
+                Confirmar envío
+              </h3>
+            </header>
+
+            <div className="flex items-baseline justify-center gap-2 py-1">
+              <span className="text-3xl font-bold text-tropico-text">
+                {amount}
+              </span>
+              <span className="text-lg font-semibold text-tropico-mute">
+                {token}
+              </span>
+            </div>
+
+            <dl className="flex flex-col gap-2 rounded-lg border border-tropico-border bg-tropico-ink/40 p-3 text-xs">
+              <div className="flex items-center justify-between gap-2">
+                <dt className="text-tropico-mute">Desde</dt>
+                <dd className="font-mono text-tropico-text">
+                  {fromPubkey.slice(0, 6)}…{fromPubkey.slice(-4)}
+                </dd>
+              </div>
+              <div className="flex items-center justify-between gap-2">
+                <dt className="text-tropico-mute">Para</dt>
+                <dd className="flex flex-col items-end">
+                  {(() => {
+                    const c = contacts.find((x) => x.pubkey === destination.trim());
+                    return c?.name ? (
+                      <span className="font-semibold text-tropico-text">{c.name}</span>
+                    ) : null;
+                  })()}
+                  <span className="font-mono text-tropico-text">
+                    {destination.trim().slice(0, 6)}…{destination.trim().slice(-4)}
+                  </span>
+                </dd>
+              </div>
+              <div className="flex items-center justify-between gap-2">
+                <dt className="text-tropico-mute">Red</dt>
+                <dd className="font-semibold text-tropico-text">
+                  {cluster === "devnet" ? "DEVNET" : "MAINNET"}
+                </dd>
+              </div>
+            </dl>
+
+            <div className="flex items-start gap-2 rounded-lg border border-tropico-coral/30 bg-tropico-coral/5 p-2 text-[11px] text-tropico-mute">
+              <AlertTriangle className="mt-0.5 size-3.5 shrink-0 text-tropico-coral" />
+              <span>
+                Las transacciones on-chain son irreversibles. Verificá la wallet
+                destino antes de confirmar.
+              </span>
+            </div>
+
+            <div className="flex gap-2">
+              <button
+                onClick={() => setShowConfirm(false)}
+                className="flex-1 rounded-lg border border-tropico-border px-3 py-2 text-sm text-tropico-mute hover:text-tropico-text"
+              >
+                Cancelar
+              </button>
+              <button onClick={handleSend} className="btn-primary flex-1">
+                Confirmar y enviar
+              </button>
+            </div>
+          </div>
+        </div>
       )}
 
       {/* Modal: guardar destinatario después de envío exitoso */}

@@ -32,7 +32,7 @@ export const PROPERTIES: Record<string, PropertyInfo> = {
       "/properties/avila-001-2.jpg",
       "/properties/avila-001-3.jpg",
     ],
-    tourUrl: "https://tour.tropico.app/avila-001",
+    tourUrl: "https://llave-ruby.vercel.app/inmueble/e5d022c7-4295-4969-af83-fc8a8d3ca0bd",
     pricePerShare: 5,
     totalShares: 2400,
     sharesSold: 0,
