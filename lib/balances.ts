@@ -81,6 +81,50 @@ export async function fetchSplBalance(
   }
 }
 
+// SPL Token program (clásico). Token-2022 usa otro programId — fuera de scope demo.
+const TOKEN_PROGRAM_ID = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
+
+/**
+ * Lee TODOS los token accounts del owner en UNA sola llamada RPC
+ * (getTokenAccountsByOwner por programId) y devuelve mint → uiAmount.
+ * Evita N llamadas (una por mint), que era el cuello de botella de carga.
+ */
+async function fetchAllTokenAmounts(
+  pubkey: string
+): Promise<Record<string, number>> {
+  try {
+    const res = await fetch(getActiveRpcUrl(), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        jsonrpc: "2.0",
+        id: 1,
+        method: "getTokenAccountsByOwner",
+        params: [
+          pubkey,
+          { programId: TOKEN_PROGRAM_ID },
+          { encoding: "jsonParsed" },
+        ],
+      }),
+    });
+    const data = await res.json();
+    const accounts = data.result?.value ?? [];
+    const byMint: Record<string, number> = {};
+    for (const acc of accounts) {
+      const info = acc.account?.data?.parsed?.info;
+      const mint = info?.mint;
+      if (!mint) continue;
+      const ta = info.tokenAmount;
+      const amount = Number(ta?.uiAmountString ?? ta?.uiAmount ?? 0);
+      byMint[mint] = (byMint[mint] ?? 0) + amount;
+    }
+    return byMint;
+  } catch (e) {
+    console.error("[balances] getTokenAccountsByOwner failed:", e);
+    return {};
+  }
+}
+
 /** Lee TODOS los balances de los tokens curados */
 export async function fetchAllBalances(
   pubkey: string
@@ -106,14 +150,15 @@ export async function fetchAllBalances(
     splTokens.push({ symbol: "TROPI", mint: TOKENS.TROPI.mint });
   }
 
-  const [sol, ...splValues] = await Promise.all([
+  // 2 RPC calls totales: SOL nativo + todos los SPL en una sola query.
+  const [sol, amountsByMint] = await Promise.all([
     fetchSolBalance(pubkey),
-    ...splTokens.map((t) => fetchSplBalance(pubkey, t.mint)),
+    fetchAllTokenAmounts(pubkey),
   ]);
 
   const raw: Record<string, number> = { SOL: sol };
-  splTokens.forEach((t, i) => {
-    raw[t.symbol] = splValues[i];
+  splTokens.forEach((t) => {
+    raw[t.symbol] = amountsByMint[t.mint] ?? 0;
   });
 
   // Estimación USD muy básica — para demo. Producción: Jupiter Price API.

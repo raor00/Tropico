@@ -42,12 +42,22 @@ const RPC = "https://devnet.helius-rpc.com/?api-key=24344eaf-3604-408d-9b49-54b5
 
 const PROGRAM_ID = new PublicKey(
   process.env.NEXT_PUBLIC_REALESTATE_PROGRAM_ID ??
-    "9XVkC2bH7Kiu6EWLVecuPVuT6agH6TzkFSFKxLo4KcoT"
+    "3V49YdnmbsHPoguFWhDhyAJhbUASq9s9LAXjxSfBPoWK"
 );
 
 const USDC_DEVNET_MINT = new PublicKey("4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU");
 
 const USDC_DECIMALS = 1_000_000n; // 6 decimals
+
+// Wallets a aprobar en KYC además del seed (self). El wallet de la app del demo
+// debe estar acá o buy_shares falla por whitelist faltante.
+// Override: DEMO_INVESTORS="pubkey1,pubkey2" node scripts/seed-properties.mjs
+const DEMO_INVESTORS = (
+  process.env.DEMO_INVESTORS ?? "96BjLBarLCAqZMU1FBun6VbtrCUkKoGg2xq5N8xSDY8i"
+)
+  .split(",")
+  .map((s) => s.trim())
+  .filter(Boolean);
 
 // Demo properties — mirror lib/properties.ts (montos en micro-USDC)
 const PROPERTIES = [
@@ -304,15 +314,25 @@ async function main() {
     console.log(`    USDC Vault: https://solscan.io/account/${vault.toBase58()}?cluster=devnet`);
   }
 
-  // 3. KYC demo investor (self)
-  console.log("\n[3/3] set_kyc (self)...");
-  try {
-    const sig = await sendTx(conn, payer, buildSetKyc(payer, payer.publicKey));
-    console.log(`  ✓ KYC verified for ${payer.publicKey.toBase58()}`);
-    console.log(`  Sig: ${sig}`);
-  } catch (e) {
-    console.error(`  ❌ ${e.message}`);
-    if (e.logs) e.logs.forEach((l) => console.error("     ", l));
+  // 3. KYC demo investors (self + wallets de la app)
+  const kycTargets = [
+    payer.publicKey,
+    ...DEMO_INVESTORS.map((s) => new PublicKey(s)),
+  ];
+  console.log(`\n[3/3] set_kyc x${kycTargets.length}...`);
+  for (const investor of kycTargets) {
+    try {
+      const sig = await sendTx(conn, payer, buildSetKyc(payer, investor));
+      console.log(`  ✓ KYC verified for ${investor.toBase58()}`);
+      console.log(`    Sig: ${sig}`);
+    } catch (e) {
+      if (isAlreadyExists(e)) {
+        console.log(`  ↩ KYC already set for ${investor.toBase58()}`);
+      } else {
+        console.error(`  ❌ ${investor.toBase58()}: ${e.message}`);
+        if (e.logs) e.logs.forEach((l) => console.error("     ", l));
+      }
+    }
   }
 
   console.log("\n══════════════════════════════════════════════════════════");

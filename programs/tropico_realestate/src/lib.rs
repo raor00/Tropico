@@ -1,7 +1,7 @@
 use anchor_lang::prelude::*;
 use anchor_spl::token::{self, Mint, MintTo, Token, TokenAccount, Transfer};
 
-declare_id!("9XVkC2bH7Kiu6EWLVecuPVuT6agH6TzkFSFKxLo4KcoT");
+declare_id!("3V49YdnmbsHPoguFWhDhyAJhbUASq9s9LAXjxSfBPoWK");
 
 // ---------------------------------------------------------------------------
 // Fee constants — CERRADAS por el founder
@@ -813,7 +813,7 @@ pub struct ListProperty<'info> {
     pub admin: Signer<'info>,
 
     #[account(seeds = [b"registry"], bump = registry.bump)]
-    pub registry: Account<'info, RegistryConfig>,
+    pub registry: Box<Account<'info, RegistryConfig>>,
 
     #[account(
         init,
