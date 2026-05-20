@@ -15,6 +15,7 @@ import {
 import {
   getAssociatedTokenAddress,
   createAssociatedTokenAccountInstruction,
+  createTransferInstruction,
   TOKEN_PROGRAM_ID,
   ASSOCIATED_TOKEN_PROGRAM_ID,
 } from "@solana/spl-token";
@@ -363,6 +364,47 @@ export async function buildVoteTx(
   const { blockhash } = await conn.getLatestBlockhash();
   tx.recentBlockhash = blockhash;
   tx.feePayer = voter;
+
+  return tx;
+}
+
+/**
+ * Transferencia de acciones (SPL token) del inmueble a otra wallet.
+ * Crea el ATA del receptor si no existe (lo paga el owner).
+ */
+export async function buildTransferShareTx(
+  propertyId: string,
+  owner: PublicKey,
+  recipient: PublicKey,
+  numShares: bigint
+): Promise<Transaction> {
+  const conn = new Connection(getActiveRpcUrl(), "confirmed");
+  const shareMintKey = shareMintPda(propertyId);
+
+  const ownerAta = await getAssociatedTokenAddress(shareMintKey, owner);
+  const recipientAta = await getAssociatedTokenAddress(shareMintKey, recipient);
+
+  const tx = new Transaction();
+
+  const recipientAtaInfo = await conn.getAccountInfo(recipientAta);
+  if (!recipientAtaInfo) {
+    tx.add(
+      createAssociatedTokenAccountInstruction(
+        owner,
+        recipientAta,
+        recipient,
+        shareMintKey
+      )
+    );
+  }
+
+  tx.add(
+    createTransferInstruction(ownerAta, recipientAta, owner, numShares)
+  );
+
+  const { blockhash } = await conn.getLatestBlockhash();
+  tx.recentBlockhash = blockhash;
+  tx.feePayer = owner;
 
   return tx;
 }

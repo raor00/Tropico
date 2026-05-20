@@ -34,6 +34,7 @@ export function PropertyBuyForm({ property: p, privySigner = null }: Props) {
   const [executing, setExecuting] = useState(false);
   const [password, setPassword] = useState("");
   const [needsPassword, setNeedsPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const [txError, setTxError] = useState<string | null>(null);
   const [confirmed, setConfirmed] = useState<{
     txSig: string;
@@ -63,8 +64,20 @@ export function PropertyBuyForm({ property: p, privySigner = null }: Props) {
 
   const kycOk = true; // Fase 0: KYC toggle admin, siempre true en demo
 
+  function requestBuy() {
+    if (!quote || !kycOk || sharesNum <= 0 || sharesNum > available) return;
+    setTxError(null);
+    // Wallet local: pedir contraseña antes de mostrar la confirmación
+    if (canDoRealTx && !privySigner && localPubkey && !password) {
+      setNeedsPassword(true);
+      return;
+    }
+    setShowConfirm(true);
+  }
+
   async function execute() {
     if (!quote || !kycOk) return;
+    setShowConfirm(false);
     setTxError(null);
     setExecuting(true);
 
@@ -287,7 +300,7 @@ export function PropertyBuyForm({ property: p, privySigner = null }: Props) {
       {/* Botón */}
       <button
         type="button"
-        onClick={execute}
+        onClick={requestBuy}
         disabled={!quote || sharesNum > available || executing}
         className="btn-primary inline-flex items-center justify-center gap-2 disabled:opacity-50"
       >
@@ -303,6 +316,73 @@ export function PropertyBuyForm({ property: p, privySigner = null }: Props) {
           </>
         )}
       </button>
+
+      {/* Modal de confirmación de compra */}
+      {showConfirm && quote && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
+          <div className="panel flex w-full max-w-sm flex-col gap-4 border-tropico-sea/30 p-5">
+            <header className="flex items-center gap-2">
+              <Building2 className="size-5 text-tropico-sea" />
+              <strong className="text-tropico-text">Confirmar compra</strong>
+            </header>
+
+            <div className="flex flex-col gap-2 text-sm">
+              <div className="flex items-center justify-between">
+                <span className="text-tropico-mute">Inmueble</span>
+                <span className="text-right font-semibold text-tropico-text">{p.name}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-tropico-mute">Acciones</span>
+                <span className="font-semibold text-tropico-text">{sharesNum}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-tropico-mute">Subtotal</span>
+                <span className="text-tropico-text">${quote.subtotal.toFixed(2)}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-tropico-mute">Fee (1.5%)</span>
+                <span className="text-tropico-text">+${quote.fee.toFixed(4)}</span>
+              </div>
+              <div className="flex items-center justify-between border-t border-tropico-border pt-2">
+                <span className="font-semibold text-tropico-text">Total a pagar</span>
+                <span className="font-display text-lg font-bold text-tropico-sea">
+                  ${quote.total.toFixed(2)} USDC
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-tropico-mute">Red</span>
+                <span className="font-mono text-xs uppercase text-tropico-text">
+                  {cluster}
+                </span>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-2 rounded-md border border-tropico-sun/30 bg-tropico-sun/5 p-2 text-[11px] text-tropico-sun">
+              <AlertTriangle className="mt-0.5 size-3.5 shrink-0" />
+              <span>
+                Vas a firmar una transacción on-chain. Una vez confirmada es irreversible.
+              </span>
+            </div>
+
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => setShowConfirm(false)}
+                className="flex-1 rounded-lg border border-tropico-border bg-tropico-ink/40 py-2 text-sm font-semibold transition hover:border-tropico-mute"
+              >
+                Cancelar
+              </button>
+              <button
+                type="button"
+                onClick={execute}
+                className="btn-primary flex-1 py-2 text-sm"
+              >
+                Confirmar y comprar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Confirmación */}
       {confirmed && (

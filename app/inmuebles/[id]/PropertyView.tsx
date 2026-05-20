@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import { getPropertyById, getProgressPercent } from "@/lib/properties";
 import { TourEmbed } from "@/components/TourEmbed";
-import { PropertyBuyForm } from "@/components/PropertyBuyForm";
+import { PropertyBuyFormEntry } from "@/components/PropertyBuyFormPrivy";
 import { RewardClaimCard } from "@/components/RewardClaimCard";
 import { getRealEstateProgramId, shareMintPda, usdcVaultPda, propertyPda } from "@/lib/realestate-program";
 
@@ -175,7 +175,7 @@ export function PropertyView({ id }: Props) {
 
         {/* Right column — buy form + rewards */}
         <div className="flex flex-col gap-4">
-          <PropertyBuyForm property={property} />
+          <PropertyBuyFormEntry property={property} />
 
           {/* Demo reward card — Fase 0: renta simulada */}
           <RewardClaimCard
