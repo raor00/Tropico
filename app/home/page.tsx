@@ -6,6 +6,8 @@ import { formatUSD } from "@/lib/formato";
 import { MOCK_CASHBACK_PENDIENTE, MOCK_NEXT_DCA } from "@/lib/mock-data";
 import {
   ArrowLeftRight,
+  Briefcase,
+  Building2,
   CalendarClock,
   Compass,
   Gift,
@@ -91,6 +93,22 @@ const MODULES = [
     descripcion: "Controla tu wallet desde WhatsApp con comandos de texto",
     gradient: "from-tropico-green/20 to-tropico-sea/10",
     badge: "Bot",
+  },
+  {
+    href: "/inmuebles",
+    Icon: Building2,
+    titulo: "Inmuebles",
+    descripcion: "Compra acciones de inmuebles tokenizados desde $2",
+    gradient: "from-tropico-sea/25 to-tropico-green/10",
+    badge: "Crixto",
+  },
+  {
+    href: "/mis-inmuebles",
+    Icon: Briefcase,
+    titulo: "Mis Inmuebles",
+    descripcion: "Tus acciones, renta reclamable y gobernanza on-chain",
+    gradient: "from-tropico-purple/20 to-tropico-sea/10",
+    badge: "Portfolio",
   },
   {
     href: "/descubrir",
