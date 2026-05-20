@@ -1,7 +1,7 @@
 use anchor_lang::prelude::*;
 use anchor_spl::token::{self, Mint, MintTo, Token, TokenAccount, Transfer};
 
-declare_id!("REaLEsTaTePLaCeHoLDer11111111111111111111111");
+declare_id!("9XVkC2bH7Kiu6EWLVecuPVuT6agH6TzkFSFKxLo4KcoT");
 
 // ---------------------------------------------------------------------------
 // Fee constants — CERRADAS por el founder
@@ -146,6 +146,8 @@ pub mod tropico_realestate {
         let now = Clock::get()?.unix_timestamp;
         require!(wl.expires_at == 0 || wl.expires_at > now, RealEstateError::KycExpired);
 
+        let property_key = ctx.accounts.property.key();
+        let property_account_info = ctx.accounts.property.to_account_info();
         let prop = &mut ctx.accounts.property;
         require!(prop.status == PropertyStatus::Active, RealEstateError::PropertyNotActive);
         require!(
@@ -224,7 +226,7 @@ pub mod tropico_realestate {
             MintTo {
                 mint: ctx.accounts.share_mint.to_account_info(),
                 to: ctx.accounts.investor_share_ata.to_account_info(),
-                authority: ctx.accounts.property.to_account_info(),
+                authority: property_account_info,
             },
             signer_seeds,
         );
@@ -233,7 +235,7 @@ pub mod tropico_realestate {
         // 5. Upsert InvestorPosition
         let position = &mut ctx.accounts.investor_position;
         position.investor = ctx.accounts.investor.key();
-        position.property = ctx.accounts.property.key();
+        position.property = property_key;
         position.shares_owned = position
             .shares_owned
             .checked_add(num_shares)
@@ -247,7 +249,7 @@ pub mod tropico_realestate {
 
         emit!(SharesPurchased {
             investor: ctx.accounts.investor.key(),
-            property: ctx.accounts.property.key(),
+            property: property_key,
             num_shares,
             total_price,
             total_fee,
@@ -382,6 +384,7 @@ pub mod tropico_realestate {
         }
 
         // 4. Crear YieldEpoch
+        let property_key = ctx.accounts.property.key();
         let prop = &mut ctx.accounts.property;
         let epoch_num = prop.epoch_count;
         prop.epoch_count = prop
@@ -391,7 +394,7 @@ pub mod tropico_realestate {
 
         let ye = &mut ctx.accounts.yield_epoch;
         ye.epoch = epoch_num;
-        ye.property = ctx.accounts.property.key();
+        ye.property = property_key;
         ye.total_usdc_net = net_usdc;
         ye.total_shares_snapshot = prop.shares_sold;
         ye.deposited_at = Clock::get()?.unix_timestamp;
@@ -399,7 +402,7 @@ pub mod tropico_realestate {
         ye.bump = ctx.bumps.yield_epoch;
 
         emit!(YieldDeposited {
-            property: ctx.accounts.property.key(),
+            property: property_key,
             epoch: epoch_num,
             gross_usdc,
             net_usdc,
@@ -509,6 +512,7 @@ pub mod tropico_realestate {
     /// Vota en una propuesta. Peso = balance de shares vivo.
     pub fn vote(ctx: Context<Vote>, approve: bool) -> Result<()> {
         let now = Clock::get()?.unix_timestamp;
+        let proposal_key = ctx.accounts.proposal.key();
         let proposal = &mut ctx.accounts.proposal;
 
         require!(!proposal.executed, RealEstateError::ProposalExecuted);
@@ -520,7 +524,7 @@ pub mod tropico_realestate {
 
         let receipt = &mut ctx.accounts.vote_receipt;
         receipt.voter = ctx.accounts.voter.key();
-        receipt.proposal = ctx.accounts.proposal.key();
+        receipt.proposal = proposal_key;
         receipt.weight = weight;
         receipt.approve = approve;
         receipt.bump = ctx.bumps.vote_receipt;
@@ -539,7 +543,7 @@ pub mod tropico_realestate {
 
         emit!(VoteCast {
             voter: ctx.accounts.voter.key(),
-            proposal: ctx.accounts.proposal.key(),
+            proposal: proposal_key,
             weight,
             approve,
         });
@@ -818,7 +822,7 @@ pub struct ListProperty<'info> {
         seeds = [b"property", property_id.as_ref()],
         bump,
     )]
-    pub property: Account<'info, PropertyConfig>,
+    pub property: Box<Account<'info, PropertyConfig>>,
 
     /// Share mint — autoridad es el property PDA
     #[account(
@@ -829,7 +833,7 @@ pub struct ListProperty<'info> {
         seeds = [b"share_mint", property_id.as_ref()],
         bump,
     )]
-    pub share_mint: Account<'info, Mint>,
+    pub share_mint: Box<Account<'info, Mint>>,
 
     /// USDC vault del inmueble — autoridad es el property PDA
     #[account(
@@ -840,9 +844,9 @@ pub struct ListProperty<'info> {
         seeds = [b"usdc_vault", property_id.as_ref()],
         bump,
     )]
-    pub usdc_vault: Account<'info, TokenAccount>,
+    pub usdc_vault: Box<Account<'info, TokenAccount>>,
 
-    pub usdc_mint: Account<'info, Mint>,
+    pub usdc_mint: Box<Account<'info, Mint>>,
 
     pub token_program: Program<'info, Token>,
     pub system_program: Program<'info, System>,
