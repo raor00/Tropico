@@ -23,8 +23,8 @@ export default function InmueblesPage() {
         </span>
         <h1 className="h-display">Inmuebles venezolanos en Solana</h1>
         <p className="max-w-2xl text-tropico-mute">
-          Explorá como Airbnb, invertí como Wall Street. Comprá acciones
-          fraccionadas desde $2 USDC, recibí renta mensual y gobernás las
+          Explora como Llave, invierte como Wall Street. Compra acciones
+          fraccionadas desde $2 USDC, recibe renta mensual y gobierna las
           decisiones del inmueble on-chain.
         </p>
       </header>
@@ -55,7 +55,7 @@ export default function InmueblesPage() {
 
       <footer className="mt-auto border-t border-tropico-border pt-6 text-xs text-tropico-mute">
         Tropico y Crixto no son asesores financieros. Invertir en inmuebles
-        tokenizados conlleva riesgos. Leé los{" "}
+        tokenizados conlleva riesgos. Lee los{" "}
         <Link href="/legal/token-holders" className="underline hover:text-tropico-text">
           términos de los token-holders
         </Link>{" "}
