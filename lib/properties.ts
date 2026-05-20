@@ -6,6 +6,7 @@ export type PropertyInfo = {
   address: string;
   images: string[];
   tourUrl: string;
+  tourModelUrl?: string;
   pricePerShare: number;
   totalShares: number;
   sharesSold: number;
@@ -33,6 +34,8 @@ export const PROPERTIES: Record<string, PropertyInfo> = {
       "/properties/avila-001-3.jpg",
     ],
     tourUrl: "https://llave-ruby.vercel.app/inmueble/e5d022c7-4295-4969-af83-fc8a8d3ca0bd",
+    tourModelUrl:
+      "https://tpffeqomdefynbkpjjtn.supabase.co/storage/v1/object/public/properties/loft-hackathon.glb",
     pricePerShare: 5,
     totalShares: 2400,
     sharesSold: 0,

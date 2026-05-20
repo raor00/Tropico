@@ -101,7 +101,11 @@ export function PropertyView({ id }: Props) {
           </div>
 
           {/* Tour 3D */}
-          <TourEmbed tourUrl={property.tourUrl} name={property.name} />
+          <TourEmbed
+            tourUrl={property.tourUrl}
+            tourModelUrl={property.tourModelUrl}
+            name={property.name}
+          />
 
           {/* Pitch */}
           <div className="panel p-4">
