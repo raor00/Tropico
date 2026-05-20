@@ -143,14 +143,17 @@ impl TreasuryState {
 
 #[derive(AnchorSerialize, AnchorDeserialize, Clone, Copy, PartialEq, Eq, Debug)]
 pub enum ModuleType {
-    Swap,       // /cambiar
-    Pay,        // /cobrar
-    Yield,      // /guardar
-    Cashback,   // /carlos/agente cashback
-    Remesas,    // /remesas
-    Servicios,  // /pagar-servicios
-    P2pBs,      // /cambiar tab Bolivares
-    TropicoPay, // /api/checkout/create
+    Swap,           // /cambiar
+    Pay,            // /cobrar
+    Yield,          // /guardar
+    Cashback,       // /carlos/agente cashback
+    Remesas,        // /remesas
+    Servicios,      // /pagar-servicios
+    P2pBs,          // /cambiar tab Bolivares
+    TropicoPay,     // /api/checkout/create
+    RealEstate,     // /inmuebles — venta primaria
+    RealEstateYield, // /inmuebles — gestión de renta
+    RealEstateSecondary, // /inmuebles — transfer secundario
 }
 
 /* ═══ EVENTS — indexables off-chain ══════════════════════════════════ */
