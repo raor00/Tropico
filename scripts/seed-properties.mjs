@@ -62,27 +62,27 @@ const DEMO_INVESTORS = (
 // Demo properties — mirror lib/properties.ts (montos en micro-USDC)
 const PROPERTIES = [
   {
-    id: "residencias-avila-001",
+    id: "residencias-avila-v2",
     totalShares: 2400n,
-    pricePerShare: 50n * USDC_DECIMALS,
+    pricePerShare: 5n * USDC_DECIMALS,
     valuationUsdc: 120_000n * USDC_DECIMALS,
     legalDocHash: "abababababababababababababababababababababababababababababababab",
     tourUrl: "https://tour.tropico.app/avila-001",
     name: "Residencias Ávila #1",
   },
   {
-    id: "la-candelaria-002",
+    id: "la-candelaria-v2",
     totalShares: 1500n,
-    pricePerShare: 30n * USDC_DECIMALS,
+    pricePerShare: 3n * USDC_DECIMALS,
     valuationUsdc: 45_000n * USDC_DECIMALS,
     legalDocHash: "cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
     tourUrl: "https://tour.tropico.app/candelaria-002",
     name: "La Candelaria Centro #2",
   },
   {
-    id: "maracaibo-lago-003",
+    id: "maracaibo-lago-v2",
     totalShares: 3200n,
-    pricePerShare: 25n * USDC_DECIMALS,
+    pricePerShare: 2n * USDC_DECIMALS,
     valuationUsdc: 80_000n * USDC_DECIMALS,
     legalDocHash: "efefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefef",
     tourUrl: "https://tour.tropico.app/maracaibo-003",
