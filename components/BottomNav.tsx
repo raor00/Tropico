@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, ArrowLeftRight, QrCode, Sparkles, Store } from "lucide-react";
+import { Home, ArrowLeftRight, QrCode, Sparkles, Building2 } from "lucide-react";
 import { useWalletAuth } from "@/lib/auth-context";
 
 /**
@@ -13,8 +13,8 @@ import { useWalletAuth } from "@/lib/auth-context";
  *  - Home (dashboard)
  *  - Cambiar (swap — revenue principal)
  *  - Cobrar (QR Solana Pay)
- *  - Carlos (AI copilot)
- *  - Comercios (lado merchant)
+ *  - Carlos (GuacamaAI copilot)
+ *  - Inmuebles (real estate tokenizado)
  *
  * Estilo: pill rounded-full floating, backdrop-blur fuerte, borde sutil,
  * gradient interno para el liquid glass feel. Safe-area-inset-bottom para notch.
@@ -25,7 +25,7 @@ const TABS = [
   { href: "/cambiar", Icon: ArrowLeftRight, label: "Cambiar" },
   { href: "/cobrar", Icon: QrCode, label: "Cobrar" },
   { href: "/carlos", Icon: Sparkles, label: "Carlos" },
-  { href: "/comercios", Icon: Store, label: "Comercios" },
+  { href: "/inmuebles", Icon: Building2, label: "Inmuebles" },
 ];
 
 export function BottomNav() {

@@ -1,12 +1,12 @@
 [package]
-name = "tropico_bs"
+name = "tropico_realestate"
 version = "0.1.0"
-description = "Tropico BsX — synthetic Venezuelan Bolívar primitive on Solana"
+description = "Tropico Real Estate — tokenización fraccionada de inmuebles venezolanos sobre Solana"
 edition = "2021"
 
 [lib]
 crate-type = ["cdylib", "lib"]
-name = "tropico_bs"
+name = "tropico_realestate"
 
 [features]
 no-entrypoint = []

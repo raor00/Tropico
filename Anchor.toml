@@ -8,10 +8,12 @@ skip-lint = false
 [programs.devnet]
 tropico_treasury = "3a5NkTssAsVaarUPqx4YokNwUcfxHnNebGugrgBBxe8S"
 tropico_bs = "EdWuyZDXao86mTcUSpRVzNXaT9Tb5muU6YGubFhADWdN"
+tropico_realestate = "3V49YdnmbsHPoguFWhDhyAJhbUASq9s9LAXjxSfBPoWK"
 
 [programs.localnet]
 tropico_treasury = "3a5NkTssAsVaarUPqx4YokNwUcfxHnNebGugrgBBxe8S"
 tropico_bs = "EdWuyZDXao86mTcUSpRVzNXaT9Tb5muU6YGubFhADWdN"
+tropico_realestate = "3V49YdnmbsHPoguFWhDhyAJhbUASq9s9LAXjxSfBPoWK"
 
 [registry]
 url = "https://api.apr.dev"
