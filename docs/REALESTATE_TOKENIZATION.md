@@ -81,26 +81,26 @@ Clonado estructuralmente de `programs/tropico_bs/src/lib.rs` (config PDA como mi
 
 **PDAs / cuentas:**
 
-- `RegistryConfig` — singleton, seeds `[b"registry"]`: `admin`, `crixto_authority` (attester/oracle, espeja `oracle_authority` de `tropico_bs`), `usdc_mint`, `paused`, `bump`.
+- `RegistryConfig` — singleton, seeds `[b"registry"]`: `admin`, `operator_authority` (attester/oracle, espeja `oracle_authority` de `tropico_bs`), `usdc_mint`, `paused`, `bump`.
 - `PropertyConfig` — seeds `[b"property", property_id]`: `property_id`, `share_mint`, `usdc_vault` (ATA del programa), `total_shares`, `price_per_share` (USDC 6dec), `shares_sold`, `legal_doc_hash:[u8;32]`, `valuation_usdc`, `status{Draft,Active,Paused,Closed}`, `crixto_fee_bps` (default 90), `tropico_fee_bps` (default 60; suman 150 = 1,5% venta primaria, sobre el precio), `bump`. El `share_mint` se crea con `mint::authority = property_config` PDA — patrón exacto de `tropico_bs` líneas 339-347.
 - `InvestorPosition` — seeds `[b"position", property, investor]`: `shares_owned`, `reward_debt`, `last_claimed_epoch`.
 - `YieldEpoch` — seeds `[b"yield", property, epoch]`: `epoch`, `total_usdc_deposited`, `total_shares_snapshot`, `deposited_at`, `crixto_attestation`.
-- `Whitelist` (gate KYC) — seeds `[b"kyc", investor]`: `verified`, `verified_by` (=crixto_authority), `expires_at`.
+- `Whitelist` (gate KYC) — seeds `[b"kyc", investor]`: `verified`, `verified_by` (=operator_authority), `expires_at`.
 - Gobernanza: `Proposal` — seeds `[b"proposal", property, proposal_id]`: `creator`, `title_hash`, `uri`, `yes_weight`, `no_weight`, `start_ts`, `end_ts`, `executed`, `snapshot_total_shares`. `VoteReceipt` — seeds `[b"vote", proposal, voter]` (anti-doble-voto).
 
 **Instrucciones** (cada una hace `emit!` de evento de auditoría, estilo `tropico_bs`):
 
 | Instrucción | Caller | Efecto |
 |---|---|---|
-| `initialize_registry(crixto_authority)` | admin | crea `RegistryConfig` |
+| `initialize_registry(operator_authority)` | admin | crea `RegistryConfig` |
 | `list_property(id, total_shares, price, legal_doc_hash, valuation, fees)` | admin | init `PropertyConfig` + crea `share_mint` (autoridad PDA) + `usdc_vault`; emit `PropertyListed` |
-| `set_kyc(investor, verified, expires)` | crixto_authority | upsert `Whitelist` |
+| `set_kyc(investor, verified, expires)` | operator_authority | upsert `Whitelist` |
 | `buy_shares(num_shares)` | investor | requiere KYC; `precio = num_shares×price_per_share`, `fee = precio×150/10_000` (1,5% **sobre el precio**); CPI USDC investor→vault por el **precio** (SPV 100%, como `mint_bsx` L104) + CPI USDC investor→ATA Crixto (90 bps) y →ATA Trópico (60 bps); CPI MintTo de shares con PDA signer (L119-128); upsert position; record_fee(fee total, RealEstate); emit `SharesPurchased` |
 | `transfer_shares(amount, to)` | holder | requiere `to` con KYC; CPI transfer; emit `SharesTransferred` (primitiva de mercado secundario) |
-| `deposit_yield(epoch, usdc, attestation)` | crixto_authority | transfiere USDC al vault, snapshot total shares, crea `YieldEpoch`; emit `YieldDeposited` |
+| `deposit_yield(epoch, usdc, attestation)` | operator_authority | transfiere USDC al vault, snapshot total shares, crea `YieldEpoch`; emit `YieldDeposited` |
 | `claim_reward(epoch)` | holder | `balance/total_snapshot * epoch_usdc`; transfiere USDC vault→holder (PDA signer, como `burn_bsx` L183-192); emit `RewardClaimed` |
 | `create_proposal / vote / execute_proposal` | holders | peso = balance de shares vivo; quorum/mayoría |
-| `update_valuation(new, attestation)` | crixto_authority | actualiza valuación; emit `ValuationUpdated` |
+| `update_valuation(new, attestation)` | operator_authority | actualiza valuación; emit `ValuationUpdated` |
 | `set_pause(paused)` | admin | espeja `tropico_bs::set_pause` |
 
 ### 2.2 Modelo de token — RECOMENDADO: SPL fungible fraccionado (NO NFT)

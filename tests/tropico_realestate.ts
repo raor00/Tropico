@@ -248,7 +248,7 @@ describe("tropico_realestate", () => {
     const registry = await program.account.registryConfig.fetch(registryKey);
     assert.equal(registry.admin.toBase58(), wallet.publicKey.toBase58());
     assert.equal(
-      registry.crixtoAuthority.toBase58(),
+      registry.operatorAuthority.toBase58(),
       crixto.publicKey.toBase58()
     );
     assert.isFalse(registry.paused);

@@ -35,18 +35,18 @@ pub mod tropico_realestate {
     /// Inicializa el registro global. Un solo registry por deploy.
     pub fn initialize_registry(
         ctx: Context<InitializeRegistry>,
-        crixto_authority: Pubkey,
+        operator_authority: Pubkey,
     ) -> Result<()> {
         let registry = &mut ctx.accounts.registry;
         registry.admin = ctx.accounts.admin.key();
-        registry.crixto_authority = crixto_authority;
+        registry.operator_authority = operator_authority;
         registry.usdc_mint = ctx.accounts.usdc_mint.key();
         registry.paused = false;
         registry.bump = ctx.bumps.registry;
 
         emit!(RegistryInitialized {
             admin: registry.admin,
-            crixto_authority,
+            operator_authority,
         });
 
         Ok(())
@@ -98,7 +98,7 @@ pub mod tropico_realestate {
         Ok(())
     }
 
-    /// Establece el estado KYC de un inversor. Solo crixto_authority puede llamarlo.
+    /// Establece el estado KYC de un inversor. Solo operator_authority puede llamarlo.
     pub fn set_kyc(
         ctx: Context<SetKyc>,
         investor: Pubkey,
@@ -106,7 +106,7 @@ pub mod tropico_realestate {
         expires_at: i64,
     ) -> Result<()> {
         require!(
-            ctx.accounts.registry.crixto_authority == ctx.accounts.crixto.key(),
+            ctx.accounts.registry.operator_authority == ctx.accounts.crixto.key(),
             RealEstateError::Unauthorized
         );
 
@@ -315,7 +315,7 @@ pub mod tropico_realestate {
         Ok(())
     }
 
-    /// Deposita renta. Solo crixto_authority. Crea YieldEpoch con snapshot.
+    /// Deposita renta. Solo operator_authority. Crea YieldEpoch con snapshot.
     /// Fee 10% descontado del depósito antes de guardar en vault.
     pub fn deposit_yield(
         ctx: Context<DepositYield>,
@@ -323,7 +323,7 @@ pub mod tropico_realestate {
         attestation: [u8; 32],
     ) -> Result<()> {
         require!(
-            ctx.accounts.registry.crixto_authority == ctx.accounts.crixto.key(),
+            ctx.accounts.registry.operator_authority == ctx.accounts.crixto.key(),
             RealEstateError::Unauthorized
         );
         require!(gross_usdc > 0, RealEstateError::InvalidAmount);
@@ -575,14 +575,14 @@ pub mod tropico_realestate {
         Ok(())
     }
 
-    /// Actualiza valuación del inmueble. Solo crixto_authority.
+    /// Actualiza valuación del inmueble. Solo operator_authority.
     pub fn update_valuation(
         ctx: Context<UpdateValuation>,
         new_valuation: u64,
         attestation: [u8; 32],
     ) -> Result<()> {
         require!(
-            ctx.accounts.registry.crixto_authority == ctx.accounts.crixto.key(),
+            ctx.accounts.registry.operator_authority == ctx.accounts.crixto.key(),
             RealEstateError::Unauthorized
         );
         require!(new_valuation > 0, RealEstateError::InvalidAmount);
@@ -626,7 +626,7 @@ pub mod tropico_realestate {
 #[derive(Default)]
 pub struct RegistryConfig {
     pub admin: Pubkey,
-    pub crixto_authority: Pubkey,
+    pub operator_authority: Pubkey,
     pub usdc_mint: Pubkey,
     pub paused: bool,
     pub bump: u8,
@@ -1212,7 +1212,7 @@ pub struct SetPause<'info> {
 #[event]
 pub struct RegistryInitialized {
     pub admin: Pubkey,
-    pub crixto_authority: Pubkey,
+    pub operator_authority: Pubkey,
 }
 
 #[event]

@@ -11,7 +11,7 @@
  *   NEXT_PUBLIC_REALESTATE_PROGRAM_ID=<id> node scripts/seed-properties.mjs
  *
  * Qué hace:
- *   1. initialize_registry (idempotente — admin == crixto_authority en demo)
+ *   1. initialize_registry (idempotente — admin == operator_authority en demo)
  *   2. list_property x3 (Ávila, Candelaria, Maracaibo)
  *   3. set_kyc del wallet demo (self) → verified = true
  *
@@ -167,7 +167,7 @@ function kycPda(investor) {
 
 // ─── Instruction builders (signatures from programs/tropico_realestate/src/lib.rs) ──
 
-// initialize_registry(crixto_authority: Pubkey)
+// initialize_registry(operator_authority: Pubkey)
 // accounts: admin(signer,mut), usdc_mint, registry(init), system_program
 function buildInitializeRegistry(payer) {
   const [registry] = registryPda();
