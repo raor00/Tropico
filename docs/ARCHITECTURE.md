@@ -39,7 +39,7 @@ Tropico/ (monorepo — en migración)
 │   ├── core/                     # tipos compartidos, constantes, mints
 │   ├── sdk/                      # @tropico/sdk — merchant SDK público
 │   ├── lumen/                    # Lumen KIT + SKILLS (portado de lumen-kit/)
-│   ├── carlos/                   # agente Carlos (portado de lib/carlos-*)
+│   ├── guacama/                   # agente Guacama (portado de lib/guacama-*)
 │   ├── payments/                 # Solana Pay, durable nonces, Pago Móvil
 │   ├── swap/                     # Jupiter v6 integration
 │   ├── wallet/                   # Privy MPC + Wallet Adapter
@@ -67,7 +67,7 @@ Tropico/ (monorepo — en migración)
 ┌───────────────────────────┐   ┌───────────────────────────────────────┐
 │  Next.js Edge / Node API  │   │  Solana (devnet / mainnet-beta)       │
 │  ─────────────────────    │   │  ──────────────────────────────────   │
-│  /api/carlos   → LLM      │   │  programs/tropico_bs (BsX protocol)  │
+│  /api/guacama   → LLM      │   │  programs/tropico_bs (BsX protocol)  │
 │  /api/checkout → TropicoPay   │  programs/tropico_treasury (fees)    │
 │  /api/precio-bs → dolarapi│   │  SPL Token Program                   │
 │                           │   │  Jupiter v6 Aggregator               │
@@ -94,15 +94,15 @@ Tropico/ (monorepo — en migración)
 | `/guardar` | funcional | yield mSOL / Kamino (~5-7% APY) |
 | `/pagar-servicios` | funcional | Pago Móvil VE — integración Suiche7B + banco destino |
 | `/remesas` | funcional | on-ramp aggregator (MoonPay/Transak/Ramp) |
-| `/carlos` | funcional | chat Carlos AI con 7 capabilities |
-| `/carlos/agente` | funcional | Modo Agente — 4 acciones autónomas (UI + lógica) |
+| `/guacama` | funcional | chat Guacama AI con 7 capabilities |
+| `/guacama/agente` | funcional | Modo Agente — 4 acciones autónomas (UI + lógica) |
 | `/comercios` | funcional | landing merchant, comparativa vs POS |
 | `/integraciones` | funcional | Tropico Pay — 3 patrones de integración |
 | `/perfil` | funcional | avatar, nombre editable, pubkey, cluster, importar wallet |
 | `/wallet/crear` | funcional | wallet local cifrada AES-GCM 256 + PBKDF2 |
 | `/descubrir` | funcional | catálogo educativo 9 tokens curados |
 | `/api/checkout/create` | funcional | POST endpoint Tropico Pay, devuelve session + Solana Pay URL |
-| `/api/carlos` | funcional | proxy LLM (DeepSeek > Gemini > smart fallback) |
+| `/api/guacama` | funcional | proxy LLM (DeepSeek > Gemini > smart fallback) |
 
 ### `lib/` — lógica de negocio
 
@@ -112,7 +112,7 @@ Tropico/ (monorepo — en migración)
 | `suiche7b-parser.ts` | parseo de QR Suiche7B (formato bancario venezolano) |
 | `jupiter.ts` | `buildSwapTransaction()` con `platformFeeBps=50` |
 | `solana-pay.ts` | `buildSolanaPayUrl()`, QR, durable nonces para pagos offline |
-| `carlos-prompt.ts` | system prompt de Carlos: identidad venezolana, reglas estrictas |
+| `guacama-prompt.ts` | system prompt de Guacama: identidad venezolana, reglas estrictas |
 | `agent-actions.ts` | definición de las 4 acciones autónomas del Modo Agente |
 | `agent-rules-store.ts` | persistencia de reglas de agente por usuario (localStorage) |
 | `balances.ts` | lectura de SPL token accounts vía Helius |
@@ -122,13 +122,13 @@ Tropico/ (monorepo — en migración)
 
 ### `lumen-kit/` — runtime declarativo de Lumen
 
-Ver sección "Lumen vs Carlos" más abajo.
+Ver sección "Lumen vs Guacama" más abajo.
 
 ```
 lumen-kit/
 ├── kit/
 │   ├── module.yaml       # metadatos: tropico-wallet-kit v0.1.0
-│   └── personality.yaml  # identidad Carlos + tono + reglas + knowledge
+│   └── personality.yaml  # identidad Guacama + tono + reglas + knowledge
 └── skills/
     ├── tropico-balances/SKILL.md
     ├── tropico-prices/SKILL.md
@@ -169,7 +169,7 @@ PDAs: `ProtocolConfig` (seeds: `["config"]`) y `ReservesAttestation` (seeds: `["
 
 ---
 
-## Lumen vs Carlos — subsección crítica
+## Lumen vs Guacama — subsección crítica
 
 Esta distinción fue borrosa en documentación anterior. La aclaramos aquí de forma definitiva:
 
@@ -183,22 +183,22 @@ Esta distinción fue borrosa en documentación anterior. La aclaramos aquí de f
 
 **Analogía**: Lumen es el motor. No sabe nada de Tropico ni de Venezuela por sí solo.
 
-### Carlos = agente de producto construido sobre Lumen
+### Guacama = agente de producto construido sobre Lumen
 
 **Qué es**: el copiloto financiero venezolano de Tropico. Conoce el ecosistema Solana, habla español venezolano, tiene reglas estrictas (cero política, cero garantías de rendimientos), y puede guiar al usuario a cada módulo de la app.
 
 **Dónde vive en este repo**:
-- `lib/carlos-prompt.ts` — system prompt: identidad + tono + reglas + knowledge de Solana/VE
+- `lib/guacama-prompt.ts` — system prompt: identidad + tono + reglas + knowledge de Solana/VE
 - `lib/agent-actions.ts` — definición de las 4 acciones del Modo Agente
 - `lib/agent-rules-store.ts` — persistencia de reglas de agente por usuario
-- `app/carlos/` — UI del chat
-- `app/carlos/agente/` — UI del Modo Agente
+- `app/guacama/` — UI del chat
+- `app/guacama/agente/` — UI del Modo Agente
 
-**Analogía**: Carlos es el conductor. Sabe adónde ir (el contexto de Tropico), usa el motor (Lumen) para moverse.
+**Analogía**: Guacama es el conductor. Sabe adónde ir (el contexto de Tropico), usa el motor (Lumen) para moverse.
 
 ### En MVP (estado actual)
 
-`app/api/carlos/route.ts` llama directamente al LLM (DeepSeek → Gemini → smart fallback) sin pasar por un servidor Lumen. El Tropico Web3 Kit (`lumen-kit/`) está estructurado y listo; la integración real con `lumen server` ocurre post-Colosseum (ver `docs/LUMEN_INTEGRATION.md`).
+`app/api/guacama/route.ts` llama directamente al LLM (DeepSeek → Gemini → smart fallback) sin pasar por un servidor Lumen. El Tropico Web3 Kit (`lumen-kit/`) está estructurado y listo; la integración real con `lumen server` ocurre post-Colosseum (ver `docs/LUMEN_INTEGRATION.md`).
 
 ---
 
@@ -257,17 +257,17 @@ Este es el único proyecto del ecosistema Solana con integración nativa de Pago
 
 ---
 
-## Carlos AI — flujo completo (prompt → tx)
+## Guacama AI — flujo completo (prompt → tx)
 
 ```
 Usuario: "cobrale 50 USDT a María en BsX"
     │
     ▼
-POST /api/carlos  {message, history, currentScreen}
+POST /api/guacama  {message, history, currentScreen}
     │
     ▼
-app/api/carlos/route.ts
-    │  inyecta CARLOS_SYSTEM_PROMPT (lib/carlos-prompt.ts)
+app/api/guacama/route.ts
+    │  inyecta GUACAMA_SYSTEM_PROMPT (lib/guacama-prompt.ts)
     │  provider: DeepSeek → Gemini → smart fallback
     │
     ▼
@@ -279,7 +279,7 @@ Lumen carga SKILL.md de tropico-swap
     │  → devuelve quote real Jupiter v6
     │
     ▼
-Carlos propone tx en lenguaje natural venezolano
+Guacama propone tx en lenguaje natural venezolano
     │  "María puede recibir BsX desde USDT. El quote es: X USDT → Y BsX.
     │   ¿Confirmamos?"
     │

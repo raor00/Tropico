@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
-import { CARLOS_SYSTEM_PROMPT } from "@/lib/carlos-prompt";
+import { GUACAMA_SYSTEM_PROMPT } from "@/lib/guacama-prompt";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 /**
- * POST /api/carlos
+ * POST /api/guacama
  *
- * Endpoint del chat de Carlos AI by Lumen. Provider priority:
+ * Endpoint del chat de Guacama AI by Lumen. Provider priority:
  *   1. DEEPSEEK_API_KEY  → DeepSeek-V4 chat (recomendado, OpenAI-compatible)
  *   2. GEMINI_API_KEY    → Gemini 2.0 Flash
  *   3. ninguna           → smart fallback (keyword-routed canned answers)
@@ -15,8 +15,8 @@ export const dynamic = "force-dynamic";
  * Body:
  *   {
  *     message: string,                                  // pregunta del usuario
- *     history?: { role: "user" | "carlos", text }[],    // últimos turnos
- *     currentScreen?: string                            // contexto UI (carlos|home|cobrar|...)
+ *     history?: { role: "user" | "guacama", text }[],    // últimos turnos
+ *     currentScreen?: string                            // contexto UI (guacama|home|cobrar|...)
  *   }
  *
  * Response:
@@ -25,7 +25,7 @@ export const dynamic = "force-dynamic";
 export async function POST(req: Request) {
   let body: {
     message?: string;
-    history?: { role: "user" | "carlos"; text: string }[];
+    history?: { role: "user" | "guacama"; text: string }[];
     currentScreen?: string;
   };
   try {
@@ -46,7 +46,7 @@ export async function POST(req: Request) {
   }
 
   const history = body.history ?? [];
-  const screen = body.currentScreen ?? "carlos";
+  const screen = body.currentScreen ?? "guacama";
   const contextNote = `Pantalla actual del usuario: /${screen}.`;
 
   // Provider priority: DeepSeek → Gemini → fallback
@@ -63,7 +63,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ text, model: "gemini-2.0-flash" });
     }
   } catch (err) {
-    console.error("[carlos] LLM call failed:", err);
+    console.error("[guacama] LLM call failed:", err);
     // cae a fallback en lugar de tirar 500 — mejor UX
   }
 
@@ -81,15 +81,15 @@ export async function POST(req: Request) {
 /* ─────────────────────────────────────────────────────────────────── */
 async function callDeepseek(opts: {
   message: string;
-  history: { role: "user" | "carlos"; text: string }[];
+  history: { role: "user" | "guacama"; text: string }[];
   contextNote: string;
   apiKey: string;
 }): Promise<string> {
   const messages = [
-    { role: "system" as const, content: CARLOS_SYSTEM_PROMPT },
+    { role: "system" as const, content: GUACAMA_SYSTEM_PROMPT },
     { role: "system" as const, content: opts.contextNote },
     ...opts.history.map((m) => ({
-      role: m.role === "carlos" ? ("assistant" as const) : ("user" as const),
+      role: m.role === "guacama" ? ("assistant" as const) : ("user" as const),
       content: m.text,
     })),
     { role: "user" as const, content: opts.message },
@@ -122,7 +122,7 @@ async function callDeepseek(opts: {
 /* ─────────────────────────────────────────────────────────────────── */
 async function callGemini(opts: {
   message: string;
-  history: { role: "user" | "carlos"; text: string }[];
+  history: { role: "user" | "guacama"; text: string }[];
   contextNote: string;
   apiKey: string;
 }): Promise<string> {
@@ -130,10 +130,10 @@ async function callGemini(opts: {
   const contents = [
     {
       role: "user" as const,
-      parts: [{ text: `${CARLOS_SYSTEM_PROMPT}\n\n${opts.contextNote}` }],
+      parts: [{ text: `${GUACAMA_SYSTEM_PROMPT}\n\n${opts.contextNote}` }],
     },
     ...opts.history.map((m) => ({
-      role: m.role === "carlos" ? ("model" as const) : ("user" as const),
+      role: m.role === "guacama" ? ("model" as const) : ("user" as const),
       parts: [{ text: m.text }],
     })),
     { role: "user" as const, parts: [{ text: opts.message }] },
@@ -160,7 +160,7 @@ async function callGemini(opts: {
 }
 
 /* ─────────────────────────────────────────────────────────────────── */
-/* Smart fallback — keyword routing a respuestas con voz Carlos        */
+/* Smart fallback — keyword routing a respuestas con voz Guacama        */
 /* ─────────────────────────────────────────────────────────────────── */
 function smartFallback(message: string): { text: string; capabilities: string[] } {
   const m = message.toLowerCase();
@@ -176,7 +176,7 @@ function smartFallback(message: string): { text: string; capabilities: string[] 
   if (/(precio|cotiz|d(ó|o)lar|bs|bol(í|i)var|paralelo)/.test(m)) {
     return {
       capabilities: ["tropico-prices"],
-      text: "Capability `tropico-prices` lee la tasa USD/Bs del paralelo via ve.dolarapi.com y precios de tokens via Jupiter Price API. Para LLM real configura `DEEPSEEK_API_KEY` o `GEMINI_API_KEY` en .env.local — ahí Carlos te explica con contexto del momento. ¿Configuras?",
+      text: "Capability `tropico-prices` lee la tasa USD/Bs del paralelo via ve.dolarapi.com y precios de tokens via Jupiter Price API. Para LLM real configura `DEEPSEEK_API_KEY` o `GEMINI_API_KEY` en .env.local — ahí Guacama te explica con contexto del momento. ¿Configuras?",
     };
   }
   // Swap
@@ -204,14 +204,14 @@ function smartFallback(message: string): { text: string; capabilities: string[] 
   if (/(cashback|recompens)/.test(m)) {
     return {
       capabilities: ["tropico-cashback"],
-      text: "Capability `tropico-cashback` lee tu acumulado en comercios afiliados. Reclámalo manual o activa Modo Agente → auto-cashback semanal. En `/carlos/agente` lo configuras con policy (max $50 por claim, cooldown 24h).",
+      text: "Capability `tropico-cashback` lee tu acumulado en comercios afiliados. Reclámalo manual o activa Modo Agente → auto-cashback semanal. En `/guacama/agente` lo configuras con policy (max $50 por claim, cooldown 24h).",
     };
   }
   // Modo Agente
   if (/(agente|dca|autom|programad|recurr)/.test(m)) {
     return {
       capabilities: ["tropico-agent-actions"],
-      text: "Modo Agente vive en `/carlos/agente`. 4 acciones: DCA semanal · auto-yield al recibir remesa · auto-cashback claim · re-balance de portafolio. En MVP se ejecutan manual con un click. Q3 2026 van sobre OpenClaw + Privy delegated session keys. ¿Las configuro?",
+      text: "Modo Agente vive en `/guacama/agente`. 4 acciones: DCA semanal · auto-yield al recibir remesa · auto-cashback claim · re-balance de portafolio. En MVP se ejecutan manual con un click. Q3 2026 van sobre OpenClaw + Privy delegated session keys. ¿Las configuro?",
     };
   }
   // Política / prohibido
@@ -224,13 +224,13 @@ function smartFallback(message: string): { text: string; capabilities: string[] 
   // Genérico
   return {
     capabilities: [],
-    text: `¡Epa! Estoy en modo fallback (sin LLM real). Para chat completo configura \`DEEPSEEK_API_KEY\` o \`GEMINI_API_KEY\` en .env.local. Mientras tanto, prueba preguntas tipo "¿cuánto vale el dólar?", "cómo funciona el swap?", "muéstrame yield". O abre Modo Agente en /carlos/agente.`,
+    text: `¡Epa! Estoy en modo fallback (sin LLM real). Para chat completo configura \`DEEPSEEK_API_KEY\` o \`GEMINI_API_KEY\` en .env.local. Mientras tanto, prueba preguntas tipo "¿cuánto vale el dólar?", "cómo funciona el swap?", "muéstrame yield". O abre Modo Agente en /guacama/agente.`,
   };
 }
 
 export async function GET() {
   return NextResponse.json({
-    name: "Carlos AI by Lumen",
+    name: "Guacama AI by Lumen",
     version: "0.1.0",
     providers: {
       deepseek: Boolean(process.env.DEEPSEEK_API_KEY),
@@ -247,6 +247,6 @@ export async function GET() {
       "tropico-cashback",
       "tropico-agent-actions",
     ],
-    docs: "/docs/CARLOS_AI.md",
+    docs: "/docs/GUACAMA_AI.md",
   });
 }

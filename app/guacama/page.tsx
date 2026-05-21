@@ -130,10 +130,10 @@ const CANNED: Record<string, string> = {
     "¡Buena estrategia! El DCA semanal reduce el riesgo de comprar en el pico. Ve a Modo Agente → DCA y configura $50 a SOL cada 7 días. En Q3 se ejecuta automático; por ahora lo apruebas con un click. ¿Vamos?",
 };
 
-export default function CarlosPage() {
+export default function GuacamaPage() {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<
-    { role: "user" | "carlos"; text: string }[]
+    { role: "user" | "guacama"; text: string }[]
   >([]);
 
   const hasApiKey =
@@ -150,31 +150,31 @@ export default function CarlosPage() {
       const canned =
         CANNED[text] ??
         "¡Epa! Para respuestas reales configura tu API key en .env.local. Por ahora estoy en modo demo. ¿Quieres que te muestre qué puedo hacer?";
-      setMessages((prev) => [...prev, { role: "carlos", text: canned }]);
+      setMessages((prev) => [...prev, { role: "guacama", text: canned }]);
       return;
     }
 
     try {
-      const res = await fetch("/api/carlos", {
+      const res = await fetch("/api/guacama", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           message: text,
           history: [],
-          currentScreen: "carlos",
+          currentScreen: "guacama",
         }),
       });
       const data = await res.json();
       setMessages((prev) => [
         ...prev,
-        { role: "carlos", text: data.text ?? "Sin respuesta." },
+        { role: "guacama", text: data.text ?? "Sin respuesta." },
       ]);
     } catch {
-      console.log("[Carlos stub] prompt:", text);
+      console.log("[Guacama stub] prompt:", text);
       setMessages((prev) => [
         ...prev,
         {
-          role: "carlos",
+          role: "guacama",
           text: "¡Epa! Algo salió mal conectando con el backend. Intenta de nuevo, panita.",
         },
       ]);
@@ -196,7 +196,7 @@ export default function CarlosPage() {
             <span className="text-2xl">🌴</span>
           </div>
           <div>
-            <h1 className="font-display text-3xl font-bold">Carlos AI</h1>
+            <h1 className="font-display text-3xl font-bold">Guacama AI</h1>
             <p className="text-xs text-tropico-mute">
               Agente autónomo sobre Lumen Web3 Kit
             </p>
@@ -208,7 +208,7 @@ export default function CarlosPage() {
       <section className="grid gap-3 md:grid-cols-2">
         {/* Modo Agente — destacado, gradient purple */}
         <Link
-          href="/carlos/agente"
+          href="/guacama/agente"
           className="panel group relative overflow-hidden border-tropico-purple/40 p-5 transition hover:border-tropico-purple"
         >
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-tropico-purple/25 via-tropico-coral/10 to-tropico-sun/10 opacity-80 transition group-hover:opacity-100" />
@@ -224,7 +224,7 @@ export default function CarlosPage() {
             <div>
               <h3 className="font-display text-lg font-bold">Modo Agente</h3>
               <p className="mt-1 text-sm text-tropico-text/85">
-                Carlos <strong>ejecuta acciones</strong> por ti con tus límites:
+                Guacama <strong>ejecuta acciones</strong> por ti con tus límites:
                 DCA, auto-yield, rebalance, cashback. Tú diriges, él actúa.
               </p>
             </div>
@@ -236,7 +236,7 @@ export default function CarlosPage() {
 
         {/* Modo Chat — secundario */}
         <a
-          href="#carlos-chat"
+          href="#guacama-chat"
           className="panel group relative overflow-hidden p-5 transition hover:border-tropico-sea/60"
         >
           <div className="relative flex flex-col gap-3">
@@ -251,7 +251,7 @@ export default function CarlosPage() {
             <div>
               <h3 className="font-display text-lg font-bold">Modo Chat</h3>
               <p className="mt-1 text-sm text-tropico-text/85">
-                Carlos <strong>te responde</strong> consultas en español:
+                Guacama <strong>te responde</strong> consultas en español:
                 saldos, precios, qué es cada token, cómo armar un swap.
               </p>
             </div>
@@ -263,11 +263,11 @@ export default function CarlosPage() {
       </section>
 
       {/* ── Chat ───────────────────────────────────────────────── */}
-      <section id="carlos-chat" className="panel flex flex-col gap-4 p-6">
+      <section id="guacama-chat" className="panel flex flex-col gap-4 p-6">
         {/* Messages */}
         <div className="flex flex-col gap-3">
           <p className="text-tropico-text/90">
-            ¡Epa, panita! Soy Carlos, tu copiloto en Solana. Pregúntame qué es
+            ¡Epa, panita! Soy Guacama, tu copiloto en Solana. Pregúntame qué es
             cualquier token, cómo funciona el staking, o por qué Solana le pega
             a Ethereum. ¿En qué te ayudo?
           </p>
@@ -311,7 +311,7 @@ export default function CarlosPage() {
 
         {/* Status bar */}
         <p className="text-center text-[11px] text-tropico-mute">
-          Carlos corre sobre Lumen Web3 Kit — 1 KIT + 7 SKILLS + 8 capabilities
+          Guacama corre sobre Lumen Web3 Kit — 1 KIT + 7 SKILLS + 8 capabilities
           Python.{" "}
           <span className="text-tropico-text/70">
             Modelo actual: DeepSeek-V4-flash via LiteLLM
@@ -342,7 +342,7 @@ export default function CarlosPage() {
       <section className="flex flex-col gap-5">
         <div>
           <h2 className="font-display text-2xl font-bold">
-            Las 7 capacidades de Carlos
+            Las 7 capacidades de Guacama
           </h2>
           <p className="mt-1 text-sm text-tropico-mute">
             Cada capacidad es un skill de Lumen respaldado por una capability
@@ -411,9 +411,9 @@ export default function CarlosPage() {
         </div>
       </section>
 
-      {/* ── Carlos WhatsApp — demo interactivo ──────────────────── */}
+      {/* ── Guacama WhatsApp — demo interactivo ──────────────────── */}
       <Link
-        href="/carlos/whatsapp"
+        href="/guacama/whatsapp"
         className="panel group relative overflow-hidden p-6 transition hover:border-tropico-green/50"
       >
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-tropico-green/10 via-transparent to-tropico-purple/10 opacity-70 transition group-hover:opacity-100" />
@@ -426,15 +426,15 @@ export default function CarlosPage() {
               <div className="flex flex-col gap-1">
                 <div className="flex flex-wrap items-center gap-2">
                   <h3 className="font-display text-xl font-bold">
-                    Carlos por WhatsApp
+                    Guacama por WhatsApp
                   </h3>
                   <span className="rounded-full bg-tropico-green/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-tropico-green">
                     Demo
                   </span>
                 </div>
                 <p className="text-sm text-tropico-mute">
-                  Controla tu wallet con comandos de texto. "carlos saldo",
-                  "carlos pagar 5 a 04141234567" — acciones on-chain requieren
+                  Controla tu wallet con comandos de texto. "guacama saldo",
+                  "guacama pagar 5 a 04141234567" — acciones on-chain requieren
                   aprobación biométrica en la app.
                 </p>
               </div>

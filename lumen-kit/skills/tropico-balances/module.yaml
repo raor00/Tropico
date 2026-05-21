@@ -1,7 +1,7 @@
 name: tropico-balances
 version: 0.1.0
 display_name: "Tropico Balances"
-description: "Carlos consulta saldos del wallet del usuario en Solana — SOL nativo + SPL token accounts."
+description: "Guacama consulta saldos del wallet del usuario en Solana — SOL nativo + SPL token accounts."
 author: Tropico
 price: free
 min_capability: tier-2

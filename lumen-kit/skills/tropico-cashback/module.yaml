@@ -1,7 +1,7 @@
 name: tropico-cashback
 version: 0.1.0
 display_name: "Tropico Cashback"
-description: "Carlos consulta cashback acumulado de comercios afiliados Tropico y propone reclamarlo."
+description: "Guacama consulta cashback acumulado de comercios afiliados Tropico y propone reclamarlo."
 author: Tropico
 price: free
 min_capability: tier-2

@@ -1,7 +1,7 @@
 name: tropico-pay
 version: 0.1.0
 display_name: "Tropico Pay"
-description: "Carlos genera URLs y QRs Solana Pay para que el merchant cobre, o el usuario envíe USDC con claim links."
+description: "Guacama genera URLs y QRs Solana Pay para que el merchant cobre, o el usuario envíe USDC con claim links."
 author: Tropico
 price: free
 min_capability: tier-2

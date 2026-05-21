@@ -3,6 +3,13 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   compress: true,
+  async redirects() {
+    // CarlosAI migró a GuacamaAI — mantenemos los enlaces viejos vivos.
+    return [
+      { source: "/carlos", destination: "/guacama", permanent: true },
+      { source: "/carlos/:path*", destination: "/guacama/:path*", permanent: true },
+    ];
+  },
   productionBrowserSourceMaps: false,
   images: {
     formats: ["image/avif", "image/webp"],

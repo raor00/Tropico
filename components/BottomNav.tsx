@@ -13,7 +13,7 @@ import { useWalletAuth } from "@/lib/auth-context";
  *  - Home (dashboard)
  *  - Cambiar (swap — revenue principal)
  *  - Cobrar (QR Solana Pay)
- *  - Carlos (GuacamaAI copilot)
+ *  - Guacama (GuacamaAI copilot)
  *  - Inmuebles (real estate tokenizado)
  *
  * Estilo: pill rounded-full floating, backdrop-blur fuerte, borde sutil,
@@ -24,7 +24,7 @@ const TABS = [
   { href: "/home", Icon: Home, label: "Inicio" },
   { href: "/cambiar", Icon: ArrowLeftRight, label: "Cambiar" },
   { href: "/cobrar", Icon: QrCode, label: "Cobrar" },
-  { href: "/carlos", Icon: Sparkles, label: "Carlos" },
+  { href: "/guacama", Icon: Sparkles, label: "Guacama" },
   { href: "/inmuebles", Icon: Building2, label: "Inmuebles" },
 ];
 

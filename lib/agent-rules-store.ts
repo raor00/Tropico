@@ -1,5 +1,5 @@
 /**
- * Persistencia local de reglas activas de Carlos Modo Agente + histórico de ejecuciones.
+ * Persistencia local de reglas activas de Guacama Modo Agente + histórico de ejecuciones.
  *
  * MVP: localStorage del browser (no se sincroniza entre dispositivos).
  * Producción Q3: backend persistente con Cloudflare KV o Postgres.

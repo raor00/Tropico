@@ -16,7 +16,7 @@ import {
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
-type MsgRole = "user" | "carlos";
+type MsgRole = "user" | "guacama";
 
 type Message = {
   id: string;
@@ -48,7 +48,7 @@ function parseCommand(raw: string): {
   const input = raw
     .toLowerCase()
     .trim()
-    .replace(/^carlos\s*/i, "");
+    .replace(/^guacama\s*/i, "");
 
   if (/^saldo/.test(input)) return { type: "saldo" };
   if (/^precio(\s+bs)?$/.test(input)) return { type: "precio" };
@@ -96,11 +96,11 @@ function buildResponse(cmd: ReturnType<typeof parseCommand>): Partial<Message> {
       };
     case "ayuda":
       return {
-        text: `Comandos disponibles 📋\n\n*carlos saldo* — ver tu balance\n*carlos precio bs* — tasa BCV actual\n*carlos pagar 5 a 04141234567* — enviar USDC\n*carlos cobrar 10* — generar link de cobro\n\n_Escribe sin "carlos" también funciona_`,
+        text: `Comandos disponibles 📋\n\n*guacama saldo* — ver tu balance\n*guacama precio bs* — tasa BCV actual\n*guacama pagar 5 a 04141234567* — enviar USDC\n*guacama cobrar 10* — generar link de cobro\n\n_Escribe sin "guacama" también funciona_`,
       };
     default:
       return {
-        text: `No entendí ese comando 🤔\n\nEscribe *carlos ayuda* para ver qué puedo hacer.`,
+        text: `No entendí ese comando 🤔\n\nEscribe *guacama ayuda* para ver qué puedo hacer.`,
       };
   }
 }
@@ -109,26 +109,26 @@ const DEMO_HISTORY: Message[] = [
   {
     id: "d1",
     role: "user",
-    text: "carlos saldo",
+    text: "guacama saldo",
     time: "09:14",
     status: "read",
   },
   {
     id: "d2",
-    role: "carlos",
+    role: "guacama",
     text: "Tu saldo actual 💰\n\n*USDC:* 125.50 USDC\n*SOL:* 0.4500 SOL\n\nEquivalente total: ~$195.25 USD",
     time: "09:14",
   },
   {
     id: "d3",
     role: "user",
-    text: "carlos pagar 10 a 04141234567",
+    text: "guacama pagar 10 a 04141234567",
     time: "09:15",
     status: "read",
   },
   {
     id: "d4",
-    role: "carlos",
+    role: "guacama",
     text: "Pago pendiente de aprobación 🔐\n\n*Destinatario:* 04141234567\n*Monto:* 10.00 USDC\n*Equivale a:* 374.54 Bs aprox\n\nNecesito tu aprobación biométrica para ejecutar. Toca el botón de abajo ↓",
     time: "09:15",
     action: "approve",
@@ -188,15 +188,15 @@ export default function WhatsAppDemoPage() {
 
     setTimeout(() => {
       const { text, action, actionLabel } = buildResponse(cmd);
-      const carlosMsg: Message = {
+      const guacamaMsg: Message = {
         id: `c${Date.now()}`,
-        role: "carlos",
+        role: "guacama",
         text: text ?? "...",
         time: ts(),
         action,
         actionLabel,
       };
-      setMessages((m) => [...m, carlosMsg]);
+      setMessages((m) => [...m, guacamaMsg]);
       setTyping(false);
     }, responseDelay);
   }
@@ -211,7 +211,7 @@ export default function WhatsAppDemoPage() {
         ...m,
         {
           id: `c${Date.now()}`,
-          role: "carlos",
+          role: "guacama",
           text: "✅ Pago ejecutado on-chain\n\n*Tx:* DemoABCD...1234\n*Status:* Confirmado\n\n_Ver en Solscan_",
           time: ts(),
         },
@@ -225,7 +225,7 @@ export default function WhatsAppDemoPage() {
       {/* WA top bar */}
       <header className="flex items-center gap-3 bg-[#1f2937] px-4 py-3 shadow">
         <Link
-          href="/carlos"
+          href="/guacama"
           className="text-tropico-mute hover:text-tropico-sun"
         >
           ←
@@ -234,7 +234,7 @@ export default function WhatsAppDemoPage() {
           C
         </div>
         <div className="flex-1">
-          <p className="text-sm font-bold text-white">Carlos AI</p>
+          <p className="text-sm font-bold text-white">Guacama AI</p>
           <p className="text-[10px] text-green-400">en línea</p>
         </div>
         <div className="flex items-center gap-4 text-tropico-mute">
@@ -249,7 +249,7 @@ export default function WhatsAppDemoPage() {
         <Info className="mt-0.5 size-4 shrink-0 text-tropico-purple" />
         <p className="text-[11px] text-tropico-mute">
           <strong className="text-tropico-text">Demo WhatsApp Bot — </strong>
-          Carlos escucha comandos vía WhatsApp Cloud API. Acciones que mueven
+          Guacama escucha comandos vía WhatsApp Cloud API. Acciones que mueven
           fondos requieren aprobación biométrica en la app. Producción Q3 2026.
         </p>
       </div>
@@ -273,12 +273,12 @@ export default function WhatsAppDemoPage() {
         <div className="mx-auto mb-4 flex max-w-[80%] justify-center">
           <div className="rounded-xl bg-[#1f2937]/80 px-4 py-3 text-[11px] text-white/50 text-center leading-relaxed">
             Prueba:{" "}
-            <span className="text-green-300 font-mono">carlos saldo</span> ·{" "}
-            <span className="text-green-300 font-mono">carlos precio bs</span> ·{" "}
+            <span className="text-green-300 font-mono">guacama saldo</span> ·{" "}
+            <span className="text-green-300 font-mono">guacama precio bs</span> ·{" "}
             <span className="text-green-300 font-mono">
-              carlos pagar 5 a 04141234567
+              guacama pagar 5 a 04141234567
             </span>{" "}
-            · <span className="text-green-300 font-mono">carlos cobrar 10</span>
+            · <span className="text-green-300 font-mono">guacama cobrar 10</span>
           </div>
         </div>
 

@@ -10,7 +10,7 @@
  * Si en un epoch no hay contraparte directa, se cubre con la **liquidity pool
  * de Bs** (treasury de Tropico que mantiene Bs líquidos para flujo constante).
  *
- * Carlos AI by Lumen monitorea cada epoch:
+ * Guacama AI by Lumen monitorea cada epoch:
  *  - Detecta intents nuevos via webhook on-chain
  *  - Valida que el sender tenga el balance que dice tener
  *  - Ejecuta el match (firma con session key delegada en Q3)

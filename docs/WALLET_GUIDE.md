@@ -188,7 +188,7 @@ Privy ejecuta:
 8. Solana confirma en <1s
 ```
 
-**Importante**: Privy ejecuta políticas pre-firma. Si configurás "max $50 per swap", Privy se rehúsa a firmar swaps mayores aunque el agente lo pida. Esto es cómo el **Modo Agente** mantiene seguridad — Carlos puede sugerir, Privy valida la política, los shares cooperan solo si pasa la política.
+**Importante**: Privy ejecuta políticas pre-firma. Si configurás "max $50 per swap", Privy se rehúsa a firmar swaps mayores aunque el agente lo pida. Esto es cómo el **Modo Agente** mantiene seguridad — Guacama puede sugerir, Privy valida la política, los shares cooperan solo si pasa la política.
 
 ---
 

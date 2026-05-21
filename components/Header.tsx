@@ -53,7 +53,7 @@ const DEFAULT_NAV: NavLink[] = [
   { href: "/cambiar", label: "Cambiar", icon: ArrowLeftRight, tone: "purple" },
   { href: "/cobrar", label: "Cobrar", icon: QrCode, tone: "coral" },
   { href: "/remesas", label: "Remesas", icon: Globe, tone: "sea" },
-  { href: "/carlos", label: "Carlos", icon: Bot, tone: "green" },
+  { href: "/guacama", label: "Guacama", icon: Bot, tone: "green" },
   { href: "/comercios", label: "Comercios", icon: Store, tone: "sun" },
 ];
 
@@ -66,7 +66,7 @@ const LANDING_NAV: NavLink[] = [
   { href: "#producto", label: "Producto", icon: Sparkles, tone: "sun" },
   { href: "#cambiar", label: "Cambiar", icon: ArrowLeftRight, tone: "purple" },
   { href: "#remesas", label: "Remesas", icon: Globe, tone: "sea" },
-  { href: "#carlos", label: "Carlos", icon: Bot, tone: "green" },
+  { href: "#guacama", label: "Guacama", icon: Bot, tone: "green" },
   { href: "#comercios", label: "Comercios", icon: Store, tone: "coral" },
 ];
 
@@ -79,7 +79,7 @@ const FULL_NAV: NavLink[] = [
   { href: "/guardar", label: "Guardar", icon: Sprout, tone: "green" },
   { href: "/remesas", label: "Remesas", icon: Globe, tone: "sea" },
   { href: "/pagar-servicios", label: "Servicios", icon: Receipt, tone: "coral" },
-  { href: "/carlos", label: "Carlos AI", icon: Bot, tone: "green" },
+  { href: "/guacama", label: "Guacama AI", icon: Bot, tone: "green" },
   { href: "/comercios", label: "Comercios", icon: Store, tone: "sun" },
   { href: "/perfil", label: "Mi Tropico", icon: KeyRound, tone: "purple" },
 ];

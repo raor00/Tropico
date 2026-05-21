@@ -1,7 +1,7 @@
 name: tropico-yield
 version: 0.1.0
 display_name: "Tropico Yield"
-description: "Carlos consulta y propone estrategias de yield (mSOL Marinade, Kamino USDC vault, Kamino LP) para que el usuario haga trabajar su plata."
+description: "Guacama consulta y propone estrategias de yield (mSOL Marinade, Kamino USDC vault, Kamino LP) para que el usuario haga trabajar su plata."
 author: Tropico
 price: free
 min_capability: tier-2

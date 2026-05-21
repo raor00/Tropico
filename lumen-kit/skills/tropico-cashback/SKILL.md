@@ -6,7 +6,7 @@ description: "Consultar cashback acumulado de comercios Tropico afiliados y prop
 
 # Tropico Cashback — Acumulado de comercios
 
-Carlos puede:
+Guacama puede:
 - Consultar cuánto cashback tiene el usuario acumulado de comercios afiliados Tropico
 - Listar de qué comercios viene
 - Proponer reclamo (manual o vía Modo Agente automático)
@@ -42,14 +42,14 @@ python3 {SCRIPTS_DIR}/cashback_historico.py --instance {INSTANCE_ID} --wallet <P
 
 1. "¿Cuánto cashback tengo?" → `cashback_acumulado.py --wallet <pubkey>`
 2. "¿De dónde viene?" → mismo, listar comercios
-3. "Reclamame el cashback" → Carlos NO ejecuta — propone vía UI: "Te dejo el botón listo en el Modo Agente, dale Reclamar y firmás."
-4. Si el usuario activó Modo Agente con regla `auto-cashback-claim`, Carlos coordina con OpenClaw para reclamo programado (semanal/mensual).
+3. "Reclamame el cashback" → Guacama NO ejecuta — propone vía UI: "Te dejo el botón listo en el Modo Agente, dale Reclamar y firmás."
+4. Si el usuario activó Modo Agente con regla `auto-cashback-claim`, Guacama coordina con OpenClaw para reclamo programado (semanal/mensual).
 
 ## UI Surface
 
 ```
 <tropico-ui>{"version":"v1","chat_right_rail":{"cards":[
-  {"eyebrow":"Cashback acumulado","title":"$3.20 listos para reclamar","description":"De 4 comercios afiliados","cta":{"label":"Reclamar","href":"/carlos/agente"},"tone":"action"}
+  {"eyebrow":"Cashback acumulado","title":"$3.20 listos para reclamar","description":"De 4 comercios afiliados","cta":{"label":"Reclamar","href":"/guacama/agente"},"tone":"action"}
 ]}}</tropico-ui>
 ```
 

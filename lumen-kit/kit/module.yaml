@@ -1,7 +1,7 @@
 name: tropico-wallet-kit
 version: 0.1.0
-display_name: "Tropico Wallet Kit — Carlos AI"
-description: "Carlos, el copiloto financiero venezolano de Tropico. Ayuda al usuario a navegar el ecosistema Solana — saldos, swaps, pagos, yield y cashback — con voz local, sin jerga, non-custodial."
+display_name: "Tropico Wallet Kit — Guacama AI"
+description: "Guacama, el copiloto financiero venezolano de Tropico. Ayuda al usuario a navegar el ecosistema Solana — saldos, swaps, pagos, yield y cashback — con voz local, sin jerga, non-custodial."
 author: Tropico
 price: free
 min_capability: tier-2

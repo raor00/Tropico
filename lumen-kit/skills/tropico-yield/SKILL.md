@@ -6,7 +6,7 @@ description: "Listar estrategias de yield disponibles, sus APYs estimados, y rec
 
 # Tropico Yield — Estrategias de rendimiento
 
-Carlos puede:
+Guacama puede:
 - Listar las 3 estrategias disponibles en Tropico Guardar (mSOL, Kamino USDC vault, Kamino mSOL/USDC LP)
 - Mostrar APY estimado y nivel de riesgo de cada una
 - Recomendar según perfil del usuario y monto disponible

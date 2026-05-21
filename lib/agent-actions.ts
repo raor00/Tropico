@@ -1,5 +1,5 @@
 /**
- * Definición de las 4 acciones agentic de Carlos.
+ * Definición de las 4 acciones agentic de Guacama.
  *
  * En MVP están SIMULADAS. En producción Q3 van sobre arquitectura híbrida:
  *  - Hermes (Nous Research) para razonamiento + memoria + skill orchestration
@@ -96,7 +96,7 @@ export const AGENT_ACTIONS: AgentAction[] = [
     gradient: "from-tropico-sea/30 to-tropico-green/10",
     titulo: "Auto-yield al recibir remesa",
     descripcionUsuario:
-      "Cuando recibas más de un monto X (típicamente una remesa), Carlos mueve el excedente a Save automáticamente. Tu plata trabaja sola.",
+      "Cuando recibas más de un monto X (típicamente una remesa), Guacama mueve el excedente a Save automáticamente. Tu plata trabaja sola.",
     policy: "Máximo 1 ejecución por día, solo si saldo USDC > umbral",
     triggerProduccion: "Webhook on-chain del wallet del usuario",
     defaultConfig: {
@@ -179,7 +179,7 @@ export function simulateExecution(
       return {
         exito: true,
         mensaje: `Moviendo $${aMover} a ${config.estrategia === "msol" ? "mSOL (Marinade)" : "Kamino USDC vault"}`,
-        detalle: `Detección simulada de transfer entrante de $${config.umbral * 3}. Carlos sugiere mover el ${config.porcentaje}% del excedente a Save para generar ~5% APY.`,
+        detalle: `Detección simulada de transfer entrante de $${config.umbral * 3}. Guacama sugiere mover el ${config.porcentaje}% del excedente a Save para generar ~5% APY.`,
       };
 
     case "auto-cashback-claim":

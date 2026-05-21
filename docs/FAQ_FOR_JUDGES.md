@@ -73,11 +73,11 @@ Tropico no opera fiat directamente en US o EU. Para onramp internacional usamos 
 
 ---
 
-### 6. ¿Carlos AI / Lumen es solo un wrapper de LLM?
+### 6. ¿Guacama AI / Lumen es solo un wrapper de LLM?
 
 No. Lumen es un framework con arquitectura de 3 capas:
 
-- **Personality YAML**: define quién es Carlos (voseo venezolano, reglas no-política, no-garantías).
+- **Personality YAML**: define quién es Guacama (voseo venezolano, reglas no-política, no-garantías).
 - **Skills**: 7 skills tipadas con descripción + parámetros + capability mapping.
 - **Capabilities**: scripts Python ejecutables (consultan precios reales en Jupiter v6, balances en Helius, etc.).
 
@@ -93,7 +93,7 @@ Tres vías:
 
 1. **Spread en mint/burn** (0.3–0.5%): cada conversión USDC↔BsX deja un pequeño excedente en el vault que es revenue del protocolo. Acumulado sobre miles de transacciones es significativo.
 2. **Yield share opcional** (Q4): con consentimiento del usuario, parte del USDC ocioso en el vault se rutea a yield USDC (Kamino, Marinade). 20% del rendimiento queda en Tropico. El usuario sigue pudiendo burnear 1:1 — el yield es sobre la fracción excedente.
-3. **Merchant fee + Premium Carlos + SDK**: estos son streams aledaños al BsX core, pero alimentados por la red que BsX habilita.
+3. **Merchant fee + Premium Guacama + SDK**: estos son streams aledaños al BsX core, pero alimentados por la red que BsX habilita.
 
 Tropico no captura valor "robándole" al usuario — captura del flujo, igual que Stripe captura sobre cada transacción procesada.
 
@@ -116,11 +116,11 @@ No es decisión religiosa — es la chain que técnicamente cumple los requisito
 ### 9. ¿Cuánto del producto está construido? ¿Cuánto es slideware?
 
 **Construido y vivo en `tropico-rho.vercel.app`**:
-- 9 módulos navegables (Home, Cambiar, Cobrar, Enviar, Guardar, Pago Móvil VE, Carlos AI, Remesas, Perfil).
+- 9 módulos navegables (Home, Cambiar, Cobrar, Enviar, Guardar, Pago Móvil VE, Guacama AI, Remesas, Perfil).
 - Privy MPC integration funcional.
 - Jupiter v6 quotes reales con `platformFeeBps=50`.
 - Solana Pay QR generation client-side.
-- Carlos AI con LLM real (DeepSeek/Gemini) y fallback inteligente.
+- Guacama AI con LLM real (DeepSeek/Gemini) y fallback inteligente.
 - i18n 4 idiomas (es, en, pt, fr).
 - Modo demo devnet con faucets públicos para jueces.
 - Token TROPI deployado en devnet con mint tx verificable.
@@ -141,7 +141,7 @@ No es decisión religiosa — es la chain que técnicamente cumple los requisito
 
 Tres razones:
 
-1. **Founder-market fit**: somos venezolanos, vivimos el problema. La María de la bodega y el Carlos del freelance NO son personas en un slide — son nuestros vecinos.
+1. **Founder-market fit**: somos venezolanos, vivimos el problema. La María de la bodega y el Guacama del freelance NO son personas en un slide — son nuestros vecinos.
 2. **Track record**: dev3pack 2026 #1 Venezuela, #28 global, #10 LatAm de 386 proyectos. Validación pre-Colosseum.
 3. **Velocidad de shipping**: 9 módulos live en demo público + BsX program scaffolded en el hackathon window. Demuestra capacidad de ejecución bajo presión.
 
@@ -171,7 +171,7 @@ Posible pero improbable a corto plazo:
 - **Coinbase** no opera retail en VE por sanctions.
 - **Phantom** es non-custodial generalista, no construye verticales geográficos.
 
-Aún si lo hicieran, nuestro moat es: Pago Móvil VE integration, brand local, Carlos AI con voseo, comercios físicos afiliados. Replicar eso desde Singapore/SF tarda 12–18 meses.
+Aún si lo hicieran, nuestro moat es: Pago Móvil VE integration, brand local, Guacama AI con voseo, comercios físicos afiliados. Replicar eso desde Singapore/SF tarda 12–18 meses.
 
 Para entonces nosotros tenemos PMF + capital + Card + 100k usuarios. Es el mismo playbook que Bitso defendió en México vs Coinbase.
 
@@ -206,7 +206,7 @@ Honestidad: si en 6 meses GMV BsX no crece a >$5M, pivotamos a:
 - **Plan B**: empezar por Colombia con COP onchain (mercado más estable, mismo playbook).
 - **Plan C**: convertir Tropico en SDK pure-play (`@tropico/sdk` como rail B2B para apps que quieran USDC LatAm).
 
-El moat técnico (BsX framework + Carlos AI + Pago Móvil knowledge) se transfiere a otros corredores LatAm con mínima reescritura.
+El moat técnico (BsX framework + Guacama AI + Pago Móvil knowledge) se transfiere a otros corredores LatAm con mínima reescritura.
 
 ---
 

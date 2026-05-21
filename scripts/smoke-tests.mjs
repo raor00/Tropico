@@ -21,8 +21,8 @@ const ROUTES = [
   { path: "/enviar", label: "enviar" },
   { path: "/guardar", label: "guardar" },
   { path: "/depositar", label: "depositar" },
-  { path: "/carlos", label: "carlos" },
-  { path: "/carlos/agente", label: "carlos-agente" },
+  { path: "/guacama", label: "guacama" },
+  { path: "/guacama/agente", label: "guacama-agente" },
   { path: "/comercios", label: "comercios" },
   { path: "/remesas", label: "remesas" },
   { path: "/pagar-servicios", label: "pagar-servicios" },
@@ -136,16 +136,16 @@ async function testInteractions(page) {
     interactions.push({ test: "enviar-pubkey-input", ok: false, error: e.message });
   }
 
-  // 4. /carlos — verifica chat input
+  // 4. /guacama — verifica chat input
   try {
-    await page.goto(`${BASE}/carlos`, { waitUntil: "domcontentloaded" });
+    await page.goto(`${BASE}/guacama`, { waitUntil: "domcontentloaded" });
     const hasChat = await page
       .locator("textarea, input[type='text']")
       .first()
       .isVisible({ timeout: 5000 });
-    interactions.push({ test: "carlos-chat-input", ok: hasChat });
+    interactions.push({ test: "guacama-chat-input", ok: hasChat });
   } catch (e) {
-    interactions.push({ test: "carlos-chat-input", ok: false, error: e.message });
+    interactions.push({ test: "guacama-chat-input", ok: false, error: e.message });
   }
 
   // 5. Header consistency — sticky pill en /cobrar

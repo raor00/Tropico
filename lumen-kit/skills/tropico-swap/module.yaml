@@ -1,7 +1,7 @@
 name: tropico-swap
 version: 0.1.0
 display_name: "Tropico Swap"
-description: "Carlos cotiza y propone swaps via Jupiter v6 con platformFeeBps de Tropico. La firma siempre la hace el usuario."
+description: "Guacama cotiza y propone swaps via Jupiter v6 con platformFeeBps de Tropico. La firma siempre la hace el usuario."
 author: Tropico
 price: free
 min_capability: tier-2

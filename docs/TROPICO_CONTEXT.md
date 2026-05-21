@@ -45,11 +45,11 @@ CAPA INTEGRACIÓN (bridges)
   lib/jupiter.ts                ← swap Jupiter v6 (platformFeeBps=50)
   lib/solana-pay.ts             ← Solana Pay + durable nonces offline
 
-CAPA AGENTE (Lumen runtime + GuacamaAI, ex-Carlos)
+CAPA AGENTE (Lumen runtime + GuacamaAI, ex-Guacama)
   lumen-kit/                    ← KIT + SKILLS declarativas
   lumen-capabilities/           ← scripts Python ejecutables
-  lib/carlos-prompt.ts          ← system prompt del agente (pendiente rename)
-  app/api/carlos/               ← proxy LLM (DeepSeek / Gemini / fallback)
+  lib/guacama-prompt.ts          ← system prompt del agente (pendiente rename)
+  app/api/guacama/               ← proxy LLM (DeepSeek / Gemini / fallback)
 
 CAPA APLICACIÓN
   app/ (Next.js 15 App Router)  ← módulos consumer + merchant
@@ -105,11 +105,11 @@ Matemática: `bsx = usdc * peg_rate / 1_000_000`. El mismo protocolo escala a AR
 | 4 | Enviar | `/enviar` | P2P directo + claim links + pago a comercio con QR Suiche7B |
 | 5 | Guardar | `/guardar` | Yield ~5-7% APY — mSOL (Marinade) o Kamino |
 | 6 | Pago Móvil VE | `/pagar-servicios` | QR Suiche7B + conversión USDC→Bs + Pago Móvil en 2-5s |
-| 7 | GuacamaAI (ex-Carlos) | `/carlos` | Agente venezolano sobre Lumen |
+| 7 | GuacamaAI (ex-Guacama) | `/guacama` | Agente venezolano sobre Lumen |
 | 8 | Remesas | `/remesas` | On-ramp aggregator (UI; MoonPay/Transak/Ramp/Stripe) |
 | 9 | Mi Trópico | `/perfil` | Avatar, nombre, pubkey, cluster, importar wallet |
 | 10 | Offline | `/offline` | Firma txs sin conexión con durable nonces |
-| 11 | WhatsApp Bot | `/carlos/whatsapp` | Demo del agente via WhatsApp Cloud API |
+| 11 | WhatsApp Bot | `/guacama/whatsapp` | Demo del agente via WhatsApp Cloud API |
 
 ### Auxiliares
 
@@ -117,7 +117,7 @@ Matemática: `bsx = usdc * peg_rate / 1_000_000`. El mismo protocolo escala a AR
 |---|---|---|
 | Descubrir | `/descubrir` | Catálogo educativo de 9 tokens curados |
 | Claim | `/claim/[id]` | Receptor de claim links de `/enviar` |
-| Modo Agente | `/carlos/agente` | DCA, auto-yield, cashback, rebalance |
+| Modo Agente | `/guacama/agente` | DCA, auto-yield, cashback, rebalance |
 | Integraciones | `/integraciones` | Demo Trópico Pay para merchants |
 | Intercambio P2P | `/intercambio-p2p` | **DEPRECADO** — redirige a `/cambiar` |
 | Comercios | `/comercios` | Directorio de comercios afiliados con cashback |
@@ -214,14 +214,14 @@ La llave privada completa **nunca existe** en ningún servidor. Para firmar una 
 
 ## 10. Marca y assets de marketing (sesión mayo 2026)
 
-### 10.1 Rebrand: Carlos AI → GuacamaAI
+### 10.1 Rebrand: Guacama AI → GuacamaAI
 
-El agente de IA pasa de **"Carlos AI"** a **"GuacamaAI"** (juego de palabras: guacamaya + AI).
+El agente de IA pasa de **"Guacama AI"** a **"GuacamaAI"** (juego de palabras: guacamaya + AI).
 
 - **Estética:** guacamaya 3D estilo Pixar (cabeza roja, hombros amarillos, alas azules, parche facial blanco, ojos negros amables, pico curvo corto). Señal de "AI" sutil: chispas/sparkles, headset minimalista o anillo holográfico — evitar circuitos/pantallas.
 - **Diferenciación:** el loro grande en la escena de la isla es la "mascota ambiente" (full body); GuacamaAI es un personaje chibi/cabezón estilo emoji 3D, misma paleta pero proporciones más cute.
-- **Aplica en:** card de feature inferior, tab bar del teléfono (`GUACAMAAI` reemplaza `CARLOS`), copy de marketing.
-- **Pendiente en código (NO ejecutado aún):** renombrar `lib/carlos-prompt.ts` → `lib/guacama-prompt.ts`, rutas `/carlos` → `/guacama`, `app/api/carlos/` → `app/api/guacama/`, entradas de i18n. Requiere refactor explícito.
+- **Aplica en:** card de feature inferior, tab bar del teléfono (`GUACAMA` reemplaza `GUACAMA`), copy de marketing.
+- **Pendiente en código (NO ejecutado aún):** renombrar `lib/guacama-prompt.ts` → `lib/guacama-prompt.ts`, rutas `/guacama` → `/guacama`, `app/api/guacama/` → `app/api/guacama/`, entradas de i18n. Requiere refactor explícito.
 
 ### 10.2 Post de Instagram — diseño
 
@@ -230,7 +230,7 @@ Formato 1080×1350 (4:5). Estilo 3D claymation/Pixar, paleta pastel caribeña.
 **Estructura del diseño:**
 - Tercio superior: isla tropical (palmera + guacamaya + montañas pixel-art + sol), wordmark "Trópico" en gradiente arcoíris, tagline "Tu wallet tropical", pill "Pagos simples con sabor Caribe".
 - Fila de badges informativas: "Non-custodial · Privy MPC", "Pago Móvil VE en 2-5s", "Solana · Fee <$0.001", "Disponible en 4 idiomas".
-- Tercio medio: mockup de teléfono con la home (saldo $0.00 USDC, modo demo devnet, botones Depositar/Reclamar faucet, tab bar INICIO/CAMBIAR/COBRAR/GUACAMAAI/COMERCIOS, card de cashback).
+- Tercio medio: mockup de teléfono con la home (saldo $0.00 USDC, modo demo devnet, botones Depositar/Reclamar faucet, tab bar INICIO/CAMBIAR/COBRAR/GUACAMA/COMERCIOS, card de cashback).
 - Floating info cards alrededor del teléfono: "🏆 Dev3pack 2026 #1 Venezuela", "🇻🇪 Hecho en Venezuela", "⚡ +25 comercios afiliados", "🔒 Tu llave, tu plata".
 - Tercio inferior: 4 feature cards — Paga y cobra (wallet), Comercios (storefront), Multi-chain (monedas + logo Solana), GuacamaAI (guacamaya chibi).
 - Margen derecho: 4 stickers 3D (isla, guacamaya, coco dormido con zzz, coco transmitiendo con ondas).
@@ -267,7 +267,7 @@ Tono educativo/fundacional (presenta el proyecto desde cero, plantea el problema
 
 ### 10.5 Post original en X (referencia de mensajería)
 
-> *"Tropico Wallet es una super-app financiera para venezolanos, construida sobre @solana 🇻🇪 USDC → Bs en segundos · Remesas sin bancos, Yield nativo, Carlos AI [→ GuacamaAI], tu copiloto financiera. No es solo una wallet. Es la alternativa financiera que Venezuela necesita."*
+> *"Tropico Wallet es una super-app financiera para venezolanos, construida sobre @solana 🇻🇪 USDC → Bs en segundos · Remesas sin bancos, Yield nativo, Guacama AI [→ GuacamaAI], tu copiloto financiera. No es solo una wallet. Es la alternativa financiera que Venezuela necesita."*
 
 ### 10.6 Conversación con LEVELoxyz (incubadora) — origen del roadmap no-P2P
 
@@ -299,7 +299,7 @@ Implementado custom en `lib/i18n/dictionary.ts` + `lib/i18n/context.tsx`, sin li
 | `docs/ROADMAP.md` | Roadmap original Q3 2026 → Q1 2027 |
 | `docs/PROTOCOL_BSX.md` | Spec técnica del protocolo BsX |
 | `docs/ARCHITECTURE.md` | Arquitectura de componentes |
-| `docs/CARLOS_AI.md` | Agente AI (pendiente rename a GuacamaAI) |
+| `docs/GUACAMA_AI.md` | Agente AI (pendiente rename a GuacamaAI) |
 | `docs/LUMEN_INTEGRATION.md` | Lumen runtime |
 | `docs/INTEGRATION_API.md` | Spec Trópico Pay (endpoints, webhooks HMAC) |
 | `docs/ANCHOR_PROGRAM.md` | Deploy de programas Anchor |
@@ -311,7 +311,7 @@ Implementado custom en `lib/i18n/dictionary.ts` + `lib/i18n/context.tsx`, sin li
 
 ## 13. Tareas pendientes destacadas (backlog vivo)
 
-- [ ] Refactor de código Carlos → GuacamaAI (`lib/carlos-prompt.ts`, rutas `/carlos`, `app/api/carlos/`, i18n, `docs/CARLOS_AI.md`).
+- [ ] Refactor de código Guacama → GuacamaAI (`lib/guacama-prompt.ts`, rutas `/guacama`, `app/api/guacama/`, i18n, `docs/GUACAMA_AI.md`).
 - [ ] Ejecutar Fase 0 del roadmap MVP (matar mocks, backend Supabase, peg-oracle).
 - [ ] Firmar ≥1 partner de liquidez licenciado (Reserve preferido).
 - [ ] Diseñar el ícono final de GuacamaAI (guacamaya chibi 3D) y reemplazar el robot en assets + tab bar.

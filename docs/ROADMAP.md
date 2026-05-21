@@ -13,7 +13,7 @@ Tropico crece en 4 dimensiones simultáneas:
 3. **Nuevos módulos** — Card, Vaults curados, Lending, Earn (cashback), eventualmente facturación electrónica para merchants.
 4. **Geografía** — Venezuela primero; luego Colombia, Argentina, México, Perú.
 
-**Principios no negociables**: non-custodial siempre; Carlos AI transversal; cero EVM/Tron/Bitcoin (Solana Maxi); copy localizado por país; **confianza radical: cada fee de Tropico es público y verificable on-chain**; cero opinión política.
+**Principios no negociables**: non-custodial siempre; Guacama AI transversal; cero EVM/Tron/Bitcoin (Solana Maxi); copy localizado por país; **confianza radical: cada fee de Tropico es público y verificable on-chain**; cero opinión política.
 
 ---
 
@@ -46,11 +46,11 @@ Tropico crece en 4 dimensiones simultáneas:
 - Integración WhatsApp Business API para recibos automáticos
 - Dashboard de ingresos con totales en USD/bs/día/mes
 
-### Carlos (contexto + memoria)
-- Memoria por usuario (vía Privy session): Carlos recuerda conversaciones previas
+### Guacama (contexto + memoria)
+- Memoria por usuario (vía Privy session): Guacama recuerda conversaciones previas
 - Recomendaciones proactivas: "Hace 2 semanas hablamos de mSOL. ¿Activamos yield ahora?"
 - Voz: input por micrófono + respuesta TTS (Gemini supports audio)
-- Modo agente: "Carlos, swap $50 de USDC a JTO" → propone tx + usuario firma
+- Modo agente: "Guacama, swap $50 de USDC a JTO" → propone tx + usuario firma
 
 ### Capa agéntica REAL — Lumen + Privy delegated keys (OpenClaw opcional)
 
@@ -97,10 +97,10 @@ Tropico crece en 4 dimensiones simultáneas:
 - Cashback/loyalty layer transversal: usar Cambiar, Enviar, Cobrar genera puntos $TROPICO (token interno o solo airdrops puntuales)
 - Referidos: invita a un amigo, ganan ambos $5 de USDC en su próximo swap
 
-### Carlos AI proactivo (Q4 2026)
-- Carlos detecta oportunidades sin que el usuario configure
+### Guacama AI proactivo (Q4 2026)
+- Guacama detecta oportunidades sin que el usuario configure
 - Ejemplos: flagea inactividad de USDC ("tienes $500 USDC parados desde hace 2 semanas, ¿activamos yield?"), sugiere DCA basado en patrón de gastos, alerta de oportunidades de mercado relevantes para el portfolio del usuario
-- Sigue siendo non-custodial — Carlos solo SUGIERE, usuario firma
+- Sigue siendo non-custodial — Guacama solo SUGIERE, usuario firma
 
 ---
 
@@ -114,7 +114,7 @@ Tropico crece en 4 dimensiones simultáneas:
 - Chile (CLP)
 
 Cada país requiere:
-- Localización de copy (Carlos habla colombiano/argentino/mexicano/etc.)
+- Localización de copy (Guacama habla colombiano/argentino/mexicano/etc.)
 - Tasa local en API (replicar `ve.dolarapi.com` con `co.dolarapi.com`, etc., o usar exchange rate APIs)
 - Partners de on-ramp locales (Bitso para MX, Lemon para AR, Bitnovo para CO)
 - Compliance / legal por país
@@ -135,7 +135,7 @@ Cambiar (full)      Cambiar + DCA        Cambiar + signals   LATAM Cambiar
 Enviar (UI)         Enviar (real)        Enviar multi-curr   LATAM Enviar
 Guardar (UI)        Guardar (real)       Guardar + Vaults    LATAM Guardar
 Cobrar (UI)         Cobrar (real)        Cobrar + Card POS   LATAM Cobrar
-Carlos (full)       Carlos + memoria     Carlos + agente     Carlos polyglot
+Guacama (full)       Guacama + memoria     Guacama + agente     Guacama polyglot
                     On-ramp real         Tropico Card        Solana Mobile
                                          Tropico Vaults      
                                          Tropico Earn        
@@ -162,9 +162,9 @@ Para mantener foco, hay 6 cosas que **nunca** estarán en el roadmap:
 
 1. **Custodia de fondos** — Tropico jamás toca llaves privadas. Si necesitamos custodia parcial (ej. para Card), partner con un licenciado, no construimos custody.
 2. **Soporte multi-chain (EVM/BTC/Tron)** — Solana Maxi para siempre. Si un usuario quiere puentear, recomendamos Wormhole y se va a otra app.
-3. **Asesoría financiera personalizada** — Carlos educa, no recomienda comprar X o Y. Siempre disclaimer.
+3. **Asesoría financiera personalizada** — Guacama educa, no recomienda comprar X o Y. Siempre disclaimer.
 4. **Yield "garantizado"** — todo yield se muestra con su riesgo. Cero promesas.
-5. **Política / propaganda** — cero opinión sobre gobiernos, sanciones, regímenes. Carlos redirige.
+5. **Política / propaganda** — cero opinión sobre gobiernos, sanciones, regímenes. Guacama redirige.
 6. **Datos vendibles** — Tropico no vende datos del usuario a terceros. Privacy-first como compromiso público.
 
 ---
@@ -191,7 +191,7 @@ Para mantener foco, hay 6 cosas que **nunca** estarán en el roadmap:
 | Privy | Embedded wallet | Alto — single point of auth | Wallet Adapter directo (peor UX) |
 | Jupiter | Swap aggregator | Crítico para Cambiar | Raydium SDK directo |
 | Helius | RPC | Medio | api.mainnet-beta + QuickNode |
-| Gemini | Carlos AI | Medio | Groq Llama 3.3 + OpenAI |
+| Gemini | Guacama AI | Medio | Groq Llama 3.3 + OpenAI |
 | ve.dolarapi.com | Tasa bs | Bajo | Cache + scraper propio |
 | Reap/Rain | Card issuer (Q4) | Alto si dependemos | Multi-issuer strategy |
 | Reserve | On-ramp partner | Medio | Multiple P2P partners |

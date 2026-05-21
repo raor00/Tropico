@@ -1,4 +1,4 @@
-# Tropico Solana Monitoring — Cómo Carlos vigila la blockchain
+# Tropico Solana Monitoring — Cómo Guacama vigila la blockchain
 
 > Pregunta del usuario: "¿Integraste el Solana program para monitorear todo lo que se haga del lado de Solana?"
 
@@ -21,7 +21,7 @@ Solana programs (Anchor) sirven para **escribir/modificar estado on-chain**. Par
 
 ---
 
-## Qué monitorea Carlos AI by Lumen
+## Qué monitorea Guacama AI by Lumen
 
 ### 1. Wallets de usuarios
 
@@ -33,11 +33,11 @@ Capability: `lumen-capabilities/balances/wallet_balances.py`
 # Devuelve: { sol, usdc, usdt, jup, jto, msol, kmno, ray, bonk, ... }
 ```
 
-Carlos invoca esto cuando el usuario pregunta "¿cuánto tengo?" o cuando necesita validar saldo antes de un swap/send.
+Guacama invoca esto cuando el usuario pregunta "¿cuánto tengo?" o cuando necesita validar saldo antes de un swap/send.
 
 ### 2. Tropico Treasury (recibo de fees)
 
-Wallet de Tropico tiene 3 ATAs públicas (USDC/USDT/wSOL). Carlos puede consultar en cualquier momento cuánto fee se ha acumulado:
+Wallet de Tropico tiene 3 ATAs públicas (USDC/USDT/wSOL). Guacama puede consultar en cualquier momento cuánto fee se ha acumulado:
 
 ```bash
 spl-token balance <USDC_ATA> --owner <TROPICO_TREASURY>
@@ -47,7 +47,7 @@ O via Helius RPC. Esto es **transparencia radical** — cualquier usuario puede 
 
 ### 3. Solana Pay references (confirmación de cobros)
 
-Cada sesión de cobro o Tropico Pay tiene un `reference` (pubkey base58 32 chars). Carlos usa `findReference` del SDK `@solana/pay`:
+Cada sesión de cobro o Tropico Pay tiene un `reference` (pubkey base58 32 chars). Guacama usa `findReference` del SDK `@solana/pay`:
 
 ```typescript
 import { findReference } from "@solana/pay";
@@ -61,7 +61,7 @@ Esto permite confirmar pagos en ~1 segundo sin polling.
 
 ### 4. P2P swap epochs (NUEVO — `/intercambio-p2p`)
 
-Carlos monitorea cada 250ms el orderbook P2P. Cuando un epoch cierra (cada 10s):
+Guacama monitorea cada 250ms el orderbook P2P. Cuando un epoch cierra (cada 10s):
 - Detecta intents nuevos
 - Valida balances de cada participante (lectura on-chain)
 - Ejecuta el matching aleatorio
@@ -73,7 +73,7 @@ Carlos monitorea cada 250ms el orderbook P2P. Cuando un epoch cierra (cada 10s):
 Q3 setup en Helius dashboard:
 - Webhook 1: cualquier transfer USDC al wallet del usuario → trigger `auto-yield` agent action
 - Webhook 2: cualquier transfer al treasury de Tropico → trigger transparency dashboard refresh
-- Webhook 3: cualquier intent al pool P2P → trigger Carlos epoch validator
+- Webhook 3: cualquier intent al pool P2P → trigger Guacama epoch validator
 
 Helius parsea las txs y devuelve JSON estructurado. Más eficiente que parsear logs raw.
 
@@ -98,14 +98,14 @@ Helius parsea las txs y devuelve JSON estructurado. Más eficiente que parsear l
 │  lumen-capabilities/*.py   │  │  app/api/webhooks/helius/*       │
 │  - wallet_balances.py      │  │  - on-deposit → auto-yield       │
 │  - cashback_summary.py     │  │  - on-treasury → transparency    │
-│  - solana_pay_url.py       │  │  - on-p2p-intent → Carlos epoch  │
+│  - solana_pay_url.py       │  │  - on-p2p-intent → Guacama epoch  │
 └────────────────────────────┘  └──────────────────────────────────┘
               │                          │
               └──────────┬───────────────┘
                          ▼
               ┌──────────────────────┐
-              │  Carlos AI by Lumen  │
-              │  /api/carlos/route   │
+              │  Guacama AI by Lumen  │
+              │  /api/guacama/route   │
               │  - Decide cuándo actuar
               │  - Valida pre/post tx
               │  - Reporta al usuario
@@ -165,7 +165,7 @@ wscat -c wss://mainnet.helius-rpc.com/?api-key=YOUR_KEY
 > {"jsonrpc":"2.0","id":1,"method":"accountSubscribe","params":[<pubkey>]}
 ```
 
-Todo lo que Carlos ve, vos podés ver. **Transparencia radical** = principio #5 de Tropico.
+Todo lo que Guacama ve, vos podés ver. **Transparencia radical** = principio #5 de Tropico.
 
 ---
 

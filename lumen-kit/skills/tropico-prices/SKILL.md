@@ -6,7 +6,7 @@ description: "Consultar precios USD de tokens Solana y la tasa USD/VES paralelo 
 
 # Tropico Prices — Precios USD + tasa Bs
 
-Carlos puede consultar:
+Guacama puede consultar:
 - Precio USD actual de cualquier token del catálogo Tropico (SOL, USDC, USDT, JUP, JTO, mSOL, KMNO, RAY, BONK) vía Jupiter Price API
 - Tasa paralelo USD/VES desde ve.dolarapi.com (la realidad para el venezolano)
 

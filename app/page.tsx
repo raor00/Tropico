@@ -8,6 +8,7 @@ import {
   AlertTriangle,
   ArrowLeftRight,
   Bot,
+  Building2,
   CheckCircle2,
   Compass,
   ExternalLink,
@@ -46,9 +47,9 @@ const VALUE_CARDS = [
   },
   {
     title: "Crece",
-    body: "Carlos, tu copiloto financiero, te acompaña. ¿Qué comprar? ¿Cómo funciona el staking? Te explica.",
+    body: "Guacama, tu copiloto financiero, te acompaña. ¿Qué comprar? ¿Cómo funciona el staking? Te explica.",
     accent: "from-tropico-sea/30 to-transparent",
-    badge: "Carlos AI",
+    badge: "Guacama AI",
     Icon: Sparkles,
   },
 ];
@@ -103,6 +104,12 @@ const MODULES = [
     desc: "Yield mSOL + Kamino",
   },
   {
+    Icon: Building2,
+    name: "Inmuebles",
+    href: "/inmuebles",
+    desc: "Compra acciones de inmuebles tokenizados desde $2 · by Crixto",
+  },
+  {
     Icon: Zap,
     name: "Pago Móvil VE",
     href: "/pagar-servicios",
@@ -123,13 +130,13 @@ const MODULES = [
   {
     Icon: MessageCircle,
     name: "WhatsApp Bot",
-    href: "/carlos/whatsapp",
+    href: "/guacama/whatsapp",
     desc: "Controla tu wallet desde WhatsApp",
   },
   {
     Icon: Sparkles,
-    name: "Carlos AI",
-    href: "/carlos",
+    name: "Guacama AI",
+    href: "/guacama",
     desc: "Copiloto IA en venezolano",
   },
 ];
@@ -155,7 +162,7 @@ const REVENUE_STREAMS = [
   { name: "Send", rate: "0.3%", color: "text-tropico-sun" },
   { name: "Save (yield)", rate: "2%", color: "text-tropico-sea" },
   { name: "Merchant fee", rate: "1%", color: "text-tropico-coral" },
-  { name: "Carlos AI", rate: "—", color: "text-tropico-sun" },
+  { name: "Guacama AI", rate: "—", color: "text-tropico-sun" },
 ];
 
 export default function LandingPage() {
@@ -359,7 +366,7 @@ export default function LandingPage() {
                 {
                   name: "Crixto",
                   similar: "Wallet con foco venezolano, soporta criptos.",
-                  diff: "Tropico corre sobre Solana mainnet (no chain propio), comercios afiliados con QR, Carlos AI by Lumen, Tropico Pay como gateway B2B. Multi-feature integrado, no app independiente.",
+                  diff: "Tropico corre sobre Solana mainnet (no chain propio), comercios afiliados con QR, Guacama AI by Lumen, Tropico Pay como gateway B2B. Multi-feature integrado, no app independiente.",
                 },
                 {
                   name: "p2p.me",
@@ -592,7 +599,7 @@ export default function LandingPage() {
             La app completa
           </span>
           <h2 className="font-display text-3xl font-bold md:text-4xl">
-            Una sola app, 10 módulos que cambian tu economía.
+            Una sola app, 11 módulos que cambian tu economía.
           </h2>
           <p className="max-w-3xl text-tropico-mute">
             Puedes probar TODAS sin instalar nada. Sin Privy configurado, la app
@@ -678,9 +685,9 @@ export default function LandingPage() {
         </div>
       </ScrollReveal>
 
-      {/* CARLOS AI BY LUMEN — sección dedicada, el diferencial principal */}
+      {/* GUACAMA AI BY LUMEN — sección dedicada, el diferencial principal */}
       <ScrollReveal
-        id="carlos"
+        id="guacama"
         direction="right"
         as="section"
         className="relative flex flex-col gap-8 overflow-hidden scroll-mt-24"
@@ -697,7 +704,7 @@ export default function LandingPage() {
         <div className="space-y-3">
           <div className="inline-flex w-fit items-center gap-2 rounded-full border border-tropico-purple/40 bg-tropico-purple/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-tropico-purple">
             <Sparkles className="size-3" strokeWidth={2.5} />
-            Carlos AI <span className="text-tropico-mute">by</span> Lumen
+            Guacama AI <span className="text-tropico-mute">by</span> Lumen
           </div>
           <h2 className="font-display text-3xl font-black leading-tight md:text-5xl">
             Tu copiloto financiero
@@ -713,7 +720,7 @@ export default function LandingPage() {
             </span>
           </h2>
           <p className="max-w-3xl text-base text-tropico-mute md:text-lg">
-            Carlos no es un chatbot. Es un agente con personalidad, conocimiento
+            Guacama no es un chatbot. Es un agente con personalidad, conocimiento
             de dominio y herramientas reales — corriendo sobre{" "}
             <a
               href="https://github.com/lumen-agent/lumen"
@@ -732,7 +739,7 @@ export default function LandingPage() {
         {/* 7 capacidades reales — más prominente */}
         <div>
           <h3 className="mb-3 text-xs font-semibold uppercase tracking-widest text-tropico-mute">
-            Las 7 capacidades de Carlos (todas funcionan ya)
+            Las 7 capacidades de Guacama (todas funcionan ya)
           </h3>
           <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
             {[
@@ -775,7 +782,7 @@ export default function LandingPage() {
               <span className="text-tropico-sea">Con tus reglas.</span>
             </h3>
             <p className="max-w-3xl text-sm text-tropico-mute">
-              Activa Modo Agente y Carlos ejecuta 4 acciones autónomas dentro de
+              Activa Modo Agente y Guacama ejecuta 4 acciones autónomas dentro de
               los límites que TÚ defines. En MVP confirma con un click; Q3 2026
               corre 100% autónomo via Privy delegated session keys. Tú revocas
               cuando quieras. Llaves nunca expuestas.
@@ -829,7 +836,7 @@ export default function LandingPage() {
               <span className="mt-0.5 text-tropico-purple">→</span>
               <span>
                 <strong className="text-tropico-text">Tool calling real</strong>{" "}
-                — Carlos invoca scripts Python que tocan Solana RPC, Jupiter,
+                — Guacama invoca scripts Python que tocan Solana RPC, Jupiter,
                 DolarAPI. No es un wrapper de chat.
               </span>
             </li>
@@ -846,13 +853,13 @@ export default function LandingPage() {
 
         <div className="flex flex-wrap gap-3">
           <Link
-            href="/carlos"
+            href="/guacama"
             className="btn-primary inline-flex items-center gap-2"
           >
-            <Sparkles className="size-4" /> Hablar con Carlos
+            <Sparkles className="size-4" /> Hablar con Guacama
           </Link>
           <Link
-            href="/carlos/agente"
+            href="/guacama/agente"
             className="btn-ghost inline-flex items-center gap-2"
           >
             <Bot className="size-4" /> Ver Modo Agente
@@ -1003,17 +1010,17 @@ export default function LandingPage() {
             <span className="text-xs font-semibold uppercase tracking-wider text-tropico-text">
               IA + Recursos
             </span>
-            <Link href="/carlos" className="text-xs hover:text-tropico-sun">
-              Carlos AI
+            <Link href="/guacama" className="text-xs hover:text-tropico-sun">
+              Guacama AI
             </Link>
             <Link
-              href="/carlos/agente"
+              href="/guacama/agente"
               className="text-xs hover:text-tropico-sun"
             >
               Modo Agente
             </Link>
             <Link
-              href="/carlos/whatsapp"
+              href="/guacama/whatsapp"
               className="text-xs hover:text-tropico-sun"
             >
               WhatsApp Bot

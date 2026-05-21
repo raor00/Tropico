@@ -60,7 +60,7 @@ export default function CambiarPage() {
         >
           Jupiter Aggregator
         </a>{" "}
-        · Bolívares via Tropico Liquidity Pool (Carlos AI by Lumen monitorea cada swap).
+        · Bolívares via Tropico Liquidity Pool (Guacama AI by Lumen monitorea cada swap).
       </footer>
     </main>
   );

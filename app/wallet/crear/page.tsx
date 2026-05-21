@@ -319,7 +319,7 @@ export default function CrearWalletPage() {
                 { href: "/guardar", label: "🌱 Guardar" },
                 { href: "/remesas", label: "🌐 Remesas" },
                 { href: "/pagar-servicios", label: "⚡ Servicios" },
-                { href: "/carlos", label: "🤖 Carlos AI" },
+                { href: "/guacama", label: "🤖 Guacama AI" },
               ].map((m) => (
                 <Link
                   key={m.href}

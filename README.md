@@ -28,7 +28,7 @@ Demo live: https://tropico-rho.vercel.app
 2. En `/home` → botón "Modo demo · devnet" → fondear con faucets públicos (SOL + USDC devnet)
 3. `/cambiar` tab Bolívares → flujo BsX: depositá USDC, recibís BsX a la tasa del día
 4. `/pagar-servicios` → Pago Móvil VE: escaneá QR Suiche7B o ingresá datos manual
-5. `/carlos` → preguntá "¿cuánto vale el dólar hoy?" o "cobrale $5 a Juan en BsX"
+5. `/guacama` → preguntá "¿cuánto vale el dólar hoy?" o "cobrale $5 a Juan en BsX"
 
 Detalle completo: [`docs/JUDGE_DEMO_GUIDE.md`](docs/JUDGE_DEMO_GUIDE.md)
 
@@ -53,7 +53,7 @@ npm run dev
 # → http://localhost:3000
 ```
 
-Sin ninguna key, la app corre en **modo demo** con mocks honestos y banners explícitos. Carlos AI usa smart fallback (sin LLM real). Ningún flow visual queda roto.
+Sin ninguna key, la app corre en **modo demo** con mocks honestos y banners explícitos. Guacama AI usa smart fallback (sin LLM real). Ningún flow visual queda roto.
 
 ### Variables de entorno
 
@@ -65,7 +65,7 @@ NEXT_PUBLIC_PRIVY_APP_ID=
 NEXT_PUBLIC_HELIUS_RPC=https://mainnet.helius-rpc.com/?api-key=YOUR_KEY
 HELIUS_API_KEY=
 
-# Carlos AI — LLM (elige uno)
+# Guacama AI — LLM (elige uno)
 GOOGLE_GENERATIVE_AI_API_KEY=   # Gemini 2.0 Flash
 # DEEPSEEK_API_KEY=              # alternativa más barata
 
@@ -97,11 +97,11 @@ CAPA INTEGRACIÓN (bridges)
   lib/jupiter.ts                ← swap Jupiter v6 platformFeeBps=50
   lib/solana-pay.ts             ← Solana Pay + durable nonces offline
 
-CAPA AGENTE (Lumen runtime + Carlos)
+CAPA AGENTE (Lumen runtime + Guacama)
   lumen-kit/                    ← KIT + 7 SKILLS declarativas (Lumen)
   lumen-capabilities/           ← scripts Python ejecutables (Lumen)
-  lib/carlos-prompt.ts          ← system prompt Carlos AI
-  app/api/carlos/               ← proxy LLM (DeepSeek / Gemini / fallback)
+  lib/guacama-prompt.ts          ← system prompt Guacama AI
+  app/api/guacama/               ← proxy LLM (DeepSeek / Gemini / fallback)
 
 CAPA APLICACIÓN
   app/ (Next.js 15 App Router)  ← 9 módulos consumer + merchant
@@ -145,11 +145,11 @@ Spec completa: [`docs/PROTOCOL_BSX.md`](docs/PROTOCOL_BSX.md)
 | 4 | **Enviar** | `/enviar` | P2P directo + claim links compartibles + pago a comercio con QR Suiche7B auto FX |
 | 5 | **Guardar** | `/guardar` | Yield ~5-7% APY — mSOL (Marinade) o Kamino |
 | 6 | **Pago Móvil VE** | `/pagar-servicios` | QR Suiche7B + conversión USDC→Bs + Pago Móvil al banco destino en 2-5s |
-| 7 | **Carlos AI** | `/carlos` | Agente venezolano sobre Lumen — 7 capabilities + Modo Agente |
+| 7 | **Guacama AI** | `/guacama` | Agente venezolano sobre Lumen — 7 capabilities + Modo Agente |
 | 8 | **Remesas** | `/remesas` | On-ramp aggregator (MoonPay/Transak/Ramp/Stripe Crypto) |
 | 9 | **Mi Tropico** | `/perfil` | Avatar, nombre editable, pubkey, cluster, importar wallet |
 | 10 | **Offline** | `/offline` | Firma txs sin conexión con durable nonces de Solana — queue local, sync al reconectar |
-| 11 | **WhatsApp Bot** | `/carlos/whatsapp` | Demo Carlos via WhatsApp Cloud API — comandos de texto, aprobación biométrica on-chain |
+| 11 | **WhatsApp Bot** | `/guacama/whatsapp` | Demo Guacama via WhatsApp Cloud API — comandos de texto, aprobación biométrica on-chain |
 
 ### Módulos auxiliares
 
@@ -157,7 +157,7 @@ Spec completa: [`docs/PROTOCOL_BSX.md`](docs/PROTOCOL_BSX.md)
 |---|---|---|
 | **Descubrir** | `/descubrir` | Catálogo educativo de 9 tokens curados |
 | **Claim** | `/claim/[id]` | Receptor de claim links de /enviar |
-| **Modo Agente** | `/carlos/agente` | 4 acciones autónomas: DCA, auto-yield, cashback, rebalance |
+| **Modo Agente** | `/guacama/agente` | 4 acciones autónomas: DCA, auto-yield, cashback, rebalance |
 | **Integraciones** | `/integraciones` | Demo Tropico Pay para merchants e integradores |
 | **Intercambio P2P** | `/intercambio-p2p` | OTC P2P entre usuarios |
 | **Comercios** | `/comercios` | Directorio de comercios afiliados con cashback |
@@ -165,15 +165,15 @@ Spec completa: [`docs/PROTOCOL_BSX.md`](docs/PROTOCOL_BSX.md)
 
 ---
 
-## Carlos AI y Lumen
+## Guacama AI y Lumen
 
 **Lumen** (`lumen-kit/`, `lumen-capabilities/`) es el runtime de agentes — framework open-source por @gabogabucho. Define personalidad (YAML), skills (markdown), y ejecuta capabilities (scripts Python).
 
-**Carlos** (`lib/carlos-prompt.ts`, `app/carlos/`) es el agente de producto construido sobre Lumen. Habla venezolano, conoce Solana, y tiene reglas inviolables (cero política, cero garantías de rendimientos).
+**Guacama** (`lib/guacama-prompt.ts`, `app/guacama/`) es el agente de producto construido sobre Lumen. Habla venezolano, conoce Solana, y tiene reglas inviolables (cero política, cero garantías de rendimientos).
 
 ```
 KIT (lumen-kit/kit/)
-  personality.yaml  → identidad Carlos: voz VE, reglas, knowledge
+  personality.yaml  → identidad Guacama: voz VE, reglas, knowledge
         │
         ▼
 SKILLS (lumen-kit/skills/)
@@ -189,7 +189,7 @@ CAPABILITIES (lumen-capabilities/)
   [+ 5 capabilities pendientes post-hackathon]
 ```
 
-Doc completa: [`docs/CARLOS_AI.md`](docs/CARLOS_AI.md) — [`docs/LUMEN_INTEGRATION.md`](docs/LUMEN_INTEGRATION.md)
+Doc completa: [`docs/GUACAMA_AI.md`](docs/GUACAMA_AI.md) — [`docs/LUMEN_INTEGRATION.md`](docs/LUMEN_INTEGRATION.md)
 
 ---
 
@@ -320,7 +320,7 @@ Implementado custom en `lib/i18n/dictionary.ts` + `lib/i18n/context.tsx`. Sin li
 |---|---|
 | [`docs/PROTOCOL_BSX.md`](docs/PROTOCOL_BSX.md) | Spec técnica del protocolo BsX |
 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Arquitectura de componentes |
-| [`docs/CARLOS_AI.md`](docs/CARLOS_AI.md) | Carlos AI: arquitectura, capabilities, FAQ |
+| [`docs/GUACAMA_AI.md`](docs/GUACAMA_AI.md) | Guacama AI: arquitectura, capabilities, FAQ |
 | [`docs/LUMEN_INTEGRATION.md`](docs/LUMEN_INTEGRATION.md) | Lumen runtime: setup, deployment, replicabilidad |
 | [`docs/INTEGRATION_API.md`](docs/INTEGRATION_API.md) | Spec Tropico Pay: endpoints, webhooks HMAC |
 | [`docs/ANCHOR_PROGRAM.md`](docs/ANCHOR_PROGRAM.md) | Deploy de los programas Anchor |

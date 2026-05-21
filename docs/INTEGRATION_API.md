@@ -278,7 +278,7 @@ Tu endpoint debe responder `200 OK` en menos de 5 segundos. Si falla:
 
 ### 5.4 SaaS y suscripciones (streaming, software, coworking)
 
-**Flujo**: el usuario activa Modo Agente en Tropico → autoriza una `DCA semanal` que paga al partner cada mes con su `merchantWallet` → Carlos firma la renovación con session key delegada vía OpenClaw + Privy.
+**Flujo**: el usuario activa Modo Agente en Tropico → autoriza una `DCA semanal` que paga al partner cada mes con su `merchantWallet` → Guacama firma la renovación con session key delegada vía OpenClaw + Privy.
 
 **Por qué encaja**: cobros recurrentes sin tarjeta que vence. El usuario controla policy (max amount, frequency).
 

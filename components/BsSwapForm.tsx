@@ -51,7 +51,7 @@ const POOL_WALLET = "G4BPreo5Sbcr9WDf7ykzJ3yHMBMNHwWacYYxzSs4GSJB";
  * instante al rate del momento (DolarAPI paralelo). Tropico cobra spread 1.5%
  * y rota la liquidez en background entre quienes venden y quienes compran.
  *
- * Carlos AI by Lumen monitorea la pool, ejecuta cada swap, valida AML pre-tx,
+ * Guacama AI by Lumen monitorea la pool, ejecuta cada swap, valida AML pre-tx,
  * y reporta al usuario. Settlement <1 segundo siempre.
  */
 
@@ -597,11 +597,11 @@ export function BsSwapForm({
         </div>
       )}
 
-      {/* Carlos monitoring */}
+      {/* Guacama monitoring */}
       <div className="flex items-start gap-2 rounded-md border border-tropico-purple/20 bg-tropico-purple/5 p-3 text-xs">
         <Sparkles className="mt-0.5 size-3.5 shrink-0 text-tropico-purple" />
         <div className="text-tropico-mute">
-          <strong className="text-tropico-purple">Carlos AI by Lumen</strong>{" "}
+          <strong className="text-tropico-purple">Guacama AI by Lumen</strong>{" "}
           monitorea la pool, valida AML, ejecuta y audita en segundos. La pool
           rota Bs↔USDC en background entre vendedores y compradores — tú nunca
           esperas.

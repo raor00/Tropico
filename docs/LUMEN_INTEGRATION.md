@@ -1,12 +1,12 @@
 # Lumen Integration — el runtime agéntico de Tropico
 
-> **Decisión arquitectural**: Lumen es el runtime/framework de agentes sobre el que está construido Carlos AI. OpenClaw + Privy manejan la capa de firma autónoma en Modo Agente. **Tres roles, tres tecnologías, sin overlap**.
+> **Decisión arquitectural**: Lumen es el runtime/framework de agentes sobre el que está construido Guacama AI. OpenClaw + Privy manejan la capa de firma autónoma en Modo Agente. **Tres roles, tres tecnologías, sin overlap**.
 
 **Última actualización**: 2026-05-11
 
 ---
 
-## Lumen vs Carlos — aclaración fundamental
+## Lumen vs Guacama — aclaración fundamental
 
 Esta distinción era borrosa en versiones anteriores de la documentación. La establecemos aquí antes de cualquier otra cosa:
 
@@ -16,18 +16,18 @@ Dónde vive en este repo:
 - `lumen-kit/` — KIT declarativo: `module.yaml` + `personality.yaml` + 7 `SKILL.md`
 - `lumen-capabilities/` — scripts Python ejecutables que Lumen invoca via terminal connector
 
-**Carlos** es el agente de producto construido encima de Lumen. Habla español venezolano, conoce el ecosistema Solana, tiene reglas estrictas inviolables (cero política, cero garantías financieras), y opera en el contexto de la app Tropico.
+**Guacama** es el agente de producto construido encima de Lumen. Habla español venezolano, conoce el ecosistema Solana, tiene reglas estrictas inviolables (cero política, cero garantías financieras), y opera en el contexto de la app Tropico.
 
 Dónde vive en este repo:
-- `lib/carlos-prompt.ts` — system prompt: identidad + tono + reglas
+- `lib/guacama-prompt.ts` — system prompt: identidad + tono + reglas
 - `lib/agent-actions.ts` — las 4 acciones del Modo Agente
 - `lib/agent-rules-store.ts` — persistencia de reglas por usuario (localStorage)
-- `app/carlos/` — UI del chat
-- `app/carlos/agente/` — UI del Modo Agente
+- `app/guacama/` — UI del chat
+- `app/guacama/agente/` — UI del Modo Agente
 
-**Regla de oro**: cuando alguien dice "Carlos" se refiere al agente de producto. Cuando dice "Lumen" se refiere al runtime. Son capas distintas con responsabilidades distintas.
+**Regla de oro**: cuando alguien dice "Guacama" se refiere al agente de producto. Cuando dice "Lumen" se refiere al runtime. Son capas distintas con responsabilidades distintas.
 
-En el MVP actual, el frontend llama directamente al LLM en `app/api/carlos/route.ts` sin pasar por un servidor Lumen. El Web3 Kit (`lumen-kit/`) está completo y listo para ser cargado; la integración real con `lumen server` es trabajo post-Colosseum (ver sección 4 de este doc).
+En el MVP actual, el frontend llama directamente al LLM en `app/api/guacama/route.ts` sin pasar por un servidor Lumen. El Web3 Kit (`lumen-kit/`) está completo y listo para ser cargado; la integración real con `lumen server` es trabajo post-Colosseum (ver sección 4 de este doc).
 
 ---
 
@@ -35,8 +35,8 @@ En el MVP actual, el frontend llama directamente al LLM en `app/api/carlos/route
 
 ## 0. TL;DR
 
-Carlos AI ahora corre sobre **Lumen** (Python framework, open-source, MIT, repo: `gabogabucho/lumen-agent`). Lumen es un servidor que:
-- Define la **personalidad** de Carlos (`personality.yaml` — venezolano, no-política, no-garantías)
+Guacama AI ahora corre sobre **Lumen** (Python framework, open-source, MIT, repo: `gabogabucho/lumen-agent`). Lumen es un servidor que:
+- Define la **personalidad** de Guacama (`personality.yaml` — venezolano, no-política, no-garantías)
 - Carga **6 skills** que dicen QUÉ puede hacer (consultar precios, balances, swaps, pagos, yield, cashback, agent-actions)
 - Ejecuta **capabilities** (Python scripts) vía terminal connector con allowlist
 - Expone REST API (`/api/chat`) que el frontend Next.js consume
@@ -59,8 +59,8 @@ Carlos AI ahora corre sobre **Lumen** (Python framework, open-source, MIT, repo:
 ┌─────────────────────────────────────────────────────────────────────┐
 │                       Frontend Tropico (Next.js)                    │
 │                                                                     │
-│  /carlos (chat UI)  ──────────►  POST /api/chat  ──────►  Lumen    │
-│  /carlos/agente (Modo Agente UI)                                    │
+│  /guacama (chat UI)  ──────────►  POST /api/chat  ──────►  Lumen    │
+│  /guacama/agente (Modo Agente UI)                                    │
 └─────────────────────────────────────────────────────────────────────┘
                                                               │
                                                               ▼
@@ -69,7 +69,7 @@ Carlos AI ahora corre sobre **Lumen** (Python framework, open-source, MIT, repo:
 │                                                                    │
 │  ┌──────────────────┐   ┌────────────────────┐                     │
 │  │  personality.yaml │   │  6 SKILLs           │                   │
-│  │  Carlos           │   │  - tropico-prices   │                   │
+│  │  Guacama           │   │  - tropico-prices   │                   │
 │  │  - voz venezolana │   │  - tropico-balances │                   │
 │  │  - reglas estrict.│   │  - tropico-swap     │                   │
 │  │  - knowledge VE   │   │  - tropico-pay      │                   │
@@ -125,7 +125,7 @@ Hackathon/
 ├── lumen-kit/                                # El KIT de Lumen
 │   ├── kit/
 │   │   ├── module.yaml                       # Metadatos: tropico-wallet-kit v0.1.0
-│   │   └── personality.yaml                  # Carlos venezolano + reglas + knowledge
+│   │   └── personality.yaml                  # Guacama venezolano + reglas + knowledge
 │   └── skills/
 │       ├── tropico-prices/                   # Precios USD + tasa Bs
 │       │   ├── module.yaml
@@ -169,7 +169,7 @@ Hackathon/
 
 | Componente | Path | Estado |
 |---|---|---|
-| Kit module + personality | `lumen-kit/kit/*` | Listo, parametriza Carlos |
+| Kit module + personality | `lumen-kit/kit/*` | Listo, parametriza Guacama |
 | 7 SKILL.md | `lumen-kit/skills/*/SKILL.md` | Listos, documentan rutas + reglas |
 | 7 module.yaml por skill | `lumen-kit/skills/*/module.yaml` | Listos, declaran allowlist + config |
 | `precio_bs.py` | `lumen-capabilities/prices/` | Devuelve Bs. real de ve.dolarapi.com |
@@ -342,7 +342,7 @@ lumen server --config config-tropico.yaml
 ### 4.5 Test desde el frontend Next.js
 
 ```ts
-// app/api/carlos/route.ts (reemplaza el endpoint Gemini cuando se conecte Lumen)
+// app/api/guacama/route.ts (reemplaza el endpoint Gemini cuando se conecte Lumen)
 export async function POST(req: Request) {
   const { message, history } = await req.json();
   const lumenRes = await fetch("http://localhost:3099/api/chat", {
@@ -433,7 +433,7 @@ Hermes Agent (Nous Research) tiene memoria persistente y skill creation, pero:
 Lumen NO firma transacciones por sí solo. Para las acciones autónomas del Modo Agente (DCA, auto-yield, auto-cashback, re-balance), usamos **OpenClaw + Privy delegated keys**:
 
 ```
-Carlos (Lumen)  ──decide──►  OpenClaw skill  ──policy check──►  Privy MPC  ──signs──►  Solana
+Guacama (Lumen)  ──decide──►  OpenClaw skill  ──policy check──►  Privy MPC  ──signs──►  Solana
 ```
 
 - **Lumen** decide CUÁNDO y QUÉ ejecutar (basándose en triggers + reglas activas)
@@ -449,13 +449,13 @@ Esta integración requiere los 4 scripts pendientes en `lumen-capabilities/agent
 
 ### Frase clave
 
-> "Carlos, nuestro copiloto IA, corre sobre **Lumen** — un framework open-source de agentes con personality + skills + memoria persistente. Lumen decide qué hacer, **OpenClaw** firma las transacciones autónomas con Privy delegated keys. Tres tecnologías open-source, no-custodiales, trabajando juntas."
+> "Guacama, nuestro copiloto IA, corre sobre **Lumen** — un framework open-source de agentes con personality + skills + memoria persistente. Lumen decide qué hacer, **OpenClaw** firma las transacciones autónomas con Privy delegated keys. Tres tecnologías open-source, no-custodiales, trabajando juntas."
 
 ### Demo flow para mostrar Lumen en vivo (post-MVP cuando esté integrado)
 
-1. Usuario abre `/carlos` y pregunta "¿A cuánto está SOL?"
+1. Usuario abre `/guacama` y pregunta "¿A cuánto está SOL?"
 2. Frontend Next.js POST `/api/chat` → reverse proxy a Lumen `localhost:3099`
-3. Lumen carga `personality.yaml` (Carlos venezolano) + selecciona skill `tropico-prices`
+3. Lumen carga `personality.yaml` (Guacama venezolano) + selecciona skill `tropico-prices`
 4. Lumen lee `SKILL.md` de `tropico-prices` → identifica `precio_usd.py` como el comando relevante
 5. Lumen ejecuta `python3 precio_usd.py --instance tropico-mvp --token SOL` via terminal connector
 6. Script devuelve JSON: `{"priceUSD": 91.53, "priceChange24h": 3.41}`
@@ -475,7 +475,7 @@ Funciona, pero pierde:
 - Personality.yaml editable sin recompilar
 - Skills/capabilities pattern para escalar
 - Memoria persistente entre conversaciones
-- Multi-platform (Carlos puede correr también en Telegram/WhatsApp en Q4)
+- Multi-platform (Guacama puede correr también en Telegram/WhatsApp en Q4)
 - Hot reload de personality sin restart
 
 ### ¿Cuánto cuesta correr Lumen en producción?
@@ -486,7 +486,7 @@ Funciona, pero pierde:
 
 ### ¿Qué pasa si Lumen está caído?
 
-Frontend tiene fallback: muestra "Carlos está descansando, intenta en unos minutos" + ofrece quick prompts pre-cacheados que no requieren Lumen (educación estática del catálogo de tokens).
+Frontend tiene fallback: muestra "Guacama está descansando, intenta en unos minutos" + ofrece quick prompts pre-cacheados que no requieren Lumen (educación estática del catálogo de tokens).
 
 ### ¿Las llaves del usuario están seguras?
 
@@ -504,8 +504,8 @@ DeepSeek-V4-flash es la recomendación default por costo/velocidad. Gemini 2.0 F
 
 - [ ] Escribir los 16 scripts capabilities pendientes
 - [ ] Setup Lumen en VPS (Hetzner o DigitalOcean)
-- [ ] Conectar frontend `app/api/carlos/route.ts` → Lumen REST
-- [ ] Testing end-to-end del flow Carlos chat
+- [ ] Conectar frontend `app/api/guacama/route.ts` → Lumen REST
+- [ ] Testing end-to-end del flow Guacama chat
 - [ ] Documentación de deployment
 
 ### Sprint 2 (post-hackathon, ~3 semanas)
@@ -519,8 +519,8 @@ DeepSeek-V4-flash es la recomendación default por costo/velocidad. Gemini 2.0 F
 ### Sprint 3 (post-hackathon, ~4 semanas)
 
 - [ ] Memoria persistente del usuario en Lumen (recuerda conversaciones, preferencias)
-- [ ] Multi-platform: Carlos en WhatsApp Bot + Telegram Bot
-- [ ] Carlos proactivo: detecta oportunidades sin que el usuario configure
+- [ ] Multi-platform: Guacama en WhatsApp Bot + Telegram Bot
+- [ ] Guacama proactivo: detecta oportunidades sin que el usuario configure
 
 ---
 
@@ -613,7 +613,7 @@ El adapter es ~30 líneas. Lo mismo aplica para OpenClaw — la skill `tropico-a
 1. **No nos casamos con un vendor**. Si Lumen cambia su licencia o muere, el kit sigue siendo nuestro.
 2. **Stack progresivo**. Hoy Lumen es suficiente para chat + lookup. Mañana sumamos Hermes para memoria persistente, OpenClaw para autonomía on-chain. Cada pieza es opcional.
 3. **Open source replicable**. El Web3 Kit es el primero de su tipo en español caribeño con foco fintech LATAM. Otros equipos pueden forkear y adaptar (replicar para Colombia, Argentina, México) sin tocar el orquestador.
-4. **Auditabilidad**. Personality.yaml + skills + capabilities son texto plano. Cualquiera puede revisar qué Carlos sabe, qué puede hacer, qué nunca hace. No hay caja negra.
+4. **Auditabilidad**. Personality.yaml + skills + capabilities son texto plano. Cualquiera puede revisar qué Guacama sabe, qué puede hacer, qué nunca hace. No hay caja negra.
 
 ### 13.5 Ruta de migración (post-hackathon)
 

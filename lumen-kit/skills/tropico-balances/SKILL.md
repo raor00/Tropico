@@ -6,7 +6,7 @@ description: "Leer saldos del wallet del usuario: SOL nativo + Associated Token 
 
 # Tropico Balances — Saldos del wallet
 
-Carlos puede consultar el saldo del wallet del usuario en Solana:
+Guacama puede consultar el saldo del wallet del usuario en Solana:
 - SOL nativo
 - USDC, USDT, JUP, JTO, mSOL, KMNO, RAY, BONK (SPL tokens)
 - Valor total USD + equivalente en Bs paralelo

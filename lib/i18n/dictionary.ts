@@ -27,7 +27,7 @@ export const dict = {
   "nav.enviar": { es: "Enviar", en: "Send", pt: "Enviar", fr: "Envoyer" },
   "nav.guardar": { es: "Guardar", en: "Save", pt: "Guardar", fr: "Épargner" },
   "nav.remesas": { es: "Remesas", en: "Remittances", pt: "Remessas", fr: "Transferts" },
-  "nav.carlos": { es: "Carlos", en: "Carlos", pt: "Carlos", fr: "Carlos" },
+  "nav.guacama": { es: "Guacama", en: "Guacama", pt: "Guacama", fr: "Guacama" },
   "nav.comercios": { es: "Comercios", en: "Merchants", pt: "Comércios", fr: "Commerces" },
   "nav.servicios": { es: "Servicios", en: "Bills", pt: "Contas", fr: "Factures" },
   "header.cta.mywallet": { es: "Mi Tropico", en: "My Tropico", pt: "Meu Tropico", fr: "Mon Tropico" },

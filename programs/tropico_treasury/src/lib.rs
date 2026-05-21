@@ -146,7 +146,7 @@ pub enum ModuleType {
     Swap,           // /cambiar
     Pay,            // /cobrar
     Yield,          // /guardar
-    Cashback,       // /carlos/agente cashback
+    Cashback,       // /guacama/agente cashback
     Remesas,        // /remesas
     Servicios,      // /pagar-servicios
     P2pBs,          // /cambiar tab Bolivares

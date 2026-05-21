@@ -64,7 +64,7 @@ USDC parqueado en wallets Tropico (con consentimiento del usuario) se rutea a Ma
 
 ---
 
-### Stream 4 · Premium Carlos AI — **$4.99/mes**
+### Stream 4 · Premium Guacama AI — **$4.99/mes**
 
 Tier de pago para acciones autónomas (Modo Agente):
 - DCA programado
@@ -101,7 +101,7 @@ Tier de pago para acciones autónomas (Modo Agente):
 | Swap spread | $80k | $235k |
 | Merchant fee | $120k | $240k |
 | Yield share | $40k | $90k |
-| Premium Carlos AI | $35k | $75k |
+| Premium Guacama AI | $35k | $75k |
 | SDK enterprise | $50k | $120k |
 | **Total** | **~$325k** | **~$760k** |
 
@@ -153,7 +153,7 @@ Asumiendo:
 |---|---|
 | Privy MPC | ~$0.005 |
 | Helius RPC | ~$0.01 |
-| OpenAI / Gemini / DeepSeek (Carlos) | ~$0.01–0.05 (cap a $0.10 con rate limiting) |
+| OpenAI / Gemini / DeepSeek (Guacama) | ~$0.01–0.05 (cap a $0.10 con rate limiting) |
 | Vercel + Cloudflare | ~$0.001 |
 | **Total infra / usuario / mes** | **~$0.02–0.06** |
 
@@ -201,12 +201,12 @@ Two-sided marketplace clásico:
 
 - Libreta de contactos privada por wallet (P2P + claim links históricos).
 - Histórico de pagos a comercios (loyalty acumulada).
-- Carlos AI con memoria personalizada (preferencias, presupuestos, frecuencia).
+- Guacama AI con memoria personalizada (preferencias, presupuestos, frecuencia).
 - BsX balance + reserva atestada — el usuario confía en este vault, no en el de otro.
 
 ### 6.3 Brand local
 
-- "Tropico" = identidad caribeña venezolana. Carlos AI habla con voseo natural.
+- "Tropico" = identidad caribeña venezolana. Guacama AI habla con voseo natural.
 - Marca pega antes que cualquier app gringa en español machine-translated.
 - Diáspora venezolana en Madrid, Buenos Aires, Miami reconoce y comparte.
 

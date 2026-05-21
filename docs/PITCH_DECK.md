@@ -154,7 +154,7 @@ ENFASIS en los números: '95%', '4.5%', '24-72 horas'. Deja pausar el final.
 - Saldo USDC + yield <span class="accent-green">~5% APY default ON</span>
 - Swap via Jupiter <span class="accent-green">0.5% fee</span>
 - QR Solana Pay para pagar
-- Carlos AI copiloto venezolano
+- Guacama AI copiloto venezolano
 
 </td>
 <td>
@@ -221,7 +221,7 @@ La frase clave es la última. Dila firme.
 `tropico.vercel.app`
 
 🤖 **Modo Agente**
-Carlos ejecuta DCA, auto-yield, cashback, re-balance con permisos limitados
+Guacama ejecuta DCA, auto-yield, cashback, re-balance con permisos limitados
 
 🧠 **Powered by Lumen**
 Open-source agent framework
@@ -241,9 +241,9 @@ SPEAKER NOTES (slide 4 — 90 segundos):
 "En 1 segundo el cliente paga, el comercio recibe, Tropico cobra su 1%, el cashback vuelve.
 TODO esto sin pasar por banco, sin Visa, sin Banesco. Eso es la red económica."
 
-[Mostrar /carlos/agente → activar DCA → simular ejecución]
+[Mostrar /guacama/agente → activar DCA → simular ejecución]
 
-"Carlos puede ejecutar acciones autónomas con permisos limitados via OpenClaw + Privy.
+"Guacama puede ejecutar acciones autónomas con permisos limitados via OpenClaw + Privy.
 DCA semanal, auto-yield, auto-cashback, re-balance. La parte agéntica es el wow técnico
 del meta AI Agents 2026."
 
@@ -266,7 +266,7 @@ Si la WiFi falla, hay video grabado de respaldo.
 <tr><td>Send</td><td><span class="accent-green">0.3%</span></td><td>Spread USDC en envíos peer-to-peer</td></tr>
 <tr><td>Yield (Save)</td><td><span class="accent-green">2% del yield</span></td><td>Performance fee sobre mSOL/Kamino</td></tr>
 <tr><td>Merchant</td><td><span class="accent-green">1%</span></td><td>Fee al comercio por cada cobro</td></tr>
-<tr><td>Carlos AI</td><td><span class="muted">acelerador</span></td><td>Multiplica retention 2-3×</td></tr>
+<tr><td>Guacama AI</td><td><span class="muted">acelerador</span></td><td>Multiplica retention 2-3×</td></tr>
 </table>
 
 <br/>

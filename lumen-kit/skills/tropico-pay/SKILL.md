@@ -6,7 +6,7 @@ description: "Generar URLs Solana Pay para Cobrar (merchant QR) y Enviar (claim 
 
 # Tropico Pay — Solana Pay URL builder + claim links
 
-Carlos puede:
+Guacama puede:
 - Generar URL Solana Pay + QR para que un merchant cobre USDC (módulo Cobrar)
 - Generar claim link para enviar USDC a alguien que NO tiene wallet aún (módulo Enviar — el receptor abre el link, login con email, recibe la plata)
 - Compartir cualquier URL via WhatsApp deep link

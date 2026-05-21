@@ -23,7 +23,7 @@ export function AgentHistory({ refreshKey = 0 }: { refreshKey?: number }) {
         <span className="text-3xl" aria-hidden>📋</span>
         <h3 className="font-display text-lg font-bold">Sin acciones aún</h3>
         <p className="text-sm text-tropico-mute">
-          Cuando Carlos ejecute una acción agentic, aparecerá acá.
+          Cuando Guacama ejecute una acción agentic, aparecerá acá.
           Activa alguna regla y simulá una ejecución para empezar.
         </p>
       </div>

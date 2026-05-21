@@ -19,7 +19,7 @@ Dos ejes para ubicar las categorías de players:
                                   │
                  Apps custodiales │      ▶ TROPICO
                  locales VE       │       (BsX rail JIT + Pago Móvil
-                                  │        + Carlos AI + non-custodial)
+                                  │        + Guacama AI + non-custodial)
                                   │
    Remesadoras ────────────────── + ──────────────── Exchanges P2P
    tradicionales                  │                   globales
@@ -145,7 +145,7 @@ Los jueces pueden verificar esto: el corpus que usan es el mismo.
 | Apps custodiales VE | Limitado | Sí | No (custodia) | No | No (cerrado) | Mix | No |
 | Wallets cripto generalistas | Sí | No | No | No | Variable | No | Sí |
 | Exchanges centralizados LatAm | Sí | No (otros rails) | No | No | No | No | No |
-| **Tropico** | **Sí** | **Sí (nativo)** | **Sí (BsX JIT)** | **Carlos + 4 acciones autónomas** | **Sí (onchain attest)** | **Sí** | **Sí (Privy MPC)** |
+| **Tropico** | **Sí** | **Sí (nativo)** | **Sí (BsX JIT)** | **Guacama + 4 acciones autónomas** | **Sí (onchain attest)** | **Sí** | **Sí (Privy MPC)** |
 
 ---
 
@@ -169,9 +169,9 @@ Una copia necesita: 6–9 meses, un equipo Solana competente, un oracle reputado
 
 ~90% de la economía cotidiana venezolana corre por Pago Móvil. Conocemos los 20+ bancos, los flows, los edge cases (cuándo se cae Banesco, cuándo Provincial tiene horario reducido, cómo funciona el formato QR de Suiche7B). Un equipo extranjero tarda meses solo en mapear esto.
 
-### 3. Carlos AI sobre Lumen (capability moat)
+### 3. Guacama AI sobre Lumen (capability moat)
 
-Carlos no es un wrapper de LLM:
+Guacama no es un wrapper de LLM:
 - Personalidad YAML con voseo venezolano nativo.
 - 7 skills tipadas con capabilities ejecutables (Python scripts que consultan Solana real-time).
 - Modo Agente con 4 acciones autónomas + policy engine.
@@ -183,7 +183,7 @@ Copiar esto requiere conocer Lumen framework + tener identidad local nativa + sc
 ### 4. Brand venezolana (network moat)
 
 - "Tropico" + paleta caribeña + Honk wordmark + Bricolage Grotesque = identidad reconocible.
-- Voseo natural en copy y Carlos.
+- Voseo natural en copy y Guacama.
 - Diáspora distribuye orgánicamente.
 - Comercios físicos con sticker "Acepta Tropico".
 

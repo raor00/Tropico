@@ -172,7 +172,7 @@ export const INTEGRATION_USE_CASES = [
     vertical: "SaaS y suscripciones",
     examples: ["Streaming", "Software", "Coworking"],
     icon: "💼",
-    why: "Cobros recurrentes vía Modo Agente del usuario (Carlos firma con su permiso).",
+    why: "Cobros recurrentes vía Modo Agente del usuario (Guacama firma con su permiso).",
     integration: "REST API + DCA agentic action",
   },
 ] as const;

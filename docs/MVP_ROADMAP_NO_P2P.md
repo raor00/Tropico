@@ -38,7 +38,7 @@ Este roadmap es la respuesta operativa a esa conversación: define el "routing i
 
 Tropico Wallet es una wallet non-custodial en Solana para Venezuela. Hoy en testnet, buscamos definir cómo el usuario podrá **comprar USDC/SOL con bolívares dentro de la app sin recurrir a un marketplace P2P**.
 
-El repo ya tiene infraestructura sólida — programa Anchor `tropico_bs` con `mint_bsx`/`burn_bsx`, Pago Móvil OUTBOUND vía Suiche7B, Privy MPC, Carlos AI sobre Lumen — pero el on-ramp Bs→USDC es **100% mock** (pool hardcoded en `components/BsSwapForm.tsx`, ningún partner real, sin KYC, sin backend). El módulo `/intercambio-p2p` ya está deprecado/redirigido a `/cambiar`, así que el camino "no-P2P" no requiere desmontar nada, sólo construir el reemplazo correcto.
+El repo ya tiene infraestructura sólida — programa Anchor `tropico_bs` con `mint_bsx`/`burn_bsx`, Pago Móvil OUTBOUND vía Suiche7B, Privy MPC, Guacama AI sobre Lumen — pero el on-ramp Bs→USDC es **100% mock** (pool hardcoded en `components/BsSwapForm.tsx`, ningún partner real, sin KYC, sin backend). El módulo `/intercambio-p2p` ya está deprecado/redirigido a `/cambiar`, así que el camino "no-P2P" no requiere desmontar nada, sólo construir el reemplazo correcto.
 
 **Objetivo:** llevar Tropico de "demo de hackathon" a "MVP en mainnet con 50 usuarios canary" en 14 semanas, definiendo las 4 rutas (Registro, Compra, Cambio bidireccional, Transferencia) con cero matching P2P.
 
@@ -69,7 +69,7 @@ El repo ya tiene infraestructura sólida — programa Anchor `tropico_bs` con `m
 | KYC / verificación identidad | —                                            | NO EXISTE   | Solo formato de cédula validado en pagos. Cero KYC real.                       |
 | AML / límites                | `lib/aml.ts`                                 | **MOCK**    | $5k/tx, $20k/día, $100k/mes en localStorage. Sin ledger server.                |
 | On-ramp partners             | `app/remesas/`                               | UI ONLY     | MoonPay/Transak/Ramp/Stripe mencionados, cero código/keys.                     |
-| Carlos AI capabilities       | `lumen-capabilities/`                        | 3/8         | Implementadas: `precio_bs`, `precio_usd`, `jupiter_quote`. Faltan 5.           |
+| Guacama AI capabilities       | `lumen-capabilities/`                        | 3/8         | Implementadas: `precio_bs`, `precio_usd`, `jupiter_quote`. Faltan 5.           |
 | `/intercambio-p2p`           | `app/intercambio-p2p/page.tsx:4-9`           | DEPRECADO   | Redirige a `/cambiar`. No requiere desmontaje.                                 |
 | Backend                      | —                                            | NO EXISTE   | Todo client-side u on-chain. Sin Postgres, sin webhooks, sin queue.            |
 | i18n                         | `lib/i18n/dictionary.ts`                     | REAL        | 4 idiomas (es/en/pt/fr), 100% cobertura. No tocar en MVP.                      |
@@ -122,7 +122,7 @@ El repo ya tiene infraestructura sólida — programa Anchor `tropico_bs` con `m
 **Entregables:**
 - Backend Supabase (Postgres + RLS) con esquema inicial: `users`, `kyc_records`, `ramp_orders`, `aml_ledger`, `partner_webhooks`, `peg_rates`. Migración en `supabase/migrations/0001_init.sql`.
 - Eliminar `POOL_BS_AVAILABLE` de `components/BsSwapForm.tsx` y `lib/p2p-swap.ts`. Reemplazar por llamada server a `/api/liquidity/quote` que devuelve 503 "sin liquidez" hasta Fase 1 (no mentir más en UI).
-- Sunset completo de `/intercambio-p2p`: quitar de nav, sitemap, README, `lib/carlos-prompt.ts`. Guardia CI en `scripts/smoke-tests.mjs` con grep para evitar reintroducción.
+- Sunset completo de `/intercambio-p2p`: quitar de nav, sitemap, README, `lib/guacama-prompt.ts`. Guardia CI en `scripts/smoke-tests.mjs` con grep para evitar reintroducción.
 - `lib/profile-store.ts` extendido: campos `email`, `phone_e164`, `cedula`, `jurisdiction`, `kyc_tier`, `kyc_status`. Source of truth en Postgres, localStorage es cache.
 - `lib/aml.ts` reescrito: misma API, backed por `/api/aml/ledger`. localStorage = cache optimista.
 - `scripts/peg-oracle.mjs`: worker que lee `ve.dolarapi.com` cada 60s y llama `tropico_bs.update_peg` en devnet. Hosted en Railway (~$5/mes).
@@ -167,7 +167,7 @@ El repo ya tiene infraestructura sólida — programa Anchor `tropico_bs` con `m
 
 1. Usuario indica monto en Bs o USDC objetivo. UI muestra quote agregado (mejor de los partners registrados), spread Tropico explícito (BCV+1.5%), timer de expiración 60s.
 2. Al aceptar, backend crea `ramp_orders` row con `status: AWAITING_DEPOSIT`, selecciona el partner más barato, genera instrucciones específicas de Pago Móvil (cédula/banco/teléfono del colector del partner + código de referencia único).
-3. UI muestra: *"Envía exactamente X,XX Bs por Pago Móvil al **0414-XXXXXXX, Banesco, V-XXXXXXX**, concepto **TR-AB12CD**"*. Botones de copia grandes. Carlos flotante con "¿necesitás ayuda?".
+3. UI muestra: *"Envía exactamente X,XX Bs por Pago Móvil al **0414-XXXXXXX, Banesco, V-XXXXXXX**, concepto **TR-AB12CD**"*. Botones de copia grandes. Guacama flotante con "¿necesitás ayuda?".
 4. Usuario hace Pago Móvil desde su app bancaria VE (out-of-band).
 5. **Partner webhook → `/api/ramp/webhook/[partner]`** confirma depósito (matched por código de referencia).
 6. Backend dispara settlement: oracle service llama `tropico_bs.mint_bsx` con el equivalente en USDC (USDC viene del **buffer de liquidez Tropico**, pre-fondeado ~$50k para MVP), inmediatamente llama `burn_bsx` para liberar USDC limpio a la **ATA del usuario**. Net: BsX vive segundos en tx history (transparencia on-chain), wallet del usuario termina con USDC.
@@ -281,7 +281,7 @@ El repo ya tiene infraestructura sólida — programa Anchor `tropico_bs` con `m
 - **Audit trail SAR-ready**: cada order/settlement/screening append-only en Postgres con hash chain; tool de export para compliance de partners.
 - **Observabilidad v2**: Grafana dashboard (peg deviation, partner uptime, settlement latency p50/p95/p99, AML hit rate). PagerDuty para partner-down y peg-stale.
 - **Tercer partner live**: traer el tercer LLP de sandbox a producción — el router necesita failover real (un demo con sólo 2 no es honesto).
-- **Carlos aware**: extender `lib/carlos-prompt.ts` para que pueda responder "¿por qué mi compra está pendiente?" leyendo `ramp_orders` (tool read-only en `lumen-capabilities/`).
+- **Guacama aware**: extender `lib/guacama-prompt.ts` para que pueda responder "¿por qué mi compra está pendiente?" leyendo `ramp_orders` (tool read-only en `lumen-capabilities/`).
 - **Tropico Card primer**: NO construir la card aún, pero: campo `card_eligible` en `users`, funnel `app/onboarding/kyc-tier-2/`, conversación Reap/Rain iniciada.
 - **Primer 2da jurisdicción**: campo `jurisdiction` ya abstraído; adapter `lib/ramp-partners/colombia/{bitso,littio}.ts` detrás de feature flag.
 
@@ -325,7 +325,7 @@ El repo ya tiene infraestructura sólida — programa Anchor `tropico_bs` con `m
 - `lib/p2p-swap.ts` — renombrar a `lib/bs-quote.ts`, reducir a helpers de pricing (el nombre engaña).
 - `app/cambiar/CambiarTabs.tsx` — Bs-comprar redirect a `/comprar`; Bs-vender → `SellUsdcForm`.
 - `app/claim/[id]/ClaimView.tsx` — llamar escrow on-chain.
-- `lib/carlos-prompt.ts` — borrar lenguaje P2P-marketplace; enseñar buy/sell/claim flows y partner status.
+- `lib/guacama-prompt.ts` — borrar lenguaje P2P-marketplace; enseñar buy/sell/claim flows y partner status.
 
 ---
 
@@ -414,8 +414,8 @@ Estos puntos son válidos pero **explícitamente diferidos** para post-MVP, para
 
 - **Tropico Card** (debit USDC + cashback): primer scaffolding en Fase 3, construcción real Q1 2027 con Reap/Rain.
 - **Compras de SOL nativo desde Bs**: el MVP cubre Bs→USDC; SOL se obtiene swap-eando USDC→SOL en el tab Jupiter ya existente. Compra directa Bs→SOL queda post-MVP.
-- **WhatsApp Bot productivo**: la demo en `/carlos/whatsapp` queda como demo. Producción Q3 2026 según ROADMAP.md original.
-- **Lumen server completo**: Carlos AI sigue con direct LLM calls (DeepSeek → Gemini fallback). Lumen runtime real es post-MVP.
+- **WhatsApp Bot productivo**: la demo en `/guacama/whatsapp` queda como demo. Producción Q3 2026 según ROADMAP.md original.
+- **Lumen server completo**: Guacama AI sigue con direct LLM calls (DeepSeek → Gemini fallback). Lumen runtime real es post-MVP.
 - **Yield real (Marinade/Kamino)**: `/guardar` queda con UI actual (mock). Activación real post-MVP.
 - **DCA, limit orders, swap history en USD/Bs**: roadmap Q3 original, no en MVP.
 - **Tropico Pay GA con SDK**: el endpoint `/api/checkout/create` queda como está; partner enrollment formal es post-MVP.
@@ -467,5 +467,5 @@ Cuando este roadmap esté aprobado para ejecutar:
 - Backend on-chain: `docs/BLOCKCHAIN_BACKEND.md`
 - Spec Tropico Pay: `docs/INTEGRATION_API.md`
 - Sistema de claim links: `docs/CLAIM_SYSTEM.md`
-- Carlos AI: `docs/CARLOS_AI.md` y `docs/LUMEN_INTEGRATION.md`
+- Guacama AI: `docs/GUACAMA_AI.md` y `docs/LUMEN_INTEGRATION.md`
 - Guía de demo para jueces: `docs/JUDGE_DEMO_GUIDE.md`

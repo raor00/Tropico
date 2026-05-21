@@ -87,7 +87,7 @@ const MODULES = [
     badge: "Nonces",
   },
   {
-    href: "/carlos/whatsapp",
+    href: "/guacama/whatsapp",
     Icon: MessageCircle,
     titulo: "WhatsApp Bot",
     descripcion: "Controla tu wallet desde WhatsApp con comandos de texto",
@@ -141,10 +141,10 @@ export default function HomePage() {
       {/* Saldo real on-chain (HomeBalances trae card + lista) */}
       <HomeBalances />
 
-      {/* Carlos AI — featured: agente autónomo dentro del wallet (diferencial único) */}
+      {/* Guacama AI — featured: agente autónomo dentro del wallet (diferencial único) */}
       <section className="flex flex-col gap-2">
         <Link
-          href="/carlos/agente"
+          href="/guacama/agente"
           className="panel group relative flex items-stretch gap-4 overflow-hidden border-tropico-purple/40 p-4 transition hover:border-tropico-purple/70 md:p-5"
         >
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-tropico-purple/25 via-tropico-coral/15 to-tropico-sun/10 opacity-70 transition group-hover:opacity-100" />
@@ -154,7 +154,7 @@ export default function HomePage() {
           <div className="relative flex min-w-0 flex-1 flex-col justify-center gap-1">
             <div className="flex items-center gap-2">
               <h3 className="font-display text-lg font-bold leading-tight md:text-xl">
-                Carlos AI — Agente autónomo
+                Guacama AI — Agente autónomo
               </h3>
               <span className="rounded-md bg-tropico-sun/20 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-tropico-sun">
                 Único
@@ -162,7 +162,7 @@ export default function HomePage() {
             </div>
             <p className="text-xs leading-snug text-tropico-text/85 md:text-sm">
               IA dentro de tu wallet — ejecuta swaps, DCA y cashback automático.
-              Tú diriges, Carlos actúa.
+              Tú diriges, Guacama actúa.
             </p>
           </div>
           <div className="relative hidden items-center self-center text-tropico-sun/80 transition group-hover:translate-x-1 group-hover:text-tropico-sun md:flex">
@@ -171,11 +171,11 @@ export default function HomePage() {
         </Link>
       </section>
 
-      {/* Notificaciones Carlos — descriptivas, sin saturar */}
+      {/* Notificaciones Guacama — descriptivas, sin saturar */}
       <section className="grid gap-3 md:grid-cols-2">
         {MOCK_CASHBACK_PENDIENTE.total > 0 && (
           <Link
-            href="/carlos/agente"
+            href="/guacama/agente"
             className="panel flex items-center gap-3 border-tropico-sun/30 bg-tropico-sun/5 p-4 transition hover:border-tropico-sun/60"
           >
             <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-tropico-sun/20 text-tropico-sun">
@@ -195,7 +195,7 @@ export default function HomePage() {
         )}
 
         <Link
-          href="/carlos/agente"
+          href="/guacama/agente"
           className="panel flex items-center gap-3 border-tropico-coral/30 bg-tropico-coral/5 p-4 transition hover:border-tropico-coral/60"
         >
           <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-tropico-coral/20 text-tropico-coral">
@@ -207,7 +207,7 @@ export default function HomePage() {
               {MOCK_NEXT_DCA.tokenDestino}
             </div>
             <div className="text-xs text-tropico-mute">
-              Lunes 10:00 — Carlos lo ejecuta automático
+              Lunes 10:00 — Guacama lo ejecuta automático
             </div>
           </div>
         </Link>

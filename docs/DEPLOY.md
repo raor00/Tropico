@@ -244,7 +244,7 @@ Antes de submit del hackathon:
 
 ```bash
 # Test rápido de las 11 rutas
-for r in / /home /cambiar /cobrar /enviar /guardar /depositar /comercios /carlos /carlos/agente /descubrir; do
+for r in / /home /cambiar /cobrar /enviar /guardar /depositar /comercios /guacama /guacama/agente /descubrir; do
   echo -n "$r: "
   curl -s -o /dev/null -w "%{http_code}\n" https://tu-url.vercel.app$r
 done

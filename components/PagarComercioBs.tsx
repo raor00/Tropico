@@ -448,7 +448,7 @@ export function PagarComercioBs({
         <div className="flex items-start gap-2">
           <Sparkles className="mt-0.5 size-3.5 shrink-0 text-tropico-purple" />
           <div className="text-tropico-mute">
-            <strong className="text-tropico-purple">Carlos AI</strong> valida el
+            <strong className="text-tropico-purple">Guacama AI</strong> valida el
             QR, calcula la mejor tasa de FX en tiempo real y audita el pago. Si
             excede límite AML (${AML_LIMITS.PER_TX_USD.toLocaleString()}/tx), te
             avisa antes.

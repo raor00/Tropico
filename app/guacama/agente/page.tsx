@@ -15,10 +15,10 @@ export default function ModoAgentePage() {
       {/* Header de página */}
       <header className="flex flex-col gap-4 pt-4">
         <Link
-          href="/carlos"
+          href="/guacama"
           className="w-fit text-sm text-tropico-mute transition hover:text-tropico-sun"
         >
-          &larr; Volver a Carlos
+          &larr; Volver a Guacama
         </Link>
 
         <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
@@ -29,7 +29,7 @@ export default function ModoAgentePage() {
             <div>
               <h1 className="font-display text-3xl font-bold">Modo Agente</h1>
               <p className="text-sm text-tropico-mute">
-                Carlos puede ejecutar acciones con tu permiso, dentro de límites
+                Guacama puede ejecutar acciones con tu permiso, dentro de límites
                 que tú defines
               </p>
             </div>
@@ -84,7 +84,7 @@ export default function ModoAgentePage() {
         </header>
 
         <p className="text-sm leading-relaxed text-tropico-mute">
-          Carlos no es un wrapper de ChatGPT. Es un agente con personalidad,
+          Guacama no es un wrapper de ChatGPT. Es un agente con personalidad,
           conocimiento de dominio y acceso a herramientas reales — corriendo
           sobre{" "}
           <a
@@ -115,7 +115,7 @@ export default function ModoAgentePage() {
               <code className="text-tropico-text">personality.yaml</code>
             </p>
             <p className="mt-2 text-xs text-tropico-mute">
-              Define qué es Carlos, cómo habla (español venezolano, sin jerga),
+              Define qué es Guacama, cómo habla (español venezolano, sin jerga),
               qué nunca hace (política, prometer rendimientos).
             </p>
           </div>
@@ -208,7 +208,7 @@ export default function ModoAgentePage() {
       </section>
 
       {/* ─────────────────────────────────────────────────────────── */}
-      {/* SECCIÓN: Carlos AI corre sobre Lumen — Hermes y OpenClaw    */}
+      {/* SECCIÓN: Guacama AI corre sobre Lumen — Hermes y OpenClaw    */}
       {/* son alternativas portables (no combinación obligatoria)     */}
       {/* ─────────────────────────────────────────────────────────── */}
       <section className="panel flex flex-col gap-5 p-6">
@@ -218,7 +218,7 @@ export default function ModoAgentePage() {
           </span>
           <div>
             <h2 className="font-display text-2xl font-bold">
-              Carlos AI <span className="text-tropico-purple">by Lumen</span>
+              Guacama AI <span className="text-tropico-purple">by Lumen</span>
             </h2>
             <p className="text-xs text-tropico-mute">
               Tropico eligió Lumen como motor. El kit es portable — Hermes y
@@ -233,7 +233,7 @@ export default function ModoAgentePage() {
             <div className="flex items-center gap-2">
               <span className="text-2xl">🌟</span>
               <h3 className="font-display text-lg font-bold text-tropico-sun">
-                Lumen — el motor de Carlos
+                Lumen — el motor de Guacama
               </h3>
             </div>
             <span className="rounded-full bg-tropico-green/20 px-2 py-0.5 text-[10px] font-semibold uppercase text-tropico-green">
@@ -305,7 +305,7 @@ export default function ModoAgentePage() {
             <ul className="flex flex-col gap-1 text-[11px] text-tropico-mute">
               <li>• Recuerda conversaciones previas</li>
               <li>• Multi-canal (web, Telegram, WhatsApp)</li>
-              <li>• Tropico evaluará en Q3 2026 para Carlos proactivo</li>
+              <li>• Tropico evaluará en Q3 2026 para Guacama proactivo</li>
             </ul>
           </div>
 
@@ -338,7 +338,7 @@ export default function ModoAgentePage() {
         {/* Diagrama del flow — Lumen es el motor, todo lo demás es opcional */}
         <div className="overflow-x-auto rounded-xl border border-tropico-border bg-tropico-ink/60 p-3 font-mono text-[10px] leading-relaxed text-tropico-mute sm:p-4 sm:text-[11px]">
           <div className="text-tropico-text mb-1">
-            // Flujo de Carlos sobre Lumen (MVP hoy)
+            // Flujo de Guacama sobre Lumen (MVP hoy)
           </div>
           <pre className="min-w-max whitespace-pre">{`Usuario  ──▶  Lumen (orquestador + tool calling)
                   │ "DCA semanal — quieres ejecutar?"
@@ -359,7 +359,7 @@ Usuario  ──▶  [Hermes opcional]  ──▶  Lumen Kit
 
         <p className="text-xs text-tropico-mute">
           <strong className="text-tropico-text">Resumen:</strong> Tropico hoy
-          corre <strong className="text-tropico-sun">Carlos AI by Lumen</strong>
+          corre <strong className="text-tropico-sun">Guacama AI by Lumen</strong>
           . Hermes añade memoria persistente si lo quieres; OpenClaw añade firma
           delegada on-chain si la quieres. El Tropico Web3 Kit es la pieza común
           que puede viajar entre los tres — eso lo hace replicable.{" "}

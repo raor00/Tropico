@@ -59,7 +59,7 @@ El "Modo demo · devnet" respeta esto: el usuario fondea su wallet propia desde 
 | **Swap** | `/cambiar` → tab "Tokens" | Quote real Jupiter v6 con `platformFeeBps=50` (mainnet) |
 | **Bs ↔ USDC** | `/cambiar` → tab "Bolívares" | Pool propio Tropico, settlement <1s |
 | **Pago Móvil VE** | `/pagar-servicios` | Scan QR Suiche7B (cámara) o entrada manual → pool Bs Tropico paga al banco destino |
-| **Carlos AI** | `/carlos` | Chat + 4 acciones agentic (DCA, auto-yield, cashback, rebalance) |
+| **Guacama AI** | `/guacama` | Chat + 4 acciones agentic (DCA, auto-yield, cashback, rebalance) |
 | **Perfil** | `/perfil` | Editar nombre, ver email Privy, eliminar wallet |
 | **Idiomas** | Header → globo | ES / EN / PT / FR |
 

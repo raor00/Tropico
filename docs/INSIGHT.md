@@ -96,7 +96,7 @@ Lo único que pueden hacer es ignorar o intentar regular el on/offramp fiat. **T
 - **Token TROPI deployado** en devnet, mint tx verificable en Solscan.
 - **Tropico Bs Bridge** integrado en `/pagar-servicios` con UI completa (scan QR Suiche7B, conversión USDC→Bs JIT, ejecución bancaria).
 - **BsX program** (`programs/tropico_bs/`) scaffolded — rail JIT abierto con `attest_reserves`, el moat técnico que nadie más tiene.
-- **Carlos AI by Lumen** funcionando con LLM real (DeepSeek default + Gemini fallback).
+- **Guacama AI by Lumen** funcionando con LLM real (DeepSeek default + Gemini fallback).
 - **Comunidad venezolana cripto** alineada — feedback positivo de operadores VE y comercios piloto. [TODO: cuantificar]
 
 ---

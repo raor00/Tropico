@@ -1,7 +1,7 @@
 name: tropico-prices
 version: 0.1.0
 display_name: "Tropico Prices"
-description: "Carlos consulta precios USD live de tokens Solana y la tasa USD/VES paralelo de Venezuela."
+description: "Guacama consulta precios USD live de tokens Solana y la tasa USD/VES paralelo de Venezuela."
 author: Tropico
 price: free
 min_capability: tier-2

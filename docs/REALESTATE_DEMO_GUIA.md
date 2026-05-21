@@ -24,7 +24,11 @@ Un marketplace donde un usuario venezolano compra **acciones fraccionadas** de u
 | KYC de wallets demo | ✅ seed wallet + wallet de la app (96Bj) |
 | Catálogo, detalle, portafolio (web) | ✅ rinden (HTTP 200) |
 | Lectura de saldos optimizada | ✅ de 10 llamadas RPC a 2 |
-| Comprar / reclamar renta / votar | ⏳ falta probar en navegador (requiere firmar con la wallet) |
+| Compra real on-chain (mintea token) | ✅ firma con Privy/wallet local; antes caía a modo demo |
+| Modal de confirmación de compra | ✅ muestra subtotal/fee/total/red + aviso de irreversibilidad |
+| Portafolio on-chain (`/mis-inmuebles`) | ✅ lee saldos reales con `fetchShareBalance` (antes era data hardcodeada) |
+| Transferencia de acciones (mercado secundario) | ✅ `ShareTransferCard` → `buildTransferShareTx` |
+| Reclamar renta / votar | ⏳ falta probar en navegador (requiere firmar con la wallet) |
 
 ---
 
@@ -61,17 +65,20 @@ Un marketplace donde un usuario venezolano compra **acciones fraccionadas** de u
 - **`Anchor.toml`** — registra el program ID por red.
 
 ### Cliente (puente app ↔ contrato)
-- **`lib/realestate-program.ts`** — arma las transacciones que el navegador firma (`buildBuySharesTx`, etc.) y deriva las direcciones PDA. Lee el program ID de la env `NEXT_PUBLIC_REALESTATE_PROGRAM_ID`.
+- **`lib/realestate-program.ts`** — arma las transacciones que el navegador firma (`buildBuySharesTx`, `buildTransferShareTx`, etc.), lee saldos (`fetchShareBalance`) y deriva las direcciones PDA. Lee el program ID de la env `NEXT_PUBLIC_REALESTATE_PROGRAM_ID`.
 - **`lib/properties.ts`** — catálogo estático de los inmuebles (nombre, fotos, precio mostrado, ids). Lo que se ve en las cards.
 - **`lib/balances.ts`** — lee saldos on-chain (SOL + tokens). Optimizado a 2 llamadas RPC.
 - **`lib/cluster.ts`** — qué red/RPC usar (devnet + Helius).
 
 ### UI (lo que ve el usuario)
 - **`app/inmuebles/page.tsx`** — catálogo (grid de inmuebles).
-- **`app/inmuebles/[id]/PropertyView.tsx`** — detalle: tour 3D + características + formulario de compra.
-- **`components/PropertyBuyForm.tsx`** — formulario de compra: calcula precio + fee, arma y firma la tx.
+- **`app/inmuebles/[id]/PropertyView.tsx`** — detalle: tour 3D (`model-viewer` con `.glb`, no iframe) + características + formulario de compra.
+- **`components/PropertyBuyFormPrivy.tsx`** — wrapper: si Privy está activo inyecta el signer real (`walletClientType === "privy"`); si no, renderiza el form pelado. **Sin esto la compra caía a modo demo** (firma falsa, no minteaba token).
+- **`components/PropertyBuyForm.tsx`** — formulario de compra: calcula precio + fee, abre el modal de confirmación (`requestBuy`) y al confirmar arma y firma la tx (`execute`).
+- **`components/ShareTransferCard.tsx`** — transferir acciones a otra wallet con KYC. Resuelve el signer (Privy o wallet local con password), arma la tx con `buildTransferShareTx`, firma y envía. Incluye modal de confirmación + link a Solscan.
 - **`app/inmuebles/[id]/gobernanza/`** — propuestas y votación.
-- **`app/mis-inmuebles/page.tsx`** — portafolio del inversor (sus acciones por inmueble).
+- **`app/mis-inmuebles/page.tsx`** — shell server; delega en `MisInmueblesEntry`.
+- **`components/MisInmueblesPrivy.tsx`** / **`components/MisInmueblesView.tsx`** — portafolio del inversor leído **on-chain**: recorre `PROPERTY_LIST`, llama `fetchShareBalance(id, investor)` y muestra solo las posiciones con saldo > 0.
 - **`components/BottomNav.tsx`** — pestaña "Inmuebles".
 
 ### Setup / scripts
@@ -172,13 +179,18 @@ No hay `vercel.json` — Next.js se detecta solo. Toda la config son **Environme
 4. **La compra exige fee ATAs reales.** El programa valida que `crixto_fee_ata`/`tropico_fee_ata` sean cuentas USDC (mismo mint del registry). Si las envs faltan, el front manda la wallet del inversor (que NO es una cuenta de token) → la tx falla. Por eso ambas envs apuntan a una ATA USDC existente.
 5. **Precios bajos = ids nuevos.** Los inmuebles on-chain son inmutables en precio (no hay instrucción de "cambiar precio"). Para bajar a 5/3/2 USDC se listaron **ids nuevos** (`-v2`); los viejos quedaron huérfanos en devnet (inofensivo).
 6. **Performance saldos.** `lib/balances.ts` ahora hace 1 sola query `getTokenAccountsByOwner` por programId (antes una por token) → de ~10 llamadas RPC a 2.
+7. **Bug arreglado — la compra no minteaba token.** `PropertyView` renderizaba `PropertyBuyForm` sin signer → `canDoRealTx = false` → modo demo (firma `DEMO_xxx` falsa, nada on-chain). Fix: `PropertyBuyFormPrivy` inyecta el signer real de Privy. Mismo patrón para `MisInmuebles` y `ShareTransferCard`.
+8. **El portafolio era data hardcodeada.** `/mis-inmuebles` mostraba `DEMO_POSITIONS` con id `residencias-avila-001` que no matcheaba el id real `-v2` → siempre vacío. Ahora lee on-chain con `fetchShareBalance`.
+9. **CarlosAI → GuacamaAI (rename total).** El agente IA se renombró (referencia: la guacamaya). Rutas `app/carlos/*` → `app/guacama/*`, API `app/api/carlos` → `app/api/guacama`, `lib/carlos-prompt.ts` → `lib/guacama-prompt.ts`. Los enlaces viejos siguen vivos vía `redirects()` en `next.config.mjs` (`/carlos` → `/guacama`, 308 permanente). No había env vars `CARLOS_*` reales — eran constantes/refs de docs.
 
 ---
 
 ## 10. Qué falta (para cerrar el demo)
 
-- [ ] Probar en navegador con la wallet 96Bj: **comprar** acciones (tiene 19 USDC, alcanza para varias).
-- [ ] Verificar **portafolio** en `/mis-inmuebles` tras comprar.
+- [x] **Comprar** acciones firmando con Privy → mintea token real on-chain (con modal de confirmación).
+- [x] **Portafolio** `/mis-inmuebles` lee saldos reales on-chain.
+- [x] **Transferir** acciones a otra wallet con KYC.
+- [ ] Probar el flujo completo end-to-end en navegador con la wallet 96Bj (tiene 19 USDC).
 - [ ] **Reclamar renta**: requiere que el admin corra `deposit_yield` primero (poner USDC en la bóveda).
 - [ ] **Votar** en `/inmuebles/[id]/gobernanza`.
 - [ ] Setear las envs en Vercel y redeploy para que ande desde la web.

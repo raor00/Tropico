@@ -1,7 +1,7 @@
 name: tropico-agent-actions
 version: 0.1.0
 display_name: "Tropico Agent Actions"
-description: "Carlos coordina las 4 acciones autónomas del Modo Agente (DCA, auto-yield, auto-cashback, re-balance) vía OpenClaw + Privy delegated keys."
+description: "Guacama coordina las 4 acciones autónomas del Modo Agente (DCA, auto-yield, auto-cashback, re-balance) vía OpenClaw + Privy delegated keys."
 author: Tropico
 price: free
 min_capability: tier-2

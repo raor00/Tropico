@@ -6,7 +6,7 @@ description: "Coordinar las 4 acciones autónomas del Modo Agente con OpenClaw +
 
 # Tropico Agent Actions — Modo Agente
 
-Cuando el usuario activa Modo Agente en `/carlos/agente`, este skill se vuelve el orquestador de las 4 acciones agentic:
+Cuando el usuario activa Modo Agente en `/guacama/agente`, este skill se vuelve el orquestador de las 4 acciones agentic:
 
 1. **DCA semanal** — compra programada de un token
 2. **Auto-yield** — al recibir remesa, mueve excedente a Save
@@ -16,11 +16,11 @@ Cuando el usuario activa Modo Agente en `/carlos/agente`, este skill se vuelve e
 ## Arquitectura
 
 ```
-Carlos (Lumen) ──→ OpenClaw skill (ClawHub) ──→ Privy delegated key ──→ Solana mainnet
+Guacama (Lumen) ──→ OpenClaw skill (ClawHub) ──→ Privy delegated key ──→ Solana mainnet
                        (policy engine)              (server-side)
 ```
 
-- Carlos DECIDE cuándo ejecutar (basándose en triggers)
+- Guacama DECIDE cuándo ejecutar (basándose en triggers)
 - OpenClaw VALIDA la policy (max amount, frequency, time window)
 - Privy FIRMA con session key delegada (expira en 1h default, max 24h)
 - Tropico NUNCA toca llaves privadas
@@ -75,14 +75,14 @@ python3 {SCRIPTS_DIR}/agent_history.py --instance {INSTANCE_ID} --wallet <PUBKEY
 
 - **Confirmación SIEMPRE**: antes de ejecutar una acción autónoma, mostrar al usuario los detalles (monto, token, destino, fee). NUNCA ejecutar sin confirmación, ni siquiera con regla activa.
 - **Policy primero**: si OpenClaw rechaza por policy violation, muestra el motivo claro al usuario: "No puedo ejecutar — supera el límite semanal de $200 que configuraste."
-- **Sesión expirada**: si la session key delegada expiró, dirige al usuario a reactivar Modo Agente: "La sesión del agente expiró por seguridad. Ve a /carlos/agente y vuelve a activar para extender 24h."
+- **Sesión expirada**: si la session key delegada expiró, dirige al usuario a reactivar Modo Agente: "La sesión del agente expiró por seguridad. Ve a /guacama/agente y vuelve a activar para extender 24h."
 - **Dry-run primero (opcional)**: para acciones de monto >$100, ofrece un dry-run que simula sin ejecutar — el usuario aprueba después.
 
 ## UI Surface (cuando proponés activar/ejecutar una acción)
 
 ```
 <tropico-ui>{"version":"v1","chat_right_rail":{"cards":[
-  {"eyebrow":"Modo Agente","title":"DCA semanal lunes","description":"$50 USDC → SOL · Policy: max $200/sem","cta":{"label":"Configurar","href":"/carlos/agente"},"tone":"action"}
+  {"eyebrow":"Modo Agente","title":"DCA semanal lunes","description":"$50 USDC → SOL · Policy: max $200/sem","cta":{"label":"Configurar","href":"/guacama/agente"},"tone":"action"}
 ]}}</tropico-ui>
 ```
 
@@ -99,4 +99,4 @@ python3 {SCRIPTS_DIR}/agent_history.py --instance {INSTANCE_ID} --wallet <PUBKEY
 
 ## Disclaimer en cada respuesta de Modo Agente
 
-Siempre cierra con: "Puedes pausar o revocar el agente cuando quieras desde /carlos/agente."
+Siempre cierra con: "Puedes pausar o revocar el agente cuando quieras desde /guacama/agente."
