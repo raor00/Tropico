@@ -13,6 +13,15 @@ declare_id!("EdWuyZDXao86mTcUSpRVzNXaT9Tb5muU6YGubFhADWdN");
 /// Example: if 1 USD == 36.50 Bs, peg_rate = 36_500_000.
 pub const PEG_SCALE: u64 = 1_000_000;
 
+/// Denominator for basis-point calculations (10 000 bps == 100 %).
+pub const BPS_DENOMINATOR: u64 = 10_000;
+
+/// Maximum allowed peg movement per update: ±20 % (2 000 bps).
+pub const MAX_RATE_CHANGE_BPS: u64 = 2_000;
+
+/// Minimum seconds that must elapse between consecutive peg updates (5 min).
+pub const MIN_PEG_UPDATE_INTERVAL: i64 = 300;
+
 // ---------------------------------------------------------------------------
 // Program
 // ---------------------------------------------------------------------------
@@ -39,7 +48,8 @@ pub mod tropico_bs {
         config.oracle_authority = ctx.accounts.admin.key(); // admin is oracle by default
         config.paused = false;
         config.peg_rate = peg_rate;
-        config.last_peg_update_ts = Clock::get()?.unix_timestamp;
+        // Zero sentinel: first update_peg call will bypass deviation/interval guards.
+        config.last_peg_update_ts = 0;
         config.bump = ctx.bumps.config;
 
         emit!(ProtocolInitialized {
@@ -66,9 +76,42 @@ pub mod tropico_bs {
             BsxError::Unauthorized
         );
 
+        let now = Clock::get()?.unix_timestamp;
+        let last_ts = config.last_peg_update_ts;
+
+        // Bootstrap: last_peg_update_ts == 0 means this is the very first update.
+        // In that case skip both the deviation cap and the interval guard.
+        let is_bootstrap = last_ts == 0;
+
+        if !is_bootstrap {
+            // Interval guard: must wait MIN_PEG_UPDATE_INTERVAL seconds between updates.
+            require!(
+                now.saturating_sub(last_ts) >= MIN_PEG_UPDATE_INTERVAL,
+                BsxError::PegUpdateTooFrequent
+            );
+
+            // Deviation cap: new_rate must be within ±MAX_RATE_CHANGE_BPS of current rate.
+            let old_rate_u128 = config.peg_rate as u128;
+            let max_delta = old_rate_u128
+                .checked_mul(MAX_RATE_CHANGE_BPS as u128)
+                .ok_or(BsxError::MathOverflow)?
+                .checked_div(BPS_DENOMINATOR as u128)
+                .ok_or(BsxError::MathOverflow)?;
+
+            let lower = old_rate_u128.saturating_sub(max_delta);
+            let upper = old_rate_u128
+                .checked_add(max_delta)
+                .ok_or(BsxError::MathOverflow)?;
+
+            require!(
+                (new_rate as u128) >= lower && (new_rate as u128) <= upper,
+                BsxError::PegDeviationTooLarge
+            );
+        }
+
         let old_rate = config.peg_rate;
         config.peg_rate = new_rate;
-        config.last_peg_update_ts = Clock::get()?.unix_timestamp;
+        config.last_peg_update_ts = now;
 
         emit!(PegUpdated {
             old_rate,
@@ -599,4 +642,8 @@ pub enum BsxError {
     InsufficientReserves,
     #[msg("Arithmetic overflow in BsX amount calculation")]
     MathOverflow,
+    #[msg("Peg rate change exceeds the maximum allowed deviation (±20%)")]
+    PegDeviationTooLarge,
+    #[msg("Peg update rejected: minimum interval between updates has not elapsed")]
+    PegUpdateTooFrequent,
 }

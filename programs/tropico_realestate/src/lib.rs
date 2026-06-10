@@ -1,5 +1,8 @@
 use anchor_lang::prelude::*;
-use anchor_spl::token::{self, Mint, MintTo, Token, TokenAccount, Transfer};
+use anchor_spl::token::{
+    self, freeze_account, thaw_account, FreezeAccount, Mint, MintTo, ThawAccount, Token,
+    TokenAccount, Transfer,
+};
 
 declare_id!("3V49YdnmbsHPoguFWhDhyAJhbUASq9s9LAXjxSfBPoWK");
 
@@ -33,26 +36,35 @@ pub mod tropico_realestate {
     use super::*;
 
     /// Inicializa el registro global. Un solo registry por deploy.
+    /// `crixto_fee_wallet` y `tropico_fee_wallet` son las wallets que recibirán fees;
+    /// se usan para validar los ATAs de fees en cada instrucción.
     pub fn initialize_registry(
         ctx: Context<InitializeRegistry>,
         operator_authority: Pubkey,
+        crixto_fee_wallet: Pubkey,
+        tropico_fee_wallet: Pubkey,
     ) -> Result<()> {
         let registry = &mut ctx.accounts.registry;
         registry.admin = ctx.accounts.admin.key();
         registry.operator_authority = operator_authority;
         registry.usdc_mint = ctx.accounts.usdc_mint.key();
+        registry.crixto_fee_wallet = crixto_fee_wallet;
+        registry.tropico_fee_wallet = tropico_fee_wallet;
         registry.paused = false;
         registry.bump = ctx.bumps.registry;
 
         emit!(RegistryInitialized {
             admin: registry.admin,
             operator_authority,
+            crixto_fee_wallet,
+            tropico_fee_wallet,
         });
 
         Ok(())
     }
 
     /// Lista un nuevo inmueble: crea PropertyConfig + share_mint (autoridad = PDA) + usdc_vault.
+    /// El share_mint se crea con freeze_authority = property PDA para poder congelar ATAs.
     pub fn list_property(
         ctx: Context<ListProperty>,
         property_id: [u8; 32],
@@ -136,6 +148,7 @@ pub mod tropico_realestate {
     ///   → precio va al usdc_vault (SPV recibe 100%)
     ///   → 90 bps van a crixto_fee_ata, 60 bps a tropico_fee_ata
     ///   → shares minteadas a investor_share_ata vía PDA signer
+    ///   → investor_share_ata queda congelada (anti raw-SPL bypass)
     pub fn buy_shares(ctx: Context<BuyShares>, num_shares: u64) -> Result<()> {
         require!(!ctx.accounts.registry.paused, RealEstateError::ProtocolPaused);
         require!(num_shares > 0, RealEstateError::InvalidAmount);
@@ -215,27 +228,52 @@ pub mod tropico_realestate {
             token::transfer(transfer_tropico_ctx, tropico_fee)?;
         }
 
-        // 4. Mint shares al investor vía PDA signer
+        // 4. Mint shares al investor vía PDA signer.
+        //    Si la ATA ya estaba congelada (compra repetida), descongelar antes de mint.
         let prop_id = prop.property_id;
         let prop_bump = prop.bump;
         let seeds: &[&[u8]] = &[b"property", prop_id.as_ref(), &[prop_bump]];
         let signer_seeds = &[seeds];
+
+        if ctx.accounts.investor_share_ata.is_frozen() {
+            thaw_share_account(
+                ctx.accounts.token_program.to_account_info(),
+                ctx.accounts.investor_share_ata.to_account_info(),
+                ctx.accounts.share_mint.to_account_info(),
+                property_account_info.clone(),
+                signer_seeds,
+            )?;
+        }
 
         let mint_ctx = CpiContext::new_with_signer(
             ctx.accounts.token_program.to_account_info(),
             MintTo {
                 mint: ctx.accounts.share_mint.to_account_info(),
                 to: ctx.accounts.investor_share_ata.to_account_info(),
-                authority: property_account_info,
+                authority: property_account_info.clone(),
             },
             signer_seeds,
         );
         token::mint_to(mint_ctx, num_shares)?;
 
-        // 5. Upsert InvestorPosition
+        // 5. Freeze investor_share_ata — impide transfers raw-SPL fuera del programa
+        freeze_share_account(
+            ctx.accounts.token_program.to_account_info(),
+            ctx.accounts.investor_share_ata.to_account_info(),
+            ctx.accounts.share_mint.to_account_info(),
+            property_account_info,
+            signer_seeds,
+        )?;
+
+        // 6. Upsert InvestorPosition
         let position = &mut ctx.accounts.investor_position;
         position.investor = ctx.accounts.investor.key();
         position.property = property_key;
+        // Initialize last_claimed_epoch only on first buy so the new holder
+        // cannot claim historical yield epochs they never economically held.
+        if position.shares_owned == 0 {
+            position.last_claimed_epoch = prop.epoch_count;
+        }
         position.shares_owned = position
             .shares_owned
             .checked_add(num_shares)
@@ -262,6 +300,8 @@ pub mod tropico_realestate {
 
     /// Transfiere shares entre holders (mercado secundario P2P).
     /// Fee 1% sobre el valor a valuación actual. Requiere KYC del destinatario.
+    /// El fee USDC se cobra antes del transfer de shares (50 bps Crixto / 50 bps Trópico).
+    /// Las ATAs de shares se descongelan temporalmente vía PDA signer y se vuelven a congelar.
     pub fn transfer_shares(ctx: Context<TransferShares>, amount: u64) -> Result<()> {
         require!(!ctx.accounts.registry.paused, RealEstateError::ProtocolPaused);
         require!(amount > 0, RealEstateError::InvalidAmount);
@@ -272,13 +312,87 @@ pub mod tropico_realestate {
         let now = Clock::get()?.unix_timestamp;
         require!(wl_to.expires_at == 0 || wl_to.expires_at > now, RealEstateError::KycExpired);
 
-        // Verificar balance del sender
+        // Verificar posición del sender
         require!(
-            ctx.accounts.from_share_ata.amount >= amount,
+            ctx.accounts.from_position.shares_owned >= amount,
             RealEstateError::InsufficientShares
         );
 
-        // Transfer shares: from → to (authority = sender, SPL transfer estándar)
+        let prop = &ctx.accounts.property;
+        let prop_id = prop.property_id;
+        let prop_bump = prop.bump;
+        let seeds: &[&[u8]] = &[b"property", prop_id.as_ref(), &[prop_bump]];
+        let signer_seeds = &[seeds];
+
+        // ── Cobro del fee secundario (1% sobre valor a valuación actual) ──
+        // fee_value = amount × valuation_usdc / total_shares
+        // total_fee = fee_value × SECONDARY_FEE_BPS / BPS_DENOMINATOR
+        let transfer_value = (amount as u128)
+            .checked_mul(prop.valuation_usdc as u128)
+            .ok_or(RealEstateError::MathOverflow)?
+            .checked_div(prop.total_shares as u128)
+            .ok_or(RealEstateError::MathOverflow)?;
+
+        let crixto_fee = transfer_value
+            .checked_mul(CRIXTO_SECONDARY_BPS as u128)
+            .ok_or(RealEstateError::MathOverflow)?
+            .checked_div(BPS_DENOMINATOR as u128)
+            .ok_or(RealEstateError::MathOverflow)? as u64;
+
+        let tropico_fee = transfer_value
+            .checked_mul(TROPICO_SECONDARY_BPS as u128)
+            .ok_or(RealEstateError::MathOverflow)?
+            .checked_div(BPS_DENOMINATOR as u128)
+            .ok_or(RealEstateError::MathOverflow)? as u64;
+
+        // Crixto 50 bps
+        if crixto_fee > 0 {
+            let fee_ctx = CpiContext::new(
+                ctx.accounts.token_program.to_account_info(),
+                Transfer {
+                    from: ctx.accounts.from_usdc_ata.to_account_info(),
+                    to: ctx.accounts.crixto_fee_ata.to_account_info(),
+                    authority: ctx.accounts.sender.to_account_info(),
+                },
+            );
+            token::transfer(fee_ctx, crixto_fee)?;
+        }
+
+        // Trópico 50 bps
+        if tropico_fee > 0 {
+            let fee_ctx = CpiContext::new(
+                ctx.accounts.token_program.to_account_info(),
+                Transfer {
+                    from: ctx.accounts.from_usdc_ata.to_account_info(),
+                    to: ctx.accounts.tropico_fee_ata.to_account_info(),
+                    authority: ctx.accounts.sender.to_account_info(),
+                },
+            );
+            token::transfer(fee_ctx, tropico_fee)?;
+        }
+
+        // ── Descongelar sender ATA (siempre congelada por buy/transfer previo) ──
+        thaw_share_account(
+            ctx.accounts.token_program.to_account_info(),
+            ctx.accounts.from_share_ata.to_account_info(),
+            ctx.accounts.share_mint.to_account_info(),
+            ctx.accounts.property.to_account_info(),
+            signer_seeds,
+        )?;
+
+        // ── Descongelar recipient ATA solo si ya estaba congelada ──
+        // (puede ser nueva ATA nunca usada por este programa)
+        if ctx.accounts.to_share_ata.is_frozen() {
+            thaw_share_account(
+                ctx.accounts.token_program.to_account_info(),
+                ctx.accounts.to_share_ata.to_account_info(),
+                ctx.accounts.share_mint.to_account_info(),
+                ctx.accounts.property.to_account_info(),
+                signer_seeds,
+            )?;
+        }
+
+        // ── Transfer shares: from → to (authority = sender) ──
         let transfer_ctx = CpiContext::new(
             ctx.accounts.token_program.to_account_info(),
             Transfer {
@@ -289,7 +403,24 @@ pub mod tropico_realestate {
         );
         token::transfer(transfer_ctx, amount)?;
 
-        // Update positions
+        // ── Re-congelar ambas ATAs ──
+        freeze_share_account(
+            ctx.accounts.token_program.to_account_info(),
+            ctx.accounts.from_share_ata.to_account_info(),
+            ctx.accounts.share_mint.to_account_info(),
+            ctx.accounts.property.to_account_info(),
+            signer_seeds,
+        )?;
+
+        freeze_share_account(
+            ctx.accounts.token_program.to_account_info(),
+            ctx.accounts.to_share_ata.to_account_info(),
+            ctx.accounts.share_mint.to_account_info(),
+            ctx.accounts.property.to_account_info(),
+            signer_seeds,
+        )?;
+
+        // ── Update positions (mantiene shares_owned autoritativo) ──
         let from_pos = &mut ctx.accounts.from_position;
         from_pos.shares_owned = from_pos
             .shares_owned
@@ -299,6 +430,12 @@ pub mod tropico_realestate {
         let to_pos = &mut ctx.accounts.to_position;
         to_pos.investor = ctx.accounts.recipient.key();
         to_pos.property = ctx.accounts.property.key();
+        // Initialize last_claimed_epoch only on first receipt so the recipient
+        // cannot claim historical epochs. Do NOT carry over sender's value —
+        // always anchor to the current epoch_count.
+        if to_pos.shares_owned == 0 {
+            to_pos.last_claimed_epoch = prop.epoch_count;
+        }
         to_pos.shares_owned = to_pos
             .shares_owned
             .checked_add(amount)
@@ -310,6 +447,8 @@ pub mod tropico_realestate {
             to: ctx.accounts.recipient.key(),
             property: ctx.accounts.property.key(),
             amount,
+            crixto_fee,
+            tropico_fee,
         });
 
         Ok(())
@@ -618,6 +757,52 @@ pub mod tropico_realestate {
 }
 
 // ---------------------------------------------------------------------------
+// CPI helpers — freeze / thaw share ATAs via property PDA
+// ---------------------------------------------------------------------------
+
+/// Congela una ATA de shares usando el property PDA como freeze authority.
+fn freeze_share_account<'info>(
+    token_program: AccountInfo<'info>,
+    account: AccountInfo<'info>,
+    mint: AccountInfo<'info>,
+    authority: AccountInfo<'info>,
+    signer_seeds: &[&[&[u8]]],
+) -> Result<()> {
+    let cpi_ctx = CpiContext::new_with_signer(
+        token_program,
+        FreezeAccount {
+            account,
+            mint,
+            authority,
+        },
+        signer_seeds,
+    );
+    freeze_account(cpi_ctx)?;
+    Ok(())
+}
+
+/// Descongela una ATA de shares usando el property PDA como freeze authority.
+fn thaw_share_account<'info>(
+    token_program: AccountInfo<'info>,
+    account: AccountInfo<'info>,
+    mint: AccountInfo<'info>,
+    authority: AccountInfo<'info>,
+    signer_seeds: &[&[&[u8]]],
+) -> Result<()> {
+    let cpi_ctx = CpiContext::new_with_signer(
+        token_program,
+        ThawAccount {
+            account,
+            mint,
+            authority,
+        },
+        signer_seeds,
+    );
+    thaw_account(cpi_ctx)?;
+    Ok(())
+}
+
+// ---------------------------------------------------------------------------
 // State accounts
 // ---------------------------------------------------------------------------
 
@@ -628,12 +813,18 @@ pub struct RegistryConfig {
     pub admin: Pubkey,
     pub operator_authority: Pubkey,
     pub usdc_mint: Pubkey,
+    /// Wallet que recibe la porción de fees de Crixto (validado en cada instrucción con fees).
+    pub crixto_fee_wallet: Pubkey,
+    /// Wallet que recibe la porción de fees de Trópico (validado en cada instrucción con fees).
+    pub tropico_fee_wallet: Pubkey,
     pub paused: bool,
     pub bump: u8,
 }
 
 impl RegistryConfig {
-    pub const LEN: usize = 8 + 32 + 32 + 32 + 1 + 1;
+    // 8 discriminator + 32 admin + 32 operator + 32 usdc_mint
+    // + 32 crixto_fee_wallet + 32 tropico_fee_wallet + 1 paused + 1 bump
+    pub const LEN: usize = 8 + 32 + 32 + 32 + 32 + 32 + 1 + 1;
 }
 
 /// Por inmueble. Seeds: ["property", property_id]
@@ -824,12 +1015,14 @@ pub struct ListProperty<'info> {
     )]
     pub property: Box<Account<'info, PropertyConfig>>,
 
-    /// Share mint — autoridad es el property PDA
+    /// Share mint — mint authority y freeze authority son el property PDA.
+    /// freeze_authority habilita congelar ATAs para prevenir transfers raw-SPL.
     #[account(
         init,
         payer = admin,
         mint::decimals = 0,
         mint::authority = property,
+        mint::freeze_authority = property,
         seeds = [b"share_mint", property_id.as_ref()],
         bump,
     )]
@@ -918,7 +1111,7 @@ pub struct BuyShares<'info> {
     )]
     pub investor_usdc_ata: Account<'info, TokenAccount>,
 
-    /// ATA de shares del investor (destino)
+    /// ATA de shares del investor (destino; quedará congelada al final)
     #[account(
         mut,
         constraint = investor_share_ata.owner == investor.key(),
@@ -926,17 +1119,21 @@ pub struct BuyShares<'info> {
     )]
     pub investor_share_ata: Account<'info, TokenAccount>,
 
-    /// ATA USDC de Crixto (recibe 90 bps)
+    /// ATA USDC de Crixto (recibe 90 bps).
+    /// owner debe coincidir con registry.crixto_fee_wallet para prevenir fee theft.
     #[account(
         mut,
         constraint = crixto_fee_ata.mint == registry.usdc_mint,
+        constraint = crixto_fee_ata.owner == registry.crixto_fee_wallet @ RealEstateError::InvalidFeeAccount,
     )]
     pub crixto_fee_ata: Account<'info, TokenAccount>,
 
-    /// ATA USDC de Trópico (recibe 60 bps)
+    /// ATA USDC de Trópico (recibe 60 bps).
+    /// owner debe coincidir con registry.tropico_fee_wallet para prevenir fee theft.
     #[account(
         mut,
         constraint = tropico_fee_ata.mint == registry.usdc_mint,
+        constraint = tropico_fee_ata.owner == registry.tropico_fee_wallet @ RealEstateError::InvalidFeeAccount,
     )]
     pub tropico_fee_ata: Account<'info, TokenAccount>,
 
@@ -974,6 +1171,13 @@ pub struct TransferShares<'info> {
     )]
     pub whitelist_to: Account<'info, Whitelist>,
 
+    /// Share mint del inmueble (requerido para freeze/thaw CPIs)
+    #[account(
+        mut,
+        constraint = share_mint.key() == property.share_mint,
+    )]
+    pub share_mint: Account<'info, Mint>,
+
     #[account(
         mut,
         constraint = from_share_ata.owner == sender.key(),
@@ -987,6 +1191,30 @@ pub struct TransferShares<'info> {
         constraint = to_share_ata.mint == property.share_mint,
     )]
     pub to_share_ata: Account<'info, TokenAccount>,
+
+    /// ATA USDC del sender (fuente del fee secundario)
+    #[account(
+        mut,
+        constraint = from_usdc_ata.owner == sender.key(),
+        constraint = from_usdc_ata.mint == registry.usdc_mint,
+    )]
+    pub from_usdc_ata: Account<'info, TokenAccount>,
+
+    /// ATA USDC de Crixto — owner debe ser registry.crixto_fee_wallet
+    #[account(
+        mut,
+        constraint = crixto_fee_ata.mint == registry.usdc_mint,
+        constraint = crixto_fee_ata.owner == registry.crixto_fee_wallet @ RealEstateError::InvalidFeeAccount,
+    )]
+    pub crixto_fee_ata: Account<'info, TokenAccount>,
+
+    /// ATA USDC de Trópico — owner debe ser registry.tropico_fee_wallet
+    #[account(
+        mut,
+        constraint = tropico_fee_ata.mint == registry.usdc_mint,
+        constraint = tropico_fee_ata.owner == registry.tropico_fee_wallet @ RealEstateError::InvalidFeeAccount,
+    )]
+    pub tropico_fee_ata: Account<'info, TokenAccount>,
 
     #[account(
         mut,
@@ -1038,10 +1266,20 @@ pub struct DepositYield<'info> {
     )]
     pub crixto_usdc_ata: Account<'info, TokenAccount>,
 
-    #[account(mut, constraint = crixto_fee_ata.mint == registry.usdc_mint)]
+    /// ATA USDC de Crixto fee — owner debe ser registry.crixto_fee_wallet
+    #[account(
+        mut,
+        constraint = crixto_fee_ata.mint == registry.usdc_mint,
+        constraint = crixto_fee_ata.owner == registry.crixto_fee_wallet @ RealEstateError::InvalidFeeAccount,
+    )]
     pub crixto_fee_ata: Account<'info, TokenAccount>,
 
-    #[account(mut, constraint = tropico_fee_ata.mint == registry.usdc_mint)]
+    /// ATA USDC de Trópico fee — owner debe ser registry.tropico_fee_wallet
+    #[account(
+        mut,
+        constraint = tropico_fee_ata.mint == registry.usdc_mint,
+        constraint = tropico_fee_ata.owner == registry.tropico_fee_wallet @ RealEstateError::InvalidFeeAccount,
+    )]
     pub tropico_fee_ata: Account<'info, TokenAccount>,
 
     #[account(
@@ -1213,6 +1451,8 @@ pub struct SetPause<'info> {
 pub struct RegistryInitialized {
     pub admin: Pubkey,
     pub operator_authority: Pubkey,
+    pub crixto_fee_wallet: Pubkey,
+    pub tropico_fee_wallet: Pubkey,
 }
 
 #[event]
@@ -1250,6 +1490,8 @@ pub struct SharesTransferred {
     pub to: Pubkey,
     pub property: Pubkey,
     pub amount: u64,
+    pub crixto_fee: u64,
+    pub tropico_fee: u64,
 }
 
 #[event]
@@ -1349,4 +1591,6 @@ pub enum RealEstateError {
     ProposalRejected,
     #[msg("Tour URL too long (max 200 chars)")]
     TourUrlTooLong,
+    #[msg("Fee account owner does not match registered fee wallet")]
+    InvalidFeeAccount,
 }

@@ -39,15 +39,19 @@ pub mod tropico_treasury {
         Ok(())
     }
 
-    /// Registra un fee on-chain. Cualquiera puede llamarlo (typically Tropico
-    /// server-side cuando confirma una tx vía findReference). El program NO
-    /// custodia el token — solo guarda metadata pública verificable.
+    /// Registers a fee on-chain. Only the stored authority (Tropico server key)
+    /// may call this — enforced by the require! check below.
+    /// The program does NOT custody tokens — it only stores public verifiable metadata.
     pub fn record_fee(
         ctx: Context<RecordFee>,
         amount_lamports: u64,
         module: ModuleType,
         user: Pubkey,
     ) -> Result<()> {
+        require!(
+            ctx.accounts.recorder.key() == ctx.accounts.state.authority,
+            TreasuryError::Unauthorized
+        );
         require!(amount_lamports > 0, TreasuryError::ZeroAmount);
 
         let state = &mut ctx.accounts.state;
@@ -110,8 +114,7 @@ pub struct RecordFee<'info> {
     )]
     pub state: Account<'info, TreasuryState>,
 
-    /// Cualquier signer puede registrar (open-permission para hackathon).
-    /// Producción: solo el authority Tropico (require! check abajo).
+    /// Must be the authority stored in state — enforced in the handler.
     pub recorder: Signer<'info>,
 }
 
@@ -191,4 +194,6 @@ pub enum TreasuryError {
     ZeroAmount,
     #[msg("Arithmetic overflow")]
     Overflow,
+    #[msg("Only the authority may record fees")]
+    Unauthorized,
 }
