@@ -11,25 +11,25 @@ import {
   Sparkles,
 } from "lucide-react";
 import { useMemo, useState } from "react";
-import { getActiveCluster } from "@/lib/cluster";
-import { getActiveRpcUrl } from "@/lib/cluster";
+import { getActiveCluster, getActiveRpcUrl } from "@/lib/cluster"; // O5: merged
 import { makeKeypairSigner } from "@/lib/send-tx";
 import { hasLocalWallet, getLocalWalletPubkey, unlockLocalWallet } from "@/lib/wallet-local";
 import { buildBuySharesTx } from "@/lib/realestate-program";
 import { calcPrimaryFee } from "@/lib/realestate-yield";
 import type { PropertyInfo } from "@/lib/properties";
 import type { PrivySignerInjected } from "./BsSwapForm";
-import { Connection, PublicKey } from "@solana/web3.js";
+import { Connection, PublicKey, Transaction } from "@solana/web3.js"; // C7: Transaction imported
 
-const CRIXTO_FEE_ATA = process.env.NEXT_PUBLIC_CRIXTO_FEE_ATA_USDC ?? "";
-const TROPICO_FEE_ATA = process.env.NEXT_PUBLIC_TROPICO_FEE_ATA_USDC ?? "";
+// CRIXTO_FEE_ATA / TROPICO_FEE_ATA env vars removed — fee wallets are now
+// fetched from on-chain RegistryConfig inside buildBuySharesTx.
 
 type Props = {
   property: PropertyInfo;
   privySigner?: PrivySignerInjected | null;
+  onBought?: () => void; // F1
 };
 
-export function PropertyBuyForm({ property: p, privySigner = null }: Props) {
+export function PropertyBuyForm({ property: p, privySigner = null, onBought }: Props) {
   const [numShares, setNumShares] = useState("");
   const [executing, setExecuting] = useState(false);
   const [password, setPassword] = useState("");
@@ -50,7 +50,12 @@ export function PropertyBuyForm({ property: p, privySigner = null }: Props) {
     typeof window !== "undefined" && hasLocalWallet()
       ? getLocalWalletPubkey()
       : null;
-  const canDoRealTx = !!(privySigner || localPubkey);
+
+  // O6: wrapped in useMemo
+  const canDoRealTx = useMemo(
+    () => !!(privySigner || localPubkey),
+    [privySigner, localPubkey],
+  );
 
   const sharesNum = parseInt(numShares) || 0;
   const available = p.totalShares - p.sharesSold;
@@ -96,48 +101,34 @@ export function PropertyBuyForm({ property: p, privySigner = null }: Props) {
     }
 
     try {
-      let investor: PublicKey;
-      let signedTx: any;
+      // C6: unlock ONCE, derive investor, reuse kp for signing
+      // C1: use makeKeypairSigner consistent with ShareTransferCard
+      // C7: signedTx typed as Transaction
+      let signedTx!: Transaction;
+      const conn = new Connection(getActiveRpcUrl(), "confirmed");
 
       if (privySigner) {
-        investor = new PublicKey(privySigner.address);
+        const investor = new PublicKey(privySigner.address);
+        const tx = await buildBuySharesTx(p.id, investor, BigInt(sharesNum));
+        signedTx = await privySigner.signTransaction(tx as any);
       } else {
         if (!password) {
           setNeedsPassword(true);
           setExecuting(false);
           return;
         }
+        // C6: single unlock call
         const kp = await unlockLocalWallet(password);
         if (!kp) {
           setTxError("Contraseña incorrecta");
           setExecuting(false);
           return;
         }
-        investor = kp.publicKey;
-      }
-
-      const crixtoFeeAtaPub = CRIXTO_FEE_ATA
-        ? new PublicKey(CRIXTO_FEE_ATA)
-        : investor;
-      const tropicoFeeAtaPub = TROPICO_FEE_ATA
-        ? new PublicKey(TROPICO_FEE_ATA)
-        : investor;
-
-      const tx = await buildBuySharesTx(
-        p.id,
-        investor,
-        BigInt(sharesNum),
-        crixtoFeeAtaPub,
-        tropicoFeeAtaPub
-      );
-
-      const conn = new Connection(getActiveRpcUrl(), "confirmed");
-
-      if (privySigner) {
-        signedTx = await privySigner.signTransaction(tx as any);
-      } else {
-        const kp = await unlockLocalWallet(password);
-        tx.sign(kp!);
+        const investor = kp.publicKey;
+        // C1: makeKeypairSigner — consistent with ShareTransferCard
+        const localSigner = makeKeypairSigner(kp);
+        const tx = await buildBuySharesTx(p.id, investor, BigInt(sharesNum));
+        if (localSigner.type === "keypair") tx.sign(localSigner.kp);
         signedTx = tx;
       }
 
@@ -155,6 +146,15 @@ export function PropertyBuyForm({ property: p, privySigner = null }: Props) {
       setNumShares("");
       setPassword("");
       setNeedsPassword(false);
+
+      // Fire-and-forget treasury fee recording — failure must never surface to the user.
+      fetch("/api/treasury/record-fee", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ signature: sig, module: "RealEstate" }),
+      }).catch(() => {});
+
+      onBought?.(); // F1
     } catch (e) {
       setTxError((e as Error).message);
     } finally {

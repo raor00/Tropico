@@ -7,11 +7,10 @@ import {
   Loader2,
 } from "lucide-react";
 import { useState } from "react";
+import { Connection, Transaction } from "@solana/web3.js";
 import type { Signer } from "@/lib/send-tx";
-import { getActiveCluster } from "@/lib/cluster";
+import { getActiveCluster, getActiveRpcUrl } from "@/lib/cluster";
 import { buildClaimRewardTx } from "@/lib/realestate-program";
-import { Connection } from "@solana/web3.js";
-import { getActiveRpcUrl } from "@/lib/cluster";
 
 type Props = {
   propertyId: string;
@@ -20,6 +19,21 @@ type Props = {
   epoch: number;
   signer: Signer | null;
 };
+
+/** Sign and broadcast a pre-built transaction; returns the confirmed signature. */
+async function sendAndConfirm(tx: Transaction, signer: Signer): Promise<string> {
+  const conn = new Connection(getActiveRpcUrl(), "confirmed");
+  if (signer.type === "keypair") {
+    tx.sign(signer.kp);
+    const sig = await conn.sendRawTransaction(tx.serialize());
+    await conn.confirmTransaction(sig, "confirmed");
+    return sig;
+  }
+  const signed = await signer.signTransaction(tx);
+  const sig = await conn.sendRawTransaction(signed.serialize());
+  await conn.confirmTransaction(sig, "confirmed");
+  return sig;
+}
 
 export function RewardClaimCard({
   propertyId,
@@ -38,55 +52,43 @@ export function RewardClaimCard({
 
   const cluster = getActiveCluster();
 
+  // Render the card when there is a real unclaimed epoch (epoch > 0) even if the
+  // exact USDC amount is not yet known (claimableUsdc=0). Computing exact USDC
+  // requires a fetchYieldEpoch helper that reads total_yield_usdc + snapshot shares
+  // from the YieldEpoch PDA — not yet implemented. The on-chain claim instruction
+  // calculates the pro-rata amount correctly at settlement time.
+  if (claimableUsdc <= 0 && epoch <= 0) return null;
+
   async function claim() {
     setError(null);
     setClaiming(true);
-
-    if (!signer) {
-      // Demo mode
-      await new Promise((r) => setTimeout(r, 800));
-      setConfirmed({
-        txSig: `DEMO_${Math.random().toString(36).slice(2, 14)}`,
-        onchain: false,
-      });
-      setClaiming(false);
-      return;
-    }
-
     try {
+      if (!signer) {
+        // Demo mode — no real wallet connected
+        await new Promise((r) => setTimeout(r, 800));
+        setConfirmed({
+          txSig: `DEMO_${Math.random().toString(36).slice(2, 14)}`,
+          onchain: false,
+        });
+        return;
+      }
+
       const { PublicKey } = await import("@solana/web3.js");
       const investor = new PublicKey(signer.address);
       const tx = await buildClaimRewardTx(propertyId, investor, BigInt(epoch));
-
-      if (signer.type === "keypair") {
-        tx.sign(signer.kp);
-        const conn = new Connection(getActiveRpcUrl(), "confirmed");
-        const sig = await conn.sendRawTransaction(tx.serialize());
-        await conn.confirmTransaction(sig, "confirmed");
-        setConfirmed({
-          txSig: sig,
-          onchain: true,
-          explorer: `https://solscan.io/tx/${sig}${cluster === "devnet" ? "?cluster=devnet" : ""}`,
-        });
-      } else {
-        const signed = await signer.signTransaction(tx);
-        const conn = new Connection(getActiveRpcUrl(), "confirmed");
-        const sig = await conn.sendRawTransaction(signed.serialize());
-        await conn.confirmTransaction(sig, "confirmed");
-        setConfirmed({
-          txSig: sig,
-          onchain: true,
-          explorer: `https://solscan.io/tx/${sig}${cluster === "devnet" ? "?cluster=devnet" : ""}`,
-        });
-      }
+      const sig = await sendAndConfirm(tx, signer);
+      setConfirmed({
+        txSig: sig,
+        onchain: true,
+        explorer: `https://solscan.io/tx/${sig}${cluster === "devnet" ? "?cluster=devnet" : ""}`,
+      });
     } catch (e) {
       setError((e as Error).message);
     } finally {
+      // Always reset button state, even on confirmation timeout
       setClaiming(false);
     }
   }
-
-  if (claimableUsdc <= 0) return null;
 
   return (
     <div className="panel flex flex-col gap-3 border-tropico-sun/30 bg-tropico-sun/5 p-4">
@@ -96,7 +98,7 @@ export function RewardClaimCard({
           Renta disponible
         </span>
         <span className="ml-auto font-display text-lg font-bold text-tropico-sun">
-          ${claimableUsdc.toFixed(2)} USDC
+          {claimableUsdc > 0 ? `$${claimableUsdc.toFixed(2)} USDC` : "Pendiente de cálculo"}
         </span>
       </header>
       <p className="text-xs text-tropico-mute">
@@ -144,7 +146,9 @@ export function RewardClaimCard({
           ) : (
             <>
               <Gift className="size-4" />
-              Reclamar ${claimableUsdc.toFixed(2)} USDC
+              {claimableUsdc > 0
+                ? `Reclamar $${claimableUsdc.toFixed(2)} USDC`
+                : "Reclamar renta"}
             </>
           )}
         </button>

@@ -3,10 +3,15 @@
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { Building2, Loader2, TrendingUp, Wallet } from "lucide-react";
-import { PublicKey } from "@solana/web3.js";
+import { Connection, PublicKey } from "@solana/web3.js";
+import { getAssociatedTokenAddress } from "@solana/spl-token";
 import { PROPERTY_LIST } from "@/lib/properties";
-import { fetchShareBalance } from "@/lib/realestate-program";
-import { getActiveCluster } from "@/lib/cluster";
+import {
+  fetchInvestorPosition,
+  fetchPropertyConfig,
+  shareMintPda,
+} from "@/lib/realestate-program";
+import { getActiveCluster, getActiveRpcUrl } from "@/lib/cluster";
 import type { Signer } from "@/lib/send-tx";
 import { RewardClaimCard } from "@/components/RewardClaimCard";
 import { ShareTransferCard } from "@/components/ShareTransferCard";
@@ -14,6 +19,10 @@ import { ShareTransferCard } from "@/components/ShareTransferCard";
 type Position = {
   propertyId: string;
   sharesOwned: number;
+  /** On-chain: last epoch claimed by this investor (0 = none). */
+  lastClaimedEpoch: number;
+  /** On-chain: total epochs deposited for this property (PropertyConfig.epoch_count). */
+  epochCount: number;
 };
 
 type Props = {
@@ -37,13 +46,50 @@ export function MisInmueblesView({ pubkey, signer, localPubkey }: Props) {
     setLoading(true);
     try {
       const investor = new PublicKey(pubkey);
-      const results = await Promise.all(
+      const conn = new Connection(getActiveRpcUrl(), "confirmed");
+
+      // Derive ATAs for every property (pure computation — no RPC)
+      const ataEntries = await Promise.all(
         PROPERTY_LIST.map(async (p) => {
-          const bal = await fetchShareBalance(p.id, investor);
-          return { propertyId: p.id, sharesOwned: Number(bal) };
+          const mint = shareMintPda(p.id);
+          const ata = await getAssociatedTokenAddress(mint, investor);
+          return { propertyId: p.id, ata };
         })
       );
-      setPositions(results.filter((r) => r.sharesOwned > 0));
+
+      // O1: single batched RPC call replaces N serial getAccountInfo calls
+      const accounts = await conn.getMultipleAccountsInfo(
+        ataEntries.map((e) => e.ata)
+      );
+
+      // SPL token account: amount is u64 LE at byte offset 64
+      const held = accounts
+        .map((info, i) => ({
+          propertyId: ataEntries[i].propertyId,
+          sharesOwned: info ? Number(info.data.readBigUInt64LE(64)) : 0,
+        }))
+        .filter((r) => r.sharesOwned > 0);
+
+      // C3: for each held position, read on-chain InvestorPosition (lastClaimedEpoch)
+      // and PropertyConfig (epochCount) to derive real reward eligibility.
+      // NOTE: Computing exact claimableUsdc requires reading the YieldEpoch PDA for each
+      // unclaimed epoch (total_yield_usdc, snapshot_total_shares). No fetchYieldEpoch
+      // helper exists yet — claimableUsdc is passed as 0 and the card gates on epoch only.
+      const enrichedPositions = await Promise.all(
+        held.map(async (pos) => {
+          const [posData, propData] = await Promise.all([
+            fetchInvestorPosition(pos.propertyId, investor),
+            fetchPropertyConfig(pos.propertyId),
+          ]);
+          return {
+            ...pos,
+            lastClaimedEpoch: Number(posData?.lastClaimedEpoch ?? 0n),
+            epochCount: Number(propData?.epochCount ?? 0n),
+          };
+        })
+      );
+
+      setPositions(enrichedPositions);
     } finally {
       setLoading(false);
     }
@@ -123,9 +169,15 @@ export function MisInmueblesView({ pubkey, signer, localPubkey }: Props) {
 
           {!loading && (
             <section className="flex flex-col gap-6">
-              {enriched.map(({ property: p, sharesOwned, propertyId }) => {
+              {enriched.map(({ property: p, sharesOwned, propertyId, lastClaimedEpoch, epochCount }) => {
                 if (!p) return null;
                 const pct = ((sharesOwned / p.totalShares) * 100).toFixed(4);
+
+                // Next unclaimed epoch: epochs are 1-indexed in the program.
+                // If lastClaimedEpoch < epochCount, epoch (lastClaimedEpoch + 1) is unclaimed.
+                const claimEpoch =
+                  lastClaimedEpoch < epochCount ? lastClaimedEpoch + 1 : 0;
+
                 return (
                   <div key={propertyId} className="flex flex-col gap-3">
                     <div className="panel p-4">
@@ -190,11 +242,13 @@ export function MisInmueblesView({ pubkey, signer, localPubkey }: Props) {
                       </div>
                     </div>
 
+                    {/* claimableUsdc=0: exact USDC requires YieldEpoch fetch (not yet implemented).
+                        The card renders when claimEpoch > 0 (real unclaimed epoch detected). */}
                     <RewardClaimCard
                       propertyId={propertyId}
                       propertyName={p.name}
                       claimableUsdc={0}
-                      epoch={0}
+                      epoch={claimEpoch}
                       signer={signer}
                     />
                   </div>

@@ -13,7 +13,7 @@ import { Connection, PublicKey } from "@solana/web3.js";
 import { getActiveCluster, getActiveRpcUrl } from "@/lib/cluster";
 import { makeKeypairSigner, type Signer } from "@/lib/send-tx";
 import { unlockLocalWallet } from "@/lib/wallet-local";
-import { buildTransferShareTx } from "@/lib/realestate-program";
+import { buildTransferShareTx, kycPda } from "@/lib/realestate-program";
 
 type Props = {
   propertyId: string;
@@ -37,6 +37,7 @@ export function ShareTransferCard({
   const [amount, setAmount] = useState("");
   const [password, setPassword] = useState("");
   const [showConfirm, setShowConfirm] = useState(false);
+  const [checkingKyc, setCheckingKyc] = useState(false);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [confirmed, setConfirmed] = useState<{ explorer?: string; onchain: boolean } | null>(null);
@@ -46,10 +47,11 @@ export function ShareTransferCard({
   const needsPassword = !signer && !!localPubkey;
   const canRealTx = !!signer || !!localPubkey;
 
-  function requestSend() {
+  async function requestSend() {
     setError(null);
+    let destKey: PublicKey;
     try {
-      new PublicKey(recipient.trim());
+      destKey = new PublicKey(recipient.trim());
     } catch {
       setError("Dirección de destino inválida");
       return;
@@ -62,6 +64,27 @@ export function ShareTransferCard({
       setError("Ingresa la contraseña de tu wallet");
       return;
     }
+
+    // KYC pre-check: verify recipient has an approved KYC account on-chain
+    // before showing the confirm modal so we don't waste the user's time.
+    setCheckingKyc(true);
+    try {
+      const conn = new Connection(getActiveRpcUrl(), "confirmed");
+      const kyc = kycPda(destKey);
+      const kycInfo = await conn.getAccountInfo(kyc);
+      if (!kycInfo) {
+        setError(
+          "El destinatario no tiene KYC aprobado — la transferencia fallará"
+        );
+        return;
+      }
+    } catch {
+      setError("No se pudo verificar el KYC del destinatario — reintentá");
+      return;
+    } finally {
+      setCheckingKyc(false);
+    }
+
     setShowConfirm(true);
   }
 
@@ -117,6 +140,14 @@ export function ShareTransferCard({
       setRecipient("");
       setAmount("");
       setPassword("");
+
+      // Fire-and-forget treasury fee recording — failure must never surface to the user.
+      fetch("/api/treasury/record-fee", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ signature: sig, module: "RealEstateSecondary" }),
+      }).catch(() => {});
+
       onTransferred?.();
     } catch (e) {
       setError((e as Error).message);
@@ -230,12 +261,16 @@ export function ShareTransferCard({
         <button
           type="button"
           onClick={requestSend}
-          disabled={sending}
+          disabled={sending || checkingKyc}
           className="btn-primary inline-flex flex-1 items-center justify-center gap-2 py-2 text-sm disabled:opacity-50"
         >
           {sending ? (
             <>
               <Loader2 className="size-4 animate-spin" /> Enviando…
+            </>
+          ) : checkingKyc ? (
+            <>
+              <Loader2 className="size-4 animate-spin" /> Verificando KYC…
             </>
           ) : (
             <>

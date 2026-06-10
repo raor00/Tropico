@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Bed,
   Building2,
@@ -12,22 +13,82 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { getPropertyById, getProgressPercent } from "@/lib/properties";
+import type { PropertyInfo } from "@/lib/properties";
 import { TourEmbed } from "@/components/TourEmbed";
 import { PropertyBuyFormEntry } from "@/components/PropertyBuyFormPrivy";
+import { usePrivySigner } from "@/components/PropertyBuyFormPrivy";
 import { RewardClaimCard } from "@/components/RewardClaimCard";
-import { getRealEstateProgramId, shareMintPda, usdcVaultPda, propertyPda } from "@/lib/realestate-program";
+import {
+  getRealEstateProgramId,
+  shareMintPda,
+  usdcVaultPda,
+  propertyPda,
+  fetchPropertyConfig,
+} from "@/lib/realestate-program";
+import { getActiveCluster } from "@/lib/cluster";
 
 type Props = { id: string };
 
+type LiveData = Pick<PropertyInfo, "sharesSold" | "totalShares" | "pricePerShare">;
+
 export function PropertyView({ id }: Props) {
-  const property = getPropertyById(id);
-  if (!property) notFound();
+  const staticProperty = getPropertyById(id);
+  if (!staticProperty) notFound();
+
+  const [liveData, setLiveData] = useState<LiveData | null>(null);
+  const [fetchError, setFetchError] = useState(false);
+
+  const fetchLive = useCallback(async () => {
+    try {
+      const config = await fetchPropertyConfig(id);
+      if (!config) {
+        setFetchError(true);
+        return;
+      }
+      setLiveData({
+        sharesSold: Number(config.sharesSold),
+        totalShares: Number(config.totalShares),
+        pricePerShare: Number(config.pricePerShare),
+      });
+      setFetchError(false);
+    } catch {
+      setFetchError(true);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    fetchLive();
+  }, [fetchLive]);
+
+  // Merge live data over static fallback
+  const property: PropertyInfo = useMemo(
+    () =>
+      liveData
+        ? { ...staticProperty, ...liveData }
+        : staticProperty,
+    [staticProperty, liveData]
+  );
 
   const progress = getProgressPercent(property);
-  const programId = getRealEstateProgramId().toBase58();
-  const shareMint = shareMintPda(id).toBase58();
-  const vault = usdcVaultPda(id).toBase58();
-  const propKey = propertyPda(id).toBase58();
+
+  // PDA derivations — memoized on id
+  const { programId, shareMint, vault, propKey } = useMemo(() => {
+    return {
+      programId: getRealEstateProgramId().toBase58(),
+      shareMint: shareMintPda(id).toBase58(),
+      vault: usdcVaultPda(id).toBase58(),
+      propKey: propertyPda(id).toBase58(),
+    };
+  }, [id]);
+
+  // Solscan cluster query param
+  const clusterParam = useMemo(() => {
+    const cluster = getActiveCluster();
+    return cluster === "devnet" ? "?cluster=devnet" : "";
+  }, []);
+
+  // Privy signer for RewardClaimCard
+  const signer = usePrivySigner();
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-6xl flex-col gap-8 px-5 py-10">
@@ -39,6 +100,12 @@ export function PropertyView({ id }: Props) {
         <span>/</span>
         <span className="text-tropico-text">{property.name}</span>
       </nav>
+
+      {fetchError && (
+        <p className="text-xs text-tropico-mute">
+          No se pudo leer el estado on-chain — mostrando datos estáticos.
+        </p>
+      )}
 
       <div className="grid gap-8 lg:grid-cols-[1fr_420px]">
         {/* Left column */}
@@ -112,7 +179,7 @@ export function PropertyView({ id }: Props) {
             <p className="text-sm text-tropico-mute">{property.pitchVE}</p>
           </div>
 
-          {/* Ruta on-chain — el "blindado en Trópico" del pitch */}
+          {/* Ruta on-chain */}
           <section className="panel flex flex-col gap-3 p-4">
             <h2 className="flex items-center gap-2 text-sm font-semibold">
               <SquareActivity className="size-4 text-tropico-sea" />
@@ -123,22 +190,22 @@ export function PropertyView({ id }: Props) {
                 {
                   label: "Program ID",
                   value: programId,
-                  href: `https://solscan.io/account/${programId}?cluster=devnet`,
+                  href: `https://solscan.io/account/${programId}${clusterParam}`,
                 },
                 {
                   label: "Share Mint",
                   value: shareMint,
-                  href: `https://solscan.io/token/${shareMint}?cluster=devnet`,
+                  href: `https://solscan.io/token/${shareMint}${clusterParam}`,
                 },
                 {
                   label: "USDC Vault",
                   value: vault,
-                  href: `https://solscan.io/account/${vault}?cluster=devnet`,
+                  href: `https://solscan.io/account/${vault}${clusterParam}`,
                 },
                 {
                   label: "Property Config",
                   value: propKey,
-                  href: `https://solscan.io/account/${propKey}?cluster=devnet`,
+                  href: `https://solscan.io/account/${propKey}${clusterParam}`,
                 },
               ].map(({ label, value, href }) => (
                 <div key={label} className="flex items-center justify-between gap-2">
@@ -175,7 +242,7 @@ export function PropertyView({ id }: Props) {
 
         {/* Right column — buy form + rewards */}
         <div className="flex flex-col gap-4">
-          <PropertyBuyFormEntry property={property} />
+          <PropertyBuyFormEntry property={property} onBought={fetchLive} />
 
           {/* Demo reward card — Fase 0: renta simulada */}
           <RewardClaimCard
@@ -183,7 +250,7 @@ export function PropertyView({ id }: Props) {
             propertyName={property.name}
             claimableUsdc={12.48}
             epoch={0}
-            signer={null}
+            signer={signer}
           />
 
           {/* Link a gobernanza */}

@@ -1,7 +1,6 @@
 "use client";
 
-import Script from "next/script";
-import { createElement } from "react";
+import { createElement, useEffect, useState } from "react";
 import { ExternalLink, Video } from "lucide-react";
 
 function safeHost(url: string): string {
@@ -10,6 +9,50 @@ function safeHost(url: string): string {
   } catch {
     return "";
   }
+}
+
+function ModelViewer({
+  src,
+  alt,
+}: {
+  src: string;
+  alt: string;
+}) {
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    // Dynamically import the package so it registers the <model-viewer> custom element.
+    // The package has no named React export — side-effect import is the correct pattern.
+    import("@google/model-viewer").then(() => setReady(true));
+  }, []);
+
+  return (
+    <div className="relative size-full">
+      {/* Fixed-dimension placeholder prevents CLS while the custom element upgrades */}
+      {!ready && (
+        <div
+          className="absolute inset-0 animate-pulse rounded-xl bg-tropico-ink/60"
+          aria-hidden="true"
+        />
+      )}
+      {createElement("model-viewer", {
+        src,
+        alt,
+        "camera-controls": true,
+        "auto-rotate": true,
+        "touch-action": "pan-y",
+        "shadow-intensity": "1",
+        exposure: "1",
+        style: {
+          width: "100%",
+          height: "100%",
+          backgroundColor: "transparent",
+          opacity: ready ? 1 : 0,
+          transition: "opacity 0.3s ease",
+        },
+      })}
+    </div>
+  );
 }
 
 export function TourEmbed({
@@ -49,25 +92,10 @@ export function TourEmbed({
         </a>
       </div>
       <div className="relative overflow-hidden rounded-xl border border-tropico-border bg-tropico-ink/40">
+        {/* Explicit aspect-ratio dimensions prevent CLS regardless of model-viewer load state */}
         <div className="aspect-video w-full">
           {tourModelUrl ? (
-            <>
-              <Script
-                type="module"
-                src="https://unpkg.com/@google/model-viewer@4.0.0/dist/model-viewer.min.js"
-                strategy="afterInteractive"
-              />
-              {createElement("model-viewer", {
-                src: tourModelUrl,
-                alt: `Tour 3D — ${name}`,
-                "camera-controls": true,
-                "auto-rotate": true,
-                "touch-action": "pan-y",
-                "shadow-intensity": "1",
-                exposure: "1",
-                style: { width: "100%", height: "100%", backgroundColor: "transparent" },
-              })}
-            </>
+            <ModelViewer src={tourModelUrl} alt={`Tour 3D — ${name}`} />
           ) : (
             <iframe
               src={tourUrl}
