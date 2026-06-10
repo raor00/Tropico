@@ -1,5 +1,13 @@
 /**
- * AML — Anti Money Laundering limits.
+ * AML — Anti Money Laundering limits (CLIENT-SIDE — NON-AUTHORITATIVE).
+ *
+ * This module is used for UX hints only (disable buttons, show warnings before
+ * the user submits). It DOES NOT enforce limits — localStorage can be cleared
+ * or bypassed by any caller.
+ *
+ * The authoritative enforcement happens server-side in lib/aml-server.ts,
+ * which persists accumulated totals in Supabase and is called from every
+ * checkout and payment API route.
  *
  * Tropico aplica límites HARD por transacción para prevenir lavado.
  * Si el usuario quiere mover más, debe dividir en N transacciones.

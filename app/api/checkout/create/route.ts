@@ -1,5 +1,16 @@
 import { NextResponse } from "next/server";
 import { createCheckoutSession } from "@/lib/checkout";
+import { recordAndCheck, AmlConfigError } from "@/lib/aml-server";
+
+// NOTE: record_fee is NOT fired from this route.
+// Reason: this route creates a Solana Pay session link but does NOT confirm payment.
+// The fee is only materialised when the user's transaction lands on-chain.
+// Call sites for record_fee are post-confirmation handlers, e.g.:
+//   - realestate buy/transfer confirmation (app/api handlers after on-chain confirm)
+//   - Jupiter swap settle handlers
+// Those handlers should POST to /api/treasury/record-fee with the X-Tropico-Api-Key
+// header after verifying the on-chain signature. A recording failure must be caught
+// and logged — it must NOT surface as a user-facing payment error.
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -75,16 +86,58 @@ export async function POST(req: Request) {
     );
   }
 
-  // Auth check (en producción: validar Bearer token contra DB de partners)
+  // Auth check — fail-closed: if TROPICO_PAY_API_KEY is not configured the
+  // service refuses all requests rather than silently accepting them.
   const apiKey = process.env.TROPICO_PAY_API_KEY;
-  if (apiKey) {
-    const auth = req.headers.get("authorization") ?? "";
-    if (auth !== `Bearer ${apiKey}`) {
+  if (!apiKey) {
+    return NextResponse.json(
+      {
+        error: "service_unavailable",
+        message: "Payment API key is not configured on this server.",
+      },
+      { status: 503 }
+    );
+  }
+  const auth = req.headers.get("authorization") ?? "";
+  if (auth !== `Bearer ${apiKey}`) {
+    return NextResponse.json(
+      { error: "unauthorized", message: "API key inválida o ausente" },
+      { status: 401 }
+    );
+  }
+
+  // AML: server-side daily/monthly accumulator check (authoritative).
+  // checkPerTx is also called inside recordAndCheck.
+  try {
+    const aml = await recordAndCheck(String(input.merchantWallet), amount);
+    if (!aml.allowed) {
       return NextResponse.json(
-        { error: "unauthorized", message: "API key inválida o ausente" },
-        { status: 401 }
+        {
+          error: "aml_limit_exceeded",
+          message: "Transaction blocked by AML velocity limits.",
+          reasons: aml.reasons,
+        },
+        { status: 422 }
       );
     }
+  } catch (err) {
+    if (err instanceof AmlConfigError) {
+      // Supabase is not configured — refuse rather than silently skip AML.
+      console.error("[checkout/create] AML config error:", err.message);
+      return NextResponse.json(
+        {
+          error: "service_unavailable",
+          message: "AML service is not configured on this server.",
+        },
+        { status: 503 }
+      );
+    }
+    // Unexpected DB / network error — fail-closed.
+    console.error("[checkout/create] AML check failed:", err);
+    return NextResponse.json(
+      { error: "internal_error", message: "AML check failed. Please retry." },
+      { status: 500 }
+    );
   }
 
   const session = createCheckoutSession({
